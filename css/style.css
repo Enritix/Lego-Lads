@@ -1,9 +1,15 @@
+@font-face {
+    font-family: Bangers;
+    src: url(../assets/fonts/Bangers-Regular.ttf);
+  }
+
 :root {
     --primary-color: #252733;
 }
 
 html {
     background-image: url(../assets/images/background.png);
+    font-family: Bangers;
 }
 
 header nav ul {
@@ -39,7 +45,15 @@ header nav ul {
     overflow: hidden;
 }
 
+/* TODO: fix dat het op dezelfde plek blijft wanneer je resized */
 header nav ul li:nth-child(3) {
+    position: fixed;
+    top: 175px;
+    color: white;
+    letter-spacing: 2px;
+}
+
+header nav ul li:nth-child(4) {
     margin-top: auto;
 }
 
@@ -51,4 +65,8 @@ header nav ul li svg {
 
 header nav ul li svg:last-child {
     margin-bottom: 25px;
+}
+
+header nav ul li svg:hover {
+    color: #dadada;
 }
