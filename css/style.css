@@ -1,0 +1,54 @@
+:root {
+    --primary-color: #252733;
+}
+
+html {
+    background-image: url(../assets/images/background.png);
+}
+
+header nav ul {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--primary-color);
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10px;
+    height: 98vh;
+    width: 100px;
+    justify-content: center;
+    align-items: center;
+}
+
+header nav ul li img {
+    width: 75px;
+    height: 75px;
+    background: transparent;
+}
+
+header nav ul img:first-child {
+    margin-top: 10px;
+}
+
+header nav ul {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+header nav ul li:nth-child(3) {
+    margin-top: auto;
+}
+
+header nav ul li svg {
+    width: 50px;
+    height: 50px;
+    color: white;
+}
+
+header nav ul li svg:last-child {
+    margin-bottom: 25px;
+}
