@@ -49,11 +49,18 @@ header nav ul {
 
 /* TODO: fix dat het op dezelfde plek blijft wanneer je resized */
 header nav ul li:nth-child(3) {
-    position: fixed;
-    top: 175px;
+    position: relative;
+    height: 100%;
+    width: 60%;    
+}
+#user-name{
+    position: absolute;
+    top: -7vh;
     color: var(--text-color);
     letter-spacing: 2px;
 }
+
+
 
 header nav ul li:nth-child(4) {
     margin-top: auto;
@@ -72,3 +79,4 @@ header nav ul li svg:last-child {
 header nav ul li svg:hover {
     color: var(--text-hover-color);
 }
+
