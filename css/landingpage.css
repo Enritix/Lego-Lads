@@ -1,0 +1,47 @@
+body {
+    display: flex;
+    height: 100vh;
+    margin: 0;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--secondary--color);
+    position: relative;
+}
+
+main {
+    display: flex;
+    background-color: var(--primary-color);
+    height: 95%;
+    width: 50%;
+    min-width: 300px;
+    border-radius: 5%;
+    z-index: 1;
+    position: absolute;
+    gap: 20px;
+}
+
+
+.background-batman {
+    height: 50%;
+    width: 90%;
+    z-index: 0;
+    filter: opacity(80%);
+    object-fit: contain;
+}
+
+#left {
+    position: absolute;
+    right: 56%;
+}
+
+#right {
+    position: absolute;
+    left: 56%;
+    transform: scaleX(-1);
+}
+
+aside {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
