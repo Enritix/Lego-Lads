@@ -45,3 +45,25 @@ aside {
     justify-content: center;
     align-items: center;
 }
+@media screen and (max-width: 600px) {
+    .background-batman {
+        transform: rotate(-30deg);
+        transition: transform 0.5s ease-in-out;
+    }
+    main{
+        height: 70%;
+        width: 50%;
+    }
+}
+
+
+@media screen and (max-width: 430px) {
+    .background-batman {
+        transform: rotate(-55deg);
+        transition: transform 0.5s ease-in-out;
+    }
+    main{
+        height: 70%;
+        width: 50%;
+    }
+}
