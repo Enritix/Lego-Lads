@@ -98,8 +98,7 @@
     font-size: 2rem;
     cursor: pointer;
     position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
+    top: calc(50% - 20px);
     z-index: 3;
   }
   
@@ -109,6 +108,14 @@
   
   .carousel-btn.next {
     right: calc(50% - 200px);
+  }
+
+  .carousel-btn.prev:active {
+    animation: bounce-left 0.5s ease;
+  }
+
+  .carousel-btn.next:active {
+    animation: bounce-right 0.5s ease;
   }
   
   .carousel-indicators {
@@ -129,6 +136,26 @@
   .indicator.active {
     background: #c0bfbf;
   }
+
+  @keyframes bounce-left {
+    0%, 100% {
+        transform: translateX(0) translateY(0);
+    }
+    50% {
+        transform: translateX(-10px) translateY(0);
+    }
+}
+
+@keyframes bounce-right {
+    0%, 100% {
+        transform: translateX(0) translateY(0);
+    }
+    50% {
+        transform: translateX(10px) translateY(0);
+    }
+}
+
+
 /* prev en next button moeten nog meer uitelkaar staan*/
 @media screen and (max-width: 430px) {
   .carousel-container {

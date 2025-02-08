@@ -14,18 +14,18 @@
 }
 
 
-* {
+/* * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-  }
+  } */
   
 
 
-/*html {
+html {
     background-image: url(../assets/images/background.png);
     font-family: Bangers;
-}*/
+}
 
 header nav ul {
     display: flex;
