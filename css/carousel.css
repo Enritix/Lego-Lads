@@ -17,8 +17,8 @@
   .carousel-title:after {
     content: "";
     display: block;
-    width: 300px;
-    height: 6px;
+    width: 140px;
+    height: 3px;
     background: #ffcc00;
     margin: 5px auto 0;
   }
@@ -129,3 +129,70 @@
   .indicator.active {
     background: #c0bfbf;
   }
+/* prev en next button moeten nog meer uitelkaar staan*/
+@media screen and (max-width: 430px) {
+  .carousel-container {
+      width: 90%;
+  }
+  .carousel {
+      height: 100px;
+  }
+  .carousel-item {
+      width: 25vw; 
+      height: 25vw;
+  }
+  .carousel-item img {
+      width: 80%; 
+      height: auto;
+      max-height: 80%;
+  }
+  .carousel-track {
+      width: 90%;
+      height: 100px;
+  }
+  .carousel-btn {
+    font-size: 1.4rem;
+    padding: 8px 12px;
+}
+  .indicator {
+      width: 8px;
+      height: 8px;
+  }
+}
+
+@media (max-width: 768px) {
+  .carousel-container {
+      width: 95%;
+      margin: 15px auto;
+  }
+  .carousel {
+      height: 140px;
+      margin: 6% auto;
+  }
+  .carousel-item {
+      width: 20vw; 
+      height: 20vw;
+  }
+  .carousel-item img {
+      width: 85%;
+      height: auto;
+      max-height: 85%;
+  }
+  .carousel-btn {
+      font-size: 1.4rem;
+      padding: 8px 12px;
+  }
+  .carousel-btn.prev {
+      left: calc(50% - 10vw);
+  }
+  .carousel-btn.next {
+      right: calc(50% - 10vw);
+  }
+  .indicator {
+      width: 12px;
+      height: 12px;
+  }
+}
+
+
+
