@@ -3,6 +3,7 @@
     src: url(../assets/fonts/Bangers-Regular.ttf);
   }
 
+
 :root {
     --primary-color: #252733;
     --primary-color-light: #2b2b3d;
@@ -12,10 +13,19 @@
     --scale: 1;
 }
 
-html {
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+
+
+/*html {
     background-image: url(../assets/images/background.png);
     font-family: Bangers;
-}
+}*/
 
 header nav ul {
     display: flex;
