@@ -190,6 +190,9 @@ body {
       width: 8px;
       height: 8px;
   }
+  .carousel-btn{
+    display: none;
+  }
 }
 
 @media (max-width: 768px) {
