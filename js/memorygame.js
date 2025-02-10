@@ -116,9 +116,16 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     document.getElementById("new-game-btn").addEventListener("click", () => {
-        document.getElementById("popup").style.display = "none";
-        loadGame();
+        document.querySelectorAll(".card").forEach(card => {
+            card.classList.add("flip-back");
+        });
+    
+        setTimeout(() => {
+            document.getElementById("popup").style.display = "none";
+            loadGame();
+        }, 600);
     });
+    
 
     document.getElementById("main-menu-btn").addEventListener("click", () => {
         document.getElementById("popup").style.display = "none"
