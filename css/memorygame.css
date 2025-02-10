@@ -1,0 +1,159 @@
+body {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    flex-direction: column;
+    color: white;
+    text-align: center;
+    letter-spacing: 2px;
+}
+
+.container {
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.4);
+    max-width: 800px;
+    width: 90%;
+    text-align: center;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.container h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    position: relative;
+    font-family: Bangers;
+    font-size: 3rem;
+    letter-spacing: 2px;
+}
+
+.container h2:after {
+    content: "";
+    display: block;
+    width: 300px;
+    height: 3px;
+    background: #ffcc00;
+    margin: 5px auto 0;
+}
+
+#memory-game {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin: 20px auto;
+    padding: 15px;
+    background: var(--primary-color-light);
+    border-radius: 15px;
+    box-shadow: inset 0px 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.card {
+    width: 100px;
+    height: 140px;
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+.card .front,
+.card .back {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    backface-visibility: hidden;
+    border-radius: 10px;
+    transition: transform 0.6s;
+}
+
+.card .front {
+    background-size: cover;
+    background-position: center;
+    transform: rotateY(180deg);
+}
+
+.card .back {
+    background-image: url(../assets/images/mysteryfig.png);
+    background-size: 200%;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: rotateY(0deg);
+    font-size: 24px;
+    border: 2px solid #888;
+}
+
+.card.flipped .front {
+    transform: rotateY(0deg);
+}
+
+.card.flipped .back {
+    transform: rotateY(180deg);
+}
+
+#click-counter {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin: 15px 0;
+}
+
+button {
+    margin-top: 20px;
+    padding: 12px 24px;
+    font-size: 16px;
+    background-color: var(--button-color);
+    border: none;
+    border-radius: 5px;
+    color: var(--text-color);
+    cursor: pointer;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s, transform 0.2s;
+    text-transform: uppercase;
+}
+
+button:hover {
+    background-color: var(--button-hover);
+    transform: scale(1.05);
+}
+
+#popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+#popup-content {
+    background-color: white;
+    padding: 20px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    color: black;
+}
+
+#popup-content button {
+    margin: 10px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    background-color: var(--primary-color);
+}
+
+#popup-content button:hover {
+    background-color: var(--primary-color-light);
+    color: white;
+}

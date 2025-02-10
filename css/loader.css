@@ -1,5 +1,5 @@
 body {
-    background-color: #FDC800; /* LEGO Geel */
+    background-color: #FDC800;
     overflow: hidden;
     text-align: center;
     display: flex;
@@ -9,7 +9,6 @@ body {
     margin: 0;
 }
 
-/* Zorgt ervoor dat de animatie en tekst onder elkaar staan */
 .loader-container {
     display: flex;
     flex-direction: column;
