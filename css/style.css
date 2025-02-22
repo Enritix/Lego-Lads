@@ -57,7 +57,7 @@ header nav ul {
 header nav ul li:nth-child(3) {
     position: relative;
     height: 100%;
-    width: 60%;
+    width: 60%;    
 }
 #user-name{
     position: absolute;
@@ -86,8 +86,10 @@ header nav ul li svg:hover {
     color: var(--text-hover-color);
 }
 
+
+/* CODE MOBILE NAV BAR + ZIE HTML ONDERAAN*/
 @media (max-width: 600px) {
-    header{
+    header nav {
         display: none;
     }
     #hamburger-menu {
@@ -179,6 +181,11 @@ header nav ul li svg:hover {
     .mobile-info-bar {
         display: none;
     }
+    #nav-menu{
+        display: none;
+    }
+    
+
 }
 #music-toggle.muted svg {
     filter: brightness(0.5);
@@ -188,3 +195,5 @@ header nav ul li svg:hover {
     stroke: red;
     stroke-width: 2;
 }
+
+
