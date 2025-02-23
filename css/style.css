@@ -1,7 +1,12 @@
 @font-face {
     font-family: Bangers;
     src: url(../assets/fonts/Bangers-Regular.ttf);
-  }
+}
+
+@font-face {
+    font-family: Oswald;
+    src: url(../assets/fonts/Oswald-Regular.ttf);
+}
 
 :root {
     --primary-color: #252733;
@@ -53,22 +58,7 @@ header nav ul {
     overflow: hidden;
 }
 
-/* TODO: fix dat het op dezelfde plek blijft wanneer je resized */
 header nav ul li:nth-child(3) {
-    position: relative;
-    height: 100%;
-    width: 60%;    
-}
-#user-name{
-    position: absolute;
-    top: -4vh;
-    color: var(--text-color);
-    letter-spacing: 2px;
-}
-
-
-
-header nav ul li:nth-child(4) {
     margin-top: auto;
 }
 
@@ -84,6 +74,46 @@ header nav ul li svg:last-child {
 
 header nav ul li svg:hover {
     color: var(--text-hover-color);
+}
+
+#user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+#figure-head img {
+  width: 90px;
+  height: 90px;
+}
+
+#user-name {
+  color: var(--text-color);
+  font-size: 20px;
+  letter-spacing: 2px;
+  margin: 0;
+}
+
+#coin-container {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+#coin-container:before {
+  content: "";
+  background-image: url(../assets/images/coin.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 30px;
+  height: 30px;
+}
+
+#coin-container p {
+    color: var(--text-color);
+    font-size: 20px;
+    font-family: Oswald;
 }
 
 
