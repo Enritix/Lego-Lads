@@ -119,6 +119,10 @@ header nav ul li svg:hover {
 
 /* CODE MOBILE NAV BAR + ZIE HTML ONDERAAN*/
 @media (max-width: 600px) {
+    header nav ul {
+        display: none;
+    }
+
     #hamburger-menu {
         padding: 5px;
         display: block;
