@@ -30,20 +30,33 @@ main {
     display: flex;
     flex-direction: column;
     margin-left: 10%;
+    padding-top: 5%;
     
 }
 
 .lego-button{
-    background-color: var(--primary--color);
     border: none;
-    
-    
+   margin: 30px;
+   
 }
 
-span{
-    background-color: var(--primary--color);
-    height: 50px;
-    width: 50px;
+.lego-button span{
+    background-color: var(--primary-color);
+    color: white;
+    border-top-left-radius: 10px;
+    height: 160%;
+    width: 40%;
+    display: inline-block;
+    font-size: 3.0rem;
+    text-align: center;
+}
+
+.lego-button img{
+    height: auto;
+    width: 11%;
+    vertical-align: middle;
+    position: absolute;
+    left: 48%;
 }
 
 .character{
@@ -53,9 +66,15 @@ span{
     width: 80%;
 }
 
-.mini-lego{
+.container-mini-lego{
     position: absolute;
      bottom: -5%;
      right: 45%;
+     
+}
+
+.container-mini-lego img{
+    height: auto;
+    width: 15%;
 }
 
