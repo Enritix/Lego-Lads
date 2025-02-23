@@ -87,6 +87,8 @@ header nav ul li svg:hover {
 }
 
 
+
+
 /* CODE MOBILE NAV BAR + ZIE HTML ONDERAAN*/
 @media (max-width: 600px) {
     header nav {
@@ -96,9 +98,9 @@ header nav ul li svg:hover {
         padding: 5px;
         display: block;
         position: fixed;
-        bottom: 15px; 
+        bottom: 10px; 
         left: 15px;
-        font-size: 32px;
+        font-size: 25px;
         background: none;
         border: none;
         color: white;
@@ -106,40 +108,44 @@ header nav ul li svg:hover {
         z-index: 5;
         background-color: var(--primary-color);
         border-radius: 10px;
+        text-align: center;
+        height: 35px;
+        width: 35px;
     }
     #nav-menu {
         display: none; 
         position: fixed;
-        bottom: 15px;
+        bottom: 10px;
         left: 40px; 
         background: rgba(37, 39, 51, 0.8); 
-        z-index: 1;
+        z-index: 0;
         padding: 10px 15px;
         border-radius: 10px;
         display: flex;
         align-items: center;
         justify-content: center;
-        height: 35px; 
-    }
-    #nav-menu.active {
-        display: flex; 
+        height: 25px
     }
     #nav-menu ul {
         list-style: none;
         display: flex; 
         flex-direction: row;
         align-items: center;
+        justify-content: center; 
         padding: 0;
         margin: 0;
     }
-    #nav-menu ul li {
-        padding: 0 10px;
-    }
     #nav-menu ul li a {
-        color: white;
-        font-size: 18px;
-        text-decoration: none;
-        display: block;
+        color: white; 
+        text-decoration: none; 
+    }
+    #nav-menu ul li {
+        padding: 0 15px; 
+    }
+    #nav-menu ul li a svg {
+        width: 35px;
+        height: 35px
+
     }
     .mobile-info-bar {
         position: fixed;
@@ -167,6 +173,17 @@ header nav ul li svg:hover {
         font-weight: bold;
         font-size: 16px;
         gap: 8px;
+    }
+    .logo-container {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+    }
+    
+    .logo-container img {
+        max-width: 50px; 
+        height: auto;
+        border-radius: 10px;
     }
     .coin-container img, .name-container img {
         width: 24px;
