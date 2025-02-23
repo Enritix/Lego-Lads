@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="nl-BE">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LegoLads - Registratie</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/login.css">
+    <script src="./js/audio.js" defer></script>
+</head>
+
+<body>
+    <audio id="clickSound">
+        <source src="./assets/audio/kliksound.mp3" type="audio/mpeg">
+    </audio>
+
+    <main>
+        <div class="resultaat-container">
+            <div class="registration-form">
+                <form action="/register" method="post">
+                    <div class="form-group">
+                        <label for="name">Naam</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="password">Wachtwoord</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">E-mail</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="confirm-password">Herhaal Wachtwoord</label>
+                        <input type="password" id="confirm-password" name="confirm-password" required>
+                    </div>
+                </form>
+               
+                <div class="figuren-lijst">
+
+                    <div class="figuur">
+                        <span class="figuur-naam">Batman</span>
+                        <div class="figuur-images">
+                            <img  class="figuur-img" src="assets/images/batman.png" alt="Batman">
+                        </div>
+                    </div>
+
+                    <div class="figuur">
+                        <span class="figuur-naam">Batman</span>
+                        <div class="figuur-images">
+                            <img id="superman" class="figuur-img" src="assets/images/batman.png" alt="Superman">
+                        </div>
+                    </div>
+    </div>
+        <button class="btn" type="submit">Registreren</button>
+
+
+    
+
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>
