@@ -93,9 +93,9 @@ header nav ul li svg:hover {
         padding: 5px;
         display: block;
         position: fixed;
-        bottom: 15px; 
+        bottom: 5px;
         left: 15px;
-        font-size: 32px;
+        font-size: 25px;
         background: none;
         border: none;
         color: white;
@@ -103,45 +103,64 @@ header nav ul li svg:hover {
         z-index: 5;
         background-color: var(--primary-color);
         border-radius: 10px;
-    }
+        text-align: center;
+        height: 35px;
+        width: 35px;
+    } 
     #nav-menu {
-        display: none; 
         position: fixed;
-        bottom: 15px;
-        left: 40px; 
-        background: rgba(37, 39, 51, 0.8); 
-        z-index: 1;
+        bottom: 5px;
+        left: 40px;
+        background: rgba(37, 39, 51, 0.8);
+        z-index: 0;
         padding: 10px 15px;
         border-radius: 10px;
         display: flex;
         align-items: center;
         justify-content: center;
-        height: 35px; 
+        height: 25px; 
+        min-width: 180px;
+        opacity: 0; 
+        visibility: hidden;
+        transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
     }
     #nav-menu.active {
-        display: flex; 
+        opacity: 1;
+        visibility: visible;
     }
     #nav-menu ul {
         list-style: none;
-        display: flex; 
+        display: flex;
         flex-direction: row;
         align-items: center;
+        justify-content: center;
         padding: 0;
         margin: 0;
     }
-    #nav-menu ul li {
-        padding: 0 10px;
-    }
     #nav-menu ul li a {
         color: white;
-        font-size: 18px;
         text-decoration: none;
-        display: block;
     }
+
+    #nav-menu ul li {
+        padding: 0 15px;
+    }
+    #nav-menu ul li a svg {
+        width: 30px; 
+        height: 30px;
+        transition: transform 0.2s ease-in-out;
+
+    }
+    #nav-menu ul li a svg:hover {
+        transform: scale(1.2);
+        color: var(--secondary--color);
+
+    }
+
     .mobile-info-bar {
         position: fixed;
         font-family: sans-serif;
-        top: 10px;
+        top: 0px;
         left: 50%;
         transform: translateX(-50%);
         display: flex;
@@ -149,10 +168,12 @@ header nav ul li svg:hover {
         align-items: center;
         width: 90%;
         max-width: 350px;
-        padding: 10px 15px;
         border-radius: 15px;
         box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
         z-index: 1000;
+        padding-left: 10px;
+        padding-right: 10px;
+        width: 90%;
     }
     .coin-container, .name-container {
         display: flex;
@@ -168,6 +189,17 @@ header nav ul li svg:hover {
     .coin-container img, .name-container img {
         width: 24px;
         height: 24px;
+    }
+    .logo-container {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+    }
+    
+    .logo-container img {
+        max-width: 50px; 
+        height: auto;
+        border-radius: 10px;
     }
 }
 

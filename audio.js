@@ -23,16 +23,18 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     const hamburger = document.getElementById("hamburger-menu");
     const navMenu = document.getElementById("nav-menu");
 
-    hamburger.addEventListener("click", function() {
-        if (navMenu.style.display === "block") {
-            navMenu.style.display = "none"; 
+    hamburger.addEventListener("click", function () {
+        navMenu.classList.toggle("active");
+        if (navMenu.classList.contains("active")) {
+            navMenu.style.opacity = "1";
+            navMenu.style.visibility = "visible";
         } else {
-            navMenu.style.display = "block"; 
+            navMenu.style.opacity = "0";
+            navMenu.style.visibility = "hidden";
         }
     });
 });
-

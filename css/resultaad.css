@@ -286,11 +286,11 @@ h2::after {
         display: none;
     }
     .resultaat-container {
-        width: 95%;
+        width: 90%;
         padding: 15px;
         border-radius: 10px;
         text-align: center;
-        height: 80vh; 
+        height: 75vh; 
         display: flex;
         flex-direction: column;
         justify-content: space-between; 
