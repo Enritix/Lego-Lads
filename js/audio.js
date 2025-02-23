@@ -3,14 +3,14 @@ document.addEventListener("DOMContentLoaded", function () {
     const musicButton = document.getElementById("music-toggle");
     const muteLine = document.getElementById("mute-line");
 
-    let soundEnabled = true;
+    let soundEnabled = true; 
 
     if (musicButton) {
         musicButton.addEventListener("click", function (event) {
-            event.preventDefault();
+            event.preventDefault(); 
 
-            soundEnabled = !soundEnabled;
-            muteLine.style.display = soundEnabled ? "none" : "block";
+            soundEnabled = !soundEnabled; 
+            muteLine.style.display = soundEnabled ? "none" : "block"; 
         });
     }
     if (sound) {
@@ -28,10 +28,13 @@ document.addEventListener("DOMContentLoaded", function () {
     const navMenu = document.getElementById("nav-menu");
 
     hamburger.addEventListener("click", function () {
-        if (navMenu.style.display === "block") {
-            navMenu.style.display = "none";
+        navMenu.classList.toggle("active");
+        if (navMenu.classList.contains("active")) {
+            navMenu.style.opacity = "1";
+            navMenu.style.visibility = "visible";
         } else {
-            navMenu.style.display = "block";
+            navMenu.style.opacity = "0";
+            navMenu.style.visibility = "hidden";
         }
     });
 });
