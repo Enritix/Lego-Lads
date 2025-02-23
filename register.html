@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="css/login.css">
     <script src="./js/audio.js" defer></script>
+    <script src="carrousel.js"defer></script>
 </head>
 
 <body>
@@ -17,7 +18,10 @@
     </audio>
 
     <main>
+
         <div class="resultaat-container">
+            <a  class="close" href="landingpage.html">❌</a>
+            <h2>Registreren</h2>
             <div class="registration-form">
                 <form action="/register" method="post">
                     <div class="form-group">
@@ -30,38 +34,43 @@
                         <label for="password">Wachtwoord</label>
                         <input type="password" id="password" name="password" required>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="email">E-mail</label>
                         <input type="email" id="email" name="email" required>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="confirm-password">Herhaal Wachtwoord</label>
                         <input type="password" id="confirm-password" name="confirm-password" required>
                     </div>
+                    <div class="figuren-lijst">
+
+                        <div class="figuur">
+                            <span class="figuur-naam">Batman</span>
+                            <div class="figuur-images">
+                                <img  class="figuur-img" src="assets/images/batman.png" alt="Batman">
+                            </div>
+                        </div>
+
+                        <div class="figuur">
+                            <span class="figuur-naam">Batman</span>
+                            <div class="figuur-images">
+                                <img id="superman" class="figuur-img" src="assets/images/batman.png" alt="Superman">
+                            </div>
+                        </div>
+                    </div>
+
                 </form>
-               
-                <div class="figuren-lijst">
-
-                    <div class="figuur">
-                        <span class="figuur-naam">Batman</span>
-                        <div class="figuur-images">
-                            <img  class="figuur-img" src="assets/images/batman.png" alt="Batman">
-                        </div>
-                    </div>
-
-                    <div class="figuur">
-                        <span class="figuur-naam">Batman</span>
-                        <div class="figuur-images">
-                            <img id="superman" class="figuur-img" src="assets/images/batman.png" alt="Superman">
-                        </div>
-                    </div>
-    </div>
-        <button class="btn" type="submit">Registreren</button>
-
-
+                <p>Heeft u al een account? <a href="#"> <u>Meld u nu aan</u></a></p>
+                <a href="#"><u>Gelieve een character te kiezen</u></a>
+                
     
+
+            </div>
+            <button class="btn" type="submit">Registreren</button>
+
+            
 
             </div>
         </div>
