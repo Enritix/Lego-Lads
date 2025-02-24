@@ -11,7 +11,7 @@
 :root {
     --primary-color: #252733;
     --secondary--color: #EFC61A;
-    --tertiarty-color: #272B45;
+    --tertiarty-color: #2D2F3E;
     --text-color: rgb(233, 232, 232);
     --text-hover-color: #dadada;
 }
@@ -124,6 +124,7 @@ header nav ul li svg:hover {
     }
 
     #hamburger-menu {
+        display: flex;
         padding: 5px;
         display: block;
         position: fixed;
@@ -134,7 +135,7 @@ header nav ul li svg:hover {
         border: none;
         color: white;
         cursor: pointer;
-        z-index: 5;
+        z-index: 1000000;
         background-color: var(--primary-color);
         border-radius: 10px;
         text-align: center;
@@ -142,11 +143,12 @@ header nav ul li svg:hover {
         width: 35px;
     } 
     #nav-menu {
+        display: flex;
         position: fixed;
         bottom: 5px;
         left: 40px;
         background: rgba(37, 39, 51, 0.8);
-        z-index: 0;
+        z-index: 10000;
         padding: 10px 15px;
         border-radius: 10px;
         display: flex;
@@ -158,39 +160,7 @@ header nav ul li svg:hover {
         visibility: hidden;
         transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
     }
-    #nav-menu.active {
-        opacity: 1;
-        visibility: visible;
-    }
-    #nav-menu ul {
-        list-style: none;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-        padding: 0;
-        margin: 0;
-    }
-    #nav-menu ul li a {
-        color: white;
-        text-decoration: none;
-    }
-
-    #nav-menu ul li {
-        padding: 0 15px;
-    }
-    #nav-menu ul li a svg {
-        width: 30px; 
-        height: 30px;
-        transition: transform 0.2s ease-in-out;
-
-    }
-    #nav-menu ul li a svg:hover {
-        transform: scale(1.2);
-        color: var(--secondary--color);
-
-    }
-
+    
     .mobile-info-bar {
         position: fixed;
         font-family: sans-serif;
@@ -215,7 +185,7 @@ header nav ul li svg:hover {
         background: #252733;
         padding: 5px 12px;
         border-radius: 20px;
-        color: white;
+        color: var(--text-color);
         font-weight: bold;
         font-size: 16px;
         gap: 8px;
@@ -234,6 +204,43 @@ header nav ul li svg:hover {
         max-width: 50px; 
         height: auto;
         border-radius: 10px;
+    }
+    #nav-menu.active {
+        opacity: 1;
+        visibility: visible;
+    }
+    #nav-menu ul {
+        list-style: none;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        margin: 0;
+    }
+    #nav-menu ul li a {
+        color: white;
+        text-decoration: none;
+    }
+    
+    #nav-menu ul li {
+        padding: 0 15px;
+    }
+    #nav-menu ul li a svg {
+        width: 30px; 
+        height: 30px;
+        transition: transform 0.2s ease-in-out;
+    
+    }
+    #nav-menu ul li a svg {
+        width: 30px; 
+        height: 30px;
+        transition: transform 0.2s ease-in-out, fill 0.3s ease-in-out;
+        fill: var(--text-hover-color); 
+    }
+    #nav-menu ul li a:hover svg {
+        transform: scale(1.2);
+        fill: var(--secondary--color) !important; 
     }
 }
 
@@ -255,9 +262,11 @@ header nav ul li svg:hover {
 }
 
 #music-toggle.muted svg path {
-    stroke: red;
+    stroke: red !important;
     stroke-width: 2;
 }
+
+
 
 
 

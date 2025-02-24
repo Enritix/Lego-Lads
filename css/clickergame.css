@@ -6,6 +6,8 @@ body {
     margin: 0;
     overflow: hidden;
     background-color: var(--secondary--color);
+    color: var(--text-color);
+    font-family: sans-serif;
 }
 body::before {
     content: "";
@@ -18,10 +20,510 @@ body::before {
     height: 80vh; 
 }
 main {
-    display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     letter-spacing: 2px;
+    z-index: 100;
+}
+.header-container h1::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 4px;
+    background-color: var(--secondary--color);
+    margin-top: 5px;
+}
+.gameplay {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto 3fr;
+    gap: 2vw; 
+    background-color: var(--primary-color);
+    border-radius: 2vw;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+    width: 80vw; 
+    height: 75vh; 
+    max-width: 900px; 
+    max-height: 700px; 
+    min-width: 300px; 
+    min-height: 500px; 
+    padding: 2vw; 
+    margin: 3vh auto; 
+    position: relative;
 }
 
+.close {
+    position: absolute;
+    top: 1%; 
+    right: 1%; 
+    font-size: 1.5rem;
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 10px;
+    transition: background 0.3s ease-in-out;
+}
+.header-container {
+    grid-column: 1 / -1;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.header-container h1 {
+    display: inline-block;
+    position: relative;
+    padding-bottom: 5px;
+    font-size: 40px;
+    text-align: center;
+}
+.header-container h1::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 4px;
+    background-color: var(--secondary--color);
+    margin-top: 5px;
+}
+.brick-counter {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center;
+    width: 35vw; 
+    max-width: 500px; 
+    min-width: 250px; 
+}
+.brick-img {
+    width: 15vw; 
+    max-width: 250px; 
+    min-width: 120px; 
+    transition: transform 0.1s ease-in-out;
+}
+.brick-cost {
+    display: inline-block;
+    min-width: 80px;
+    text-align: right;
+    font-family: monospace;
+}
+
+.brick-img:active {
+    transform: scale(1.1);
+}
+.upgrades {
+    display: flex;
+    flex-direction: column;
+    gap: 2vh; 
+    align-items: center; 
+    width: 100%;
+}
+.upgrade {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; 
+    border: solid 0.25vw var(--tertiarty-color);
+    padding: 1rem 1.5rem; 
+    transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
+    height: auto;
+    width: 100%; 
+    max-width: 30vw; 
+    min-width: 180px; 
+    border-radius: 1rem;
+}
+
+.upgrade:hover {
+    background-color: var(--primary-color-light);
+    transform: scale(1.05);
+    border-color: var(--secondary--color);
+}
+
+
+.upgrade:hover{
+    border-color: var(--secondary--color);
+}
+.upgrade:hover {
+    background-color: var(--primary-color-light);
+}
+.upgrade-icon img {
+    width: 8vw ; 
+    max-width: 70px; 
+    min-width: 50px; 
+    height: auto; 
+}
+
+.upgrade-img {
+    height: auto;
+    width: 100px !important; 
+}
+
+.upgrade-details h3 {
+    margin: 0;
+    font-size: 1.5vw;
+}
+.upgrade-details p {
+    display: flex;
+    align-items: center;
+    gap: 1vw; 
+    white-space: nowrap;
+    font-size: 1.2vw;
+}
+
+.dril-cost,
+.clicker-cost,
+.saw-cost {
+    display: inline-block;
+    min-width: 4vw; 
+    max-width: 60px; 
+    text-align: center;
+    font-size: 1.2vw; 
+
+}
+.upgrade-brick-img {
+    width: 4vw; 
+    max-width: 25px; 
+    min-width: 15px; 
+    height: auto;
+    display: inline-block;
+}
+.statistics {
+
+    bottom: 10px;
+    background-color: var(--primary-color);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+.statistics p {
+    font-size: 1.2rem;
+    margin: 5px 0;
+}
+.upgrade-details {
+    position: relative; 
+}
+.upgrade-details p:last-child {
+    position: absolute;
+    bottom: 100%; 
+    left: 10%;
+    transform: translateX(-50%);
+    background-color: var(--tertiarty-color);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    white-space: nowrap;
+    font-size: 0.9rem;
+    display: none; 
+    filter: drop-shadow(2px 2px black);
+}
+
+.upgrade-details:hover p:last-child {
+    display: block;
+}
+.popup-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); 
+    z-index: 999;
+}
+.upgrades-popup {
+    display: none; 
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--primary-color);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+    width: 80%;
+    max-width: 400px;
+    height: 75vh;
+    overflow-y: auto;
+    z-index: 1000;
+    text-align: center;
+
+}
+
+.upgrades-popup.show {
+    display: block;
+}
+.popup-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+.popup-overlay.show {
+    display: block;
+}
+
+.popup-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; 
+}
+.upgrades-popup .statistics {
+    margin-top: 20px; 
+    padding: 10px;
+    background: var(--primary-color-light);
+    border-radius: 10px;
+}
+.popup-close {
+    margin-top: 15px;
+    padding: 10px 15px;
+    background: red;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+.popup-overlay.show {
+    display: block;
+}
+
+.upgrades-popup.show {
+    display: flex;
+}
+
+.upgrades-button {
+    display: none;
+}
+.statistics {
+    display: block;
+}
+dialog {
+    width: 90%;
+    max-width: 400px;
+    max-height: 70vh;
+    padding: 20px;
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+    text-align: left;
+    background: var(--primary-color);
+    overflow-y: auto;
+}
+dialog {
+    width: 90%;
+    width: 320px;
+    max-height: 70vh;
+    padding: 20px;
+    color: var(--text-color);
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    background: var(--primary-color);
+    overflow-y: auto; 
+    display: none; 
+
+}
+
+dialog[open] {
+    display: block;
+}
+
+dialog::backdrop {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.popup-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.info-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.info-section p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    max-width: 80%;
+    text-align: center;
+    margin: 0;
+}
+
+menu {
+    padding: 0;
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+}
+
+#closeInfoPopup {
+    all: unset;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1rem;
+    background: red;
+    color: white;
+}
+.tooltip-button{
+    all: unset;
+    border: none;
+}
+@media (min-width: 601px) {
+    .gameplay {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: auto 1fr;
+        gap: 20px;
+        background-color: var(--primary-color);
+        border-radius: 15px;
+        height: 80vh;
+        box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+        padding: 40px;
+        width: 80%;
+        max-width: 900px;
+        margin: 50px auto 0 auto;
+    }
+}
+@media (max-width: 600px) {
+    body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        overflow: hidden; 
+        position: relative; 
+    }
+    .brick-counter{
+        height: auto;
+        width: 200px;
+    }
+
+    
+    .gameplay {
+        display: flex !important; 
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        width: 100%;
+        width: 300px !important;
+        min-height: 80vh;
+        box-sizing: border-box;
+        margin: 60px auto 0 auto !important;
+        padding: 20px;
+    }
+    .close {
+        font-size: 1rem; 
+        right: 1%;
+        top: 1%;
+    }
+    .upgrades-button {
+        display: block;
+        background: var(--secondary-color);
+        color: var(--text-color);
+        border: none;
+        padding: 10px 15px;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 1.2rem;
+        margin-top: auto; 
+        align-self: center; 
+        width: 80%;
+        text-align: center;
+        background-color: var(--tertiarty-color);
+        filter: drop-shadow(2px 2px black);
+    }
+    .upgrades {
+        display: none; 
+    }
+    .statistics {
+        display: none;
+    }
+    .upgrades-popup .statistics {
+        display: block;
+    }
+    .header-container h1{
+        font-size: 20px !important;
+    }
+    .brick-counter h2{
+        font-size: 20px;
+    }
+    .upgrades {
+        width: 100%;
+        max-width: 85vw; 
+    }
+    .clicker-increase {
+        display: inline-block;
+        min-width: 25px; 
+        text-align: right; 
+        margin-left: -5px; 
+    }
+    .upgrade-details p {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start; 
+        gap: 5px;
+    }
+    .upgrade {
+        width: 100%;
+        max-width: 80vw; 
+        min-width: 220px; 
+        padding: 2vh 3vw; 
+        font-size: 1.2rem; 
+        border-width: 0.4vw; 
+    }
+
+    .upgrade-icon img {
+        width: 12vw; 
+        max-width: 80px;
+        min-width: 40px;
+    }
+
+    .upgrade-details h3 {
+        font-size: 1.5rem; 
+    }
+
+    .upgrade-details p {
+        font-size: 1.2rem; 
+    }
+
+    .upgrade-brick-img {
+        width: 22px; 
+        height: auto;
+    }
+
+    .dril-cost,
+    .clicker-cost,
+    .saw-cost {
+        min-width: 55px;
+        font-size: 1.2rem;
+    }
+}
+::-webkit-scrollbar {
+    width: 5px; 
+}
+::-webkit-scrollbar-track {
+    background: var(--primary-color);
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+    background: var(--secondary--color);
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--tertiarty-color); 
+}

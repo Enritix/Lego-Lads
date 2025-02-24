@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/clickergame.css">
     <script src="js/audio.js" defer></script>
+    <script src="js/clicker.js" defer></script>
 </head>
 
 <body>
@@ -109,13 +110,173 @@
                 </a>
             </li>
         </ul>
+
     </nav>
+    <!DOCTYPE html>
+    <html lang="nl">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Klik Spel</title>
+        <link rel="stylesheet" href="clickergame.css">
+    </head>
     <main>
+        <section class="gameplay">
+            <a  class="close" href="index.html">❌</a>
+            <header class="header-container">
+                <h1>klik spel
+                    <button class="tooltip-button" aria-label="Meer informatie" onclick="openInfoPopup()">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                            <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 0 0 1 2 0"/>
+                        </svg>
+                    </button>
+                </h1>
+            </header>
+            <article class="brick-counter">
+                <h2>Stenen <span class="brick-cost">5000</span></h2>
+                <img src="./assets/images/greenblock.png" alt="Green Brick" class="brick-img" onclick="incrementBrick()" draggable="false">
+                <footer class="statistics">
+                    <p>SPC: <span id="BPC-text"></span></p>
+                    <p>SPS: <span id="BPS-text"></span></p>
+                </footer>
+            </article>
+            <div class="skills">
+            </div>
+            <aside class="upgrades">
+                <article class="upgrade" onclick="buyClick()">
+                    <figure class="upgrade-icon">
+                        <img src="./assets/images/lego-tool-2.png" alt="Clicker Upgrade" class="upgrade-img">
+                    </figure>
+                    <section class="upgrade-details">
+                        <h3>Hamer</h3>
+                        <p>kost: <span class="clicker-cost">10</span> <img src="./assets/images/greenblock.png" alt="Brick" class="upgrade-brick-img"></p>
+                        <p>nivau: <span class="clicker-level">0</span></p>
+                        <p>+<span class="clicker-increase">1</span> Stenen per klik</p>
+                    </section>
+                </article>
         
+                <article class="upgrade" onclick="buySaw()">
+                    <figure class="upgrade-icon">
+                        <img src="./assets/images/lego-tool-1.png" alt="Saw Upgrade" class="upgrade-img">
+                    </figure>
+                    <section class="upgrade-details">
+                        <h3>Zaag</h3>
+                        <p>kost: <span class="saw-cost">130</span> <img src="./assets/images/greenblock.png" alt="Brick" class="upgrade-brick-img"></p>
+                        <p>nivau: <span class="saw-level">0</span></p>
+                        <p>+<span class="saw-increase">4</span> stenen per seconde</p>
+                    </section>
+                </article>
+                <article class="upgrade" onclick="buyDril()">
+                    <figure class="upgrade-icon">
+                        <img src="./assets/images/lego-tool-3.png" alt="Drill Upgrade" class="upgrade-img">
+                    </figure>
+                    <section class="upgrade-details">
+                        <h3>Boor</h3>
+                        <p>kost: <span class="dril-cost">850</span> <img src="./assets/images/greenblock.png" alt="Brick" class="upgrade-brick-img"></p>
+                        <p>nivau: <span class="dril-level">0</span></p>
+                        <p>+<span class="dril-increase">24</span> stenen per seconde</p>
+                    </section>
+                </article>
+            </aside>
+                <div class="popup-overlay" id="popupOverlay" onclick="closeUpgrades()"></div>
+                <div class="upgrades-popup" id="upgradesPopup">
+                    <h3>Upgrades</h3>
+                    <aside class="upgrades">
+                        <article class="upgrade" onclick="buyClick()">
+                            <figure class="upgrade-icon">
+                                <img src="./assets/images/lego-tool-2.png" alt="Clicker Upgrade" class="upgrade-img">
+                            </figure>
+                            <section class="upgrade-details">
+                                <h3>Hamer</h3>
+                                <p>kost: <span class="clicker-cost">10</span> <img src="./assets/images/greenblock.png" alt="Brick" class="upgrade-brick-img"></p>
+                                <p>nivau: <span class="clicker-level">0</span></p>
+                                <p>+<span class="clicker-increase">1</span> Stenen per klik</p>
+                            </section>
+                        </article>
+                        <article class="upgrade" onclick="buySaw()">
+                            <figure class="upgrade-icon">
+                                <img src="./assets/images/lego-tool-1.png" alt="Saw Upgrade" class="upgrade-img">
+                            </figure>
+                            <section class="upgrade-details">
+                                <h3>Zaag</h3>
+                                <p>kost: <span class="saw-cost">130</span> <img src="./assets/images/greenblock.png" alt="Brick" class="upgrade-brick-img"></p>
+                                <p>nivau: <span class="saw-level">0</span></p>
+                                <p>+<span class="saw-increase">4</span> stenen per seconde</p>
+                            </section>
+                        </article>
+                        <article class="upgrade" onclick="buyDril()">
+                            <figure class="upgrade-icon">
+                                <img src="./assets/images/lego-tool-3.png" alt="Drill Upgrade" class="upgrade-img">
+                            </figure>
+                            <section class="upgrade-details">
+                                <h3>Boor</h3>
+                                <p>kost: <span class="dril-cost">850</span> <img src="./assets/images/greenblock.png" alt="Brick" class="upgrade-brick-img"></p>
+                                <p>nivau: <span class="dril-level">0</span></p>
+                                <p>+<span class="dril-increase">24</span> stenen per seconde</p>
+                            </section>
+                        </article>
+                    </aside>
+                    <button class="popup-close" onclick="closeUpgrades()">Sluiten</button>
+                    <footer class="statistics">
+                        <p>SPC: <span id="BPC-text"></span></p>
+                        <p>SPS: <span id="BPS-text"></span></p>
+                    </footer>
+                </div>
+            </aside>
+            <dialog id="infoPopup">
+                <article class="popup-content">
+                    <h2>Over het Klik Spel</h2>
+            
+                    <div class="info-section">
+                        <p><strong>🧱 Steen Clicker Game</strong></p>
+                        <p>In dit spel draait alles om het verzamelen van bricks door erop te klikken. Met deze stenen kun je verschillende upgrades en aankopen doen om je voortgang te versnellen.</p>
+                    </div>
+            
+                    <div class="info-section">
+                        <p><strong>🎮 Gameplay</strong></p>
+                        <p>🧱 <strong>Click for steen</strong><br>
+                        Klik op de brick om stenen te verzamelen.<br>
+                        Hoe meer je klikt, hoe meer stenen je verdient.</p>
+                    </div>
+            
+                    <div class="info-section">
+                        <p>🔧 <strong>Upgrades</strong><br>
+                        Gebruik stenen om je clicker te upgraden en meer stenen per klik te krijgen.<br>
+                        Verbeter je tools om automatisch stenen per seconde te verdienen.</p>
+                    </div>
+            
+                    <div class="info-section">
+                        <p>💰 <strong>Stenen omzetten in Coins</strong><br>
+                        Verdien genoeg stenen en ruil ze in voor coins.<br>
+                        Coins geven toegang tot exclusieve aankopen.</p>
+                    </div>
+            
+                    <div class="info-section">
+                        <p>🧑‍🎨 <strong>Minifigs kopen</strong><br>
+                        Gebruik je coins om minifigs te kopen en verzamel verschillende figuren!</p>
+                    </div>
+            
+                    <div class="info-section">
+                        <p>📊 <strong>Strategie</strong><br>
+                        ✔️ Actief klikken om snel stenen te verzamelen.<br>
+                        ✔️ Passieve upgrades kopen voor een constante stroom stenen.</p>
+                    </div>
+            
+                    <div class="info-section">
+                        <p>📈 <strong>Statistieken</strong><br>
+                        <strong>SPC:</strong> Stenen per klik<br>
+                        <strong>SPS:</strong> Stenen per seconde</p>
+                    </div>
+            
+                    <menu>
+                        <button id="closeInfoPopup" onclick="closeInfoPopup()">Sluiten</button>
+                    </menu>
+                </article>
+            </dialog>
+            <button class="upgrades-button" onclick="openUpgrades()">Upgrades</button>
+        </section>
     </main>
-
-
-
 </body>
 
 </html>
