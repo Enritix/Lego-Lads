@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
             if (!this.classList.contains("active")) {
                 return;
             }
-            if (this.alt === "Lego") {
+            if (this.alt === "Lego Masters") {
                 window.location.href = "loader.html";
             } else {
                 showLegoPopup();
