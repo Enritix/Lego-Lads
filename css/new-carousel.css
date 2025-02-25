@@ -117,9 +117,11 @@ body {
 .carousel-btn:hover,
 .play-btn:hover {
     background-color: #ffcc00;
-    color: black;
 }
 
+.play-btn:hover {
+    text-shadow: 0 0 5px black;
+}
 .play-btn {
     font-weight: bold;
     text-transform: uppercase;
