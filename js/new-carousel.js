@@ -21,6 +21,10 @@ function updateCarousel() {
 }
 
 function moveCarousel(direction) {
+    const spans = document.querySelectorAll(".carousel-track a span");
+        spans.forEach(span => {
+            span.style.display = "none";
+        });
     if (direction === 'next') {
         currentIndex = (currentIndex + 1) % totalItems;
     } else {
@@ -37,6 +41,15 @@ indicators.forEach((indicator, i) => {
     indicator.addEventListener('click', () => {
         currentIndex = i;
         updateCarousel();
+    });
+});
+
+items.forEach((item, i) => {
+    item.addEventListener('click', () => {
+        if (!item.classList.contains('active')) {
+            currentIndex = i;
+            updateCarousel();
+        }
     });
 });
 

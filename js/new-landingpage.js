@@ -12,7 +12,31 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
+    carouselItems.forEach(item => {
+        item.addEventListener("click", function (e) {
+            e.preventDefault();
+            if (item.classList.contains("active")) {
+                if (item.alt === "Lego Masters") {
+                    window.location.href = "loader.html";
+                } else {
+                    showPopup(item);
+                }
+            }
+        });
+    });
+
     function showPopup(item) {
-        const crossSpan = document.querySelector(".carousel-track a span");
+        const spans = document.querySelectorAll(".carousel-track a span");
+        spans.forEach(span => {
+            span.style.display = "none";
+        });
+
+        const span = item.nextElementSibling;
+        if (span) {
+            span.style.display = "block";
+            setTimeout(() => {
+                span.style.display = "none";
+            }, 1000);
+        }
     }
 });
