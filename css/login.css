@@ -100,6 +100,7 @@ button:hover {
     width: 90vh;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.9);
     height: 90vh;
+    position: relative;
 }
 
 
@@ -205,9 +206,8 @@ p, a {
 .close{
     display: flex;
     position: absolute;
-    right: 32%;
-    top: 4%;
-    
+    right: 2%;
+    top: 2%;   
 }
 
 a{

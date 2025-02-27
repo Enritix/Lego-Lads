@@ -98,6 +98,9 @@ button:hover {
     width: min(80%, 900px);
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.9);
     height: 90vh;
+
+    position: relative;
+
 }
 
 
@@ -203,8 +206,8 @@ p, a {
 .close{
     display: flex;
     position: absolute;
-    right: 21%;
-    top: 4%;
+    right: 1%;
+    top: 2%;
     
 }
 
@@ -226,6 +229,7 @@ a{
         width: 100%;
         padding: 5px;
         grid-template-columns: 1fr;
+        position: relative;
 
     }
 
@@ -254,4 +258,6 @@ a{
 
         
     }
+
+  
 }
