@@ -114,6 +114,8 @@ button:hover {
     justify-items: center; 
     max-height: 500px;
     width: 100%;
+    position: relative;
+
 }
 
 .figuur:hover{
@@ -215,49 +217,51 @@ a{
     text-decoration: none;
 }
 
-.figuren-lijst {
-    position: relative;
-}
+  
+  .carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 18px;
+    z-index: 10;
+  }
 
-
-
-
+  .carousel-button.prev { left: 10px; }
+.carousel-button.next { right: 10px; }
 
 
 @media (max-width: 600px) {
-    .resultaat-container {
-        width: 100%;
-        padding: 5px;
-        grid-template-columns: 1fr;
-        position: relative;
-
-    }
-
-    .registration-form h2 {
-        font-size: 25px;
-    }
-
-    .btn {
-        width: 100%;
-        font-size: clamp(12px, 4vw, 25px);
-        padding: 5px 10px;
-    }
-
+    
     .figuren-lijst {
-        grid-template-columns: 1fr;
-
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
     }
-
-    .figuur {
-        width: 100%;
-    }
-
-    .form-group {
-        width: 100%;
-        grid-template-columns: 1fr;
-
-        
-    }
-
   
-}
+    .figuur {
+      flex: 0 0 93%;
+
+      
+    }
+  
+    .carousel-button {
+      position: absolute;
+      top: 60%;
+      transform: translateY(-50%);
+    }
+  
+    .carousel-button.prev { left: 10px; }
+    .carousel-button.next { right: 10px; }
+  }
+  
+
+
+

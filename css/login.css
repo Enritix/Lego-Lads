@@ -218,7 +218,13 @@ a{
     position: relative;
 }
 
-
+input[type="checkbox"] {
+    -webkit-appearance: checkbox;
+       -moz-appearance: checkbox;
+            appearance: checkbox;
+    display: inline-block;
+    width: auto;
+  }
 
 
 
@@ -236,7 +242,7 @@ a{
     }
 
     .btn {
-        width: 100%;
+        width: 40%;
         font-size: clamp(12px, 4vw, 25px);
         padding: 5px 10px;
     }
