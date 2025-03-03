@@ -36,19 +36,19 @@ main {
 
 .lego-button {
     border: none;
-    width: 80%; /* Relatieve breedte */
-    max-width: 414px; /* Maximale breedte */
+    width: 80%;
+    max-width: 414px;
     position: relative;
     height: auto;
     padding: 10px;
     background-color: var(--primary-color);
     border-top-left-radius: 10px;
-    transition: transform 0.3s ease; /* Overgangseffect toegevoegd */
-    font-size: clamp(1.5rem, 5vw, 3rem); /* Responsive font size */
+    transition: transform 0.3s ease;
+    font-size: clamp(1.5rem, 5vw, 3rem);
 }
 
 .lego-button:hover {
-    transform: scale(1.1); /* Schaal bij hover */
+    transform: scale(1.1);
 }
 
 .lego-button span {
