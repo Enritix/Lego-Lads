@@ -235,6 +235,9 @@ header nav ul li svg:hover {
         height: auto;
         border-radius: 10px;
     }
+    header{
+        display: none;
+    }
 }
 
 @media (min-width: 601px) {
@@ -247,6 +250,7 @@ header nav ul li svg:hover {
     #nav-menu{
         display: none;
     }
+   
 
 
 }

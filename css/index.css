@@ -7,6 +7,10 @@ body {
   overflow: hidden;
   background-color: var(--secondary--color);
 }
+* {
+  outline: 1px solid red;
+}
+
 body::before {
   content: "";
   position: absolute;
