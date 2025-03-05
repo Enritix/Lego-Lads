@@ -52,12 +52,34 @@ main {
     transform: scale(1.05);
 }
 
-.extra-button{
+#figs-dropdown, #minigames-dropdown  {
     display: none;
+    position: relative;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
 }
 
-.extra-button.shown{
+#figs-dropdown.show, #minigames-dropdown.show {
     display: block;
+}
+
+.dropdown-button {
+    display: block;
+    background-color: #252733;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    margin: 5px 0;
+    text-decoration: none;
+    border-radius: 5px;
+    height: 30%;
+    width: 120%;
+   font-size: 20px;
+}
+
+.dropdown-button:hover {
+    background-color: darkgray;
 }
 
 .lego-button img {
@@ -81,7 +103,7 @@ main {
 .container-mini-lego{
     position: absolute;
      bottom: -2%;
-     right: 15%;
+     right: -10%;
      width: 90%;
      
 }
