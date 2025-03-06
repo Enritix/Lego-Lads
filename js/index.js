@@ -17,3 +17,25 @@ minigamesButton.addEventListener('click', () => {
     }
     minigamesDropdown.classList.toggle('show');
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    const popup = document.getElementById("popup");
+    const closePopupBtn = document.querySelector(".close-btn");
+  
+    popup.classList.remove("hidden");
+    popup.style.display = "block";
+  
+    closePopupBtn.addEventListener("click", function () {
+      popup.classList.add("hidden");
+      popup.style.display = "none";
+    });
+  
+    window.addEventListener("click", function (event) {
+      if (event.target === popup) {
+        popup.classList.add("hidden");
+        popup.style.display = "none";
+      }
+    });
+  
+  });
+  
