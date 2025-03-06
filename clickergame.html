@@ -140,6 +140,25 @@
                     <p>SPC: <span id="BPC-text"></span></p>
                     <p>SPS: <span id="BPS-text"></span></p>
                 </footer>
+
+            <button id="clicker-shop" aria-label="Open de winkel">🛒</button>
+            <dialog id="shop-popup">
+            <section class="shop-content">
+                <header>
+                    <h2>winkel</h2>
+                </header>
+                <img src="./assets/images/coin.png" alt="Munt icoon">
+                <p>Kost: <strong>100 stenen per coin</strong></p>
+                <form id="buy-form">
+                    <label for="quantity">Aantal coins:</label>
+                    <input type="number" id="quantity" name="quantity" min="1" value="1" required>
+                    <p>Totale kosten: <span id="total-cost">100</span> stenen</p>
+                    <button type="submit" id="buy-item">Koop</button>
+                </form>
+                <button class="text-lego-stroke" id="close-shop" data-text="Sluiten">Sluiten</button>
+            </section>
+            </dialog>
+
             </article>
             <div class="skills">
             </div>
@@ -179,6 +198,7 @@
                     </section>
                 </article>
             </aside>
+
                 <div class="popup-overlay" id="popupOverlay" onclick="closeUpgrades()"></div>
                 <div class="upgrades-popup" id="upgradesPopup">
                     <h3>Upgrades</h3>
@@ -217,10 +237,12 @@
                             </section>
                         </article>
                     </aside>
-                    <button class="popup-close" onclick="closeUpgrades()">Sluiten</button>
+                    <button class="text-lego-stroke popup-close" data-text="Sluiten" onclick="closeUpgrades()">Sluiten</button>
+
                     <footer class="statistics">
                         <p>SPC: <span id="BPC-text"></span></p>
                         <p>SPS: <span id="BPS-text"></span></p>
+                        
                     </footer>
                 </div>
             </aside>

@@ -159,7 +159,7 @@ function openUpgrades() {
             <p>SPC: <span id="popup-BPC-text">${bpc}</span></p>
             <p>SPS: <span id="popup-BPS-text">${bps}</span></p>
         </footer>
-        <button class="popup-close">Sluiten</button>
+        <button class="text-lego-stroke popup-close" data-text="Sluiten" >Sluiten</button>
     `;
 
     setTimeout(() => {
@@ -198,3 +198,47 @@ function openInfoPopup() {
 function closeInfoPopup() {
     document.getElementById("infoPopup").close();
 }
+
+ 
+
+/* muntenn shop*/
+
+
+
+const shopPopup = document.getElementById("shop-popup");
+const clickerShop = document.getElementById("clicker-shop");
+const closeShop = document.getElementById("close-shop");
+const buyForm = document.getElementById("buy-form");
+const quantityInput = document.getElementById("quantity");
+const totalCost = document.getElementById("total-cost");
+
+const COIN_PRICE = 100; 
+
+
+clickerShop.addEventListener("click", () => {
+    shopPopup.showModal();
+});
+
+closeShop.addEventListener("click", () => {
+    shopPopup.close();
+});
+
+
+quantityInput.addEventListener("input", () => {
+    let quantity = parseInt(quantityInput.value) || 1; 
+    totalCost.textContent = quantity * COIN_PRICE;
+});
+
+
+buyForm.addEventListener("submit", (event) => {
+    event.preventDefault(); 
+    let quantity = parseInt(quantityInput.value);
+    
+    if (quantity > 0) {
+        alert(`Je hebt ${quantity} munten gekocht voor ${quantity * COIN_PRICE} stenen!`);
+        shopPopup.close();
+    } else {
+        alert("niet mogelijkk");
+    }
+});
+
