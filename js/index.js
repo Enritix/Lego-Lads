@@ -20,22 +20,23 @@ minigamesButton.addEventListener('click', () => {
 
 document.addEventListener("DOMContentLoaded", function () {
     const popup = document.getElementById("popup");
+    const overlay = document.getElementById("overlay");
     const closePopupBtn = document.querySelector(".close-btn");
-  
-    popup.classList.remove("hidden");
-    popup.style.display = "block";
-  
-    closePopupBtn.addEventListener("click", function () {
-      popup.classList.add("hidden");
-      popup.style.display = "none";
-    });
-  
-    window.addEventListener("click", function (event) {
-      if (event.target === popup) {
+
+    function openPopup() {
+        popup.classList.remove("hidden");
+        popup.classList.add("active");
+        overlay.classList.add("active");
+    }
+
+    function closePopup() {
         popup.classList.add("hidden");
-        popup.style.display = "none";
-      }
-    });
-  
-  });
-  
+        popup.classList.remove("active");
+        overlay.classList.remove("active");
+    }
+    openPopup();
+
+    closePopupBtn.addEventListener("click", closePopup);
+
+    overlay.addEventListener("click", closePopup);
+});
