@@ -11,9 +11,22 @@
 :root {
     --primary-color: #252733;
     --secondary--color: #EFC61A;
-    --tertiarty-color: #272B45;
+    --tertiarty-color:  #2D2F3E;
     --text-color: rgb(233, 232, 232);
     --text-hover-color: #dadada;
+
+
+    /* .text-lego-stroke*/
+    --button-bg: red;
+    --text-color: white;
+    --font-size: clamp(24px, 5vw, 40px); 
+    --font-family: 'Oswald', sans-serif;
+    --padding: 10px 5vw; 
+    --border-radius: 5px;
+    --stroke-inner-width: clamp(3px, 0.4vw, 5px); 
+    --stroke-inner-color: black;
+    --stroke-outer-width: clamp(5px, 0.8vw, 8px); 
+    --stroke-outer-color: yellow;
 }
 
 html {
@@ -115,6 +128,57 @@ header nav ul li svg:hover {
     font-size: 20px;
     font-family: Oswald;
 }
+
+/* text in button geef elke button de class .text-lego-stroke */
+
+.text-lego-stroke {
+    position: relative;
+    background: var(--button-bg);
+    color: var(--text-color);
+    font-size: var(--font-size);
+    font-family: var(--font-family);
+    padding: var(--padding);
+    border: none;
+    cursor: pointer;
+    border-radius: var(--border-radius);
+    text-transform: uppercase;
+    z-index: 1000000;
+    display: inline-block;
+    text-align: center;
+}
+
+.text-lego-stroke::before {
+    content: attr(data-text); 
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: transparent;
+    -webkit-text-stroke: var(--stroke-inner-width) var(--stroke-inner-color);
+    z-index: -1;
+}
+
+
+.text-lego-stroke::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: transparent;
+    -webkit-text-stroke: var(--stroke-outer-width) var(--stroke-outer-color);
+    z-index: -2;
+}
+
+/*  class="text-lego-stroke"   data-text="u text dat in de button staat">/*
 
 
 /* CODE MOBILE NAV BAR + ZIE HTML ONDERAAN*/
