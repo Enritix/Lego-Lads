@@ -38,10 +38,9 @@ main {
   justify-content: center;
   gap: 2vh;
   width: min(100%, 500px);
-  transform: translateX(50px); 
+  transform: translateX(50px);
   overflow: hidden;
 }
-
 
 .lego-button {
   display: flex;
@@ -88,7 +87,7 @@ main {
 }
 
 .dropdown-button:hover {
-background-color: var( --tertiarty-color);
+  background-color: var(--tertiarty-color);
 }
 
 .lego-button img {
@@ -137,7 +136,7 @@ background-color: var( --tertiarty-color);
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   display: none;
-  z-index: 1000;
+  z-index: 1000000001;
   font-family: Oswald;
   font-size: large;
   text-align: center;
@@ -223,13 +222,12 @@ background-color: var( --tertiarty-color);
   }
 }
 
-
-/* De gebroeders */ 
-footer{
+/* De gebroeders */
+footer {
   display: flex;
   flex-direction: row;
   position: absolute;
-  bottom: -4% ;
+  bottom: -4%;
   left: 30%;
 }
 footer img {
@@ -237,9 +235,9 @@ footer img {
   width: 100px;
 }
 
-/* Emmet */ 
-aside{
-  position: absolute ;
+/* Emmet */
+aside {
+  position: absolute;
   overflow: hidden;
   z-index: 1000000000;
   right: 10px;
