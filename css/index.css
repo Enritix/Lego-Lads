@@ -40,6 +40,7 @@ main {
   width: min(100%, 500px);
   transform: translateX(50px);
   overflow: hidden;
+  z-index: 100;
 }
 
 .lego-button {
@@ -209,7 +210,6 @@ main {
 
 @media (max-width: 600px) {
   .buttons {
-    padding-top: 70%;
     width: 40vh;
   }
   .character-container {
@@ -231,17 +231,25 @@ main {
 
   #title {
     font-size: 20px;
-    width: 47%;
+    width: 49%;
+  }
+
+  aside {
+    display: none;
+  }
+  footer img {
+    display: none;
   }
 }
 
-/* De gebroeders */
+/* De gebroeders - les cousins*/
 footer {
   display: flex;
   flex-direction: row;
   position: absolute;
   bottom: -4%;
-  left: 30%;
+  left: 20%;
+  z-index: 0;
 }
 footer img {
   height: auto;
