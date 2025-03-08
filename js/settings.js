@@ -6,9 +6,12 @@ document.addEventListener('DOMContentLoaded', function () {
     const brightnessBar = document.getElementById('brightness-bar');
     const increaseButton = document.getElementById('brightness-increase');
     const decreaseButton = document.getElementById('brightness-decrease');
+    const colorModeSelect = document.getElementById('colormode');
+    const languageSelect = document.getElementById('language');
     let brightnessLevel = 7;
     const maxBrightness = 7;
     const minBrightness = 1;
+    let currentColorMode = 'normal';
 
     for (let i = 0; i < brightnessLevel; i++) {
         const block = document.createElement('div');
@@ -16,9 +19,9 @@ document.addEventListener('DOMContentLoaded', function () {
         brightnessBar.appendChild(block);
     }
 
-    function updateBrightness() {
+    function updateFilters() {
         const brightnessValue = brightnessLevel / maxBrightness;
-        document.body.style.filter = `brightness(${brightnessValue})`;
+        document.body.style.filter = `brightness(${brightnessValue}) url('#${currentColorMode}')`;
     }
 
     settingsBtnMobile.addEventListener("click", function () {
@@ -42,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const block = document.createElement('div');
             block.classList.add('brightness-block');
             brightnessBar.appendChild(block);
-            updateBrightness();
+            updateFilters();
         }
     });
 
@@ -53,18 +56,16 @@ document.addEventListener('DOMContentLoaded', function () {
             if (blocks.length > 0) {
                 brightnessBar.removeChild(blocks[blocks.length - 1]);
             }
-            updateBrightness();
+            updateFilters();
         }
     });
 
-    const colorModeSelect = document.getElementById('colormode');
     colorModeSelect.addEventListener('change', function (event) {
         event.preventDefault();
-        document.body.className = '';
-        document.body.classList.add(this.value);
+        currentColorMode = this.value;
+        updateFilters();
     });
 
-    const languageSelect = document.getElementById('language');
     languageSelect.addEventListener('change', function (event) {
         event.preventDefault();
         const selectedLanguage = this.value;
@@ -106,5 +107,5 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     loadTranslations('dutch');
-    updateBrightness();
+    updateFilters();
 });
