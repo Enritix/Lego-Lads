@@ -169,15 +169,38 @@ main {
   text-align: center;
   position: relative;
   color: var(--text-color);
+  height: 40%;
+  width: 20%;
+  font-size: 24px;
+  font-family: Oswald;
+}
+
+#popup-title {
+  font-size: 28px;
+  font-weight: bold;
+  font-family: Bangers;
+  width: 20%;
+  text-align: center;
+  margin: 0 auto;
+  margin-bottom: 10px;
+}
+
+#popup-title::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 4px;
+  background-color: var(--secondary--color);
 }
 
 .close-button {
   position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 20px;
+  right: 20px;
+  font-size: 25px;
+  height: 10%;
   cursor: pointer;
   color: var(--text-color);
+  
 }
 
 @media screen and (max-width: 600px) {
@@ -248,7 +271,7 @@ main {
     flex-direction: column;
     align-items: center;
     text-align: center;
-    width: 70%;
+    width: 80%;
     gap: 10px;
   }
 
