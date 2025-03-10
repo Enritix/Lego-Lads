@@ -148,16 +148,97 @@ main {
   cursor: pointer;
 }
 
+/* Popup styling */
+.popup {
+  display: none; /* Standaard verborgen */
+  position: fixed; /* Blijft op dezelfde plek, ook als je scrollt */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Donkere achtergrond */
+  z-index: 1000; /* Zorgt ervoor dat de popup bovenop alles staat */
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-content {
+  background-color: var(--primary-color); /* Achtergrondkleur popup */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  position: relative; /* Voor de close button */
+  color: var(--text-color);
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  cursor: pointer;
+  color: var(--text-color);
+}
+
 @media screen and (max-width: 600px) {
-  .blacklist-container {
-    width: 300%;
+  body {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    grid-template-rows: 80px auto;
+    height: 100vh;
+  }
+
+  header {
+    grid-column: 1 / -1;
+  }
+
+  nav {
+    display: none;
+  }
+
+  main {
+    grid-column: 2;
+    width: 70%;
     margin-top: 80px;
+  }
+
+  .blacklist-container {
+    width: 70%;
     padding: 10%;
+    margin-top: 70px;
+    height: 70vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
   .blacklist {
     width: max-content;
-    max-width: none;
+    max-width: 80%;
     padding: 10px;
+    justify-content: center;
+  }
+
+  .figure {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .figure h2 {
+    margin-top: 90%;
+  }
+
+  .reason-btn {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .reason-text {
+    height: 65%;
   }
 
   .title {
@@ -168,7 +249,8 @@ main {
     flex-direction: column;
     align-items: center;
     text-align: center;
-    width: 50%;
+    width: 70%;
+    gap: 10px;
   }
 
   .blacklist-item img {
@@ -190,5 +272,9 @@ main {
   .remove-btn {
     padding: 6px 12px;
     font-size: 0.9em;
+  }
+
+  .popup-content {
+    width: 60%;
   }
 }
