@@ -148,27 +148,26 @@ main {
   cursor: pointer;
 }
 
-/* Popup styling */
 .popup {
-  display: none; /* Standaard verborgen */
-  position: fixed; /* Blijft op dezelfde plek, ook als je scrollt */
+  display: none;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Donkere achtergrond */
-  z-index: 1000; /* Zorgt ervoor dat de popup bovenop alles staat */
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
   justify-content: center;
   align-items: center;
 }
 
 .popup-content {
-  background-color: var(--primary-color); /* Achtergrondkleur popup */
+  background-color: var(--primary-color);
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   text-align: center;
-  position: relative; /* Voor de close button */
+  position: relative;
   color: var(--text-color);
 }
 
