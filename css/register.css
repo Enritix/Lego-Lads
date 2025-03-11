@@ -98,6 +98,7 @@ button:hover {
     width: min(80%, 900px);
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.9);
     height: 90vh;
+    overflow: hidden;
 
     position: relative;
 
@@ -237,6 +238,32 @@ a{
 
 @media (max-width: 600px) {
     
+
+    body {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        height: auto;
+        overflow: auto;
+    }
+
+    header{
+        grid-column: 1 / -1;
+
+    }
+
+    nav{
+        display: none;
+    }
+
+    main {
+        height: auto;
+        padding: 10px;
+    }
+
+    .btn{
+        width: 30%;
+    }
+
     .figuren-lijst {
       position: relative;
       overflow: hidden;
@@ -247,17 +274,29 @@ a{
     }
   
     .figuur {
-      flex: 0 0 93%;
+      flex: 0 0 90%;
 
       
     }
   
     .carousel-button {
       position: absolute;
-      top: 60%;
+      top: 65%;
       transform: translateY(-50%);
     }
-  
+    h2 {
+        position: relative;
+        padding-top: 50px;
+        font-size: 30px; 
+    }
+    .resultaat-container {
+        height: 100vh; 
+        width: 90%; 
+        padding: 10px; 
+        overflow-y: auto; 
+    }
+
+    
     .carousel-button.prev { left: 10px; }
     .carousel-button.next { right: 10px; }
   }
