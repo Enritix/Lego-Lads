@@ -138,3 +138,31 @@ const startSpinnerBtn = document.getElementById("startSpinner");
 const animation = new SpinnerAnimation({ container: "spinnerContainer", list: "spinnerList" });
 
 startSpinnerBtn.addEventListener("click", () => animation.start());
+
+document.addEventListener("DOMContentLoaded", function () {
+    const popup = document.getElementById("popup");
+    const overlay = document.createElement("div");
+    overlay.id = "overlay";
+    document.body.appendChild(overlay);
+    
+    const infoIcon = document.querySelector(".bi-info-circle");
+    const closeButton = document.createElement("button");
+    closeButton.textContent = "✖";
+    closeButton.classList.add("close-btn");
+    popup.appendChild(closeButton);
+    
+    infoIcon.addEventListener("click", function () {
+        popup.classList.add("active");
+        overlay.classList.add("active");
+    });
+
+    closeButton.addEventListener("click", function () {
+        popup.classList.remove("active");
+        overlay.classList.remove("active");
+    });
+
+    overlay.addEventListener("click", function () {
+        popup.classList.remove("active");
+        overlay.classList.remove("active");
+    });
+});
