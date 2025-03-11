@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function updateFilters() {
         const brightnessValue = brightnessLevel / maxBrightness;
-        document.body.style.filter = `brightness(${brightnessValue}) url('#${currentColorMode}')`;
+        document.body.style.filter = `brightness(${brightnessValue}) url('../assets/images/filters.svg#${currentColorMode}')`;
     }
 
     settingsBtnMobile.addEventListener("click", function () {
