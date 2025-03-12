@@ -81,7 +81,7 @@
     height: 4vh;
     position: relative;
     justify-content: center;
-    cursor: pointer;
+    cursor: url('../assets/images/cursor_hand.cur'), pointer;
     padding: 0.5vh 1.5vh;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.4);
 }
@@ -134,6 +134,7 @@
 .select-wrapper {
     position: relative;
     display: inline-block;
+    cursor: url('../assets/images/cursor_hand.cur'), pointer;
 }
 
 .settings-select {
@@ -152,6 +153,11 @@
     -moz-appearance: none; /* Firefox */
     cursor: pointer;
     line-height: 3vh;
+    cursor: url('../assets/images/cursor_hand.cur'), pointer;
+}
+
+.settings-select option {
+    cursor: url('../assets/images/cursor_hand.cur'), pointer;
 }
 
 .arrow-box {
@@ -166,6 +172,7 @@
     top: 50%;
     transform: translateY(-50%) skewX(-15deg);
     pointer-events: none;
+    cursor: url('../assets/images/cursor_hand.cur'), pointer;
 }
 
 .custom-arrow {
@@ -174,6 +181,7 @@
     border-left: 0.8vh solid transparent;
     border-right: 0.8vh solid transparent;
     border-top: 1vh solid rgba(0, 0, 0, 0.5);
+    cursor: url('../assets/images/cursor_hand.cur'), pointer;
 }
 
 /* Pijl verbergen in Firefox */
@@ -203,7 +211,7 @@ select::-ms-expand {
     font-family: Bangers;
     border: none;
     border-radius: 0.5vh;
-    cursor: pointer;
+    cursor: url('../assets/images/cursor_hand.cur'), pointer;
 }
 
 #brightness-bar {

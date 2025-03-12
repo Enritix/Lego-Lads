@@ -33,6 +33,15 @@ html {
     background-image: url(../assets/images/background.png);
     font-family: Bangers;
 }
+
+html, body {
+    cursor: url('../assets/images/cursor_arrow.cur'), auto;
+}
+
+a, button {
+    cursor: url('../assets/images/cursor_hand.cur'), pointer;
+}
+
 header{
     margin-top: 10px;
     margin-left: 5px;
