@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="../css/style.css" />
     <link rel="stylesheet" href="../css/detaillist.css" />
     <script src="../js/audio.js" defer></script>
+    <script src="../js/detaillist.js" defer></script>
   </head>
   <body>
     <audio id="clickSound">
@@ -187,45 +188,100 @@
     </nav>
 
     <main>
-      <section id="genre-header">
-        <h1>Lego DC</h1>
-      </section>
-
-      <section id="content">
-        <div class="figure-container">
-          <figure>
-            <img src="../assets/images/Superman.png" alt="Superman" />
-          </figure>
-        </div>
-
-        <div class="figure-container">
-          <figure>
-            <img
-              src="../assets/images/Superman-in-stukjes.png"
-              alt="Superman in Stukjes"
-            />
-          </figure>
-        </div>
-
-        <div class="legoset-container">
-          <article>
-            <h2>Set: 76048</h2>
-            <img src="../assets/images/legoset_1.png" alt="Legoset 1" />
+      <section class="genre-container">
+        <section class="genre-header">
+          <h1>
+            Geordende Minifigs Bekijken <span class="info-icon">&#x24D8;</span>
+          </h1>
+          <article class="header-2">
+            <h2>Super Heroes DC</h2>
+            <img src="../assets/images/Lego_DC.png" alt="" />
           </article>
-        </div>
+        </section>
 
-        <div class="legoset-container">
-          <article>
-            <h2>Set: 76048</h2>
-            <img src="../assets/images/legoset_2.png" alt="Legoset 2" />
+        <section id="info-popup" class="popup">
+          <article class="popup-content">
+            <span class="close-button">❌</span>
+            <h1 id="popup-title">Info:</h1>
+            <p>
+              Hier kan je zien welke minifigs je geordend hebt en tot welke sets
+              ze behoren.
+            </p>
           </article>
-        </div>
+        </section>
 
-        <img
-          id="swinging-spiderman"
-          src="../assets/images/spiderman.png"
-          alt="Swingende Spiderman"
-        />
+        <section class="items">
+          <section id="content">
+            <section class="superheroes-section">
+              <span class="remove-btn">❌</span>
+              <article class="figure-container">
+                <figure>
+                  <figcaption>
+                    Super Man<br /><span id="code">Code: CK7AWTR</span>
+                  </figcaption>
+                  <img src="../assets/images/Superman.png" alt="Superman" />
+                </figure>
+              </article>
+
+              <article class="figure-pieces">
+                <img
+                  src="../assets/images/Superman-in-stukjes.png"
+                  alt="Superman-in-stukjes"
+                />
+              </article>
+
+              <section class="legoset-container">
+                <article class="legoset-item">
+                  <h3>Set: 76048</h3>
+                  <img src="../assets/images/legoset_1.png" alt="Legoset 1" />
+                </article>
+
+                <article class="legoset-item">
+                  <h3>Set: 76048</h3>
+                  <img src="../assets/images/legoset_2.png" alt="Legoset 2" />
+                </article>
+              </section>
+            </section>
+          </section>
+
+          <section id="content">
+            <section class="superheroes-section">
+              <span class="remove-btn">❌</span>
+              <article class="figure-container">
+                <figure>
+                  <figcaption>
+                    Super Man<br /><span id="code">Code: CK7AWTR</span>
+                  </figcaption>
+                  <img src="../assets/images/Superman.png" alt="Superman" />
+                </figure>
+              </article>
+
+              <article class="figure-pieces">
+                <img
+                  src="../assets/images/Superman-in-stukjes.png"
+                  alt="Superman-in-stukjes"
+                />
+              </article>
+
+              <section class="legoset-container">
+                <article class="legoset-item">
+                  <h3>Set: 76048</h3>
+                  <img src="../assets/images/legoset_1.png" alt="Legoset 1" />
+                </article>
+
+                <article class="legoset-item">
+                  <h3>Set: 76048</h3>
+                  <img src="../assets/images/legoset_2.png" alt="Legoset 2" />
+                </article>
+              </section>
+            </section>
+          </section>
+          <img
+            id="swinging-spiderman"
+            src="../assets/images/spiderman.png"
+            alt="Swingende Spiderman"
+          />
+        </section>
       </section>
     </main>
   </body>
