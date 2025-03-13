@@ -1,7 +1,7 @@
 #settings-container {
     position: absolute;
-    top: 10%;
-    left: 50%;
+    top: 10vh;
+    left: 50vw;
     width: 50vh;
     height: 75vh;
     transform: translate(-50%, 0);
@@ -11,8 +11,8 @@
     align-items: center;
     justify-content: center;
     background-color: #252733;
-    padding: 10px;
-    border-radius: 54px;
+    padding: 2vh;
+    border-radius: 5vh;
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.4);
     overflow: visible;
 }
@@ -20,9 +20,9 @@
 #settings-container::before {
     content: "";
     position: absolute;
-    top: -3%;
+    top: -3vh;
     width: 85%;
-    height: 95px;
+    height: 10vh;
     background-color: #edc20f;
     clip-path: polygon(0% 0%, 100% 0%, 95% 100%, 5% 100%);
     z-index: 0;
@@ -31,13 +31,13 @@
 
 #settings-container h1 {
     position: absolute;
-    top: -10%;
+    top: -9vh;
     z-index: 2;
     color: white;
-    font-size: 56pt;
+    font-size: 8vh;
     font-family: Bangers;
-    letter-spacing: 2px;
-    margin-bottom: 20px;
+    letter-spacing: 0.2vh;
+    margin-bottom: 2vh;
     text-align: center;
     text-shadow: 0px 4px 0px rgba(0, 0, 0, 0.25);
 }
@@ -52,7 +52,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    gap: 10px;
+    gap: 1vh;
 }
 
 #sound-container h2,
@@ -61,10 +61,11 @@
 #language-container h2,
 #brightness-container h2 {
     color: white;
-    font-size: 32pt;
+    font-size: 5vh;
     font-family: Bangers;
-    letter-spacing: 2px;
-    margin-bottom: 20px;
+    letter-spacing: 0.2vh;
+    margin-bottom: 2vh;
+    user-select: none;
 }
 
 .toggle-input {
@@ -75,21 +76,21 @@
     display: flex;
     align-items: center;
     background: #3A3D4B;
-    border-radius: 5px;
-    width: 120px;
-    height: 40px;
+    border-radius: 0.5vh;
+    width: 12vh;
+    height: 4vh;
     position: relative;
     justify-content: center;
-    cursor: pointer;
-    padding: 5px 15px;
+    cursor: url('../assets/images/cursor_hand.cur'), pointer;
+    padding: 0.5vh 1.5vh;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.4);
 }
 
 .toggle-knob {
-    width: 75px;
+    width: 7.5vh;
     height: auto;
     position: absolute;
-    left: -5px;
+    left: -0.5vh;
     top: 50%;
     transform: translateY(-50%);
     transition: transform 0.3s ease, left 0.3s ease;
@@ -99,7 +100,7 @@
 
 .toggle-text {
     color: white;
-    font-size: 32px;
+    font-size: 3.5vh;
     font-family: Oswald;
     position: absolute;
     top: 50%;
@@ -110,16 +111,16 @@
 }
 
 .toggle-text.off {
-    right: 25px;
+    right: 2.5vh;
 }
 
 .toggle-text.on {
-    left: 25px;
+    left: 2.5vh;
     display: none;
 }
 
 .toggle-input:checked + .toggle-label .toggle-knob {
-    left: calc(100% - 70px);
+    left: calc(100% - 7vh);
 }
 
 .toggle-input:checked + .toggle-label .toggle-text.off {
@@ -133,48 +134,54 @@
 .select-wrapper {
     position: relative;
     display: inline-block;
+    cursor: url('../assets/images/cursor_hand.cur'), pointer;
 }
 
 .settings-select {
     background-color: #3A3D4B;
     color: white;
-    font-size: 24px;
+    font-size: 2.4vh;
     font-family: Oswald, sans-serif;
     border: none;
-    border-radius: 5px;
-    padding: 10px;
-    width: 220px;
-    height: 50px;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.4);
+    border-radius: 0.5vh;
+    padding: 1vh;
+    width: 22vh;
+    height: 5vh;
+    box-shadow: 0px 0.4vh 0.4vh rgba(0, 0, 0, 0.4);
     appearance: none;
     -webkit-appearance: none; /* Safari */
     -moz-appearance: none; /* Firefox */
     cursor: pointer;
-    line-height: 30px;
+    line-height: 3vh;
+    cursor: url('../assets/images/cursor_hand.cur'), pointer;
 }
 
-
+.settings-select option {
+    cursor: url('../assets/images/cursor_hand.cur'), pointer;
+}
 
 .arrow-box {
-    width: 36px;
-    height: 28px;
+    width: 3.6vh;
+    height: 2.8vh;
     background: rgba(255, 255, 255, 0.2);
     display: flex;
     align-items: center;
     justify-content: center;
     position: absolute;
-    right: 8px;
+    right: 0.8vh;
     top: 50%;
     transform: translateY(-50%) skewX(-15deg);
     pointer-events: none;
+    cursor: url('../assets/images/cursor_hand.cur'), pointer;
 }
 
 .custom-arrow {
     width: 0;
     height: 0;
-    border-left: 8px solid transparent;
-    border-right: 8px solid transparent;
-    border-top: 10px solid rgba(0, 0, 0, 0.5);
+    border-left: 0.8vh solid transparent;
+    border-right: 0.8vh solid transparent;
+    border-top: 1vh solid rgba(0, 0, 0, 0.5);
+    cursor: url('../assets/images/cursor_hand.cur'), pointer;
 }
 
 /* Pijl verbergen in Firefox */
@@ -196,32 +203,33 @@ select::-ms-expand {
 }
 
 #brightness button {
-    width: 32px;
-    height: 58px;
+    width: 3.2vh;
+    height: 5.8vh;
     background-color: #1F222E;
     color: white;
-    font-size: 40pt;
+    font-size: 4vh;
     font-family: Bangers;
     border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    border-radius: 0.5vh;
+    cursor: url('../assets/images/cursor_hand.cur'), pointer;
 }
 
 #brightness-bar {
-    width: 170px;
-    height: 50px;
+    width: 17vh;
+    height: 5vh;
     background-color: #3A3D4B;
     position: relative;
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    padding: 0 10px;
-    gap: 5px;
+    padding: 0 1vh;
+    gap: 0.5vh;
 }
 
 .brightness-block {
-    width: 20px;
-    height: 40px;
+    width: 2vh;
+    height: 4vh;
     background-image: url('../assets/images/red_brightness_stud.png');
+    background-size: cover;
 }
 
