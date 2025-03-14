@@ -246,3 +246,8 @@ select::-ms-expand {
     background-size: cover;
 }
 
+#close-btn-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

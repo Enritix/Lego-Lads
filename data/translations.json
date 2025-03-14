@@ -19,7 +19,8 @@
         "dutch": "Nederlands",
         "english": "Engels",
         "off": "uit",
-        "on": "aan"
+        "on": "aan",
+        "close": "Sluiten"
     },
     "english": {
         "title": "Settings",
@@ -41,6 +42,7 @@
         "dutch": "Dutch",
         "english": "English",
         "off": "off",
-        "on": "on"
+        "on": "on",
+        "close": "close"
     }
 }

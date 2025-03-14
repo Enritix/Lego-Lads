@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     const settingsBtnMobile = document.getElementById("settings-btn-mobile");
     const settingsBtnDesktop = document.getElementById("settings-btn-desktop");
+    const closeBtn = document.getElementById("settings-close-btn");
     const overlay = document.getElementById("overlay");
     const settingsContainer = document.getElementById("settings-container");
     const brightnessBar = document.getElementById('brightness-bar');
@@ -35,6 +36,11 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     overlay.addEventListener("click", function () {
+        overlay.style.display = "none";
+        settingsContainer.style.display = "none";
+    });
+
+    closeBtn.addEventListener("click", function () {
         overlay.style.display = "none";
         settingsContainer.style.display = "none";
     });
@@ -89,6 +95,12 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('language-title').textContent = translations.language;
         document.getElementById('brightness-title').textContent = translations.brightness;
     
+        const toggleLabels = document.querySelectorAll('.toggle-label');
+        toggleLabels.forEach(label => {
+            label.querySelector('.toggle-text.off').textContent = translations.off;
+            label.querySelector('.toggle-text.on').textContent = translations.on;
+        });
+
         const colormodeSelect = document.getElementById('colormode');
         colormodeSelect.options[0].textContent = translations.normal;
         colormodeSelect.options[1].textContent = translations.achromatomaly;
@@ -105,11 +117,8 @@ document.addEventListener('DOMContentLoaded', function () {
         languageSelect.options[0].textContent = translations.dutch;
         languageSelect.options[1].textContent = translations.english;
     
-        const toggleLabels = document.querySelectorAll('.toggle-label');
-        toggleLabels.forEach(label => {
-            label.querySelector('.toggle-text.off').textContent = translations.off;
-            label.querySelector('.toggle-text.on').textContent = translations.on;
-        });
+        closeBtn.textContent = translations.close;
+        closeBtn.dataset.text = translations.close;
     }
 
     loadTranslations('dutch');
