@@ -35,6 +35,10 @@ main {
     margin-top: 60px;
     border-radius: 20px;
 }
+#titel{
+  font-family: Bangers;
+  letter-spacing: 2px;
+}
 
 
 
@@ -303,4 +307,7 @@ main {
   top: -10px;
   right: 5px;
   color: red;
+}
+#winName{
+  font-family: Oswald;
 }
