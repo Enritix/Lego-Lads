@@ -269,7 +269,7 @@ main {
   }
 
   .figure-container img {
-    width: 20%;
+    width: 80%;
   }
 
   .figure-pieces {
@@ -277,6 +277,10 @@ main {
   }
 
   .figure-pieces img {
-    width: 20%;
+    width: 80%;
+  }
+
+  .figure-container figure {
+    width: 100%;
   }
 }
