@@ -88,17 +88,23 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('colormode-title').textContent = translations.colormode;
         document.getElementById('language-title').textContent = translations.language;
         document.getElementById('brightness-title').textContent = translations.brightness;
-
+    
         const colormodeSelect = document.getElementById('colormode');
         colormodeSelect.options[0].textContent = translations.normal;
-        colormodeSelect.options[1].textContent = translations.protanopia;
-        colormodeSelect.options[2].textContent = translations.deuteranopia;
-        colormodeSelect.options[3].textContent = translations.tritanopia;
-
+        colormodeSelect.options[1].textContent = translations.achromatomaly;
+        colormodeSelect.options[2].textContent = translations.achromatopsia;
+        colormodeSelect.options[3].textContent = translations.daltonism;
+        colormodeSelect.options[4].textContent = translations.deuteranopia;
+        colormodeSelect.options[5].textContent = translations.deuteranomaly;
+        colormodeSelect.options[6].textContent = translations.protanopia;
+        colormodeSelect.options[7].textContent = translations.protanomaly;
+        colormodeSelect.options[8].textContent = translations.tritanomaly;
+        colormodeSelect.options[9].textContent = translations.tritanopia;
+    
         const languageSelect = document.getElementById('language');
         languageSelect.options[0].textContent = translations.dutch;
         languageSelect.options[1].textContent = translations.english;
-
+    
         const toggleLabels = document.querySelectorAll('.toggle-label');
         toggleLabels.forEach(label => {
             label.querySelector('.toggle-text.off').textContent = translations.off;

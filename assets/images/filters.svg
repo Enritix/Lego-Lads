@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg
-  xmlns="http://www.w3.org/2000/svg"
-  version="1.1" style="display: none;">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" style="display: none;">
   <defs>
     <filter id="protanopia">
       <feColorMatrix
@@ -36,8 +34,7 @@
         type="matrix"
         values="0.8,   0.2,   0,     0, 0
                 0.258, 0.742, 0,     0, 0
-                0,     0.142, 0.858, 0, 0
-                0,     0,     0,     1, 0"/>
+                0,     0.142, 0.858, 0, 0"/>
     </filter>
     <filter id="tritanopia">
       <feColorMatrix
@@ -54,8 +51,7 @@
         type="matrix"
         values="0.967, 0.033, 0,     0, 0
                 0,     0.733, 0.267, 0, 0
-                0,     0.183, 0.817, 0, 0
-                0,     0,     0,     1, 0"/>
+                0,     0.183, 0.817, 0, 0"/>
     </filter>
     <filter id="achromatopsia">
       <feColorMatrix
@@ -74,6 +70,15 @@
                 0.163, 0.775, 0.062, 0, 0
                 0.163, 0.320, 0.516, 0, 0
                 0,     0,     0,     1, 0"/>
+    </filter>
+    <filter id="daltonism">
+      <feColorMatrix
+        in="SourceGraphic"
+        type="matrix"
+        values="0.8, 0.2, 0, 0, 0
+                0.258, 0.742, 0, 0, 0
+                0, 0.142, 0.858, 0, 0
+                0, 0, 0, 1, 0"/>
     </filter>
   </defs>
 </svg>
