@@ -550,3 +550,17 @@ figure img {
     height: auto;
     width: 30px;
 }
+
+#prestatie-titel{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#amount-figs{
+    position: absolute;
+    top: 0px;
+    right: 40px;
+}
+.not:hover{
+   border-color: darkred;
+}
