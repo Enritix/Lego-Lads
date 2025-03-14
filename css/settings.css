@@ -1,3 +1,14 @@
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000000000;
+    display: none;
+  }
+
 #settings-container {
     position: absolute;
     top: 10vh;
@@ -8,7 +19,7 @@
     z-index: 1000000001;
     display: none;
     flex-direction: column;
-    align-items: center;
+    align-items: space-between;
     justify-content: center;
     background-color: #252733;
     padding: 2vh;
@@ -21,6 +32,7 @@
     content: "";
     position: absolute;
     top: -3vh;
+    align-self: center;
     width: 85%;
     height: 10vh;
     background-color: #edc20f;
@@ -33,6 +45,7 @@
     position: absolute;
     top: -9vh;
     z-index: 2;
+    align-self: center;
     color: white;
     font-size: 8vh;
     font-family: Bangers;
@@ -229,7 +242,7 @@ select::-ms-expand {
 .brightness-block {
     width: 2vh;
     height: 4vh;
-    background-image: url('../assets/images/red_brightness_stud.png');
+    background-image: url('../assets/images/yellow_brightness_stud.png');
     background-size: cover;
 }
 

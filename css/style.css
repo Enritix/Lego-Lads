@@ -207,7 +207,7 @@ header nav ul li svg:hover {
         border: none;
         color: white;
         cursor: pointer;
-        z-index: 5;
+        z-index: 10001;
         background-color: var(--primary-color);
         border-radius: 10px;
         text-align: center;
@@ -219,7 +219,7 @@ header nav ul li svg:hover {
         bottom: 5px;
         left: 40px;
         background: rgba(37, 39, 51, 0.8);
-        z-index: 0;
+        z-index: 10000;
         padding: 10px 15px;
         border-radius: 10px;
         display: flex;
