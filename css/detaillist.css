@@ -214,3 +214,69 @@ main {
   font-size: 20px;
   cursor: pointer;
 }
+
+@media (max-width: 600px) {
+  body {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    grid-template-rows: 80px auto;
+    height: 100vh;
+  }
+
+  header {
+    grid-column: 1 / -1;
+  }
+
+  nav {
+    display: none;
+  }
+
+  main {
+    grid-column: 2;
+    width: 80%;
+    margin-top: 80px;
+  }
+
+  #content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .genre-header h1 {
+    font-size: 20px;
+    width: 100%;
+  }
+
+  .genre-header h2 {
+    font-size: 18px;
+  }
+
+  .header-2 img {
+    width: 50%;
+  }
+
+  #swinging-spiderman {
+    display: none;
+  }
+
+  .superheroes-section {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .figure-container {
+    width: 50%;
+  }
+
+  .figure-container img {
+    width: 20%;
+  }
+
+  .figure-pieces {
+    width: 50%;
+  }
+
+  .figure-pieces img {
+    width: 20%;
+  }
+}
