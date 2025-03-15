@@ -52,6 +52,12 @@ main {
 .genre-header {
   text-align: center;
   margin-bottom: 20px;
+  position: sticky;
+  z-index: 100;
+  top: 0;
+  background-color: var(--primary-color);
+  width: 100%;
+  height: 250px;
 }
 
 .genre-header h1 {
@@ -71,12 +77,12 @@ main {
 }
 
 .header-2 {
-  margin-top: 10%;
   font-family: Bangers;
+  width: 100%;
 }
 
 .header-2 img {
-  width: 40%;
+  width: 20%;
 }
 
 .items {
@@ -91,6 +97,7 @@ main {
   font-family: Oswald;
   position: relative;
   margin-bottom: 5%;
+  gap: 10%;
 }
 
 #content:not(:last-child)::after {
@@ -149,6 +156,7 @@ main {
   right: 0%;
   height: auto;
   width: 20%;
+  z-index: 1000;
 }
 
 .popup {
@@ -196,6 +204,15 @@ main {
   background-color: var(--secondary--color);
 }
 
+.close-button {
+  position: absolute;
+  right: 20px;
+  font-size: 25px;
+  height: 10%;
+  cursor: pointer;
+  color: var(--text-color);
+}
+
 .remove-btn {
   position: absolute;
   right: 20px;
@@ -240,6 +257,12 @@ main {
   #content {
     display: flex;
     flex-direction: column;
+    border: solid rgb(72, 69, 69);
+    border-radius: 15px;
+  }
+
+  .items {
+    gap: 30px;
   }
 
   .genre-header h1 {
@@ -266,6 +289,10 @@ main {
 
   .figure-container {
     width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 15%;
   }
 
   .figure-container img {
@@ -274,6 +301,7 @@ main {
 
   .figure-pieces {
     width: 50%;
+    margin-top: 15%;
   }
 
   .figure-pieces img {
@@ -282,5 +310,16 @@ main {
 
   .figure-container figure {
     width: 100%;
+  }
+
+  .legoset-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 5%;
+  }
+
+  #content:not(:last-child)::after {
+    margin-bottom: 5%;
   }
 }
