@@ -1,28 +1,29 @@
 <!DOCTYPE html>
-<html lang="nl-BE">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>LegoLads - Home</title>
-    <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="css/index.css" />
-    <script src="js/audio.js" defer></script>
-    <script src="js/index.js" defer></script>
+    <title>chat-bot</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/chatbot.css" />
+    <script src="../js/audio.js" defer></script>
+    <script src="../js/chatbot.js"></script>
   </head>
-
   <body>
     <audio id="clickSound">
-      <source src="./assets/audio/kliksound.mp3" type="audio/mpeg" />
+      <source src="../assets/audio/kliksound.mp3" type="audio/mpeg" />
     </audio>
     <header>
       <nav>
         <ul>
           <li>
-            <a href=""><img src="assets/images/Lego-Lads Logo.png" alt="" /></a>
+            <a href=""
+              ><img src="../assets/images/Lego-Lads Logo.png" alt=""
+            /></a>
           </li>
           <li id="user-info">
             <a href="#" id="figure-head"
-              ><img src="assets/images/17.webp" alt=""
+              ><img src="../assets/images/17.webp" alt=""
             /></a>
             <h1 id="user-name">Naam</h1>
             <div id="coin-container">
@@ -94,19 +95,19 @@
 
     <header class="mobile-info-bar">
       <section class="coin-container">
-        <img src="assets/images/coin.png" alt="Coin" />
+        <img src="../assets/images/coin.png" alt="Coin" />
         <span>3.2K</span>
       </section>
 
       <section class="logo-container">
-        <a href="index.html">
-          <img src="assets/images/Lego-Lads Logo.png" alt="Lego Lads Logo" />
+        <a href="../index.html">
+          <img src="../assets/images/Lego-Lads Logo.png" alt="Lego Lads Logo" />
         </a>
       </section>
 
       <section class="name-container">
         <span>Jcl...</span>
-        <img src="assets/images/sad-face.png" alt="Lego Hoofd" />
+        <img src="../assets/images/sad-face.png" alt="Lego Hoofd" />
       </section>
     </header>
 
@@ -185,72 +186,40 @@
         </li>
       </ul>
     </nav>
+        <main>
+            <div class="chatbot-container">
+                <div class="chatbot">
+                    <a  class="close" href="../index.html">❌</a>
+                    <aside>
+                        <header class="header-container" id="cahtbot-header">
+                            <img src="../assets/images/bot.png" alt="">
+                            <h1 >Legolads-bot</h1>
+                        </header>
+                        <footer>
+                            <h4>LegoLads team 💪</h4>
+                            <ul>
+                            <li> <img class="self-portret" src="../assets/images/lars.png" alt=""> Lars</li>
+                            <li> <img class="self-portret" src="../assets/images/abe.png" alt=""> Abe</li>
+                            <li> <img class="self-portret" src="../assets/images/gentian.png" alt=""> Gentian</li>
+                            <li> <img class="self-portret"src="../assets/images/ennrico.png" alt=""> Ennrico</li>
+                        </ul></footer>
+                    </aside>
+                    <section id="chat" class="chat-container">
+                        <section class="chat-box" id="chat-box">
+                            <article class="message bot-message">
+                                <img src="../assets/images/bot.png" alt="Bot Avatar" class="avatar">
+                                <p class="text">hallo, ik ben de LegoLads AI, waar mee kan ik je helpen?</p>
+                            </article>
+                        </section>
+                        <section class="input-container">
+                            <input type="text" id="user-input" placeholder="stel je vraag">
+                            <button   class="text-lego-stroke"   data-text="verstuur" onclick="sendMessage()">verstuur</button>
+                            
+                        </section>
+                    </section>
+                </div>
+            </div>
 
-    <main class="buttons">
-      <a class="lego-button">
-        <img src="assets/images/green_button.png" alt="Lego steen" />
-      </a>
-      <a class="lego-button" id="sets">
-        <img src="assets/images/orange-button.png" alt="Lego steen" />
-      </a>
-      <div id="figs-dropdown">
-        <a href="geordende-figs.html" class="dropdown-button"
-          >Geordende Figs &#128230;
-        </a>
-        <a href="zwarte-lijst.html" class="dropdown-button"
-          >Zwarte Lijst &#128220;
-        </a>
-      </div>
-
-      <a class="lego-button" id="minigames">
-        <img src="assets/images/blue-button.png" alt="Lego steen" />
-      </a>
-      <div id="minigames-dropdown">
-        <a href="game1.html" class="dropdown-button">Klikkerspel &#128070;</a>
-        <a href="game2.html" class="dropdown-button">Geheugenspel &#129504;</a>
-      </div>
-
-      <a class="lego-button">
-        <img src="assets/images/red-button.png" alt="Lego steen" />
-      </a>
-    </main>
-
-    <aside><img src="assets/images/EmmetSolo.png" alt="" /></aside>
-    <footer>
-      <img src="assets/images/constfig.png" alt="Mini Lego figuren" />
-      <img src="assets/images/fihdhovel.png" alt="Mini Lego figuren" />
-      <img src="assets/images/bortselfig.png" alt="Mini Lego figuren" />
-    </footer>
-
-    <div id="overlay" class="hidden"></div>
-    <div id="popup" class="popup hidden">
-      <span class="close-btn">❌</span>
-      <h1 id="title">WAT KAN JE DOEN?</h1>
-      <ul>
-        <li>
-          <strong>Controle:</strong> Zijn er minifigs te ordenen? Zo niet, geef
-          het aantal op.
-        </li>
-        <li><strong>Koppelen:</strong> Kies een set voor de minifig.</li>
-        <li><strong>Skippen:</strong> Sla een minifig over (telt mee).</li>
-        <li>
-          <strong>Blacklisten:</strong> Voeg een minifig toe aan de blacklist
-          met reden.
-        </li>
-        <li>
-          <strong>Overzicht:</strong> Bekijk het aantal geordende en geskipte
-          minifigs.
-        </li>
-      </ul>
-      <h3>Geordende Minifigs Bekijken</h3>
-      <p>
-        Tabel met minifig- en setgegevens. Verwijder een minifig uit de lijst.
-      </p>
-      <h3>Blacklisted Minifigs Bekijken</h3>
-      <p>
-        Overzicht met naam, afbeelding en reden. Reden aanpassen of verwijderen
-        van blacklist.
-      </p>
-    </div>
+        </main>
   </body>
 </html>
