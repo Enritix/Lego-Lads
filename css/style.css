@@ -1,14 +1,31 @@
 @font-face {
     font-family: Bangers;
     src: url(../assets/fonts/Bangers-Regular.ttf);
-  }
+}
+
+@font-face {
+    font-family: Oswald;
+    src: url(../assets/fonts/Oswald-Regular.ttf);
+}
 
 :root {
     --primary-color: #252733;
     --secondary--color: #EFC61A;
-    --tertiarty-color: #272B45;
+    --tertiarty-color: #2D2F3E;
     --text-color: rgb(233, 232, 232);
     --text-hover-color: #dadada;
+
+    /* .text-lego-stroke*/
+    --button-bg: red;
+    --text-color: white;
+    --font-size: clamp(24px, 5vw, 40px); 
+    --font-family: 'Oswald', sans-serif;
+    --padding: 10px 5vw; 
+    --border-radius: 5px;
+    --stroke-inner-width: clamp(3px, 0.4vw, 5px); 
+    --stroke-inner-color: black;
+    --stroke-outer-width: clamp(5px, 0.8vw, 8px); 
+    --stroke-outer-color: yellow;
 }
 
 html {
@@ -53,22 +70,7 @@ header nav ul {
     overflow: hidden;
 }
 
-/* TODO: fix dat het op dezelfde plek blijft wanneer je resized */
 header nav ul li:nth-child(3) {
-    position: relative;
-    height: 100%;
-    width: 60%;    
-}
-#user-name{
-    position: absolute;
-    top: -4vh;
-    color: var(--text-color);
-    letter-spacing: 2px;
-}
-
-
-
-header nav ul li:nth-child(4) {
     margin-top: auto;
 }
 
@@ -86,10 +88,106 @@ header nav ul li svg:hover {
     color: var(--text-hover-color);
 }
 
+#user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+#figure-head img {
+  width: 90px;
+  height: 90px;
+}
+
+#user-name {
+  color: var(--text-color);
+  font-size: 20px;
+  letter-spacing: 2px;
+  margin: 0;
+}
+
+#coin-container {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+#coin-container:before {
+  content: "";
+  background-image: url(../assets/images/coin.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 30px;
+  height: 30px;
+}
+
+#coin-container p {
+    color: var(--text-color);
+    font-size: 20px;
+    font-family: Oswald;
+}
+
+
+/* text in button geef elke button de class .text-lego-stroke */
+
+.text-lego-stroke {
+    position: relative;
+    background: var(--button-bg);
+    color: var(--text-color);
+    font-size: clamp(0.6rem, 1.5vw, 2rem); 
+    padding: clamp(0.3rem, 0.6vw, 1rem);     
+    border: none;
+    cursor: pointer;
+    border-radius: var(--border-radius);
+    text-transform: uppercase;
+    z-index: 1000000;
+    display: inline-block;
+    text-align: center;
+}
+
+.text-lego-stroke::before {
+    content: attr(data-text); 
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: transparent;
+    -webkit-text-stroke: var(--stroke-inner-width) var(--stroke-inner-color);
+    z-index: -1;
+}
+
+
+
+.text-lego-stroke::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: transparent;
+    -webkit-text-stroke: var(--stroke-outer-width) var(--stroke-outer-color);
+    z-index: -2;
+}
+
+
 
 /* CODE MOBILE NAV BAR + ZIE HTML ONDERAAN*/
 @media (max-width: 600px) {
+    header nav ul {
+        display: none;
+    }
+
     #hamburger-menu {
+        display: flex;
         padding: 5px;
         display: block;
         position: fixed;
@@ -100,7 +198,7 @@ header nav ul li svg:hover {
         border: none;
         color: white;
         cursor: pointer;
-        z-index: 5;
+        z-index: 1000000;
         background-color: var(--primary-color);
         border-radius: 10px;
         text-align: center;
@@ -108,11 +206,12 @@ header nav ul li svg:hover {
         width: 35px;
     } 
     #nav-menu {
+        display: flex;
         position: fixed;
         bottom: 5px;
         left: 40px;
         background: rgba(37, 39, 51, 0.8);
-        z-index: 0;
+        z-index: 10000;
         padding: 10px 15px;
         border-radius: 10px;
         display: flex;
@@ -124,39 +223,7 @@ header nav ul li svg:hover {
         visibility: hidden;
         transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
     }
-    #nav-menu.active {
-        opacity: 1;
-        visibility: visible;
-    }
-    #nav-menu ul {
-        list-style: none;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-        padding: 0;
-        margin: 0;
-    }
-    #nav-menu ul li a {
-        color: white;
-        text-decoration: none;
-    }
-
-    #nav-menu ul li {
-        padding: 0 15px;
-    }
-    #nav-menu ul li a svg {
-        width: 30px; 
-        height: 30px;
-        transition: transform 0.2s ease-in-out;
-
-    }
-    #nav-menu ul li a svg:hover {
-        transform: scale(1.2);
-        color: var(--secondary--color);
-
-    }
-
+    
     .mobile-info-bar {
         position: fixed;
         font-family: sans-serif;
@@ -181,7 +248,7 @@ header nav ul li svg:hover {
         background: #252733;
         padding: 5px 12px;
         border-radius: 20px;
-        color: white;
+        color: var(--text-color);
         font-weight: bold;
         font-size: 16px;
         gap: 8px;
@@ -201,6 +268,46 @@ header nav ul li svg:hover {
         height: auto;
         border-radius: 10px;
     }
+    #nav-menu.active {
+        opacity: 1;
+        visibility: visible;
+    }
+    #nav-menu ul {
+        list-style: none;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        margin: 0;
+    }
+    #nav-menu ul li a {
+        color: white;
+        text-decoration: none;
+    }
+    
+    #nav-menu ul li {
+        padding: 0 15px;
+    }
+    #nav-menu ul li a svg {
+        width: 30px; 
+        height: 30px;
+        transition: transform 0.2s ease-in-out;
+    
+    }
+    #nav-menu ul li a svg {
+        width: 30px; 
+        height: 30px;
+        transition: transform 0.2s ease-in-out, fill 0.3s ease-in-out;
+        fill: var(--text-hover-color); 
+    }
+    #nav-menu ul li a:hover svg {
+        transform: scale(1.2);
+        fill: var(--secondary--color) !important; 
+    }
+    header{
+        display: none;
+    }
 }
 
 @media (min-width: 601px) {
@@ -210,47 +317,17 @@ header nav ul li svg:hover {
     .mobile-info-bar {
         display: none;
     }
+    #nav-menu{
+        display: none;
+    }
+
+
 }
 #music-toggle.muted svg {
     filter: brightness(0.5);
 }
 
 #music-toggle.muted svg path {
-    stroke: red;
+    stroke: red !important;
     stroke-width: 2;
 }
-
-/*     <div class="mobile-info-bar">
-        <div class="coin-container">
-            <img src="assets/images/coin.png" alt="Coin"> 
-            <span>3.2K</span>
-        </div>
-        <div class="name-container">
-            <span>Jcl...</span>
-            <img src="assets/images/sad-face.png" alt="Lego Hoofd">
-        </div>
-    </div>
-    */
-
-
-    /* 
-    <nav id="nav-menu">
-    <ul>
-        <li>
-            <a href="#" id="music-toggle">
-                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-music-note-beamed" viewBox="0 0 16 16">
-                    <path d="M6 13c0 1.105-1.12 2-2.5 2S1 14.105 1 13s1.12-2 2.5-2 2.5.896 2.5 2m9-2c0 1.105-1.12 2-2.5 2s-2.5-.895-2.5-2 1.12-2 2.5-2 2.5.895 2.5 2"/>
-                    <path fill-rule="evenodd" d="M14 11V2h1v9zM6 3v10H5V3z"/>
-                    <path d="M5 2.905a1 1 0 0 1 .9-.995l8-.8a1 1 0 0 1 1.1.995V3L5 4z"/>
-                    <line id="mute-line" x1="2" y1="14" x2="14" y2="2" stroke="red" stroke-width="2" style="display: none;" />
-                </svg>
-            </a>
-        </li>
-        
-        <li><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
-            <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492M5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0"/>
-            <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115z"/>
-          </svg></a></li>
-    </ul>
-</nav>
-*/
