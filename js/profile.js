@@ -1,17 +1,17 @@
 const figures = [
     {
         name: "CRUG",
-        image: "./assets/images/episch.png",
+        image: "../assets/images/episch.png",
         rarity: "episch"
     },
     {
         name: "CRUGX",
-        image: "./assets/images/gewoon.png",
+        image: "../assets/images/gewoon.png",
         rarity: "ongewoon"
     },
     {
         name: "CRUGS",
-        image: "./assets/images/legendary.png",
+        image: "../assets/images/legendary.png",
         rarity: "legendary"
     }
 ];
