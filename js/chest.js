@@ -6,22 +6,22 @@ const names = {
 };
 
 const images = {
-    pirate: './assets/images/pirate.png',
-    artic: './assets/images/artic.png',
-    raddus: './assets/images/raddus.png',
-    artic2: './assets/images/artic2.png',
-    artic3: './assets/images/artic3.png',
-    agent: './assets/images/agent.png',
-    anakin: './assets/images/anakin.png',
-    chen: './assets/images/chen.png',
-    cinder: './assets/images/cinder.png'
+    pirate: '../assets/images/pirate.png',
+    artic: '../assets/images/artic.png',
+    raddus: '../assets/images/raddus.png',
+    artic2: '../assets/images/artic2.png',
+    artic3: '../assets/images/artic3.png',
+    agent: '../assets/images/agent.png',
+    anakin: '../assets/images/anakin.png',
+    chen: '../assets/images/chen.png',
+    cinder: '../assets/images/cinder.png'
 };
 
 class SpinnerAnimation {
     constructor({container, list}) {
-        this.tickSound = new Audio("./assets/audio/open.mp3");
+        this.tickSound = new Audio("../assets/audio/open.mp3");
         this.tickSound.playbackRate = 4;
-        this.winSound = new Audio("./assets/audio/win.mp3");
+        this.winSound = new Audio("../assets/audio/win.mp3");
 
         this.spinnerContainer = document.getElementById(container);
         this.spinnerList = document.getElementById(list);
