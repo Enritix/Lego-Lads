@@ -394,7 +394,6 @@ menu {
     scale: 1.1;
 }
 
-/* Shop Popup */
 #shop-popup {
     position: fixed;
     top: 50%;
@@ -587,18 +586,4 @@ margin-top: 20px;
         font-size: 1rem;
         margin-top:20px;
     }
-}
-::-webkit-scrollbar {
-    width: 5px; 
-}
-::-webkit-scrollbar-track {
-    background: var(--primary-color);
-    border-radius: 10px;
-}
-::-webkit-scrollbar-thumb {
-    background: var(--secondary--color);
-    border-radius: 10px;
-}
-::-webkit-scrollbar-thumb:hover {
-    background: var(--tertiarty-color); 
 }

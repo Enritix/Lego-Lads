@@ -331,3 +331,18 @@ header nav ul li svg:hover {
     stroke: red !important;
     stroke-width: 2;
 }
+
+::-webkit-scrollbar {
+    width: 5px; 
+}
+::-webkit-scrollbar-track {
+    background: var(--primary-color);
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+    background: var(--secondary--color);
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--tertiarty-color); 
+}

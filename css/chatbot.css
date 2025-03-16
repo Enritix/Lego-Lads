@@ -185,20 +185,6 @@ h4 ::after{
     
 }
 
-::-webkit-scrollbar {
-    width: 5px; 
-}
-::-webkit-scrollbar-track {
-    background: var(--primary-color);
-    border-radius: 10px;
-}
-::-webkit-scrollbar-thumb {
-    background: var(--secondary--color);
-    border-radius: 10px;
-}
-::-webkit-scrollbar-thumb:hover {
-    background: var(--tertiarty-color); 
-}
 
 @media screen and (max-width: 600px) {
     .chatbot {
