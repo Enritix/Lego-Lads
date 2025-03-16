@@ -1,53 +1,64 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const carouselInner = document.querySelector(".carousel-inner");
-    const carouselItems = document.querySelectorAll(".carousel-item");
-    const prevButton = document.querySelector(".carousel-button.prev");
-    const nextButton = document.querySelector(".carousel-button.next");
-  
-    let currentIndex = Math.floor(carouselItems.length / 2);
-  
-    function updateCarousel() {
-      carouselItems.forEach((item, index) => {
-        const offset = index - currentIndex;
-  
-        item.style.transform = `translateX(${offset * (item.offsetWidth + 20)}px)`;
-  
-        if (offset === 0) {
-          item.classList.add("active");
-        } else {
-          item.classList.remove("active");
-        }
-  
-        item.style.opacity = offset === 0 ? "1" : "0.5";
-        item.style.filter = offset === 0 ? "none" : "blur(3px)";
-      });
+const carousel = document.querySelector('.carousel');
+const images = carousel.querySelectorAll('img');
+const prevButton = document.querySelector('.carousel-button.prev');
+const nextButton = document.querySelector('.carousel-button.next');
+let currentImageIndex = 0;
+
+function updateCarousel() {
+  images.forEach((img, index) => {
+    img.classList.remove('left', 'middle', 'right');
+    img.style.display = 'none';
+
+    let diff = index - currentImageIndex;
+
+    if (diff > 0) {
+      diff = diff % images.length;
+    } else if (diff < 0) {
+      diff = (diff % images.length) + images.length;
     }
-  
-    prevButton.addEventListener("click", () => {
-      currentIndex = (currentIndex - 1 + carouselItems.length) % carouselItems.length;
-      updateCarousel();
-    });
-  
-    nextButton.addEventListener("click", () => {
-      currentIndex = (currentIndex + 1) % carouselItems.length;
-      updateCarousel();
-    });
-  
-    updateCarousel();
 
-    const infoPopup = document.getElementById('info-popup');
-    document.querySelector('.info-icon').addEventListener('click', () => {
-      infoPopup.style.display = 'flex';
-    });
-
-    document.querySelector('.close-button').addEventListener('click', () => {
-        infoPopup.style.display = 'none';
-      });
-
-    window.addEventListener('click', (event) => {
-        if (event.target === infoPopup) {
-          infoPopup.style.display = 'none';
-        }
-      });
+    if (diff === 0) {
+      img.classList.add('middle');
+      img.style.display = 'block';
+    } else if (diff === 1) {
+      img.classList.add('right');
+      img.style.display = 'block';
+    } else if (diff === images.length - 1) {
+      img.classList.add('left');
+      img.style.display = 'block';
+    }
   });
-  
+}
+
+function goToPrev() {
+  currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+  updateCarousel();
+}
+
+function goToNext() {
+  currentImageIndex = (currentImageIndex + 1) % images.length;
+  updateCarousel();
+}
+
+prevButton.addEventListener('click', goToPrev);
+nextButton.addEventListener('click', goToNext);
+
+updateCarousel();
+
+const infoIcon = document.querySelector('.info-icon');
+const popup = document.querySelector('.popup');
+const closeButton = document.querySelector('.close-button');
+
+infoIcon.addEventListener('click', () => {
+  popup.style.display = 'flex';
+});
+
+closeButton.addEventListener('click', () => {
+  popup.style.display = 'none';
+});
+
+window.addEventListener('click', (event) => {
+  if (event.target === popup) {
+    popup.style.display = 'none';
+  }
+});
