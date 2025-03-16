@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="nl-BE">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LegoLads - Home</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/clickergame.css">
+    <script src="../js/audio.js" defer></script>
+    <script src="../js/clicker.js" defer></script>
+</head>
+
+<body>
+    <audio id="clickSound">
+        <source src="../assets/audio/kliksound.mp3" type="audio/mpeg" />
+    </audio>
+    <header>
+      <nav>
+        <ul>
+          <li>
+            <a href=""
+              ><img src="../assets/images/Lego-Lads Logo.png" alt=""
+            /></a>
+          </li>
+          <li id="user-info">
+            <a href="#" id="figure-head"
+              ><img src="../assets/images/17.webp" alt=""
+            /></a>
+            <h1 id="user-name">Naam</h1>
+            <div id="coin-container">
+              <p>3.2K</p>
+            </div>
+          </li>
+          <li>
+            <a href="#"
+              ><svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="size-6"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z"
+                />
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a href="#"
+              ><svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="size-6"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93.398.164.855.142 1.205-.108l.737-.527a1.125 1.125 0 0 1 1.45.12l.773.774c.39.389.44 1.002.12 1.45l-.527.737c-.25.35-.272.806-.107 1.204.165.397.505.71.93.78l.893.15c.543.09.94.559.94 1.109v1.094c0 .55-.397 1.02-.94 1.11l-.894.149c-.424.07-.764.383-.929.78-.165.398-.143.854.107 1.204l.527.738c.32.447.269 1.06-.12 1.45l-.774.773a1.125 1.125 0 0 1-1.449.12l-.738-.527c-.35-.25-.806-.272-1.203-.107-.398.165-.71.505-.781.929l-.149.894c-.09.542-.56.94-1.11.94h-1.094c-.55 0-1.019-.398-1.11-.94l-.148-.894c-.071-.424-.384-.764-.781-.93-.398-.164-.854-.142-1.204.108l-.738.527c-.447.32-1.06.269-1.45-.12l-.773-.774a1.125 1.125 0 0 1-.12-1.45l.527-.737c.25-.35.272-.806.108-1.204-.165-.397-.506-.71-.93-.78l-.894-.15c-.542-.09-.94-.56-.94-1.109v-1.094c0-.55.398-1.02.94-1.11l.894-.149c.424-.07.765-.383.93-.78.165-.398.143-.854-.108-1.204l-.526-.738a1.125 1.125 0 0 1 .12-1.45l.773-.773a1.125 1.125 0 0 1 1.45-.12l.737.527c.35.25.807.272 1.204.107.397-.165.71-.505.78-.929l.15-.894Z"
+                />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                />
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a href="#"
+              ><svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="size-6"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15"
+                />
+              </svg>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <header class="mobile-info-bar">
+      <section class="coin-container">
+        <img src="../assets/images/coin.png" alt="Coin" />
+        <span>3.2K</span>
+      </section>
+
+      <section class="logo-container">
+        <a href="../index.html">
+          <img src="../assets/images/Lego-Lads Logo.png" alt="Lego Lads Logo" />
+        </a>
+      </section>
+
+      <section class="name-container">
+        <span>Jcl...</span>
+        <img src="../assets/images/sad-face.png" alt="Lego Hoofd" />
+      </section>
+    </header>
+
+    <div id="hamburger-menu">☰</div>
+
+    <nav id="nav-menu">
+      <ul>
+        <li>
+          <a href="#" id="music-toggle">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="35"
+              height="35"
+              fill="currentColor"
+              class="bi bi-music-note-beamed"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M6 13c0 1.105-1.12 2-2.5 2S1 14.105 1 13s1.12-2 2.5-2 2.5.896 2.5 2m9-2c0 1.105-1.12 2-2.5 2s-2.5-.895-2.5-2 1.12-2 2.5-2 2.5.895 2.5 2"
+              />
+              <path fill-rule="evenodd" d="M14 11V2h1v9zM6 3v10H5V3z" />
+              <path
+                d="M5 2.905a1 1 0 0 1 .9-.995l8-.8a1 1 0 0 1 1.1.995V3L5 4z"
+              />
+              <line
+                id="mute-line"
+                x1="2"
+                y1="14"
+                x2="14"
+                y2="2"
+                stroke="red"
+                stroke-width="2"
+                style="display: none"
+              />
+            </svg>
+          </a>
+        </li>
+
+        <li>
+          <a href="#"
+            ><svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="35"
+              height="35"
+              fill="currentColor"
+              class="bi bi-gear"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492M5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0"
+              />
+              <path
+                d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115z"
+              />
+            </svg>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-robot"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M6 12.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5M3 8.062C3 6.76 4.235 5.765 5.53 5.886a26.6 26.6 0 0 0 4.94 0C11.765 5.765 13 6.76 13 8.062v1.157a.93.93 0 0 1-.765.935c-.845.147-2.34.346-4.235.346s-3.39-.2-4.235-.346A.93.93 0 0 1 3 9.219zm4.542-.827a.25.25 0 0 0-.217.068l-.92.9a25 25 0 0 1-1.871-.183.25.25 0 0 0-.068.495c.55.076 1.232.149 2.02.193a.25.25 0 0 0 .189-.071l.754-.736.847 1.71a.25.25 0 0 0 .404.062l.932-.97a25 25 0 0 0 1.922-.188.25.25 0 0 0-.068-.495c-.538.074-1.207.145-1.98.189a.25.25 0 0 0-.166.076l-.754.785-.842-1.7a.25.25 0 0 0-.182-.135"
+              />
+              <path
+                d="M8.5 1.866a1 1 0 1 0-1 0V3h-2A4.5 4.5 0 0 0 1 7.5V8a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1v1a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-1a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1v-.5A4.5 4.5 0 0 0 10.5 3h-2zM14 7.5V13a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V7.5A3.5 3.5 0 0 1 5.5 4h5A3.5 3.5 0 0 1 14 7.5"
+              />
+            </svg>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <!DOCTYPE html>
+    <html lang="nl">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Klik Spel</title>
+        <link rel="stylesheet" href="clickergame.css">
+    </head>
+    <main>
+        <section class="gameplay">
+            <a  class="close" href="index.html">❌</a>
+            <header class="header-container">
+                <h1>klik spel
+                    <button class="tooltip-button" aria-label="Meer informatie" onclick="openInfoPopup()">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                            <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 0 0 1 2 0"/>
+                        </svg>
+                    </button>
+                </h1>
+            </header>
+            <article class="brick-counter">
+                <h2>Stenen <span class="brick-cost">5000</span></h2>
+                <img src="../assets/images/greenblock.png" alt="Green Brick" class="brick-img" onclick="incrementBrick()" draggable="false">
+                <footer class="statistics">
+                    <p>SPC: <span id="BPC-text"></span></p>
+                    <p>SPS: <span id="BPS-text"></span></p>
+                </footer>
+
+            <button id="clicker-shop" aria-label="Open de winkel">🛒</button>
+            <dialog id="shop-popup">
+            <section class="shop-content">
+                <header>
+                    <h2>winkel</h2>
+                </header>
+                <img src="../assets/images/coin.png" alt="Munt icoon">
+                <p>Kost: <strong>100 stenen per coin</strong></p>
+                <form id="buy-form">
+                    <label for="quantity">Aantal coins:</label>
+                    <input type="number" id="quantity" name="quantity" min="1" value="1" required>
+                    <p>Totale kosten: <span id="total-cost">100</span> stenen</p>
+                    <button type="submit" id="buy-item">Koop</button>
+                </form>
+                <button class="text-lego-stroke" id="close-shop" data-text="Sluiten">Sluiten</button>
+            </section>
+            </dialog>
+
+            </article>
+            <div class="skills">
+            </div>
+            <aside class="upgrades">
+                <article class="upgrade" onclick="buyClick()">
+                    <figure class="upgrade-icon">
+                        <img src="../assets/images/lego-tool-2.png" alt="Clicker Upgrade" class="upgrade-img">
+                    </figure>
+                    <section class="upgrade-details">
+                        <h3>Hamer</h3>
+                        <p>kost: <span class="clicker-cost">10</span> <img src="../assets/images/greenblock.png" alt="Brick" class="upgrade-brick-img"></p>
+                        <p>nivau: <span class="clicker-level">0</span></p>
+                        <p>+<span class="clicker-increase">1</span> Stenen per klik</p>
+                    </section>
+                </article>
+        
+                <article class="upgrade" onclick="buySaw()">
+                    <figure class="upgrade-icon">
+                        <img src="../assets/images/lego-tool-1.png" alt="Saw Upgrade" class="upgrade-img">
+                    </figure>
+                    <section class="upgrade-details">
+                        <h3>Zaag</h3>
+                        <p>kost: <span class="saw-cost">130</span> <img src="../assets/images/greenblock.png" alt="Brick" class="upgrade-brick-img"></p>
+                        <p>nivau: <span class="saw-level">0</span></p>
+                        <p>+<span class="saw-increase">4</span> stenen per seconde</p>
+                    </section>
+                </article>
+                <article class="upgrade" onclick="buyDril()">
+                    <figure class="upgrade-icon">
+                        <img src="../assets/images/lego-tool-3.png" alt="Drill Upgrade" class="upgrade-img">
+                    </figure>
+                    <section class="upgrade-details">
+                        <h3>Boor</h3>
+                        <p>kost: <span class="dril-cost">850</span> <img src="../assets/images/greenblock.png" alt="Brick" class="upgrade-brick-img"></p>
+                        <p>nivau: <span class="dril-level">0</span></p>
+                        <p>+<span class="dril-increase">24</span> stenen per seconde</p>
+                    </section>
+                </article>
+            </aside>
+
+                <div class="popup-overlay" id="popupOverlay" onclick="closeUpgrades()"></div>
+                <div class="upgrades-popup" id="upgradesPopup">
+                    <h3>Upgrades</h3>
+                    <aside class="upgrades">
+                        <article class="upgrade" onclick="buyClick()">
+                            <figure class="upgrade-icon">
+                                <img src="../assets/images/lego-tool-2.png" alt="Clicker Upgrade" class="upgrade-img">
+                            </figure>
+                            <section class="upgrade-details">
+                                <h3>Hamer</h3>
+                                <p>kost: <span class="clicker-cost">10</span> <img src="../assets/images/greenblock.png" alt="Brick" class="upgrade-brick-img"></p>
+                                <p>nivau: <span class="clicker-level">0</span></p>
+                                <p>+<span class="clicker-increase">1</span> Stenen per klik</p>
+                            </section>
+                        </article>
+                        <article class="upgrade" onclick="buySaw()">
+                            <figure class="upgrade-icon">
+                                <img src="../assets/images/lego-tool-1.png" alt="Saw Upgrade" class="upgrade-img">
+                            </figure>
+                            <section class="upgrade-details">
+                                <h3>Zaag</h3>
+                                <p>kost: <span class="saw-cost">130</span> <img src="../assets/images/greenblock.png" alt="Brick" class="upgrade-brick-img"></p>
+                                <p>nivau: <span class="saw-level">0</span></p>
+                                <p>+<span class="saw-increase">4</span> stenen per seconde</p>
+                            </section>
+                        </article>
+                        <article class="upgrade" onclick="buyDril()">
+                            <figure class="upgrade-icon">
+                                <img src="../assets/images/lego-tool-3.png" alt="Drill Upgrade" class="upgrade-img">
+                            </figure>
+                            <section class="upgrade-details">
+                                <h3>Boor</h3>
+                                <p>kost: <span class="dril-cost">850</span> <img src="../assets/images/greenblock.png" alt="Brick" class="upgrade-brick-img"></p>
+                                <p>nivau: <span class="dril-level">0</span></p>
+                                <p>+<span class="dril-increase">24</span> stenen per seconde</p>
+                            </section>
+                        </article>
+                    </aside>
+                    <button class="text-lego-stroke popup-close" data-text="Sluiten" onclick="closeUpgrades()">Sluiten</button>
+
+                    <footer class="statistics">
+                        <p>SPC: <span id="BPC-text"></span></p>
+                        <p>SPS: <span id="BPS-text"></span></p>
+                        
+                    </footer>
+                </div>
+            </aside>
+            <dialog id="infoPopup">
+                <article class="popup-content">
+                    <h2>Over het Klik Spel</h2>
+            
+                    <div class="info-section">
+                        <p><strong>🧱 Steen Clicker Game</strong></p>
+                        <p>In dit spel draait alles om het verzamelen van bricks door erop te klikken. Met deze stenen kun je verschillende upgrades en aankopen doen om je voortgang te versnellen.</p>
+                    </div>
+            
+                    <div class="info-section">
+                        <p><strong>🎮 Gameplay</strong></p>
+                        <p>🧱 <strong>Click for steen</strong><br>
+                        Klik op de brick om stenen te verzamelen.<br>
+                        Hoe meer je klikt, hoe meer stenen je verdient.</p>
+                    </div>
+            
+                    <div class="info-section">
+                        <p>🔧 <strong>Upgrades</strong><br>
+                        Gebruik stenen om je clicker te upgraden en meer stenen per klik te krijgen.<br>
+                        Verbeter je tools om automatisch stenen per seconde te verdienen.</p>
+                    </div>
+            
+                    <div class="info-section">
+                        <p>💰 <strong>Stenen omzetten in Coins</strong><br>
+                        Verdien genoeg stenen en ruil ze in voor coins.<br>
+                        Coins geven toegang tot exclusieve aankopen.</p>
+                    </div>
+            
+                    <div class="info-section">
+                        <p>🧑‍🎨 <strong>Minifigs kopen</strong><br>
+                        Gebruik je coins om minifigs te kopen en verzamel verschillende figuren!</p>
+                    </div>
+            
+                    <div class="info-section">
+                        <p>📊 <strong>Strategie</strong><br>
+                        ✔️ Actief klikken om snel stenen te verzamelen.<br>
+                        ✔️ Passieve upgrades kopen voor een constante stroom stenen.</p>
+                    </div>
+            
+                    <div class="info-section">
+                        <p>📈 <strong>Statistieken</strong><br>
+                        <strong>SPC:</strong> Stenen per klik<br>
+                        <strong>SPS:</strong> Stenen per seconde</p>
+                    </div>
+            
+                    <menu>
+                        <button id="closeInfoPopup" onclick="closeInfoPopup()">Sluiten</button>
+                    </menu>
+                </article>
+            </dialog>
+            <button class="upgrades-button" onclick="openUpgrades()">Upgrades</button>
+        </section>
+    </main>
+</body>
+
+</html>
