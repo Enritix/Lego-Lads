@@ -196,7 +196,7 @@ main {
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 15vw;
+  width: 40vw;
   max-width: 150px;
   transition: transform 0.3s ease, opacity 0.3s ease, filter 0.3s ease,
     display 0.3s ease;
@@ -256,4 +256,73 @@ main {
 .indicator.active {
   background: #ffcc00;
   transform: scale(1.2);
+}
+
+@media (max-width: 600px) {
+  body {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+  }
+
+  header {
+    grid-column: 1 / -1;
+  }
+
+  nav {
+    display: none;
+  }
+
+  main {
+    height: auto;
+    padding: 40px;
+  }
+
+  .genre-selector h1 {
+    font-size: 30px;
+    width: 100%;
+  }
+
+  .info-icon {
+    font-size: 30px;
+  }
+
+  .popup-content {
+    width: 50%;
+  }
+
+  #popup-title {
+    width: 30%;
+  }
+
+  /* -------------------------Carrousel------------------------ */
+
+  .carousel-button {
+    position: fixed;
+    top: 65%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 18px;
+  }
+
+  .carousel-button.prev {
+    left: 70px;
+  }
+
+  .carousel-button.next {
+    right: 70px;
+  }
+
+  .carousel-item-name {
+    display: none;
+  }
+  .carousel {
+    margin-top: 25%;
+  }
 }
