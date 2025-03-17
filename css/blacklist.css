@@ -5,10 +5,11 @@ body {
   height: 100vh;
   margin: 0;
   padding: 0;
-  overflow: hidden;
   background-color: var(--secondary--color);
   color: var(--text-color);
   font-family: sans-serif;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 body::before {
   content: "";
@@ -232,8 +233,9 @@ main {
 
   main {
     grid-column: 2;
-    width: 70%;
-    margin-top: 80px;
+    width: 100%;
+    margin-top: 10px;
+    height: auto;
   }
 
   .blacklist-container {
@@ -248,8 +250,10 @@ main {
   .blacklist {
     width: max-content;
     max-width: 80%;
+    max-height: none;
     padding: 10px;
     justify-content: center;
+    padding-top: 20px;
   }
 
   .figure {
@@ -310,6 +314,4 @@ main {
   .popup-content {
     width: 60%;
   }
-
-
 }
