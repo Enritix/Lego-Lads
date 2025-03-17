@@ -196,7 +196,7 @@ header nav ul li svg:hover {
         font-size: 25px;
         background: none;
         border: none;
-        color: white;
+        color: var(--text-color);
         cursor: pointer;
         z-index: 1000000;
         background-color: var(--primary-color);

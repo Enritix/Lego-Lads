@@ -1,0 +1,277 @@
+body {
+    display: grid;
+    grid-template-columns: 100px auto; 
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+    background-color: var(--secondary--color);
+    color: var(--text-color);
+    font-family: sans-serif;
+}
+
+body::before {
+    content: "";
+    position: absolute;
+    top: 10%;
+    background-image: url(../assets/images/background.png);
+    opacity: 0.2;
+    z-index: 0; 
+    width: 100%;
+    height: 80vh; 
+}
+
+main {
+    background-color: var(--primary-color);
+    border-radius: 20px;
+    width: 80vw;
+    height: 90vh;
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    margin: auto;
+    position: relative;
+    z-index: 1;
+    padding: 20px;
+    overflow: hidden;
+}
+
+.divider {
+    width: 80%;
+    height: 2px;
+    background-color: var(--text-color);
+    margin: 20px 0;
+    opacity: 0.5;
+}
+
+.chest-shop {
+    width: 100%;
+    text-align: center;
+    border-radius: 15px;
+}
+
+.tooltip-button{
+    border: none;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+}
+
+
+
+.carousel-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 80vw; 
+    max-width: 800px; 
+    overflow: hidden;
+}
+
+.carousel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+    height: 200px; 
+}
+
+.carousel img {
+    width: 15vw; 
+    max-width: 150px; 
+    height: auto;
+    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+    opacity: 0;
+    filter: blur(3px);
+    position: absolute;
+    display: none;
+}
+
+.carousel img.middle {
+    width: 20vw; 
+    max-width: 200px;
+    opacity: 1;
+    filter: none;
+    display: block;
+    z-index: 2;
+    transform: translateX(0);
+}
+
+.carousel img.left {
+    transform: translateX(-20vw) scale(0.8); 
+    opacity: 0.5;
+    display: block;
+}
+
+.carousel img.right {
+    transform: translateX(20vw) scale(0.8); 
+    opacity: 0.5;
+    display: block;
+}
+
+.arrow {
+    font-size: 1.5em; 
+    cursor: pointer;
+    padding: 5px;
+    user-select: none;
+    z-index: 3;
+    transform: skewX(-20deg);
+    margin-left: 20px;
+    margin-right: 20px;
+    background-color: rgba(217, 217, 217, 0.4);
+    border: none;
+    
+}
+
+#arrow-right{
+    transform: skewX(+15deg);
+
+}
+
+
+.details {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.rarity {
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 5px 10px;
+    border-radius: 5px;
+    display: inline-block;
+}
+
+.coins {
+    margin-top: 5px;
+    font-size: 1.2rem;
+}
+
+
+
+
+
+#chest-products {
+    display: flex; 
+    justify-content: center; 
+    gap: 20px; 
+    padding: 0;
+    list-style: none; 
+    align-items: center;
+}
+
+#chest-products li {
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    justify-content: center;
+    background-color: var(--primary-color);
+    padding: 10px;
+    border-radius: 10px;
+    width: 120px; 
+    text-align: center;
+}
+.rarity {
+    display: inline-block;
+    font-size: 12px;
+    padding: 5px 10px;
+    text-transform: uppercase;
+    font-size: 14px;
+    padding: 5px 15px;
+    display: inline-block;
+    text-transform: uppercase;
+    transform: skew(-20deg); 
+    border-radius: 0;
+}
+
+
+.episch {
+    background-color: rgb(77, 14, 77); 
+    color: #FF00FF; 
+    border: 2px solid #FF00FF;
+}
+
+.gewoon {
+    background-color: darkgreen;
+    color: #00FF7F; 
+    border: 2px solid #00FF7F;
+}
+
+.legendary {
+    background-color: darkgoldenrod; 
+    color: gold; 
+    border: 2px solid gold;
+}
+.key {
+    background-color: rgb(6, 6, 153); 
+    color: rgb(63, 127, 223); 
+    border: 2px solid rgb(63, 127, 223);
+}
+.header-container h1{
+    
+}
+.header-container h1::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 4px;
+    background-color: var(--secondary--color);
+    margin-top: 5px;
+
+}
+.chest-shop h1{
+    margin: 0;
+}
+
+#char-info{
+    position: absolute;
+    bottom: 55%;
+    z-index: 1000;
+    left:33%;
+}
+.coins{
+    margin: 0;
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.triangle{
+    color: #3f3f3f;
+}
+.triangle:hover{
+    color: var(--secondary--color);
+    cursor: pointer;
+}
+
+#char-name{
+    margin: 0;
+    font-family: Oswald;
+    letter-spacing: 2px;
+}
+#coin-price{
+    height: auto;
+    width: 20px;
+    margin-right: 10px;
+}
+
+
+#chest-products li img{
+    height: auto;
+    width: 100px;
+}
+@media (max-width: 600px) {
+    body {
+        grid-template-columns: 1fr; 
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    main {
+        width: 90vw; 
+        height: 80vh;
+        margin: 0 auto; 
+    }
+}
