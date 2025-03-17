@@ -138,33 +138,6 @@ main {
   overflow: hidden;
 }
 
-.carousel-inner {
-  display: flex;
-  position: relative;
-}
-
-.carousel-item {
-  width: 200px;
-  opacity: 0.5;
-  filter: blur(3px);
-  transition: transform 0.3s ease, opacity 0.3s ease, filter 0.3s ease;
-  margin-top: 40%;
-}
-
-.carousel-item.active {
-  opacity: 1;
-  filter: none;
-}
-
-.carousel-item img {
-  width: 100%;
-}
-
-.carousel-item p {
-  font-family: Bangers;
-  font-size: 26px;
-}
-
 .carousel-button {
   position: absolute;
   top: 50%;
@@ -179,16 +152,19 @@ main {
 
 .carousel-button.prev {
   left: 10px;
+  position: absolute;
 }
 
 .carousel-button.next {
   right: 10px;
+  position: absolute;
 }
 
 .carousel {
   position: relative;
   width: 100%;
   height: 400px;
+  position: relative;
 }
 
 .carousel img {
@@ -213,6 +189,8 @@ main {
   margin-top: 15%;
   border-radius: 15px;
   height: 40%;
+  padding-left: 50px;
+  padding-right: 50px;
 }
 
 .carousel img.left {
@@ -223,6 +201,8 @@ main {
   margin-top: 15%;
   border-radius: 15px;
   height: 40%;
+  padding-left: 50px;
+  padding-right: 50px;
 }
 
 .carousel img.right {
@@ -233,6 +213,8 @@ main {
   margin-top: 15%;
   border-radius: 15px;
   height: 40%;
+  padding-left: 50px;
+  padding-right: 50px;
 }
 
 .carousel-indicators {
