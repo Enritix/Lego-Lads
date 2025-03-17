@@ -251,3 +251,17 @@ select::-ms-expand {
     align-items: center;
     justify-content: center;
 }
+
+.text-lego-stroke {
+    font-size: clamp(20px, 2vw, 30px) !important;
+    padding: 10px 5vw !important;
+}
+
+.text-lego-stroke::before {
+    -webkit-text-stroke: clamp(3px, 0.2vw, 3px) var(--stroke-inner-color) !important;
+}
+
+
+.text-lego-stroke::after {
+    -webkit-text-stroke: clamp(4px, 0.7vw, 7px) var(--stroke-outer-color) !important;
+}
