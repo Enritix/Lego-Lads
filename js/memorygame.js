@@ -4,15 +4,17 @@ document.addEventListener("DOMContentLoaded", async () => {
     let correctTries = 0;
     let incorrectTries = 0;
     let matchedPairs = 0;
-    const totalPairs = 8;
-    
+    const totalPairs = 6;
+
+    var time = 120;
+
     const gameContainer = document.createElement("div");
     gameContainer.id = "memory-game";
     document.querySelector(".memory-container").appendChild(gameContainer);
 
     async function fetchLegoData() {
         const randomPage = Math.floor(Math.random() * 10) + 1;
-        const apiUrl = `https://rebrickable.com/api/v3/lego/${dataType}/?page_size=8&page=${randomPage}`;
+        const apiUrl = `https://rebrickable.com/api/v3/lego/${dataType}/?page_size=${totalPairs}&page=${randomPage}`;
         try {
             const response = await fetch(apiUrl, {
                 headers: { Authorization: `key ${apiKey}` }
@@ -37,19 +39,19 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         let cards = items.flatMap(item => [{ id: item.set_num, img: item.set_img_url }, { id: item.set_num, img: item.set_img_url }]);
         cards = shuffle(cards);
-        
+
         cards.forEach(item => {
             const card = document.createElement("div");
             card.classList.add("card");
             card.dataset.id = item.id;
-            
+
             const front = document.createElement("div");
             front.classList.add("front");
             front.style.backgroundImage = `url(${item.img})`;
-            
+
             const back = document.createElement("div");
             back.classList.add("back");
-            
+
             card.appendChild(front);
             card.appendChild(back);
             gameContainer.appendChild(card);
@@ -72,7 +74,9 @@ document.addEventListener("DOMContentLoaded", async () => {
                             matchedPairs++;
                             correctTries++;
                             if (matchedPairs === totalPairs) {
-                                openPopup();
+                                PauseTimer();
+                                const earnedCoins = calculateCoins();
+                                openPopup(true, earnedCoins);
                             }
                         } else {
                             flippedCards.forEach(c => c.classList.remove("flipped"));
@@ -85,20 +89,35 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     }
 
-    function openPopup() {
+    function calculateCoins() {
+        const remainingTime = GetTime();
+        return remainingTime;
+    }
+
+    function openPopup(success, earnedCoins = 0) {
         const popup = document.getElementById("popup");
+        const popupContent = document.getElementById("popup-content");
         popup.style.display = "flex";
 
-        const confettiScript = document.createElement("script");
-        confettiScript.src = "https://cdn.jsdelivr.net/npm/canvas-confetti@1.3.1";
-        confettiScript.onload = () => {
-            confetti({
-                particleCount: 150,
-                spread: 150,
-                origin: { y: 0.6 }
-            });
-        };
-        document.body.appendChild(confettiScript);
+        if (success) {
+            popupContent.querySelector("h2").textContent = `Gefeliciteerd! Je bent gewonnen!`;
+            popupContent.querySelector("p").textContent = `Je hebt ${earnedCoins} coins verdiend!`;
+        } else {
+            popupContent.querySelector("h2").textContent = "Jammer, je hebt het niet gehaald. Volgende keer beter!";
+        }
+
+        if (success) {
+            const confettiScript = document.createElement("script");
+            confettiScript.src = "https://cdn.jsdelivr.net/npm/canvas-confetti@1.3.1";
+            confettiScript.onload = () => {
+                confetti({
+                    particleCount: 150,
+                    spread: 150,
+                    origin: { y: 0.6 }
+                });
+            };
+            document.body.appendChild(confettiScript);
+        }
     }
 
     document.getElementById("new-game-btn").addEventListener("click", () => {
@@ -111,20 +130,45 @@ document.addEventListener("DOMContentLoaded", async () => {
             loadGame();
         }, 600);
     });
-    
 
     document.getElementById("main-menu-btn").addEventListener("click", () => {
-        document.getElementById("popup").style.display = "none"
+        document.getElementById("popup").style.display = "none";
         window.location.href = "../index.html";
     });
 
     async function loadGame() {
         const items = await fetchLegoData();
         if (items.length) {
+            PauseTimer();
+            setTimer(time);
             createGameBoard(items);
             addCardClickHandlers();
         }
     }
 
+    function setTimer(seconds) {
+        display.style.height = pixel_width * height_pixels + "px";
+    
+        const timerSeconds = parseInt(seconds);
+        if (!isNaN(timerSeconds) && timerSeconds > 0) {
+            StartTimer(timerSeconds);
+        }
+    
+        const timerCheckInterval = setInterval(() => {
+            if (GetTime() <= 0) {
+                openPopup(false);
+                clearInterval(timerCheckInterval);
+                PauseTimer();
+            }
+        }, 500);
+    }
     loadGame();
 });
+
+function openInfoPopup() {
+    document.getElementById("infoPopup").showModal();
+}
+
+function closeInfoPopup() {
+    document.getElementById("infoPopup").close();
+}

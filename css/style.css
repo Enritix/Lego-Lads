@@ -34,11 +34,11 @@ html {
 }
 
 html, body {
-  cursor: url('../assets/images/cursor_arrow.cur'), auto;
+  cursor: url('../assets/images/cursor_arrow.cur'), auto !important;
 }
 
 a, button, label, input {
-  cursor: url('../assets/images/cursor_hand.cur'), pointer;
+  cursor: url('../assets/images/cursor_hand.cur'), pointer !important;
 }
 
 header{
