@@ -4,11 +4,12 @@ html {
     background-image: url(../assets/images/lego-background.png);
     background-size: cover;
     background-position: center;
+    overflow: hidden !important;
+}
+
+/* #game-container {
     overflow: hidden;
-}
-*{
-    outline: solid red;
-}
+} */
 
 #game-container #legofactory-bg {
     position: absolute;
@@ -129,7 +130,7 @@ html {
 
     #text-content {
         position: absolute;
-        width: 45vh;
+        width: 43vh;
         top: 25%;
         left: -30%;
     }
@@ -140,16 +141,17 @@ html {
 
     #textbubble-container input{
         position: absolute;
-        width: 30vh;
+        width: 35vh;
         height: auto;
-        top: 57%;
-        left: -30%;
+        top: 59%;
+        left: -40%;
         visibility: hidden;
     }
 
     #textbubble-container #submit-label {
-        top: 59%;
-        left: 0;
+        width: 30vh;
+        top: 61%;
+        left: -35%;
     }
 
     #game-container #factoryworker {
