@@ -274,7 +274,7 @@ header {
 
 .popup {
     position: absolute;
-  display: flex;
+    display: flex;
     top: 30%;
     left: 50%;
     transform: translate(-50%, -50%);
