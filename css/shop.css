@@ -306,8 +306,6 @@ main {
 #popup-price,#popup-balance{
     color: #00FF7F;
 }
-
-
 @keyframes moveAndShrink {
     0% {
         transform: scale(1) translate(0, 0);
@@ -318,7 +316,6 @@ main {
         opacity: 0;
     }
 }
-
 .popup-animation {
     transition: all 0.5s ease-in-out;
 }
@@ -326,7 +323,6 @@ main {
 .animate-move {
     animation: moveAndShrink 3s forwards;
 }
-
 #timer-shop{
     display: flex;
     align-items: center;
@@ -340,8 +336,6 @@ main {
     height: auto;
     width: 40px;
 }
-
-
 @media (max-width: 600px) {
     body {
         grid-template-columns: 1fr; 
@@ -350,7 +344,6 @@ main {
         align-items: center;
         justify-content: center;
     }
-
     main {
         width: 90vw; 
         height: 80vh;
