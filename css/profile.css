@@ -27,6 +27,11 @@ main {
     letter-spacing: 2px;
     font-family: Oswald;
 }
+
+#inventory a {
+    text-decoration: none;
+
+}
 .container {
     display: grid;
     grid-template-columns: 1fr 1fr;
