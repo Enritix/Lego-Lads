@@ -19,5 +19,22 @@ document.addEventListener('DOMContentLoaded', function() {
         infoPopup.style.display = 'none';
       }
     });
+
+    //Reden
+
+    const redenPopup = document.getElementById('reden-popup');
+    document.querySelector('.reason-btn').addEventListener('click', () => {
+      redenPopup.style.display = 'flex';
+    });
+  
+    document.querySelector('.close-reden').addEventListener('click', () => {
+      redenPopup.style.display = 'none';
+    });
+  
+    window.addEventListener('click', (event) => {
+      if (event.target === redenPopup) {
+        redenPopup.style.display = 'none';
+      }
+    });
   });
   
