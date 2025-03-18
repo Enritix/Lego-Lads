@@ -129,8 +129,8 @@ h2::after {
   .close{
     display: flex;
     position: absolute;
-    right: -160%;
-    top: -2%; 
+    right: 17%;
+    top: 4%; 
 }
 a{
     text-decoration: none;
@@ -265,8 +265,8 @@ a{
     .close{
         display: flex;
         position: absolute;
-        right: -35%;
-        top: -2%; 
+        right: 12%;
+        top: 12%; 
     }
 
 
