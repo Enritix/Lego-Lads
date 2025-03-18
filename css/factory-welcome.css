@@ -6,6 +6,9 @@ html {
     background-position: center;
     overflow: hidden;
 }
+*{
+    outline: solid red;
+}
 
 #game-container #legofactory-bg {
     position: absolute;
@@ -14,6 +17,7 @@ html {
     z-index: -1;
     top: 3%;
     left: 5%;
+    
 }
 
 #textbubble-container {
@@ -89,7 +93,7 @@ html {
 
 #game-container #factoryworker {
     position: absolute;
-    width: 20vw;
+    width: 40vh;
     top: 37%;
     left: 75%;
     z-index: 2;
@@ -111,9 +115,8 @@ html {
     }
 
     #textbubble-container {
-        width: 12vh;
-        top: 20%;
-        left: 35%;
+        top: 3%;
+        left: 25%;
         z-index: 1;
         display: flex;
         align-items: center;
@@ -128,11 +131,11 @@ html {
         position: absolute;
         width: 45vh;
         top: 25%;
-        left: -160%;
+        left: -30%;
     }
 
     #text-content p {
-        font-size: 13pt;
+        font-size: 16pt;
     }
 
     #textbubble-container input{
@@ -140,20 +143,19 @@ html {
         width: 30vh;
         height: auto;
         top: 57%;
-        left: -170%;
+        left: -30%;
         visibility: hidden;
     }
 
     #textbubble-container #submit-label {
         top: 59%;
-        left: -80%;
+        left: 0;
     }
 
     #game-container #factoryworker {
         position: absolute;
-        width: 40vw;
-        top: 62%;
-        left: 55%;
+        top: 45%;
+        left: 50%;
     }
 
     #game-container #forklift {

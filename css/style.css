@@ -105,8 +105,8 @@ header nav ul li svg:hover {
 }
 
 #figure-head img {
-  width: 90px;
-  height: 90px;
+  width: 66px;
+  height: auto;
 }
 
 #user-name {
@@ -262,9 +262,13 @@ header nav ul li svg:hover {
         font-size: 16px;
         gap: 8px;
     }
-    .coin-container img, .name-container img {
+    .coin-container img {
         width: 24px;
         height: 24px;
+    }
+    .name-container img{
+        height: auto;
+        width: 24px;
     }
     .logo-container {
         flex: 1;
