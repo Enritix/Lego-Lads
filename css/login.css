@@ -1,3 +1,8 @@
+/* *{
+    outline: red 3px solid;
+}
+ */
+
 body {
     height: 100vh;
     margin: 0;
@@ -263,16 +268,15 @@ input[type="checkbox"] {
 @media (max-width: 600px) {
 
     body {
-        grid-template-columns: 1fr;
-        grid-template-rows: auto;
+        display: flex;
+        /* grid-template-columns: 1fr; */
+        /* grid-template-rows: auto; */
+        justify-content: center;
+        align-items: center;
         height: auto;
-        overflow: auto;
+        overflow: hidden;
     }
 
-    header{
-        grid-column: 1 / -1;
-
-    }
 
     nav{
         display: none;
@@ -280,15 +284,22 @@ input[type="checkbox"] {
 
     main {
         height: auto;
-        padding: 10px;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
     }
 
 
     .resultaat-container {
-        height: 90vh; 
-        width: 90%; 
-        padding: 10px; 
-        overflow-y: auto; 
+        height: 80vh; 
+        width: 80%; 
+        padding: 10px;
+        overflow: hidden; 
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     .registration-form h2 {
@@ -301,14 +312,14 @@ input[type="checkbox"] {
         padding: 5px 10px;
     }
 
-    .figuren-lijst {
+    /* .figuren-lijst {
         grid-template-columns: 1fr;
 
     }
 
     .figuur {
         width: 100%;
-    }
+    } */
 
     .form-group {
         width: 50vh;
@@ -317,7 +328,7 @@ input[type="checkbox"] {
   
     .stay-logged-in{
     position: absolute; 
-    left: 1%; 
+    left: 17%; 
     top: calc(100% - -5px); 
     margin: 0; 
     width: 60%;
@@ -328,7 +339,7 @@ input[type="checkbox"] {
     .forgot-password {
         font-size: 0.6em; 
         position: absolute; 
-        right: 5%; 
+        right: 10%; 
         top: calc(100% - -10px); 
         margin: 0; 
         width: 40%;
