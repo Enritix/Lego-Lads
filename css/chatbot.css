@@ -80,6 +80,7 @@ aside {
     align-items: center;
     flex-direction: column;
     width: 90%;
+    overflow-x: hidden;
 }
 
 .chat-container {
