@@ -89,7 +89,7 @@ html {
 
 #game-container #factoryworker {
     position: absolute;
-    width: 40vh;
+    width: 20vw;
     top: 37%;
     left: 75%;
     z-index: 2;
@@ -111,8 +111,9 @@ html {
     }
 
     #textbubble-container {
-        top: 3%;
-        left: 25%;
+        width: 12vh;
+        top: 20%;
+        left: 35%;
         z-index: 1;
         display: flex;
         align-items: center;
@@ -127,11 +128,11 @@ html {
         position: absolute;
         width: 45vh;
         top: 25%;
-        left: -30%;
+        left: -160%;
     }
 
     #text-content p {
-        font-size: 16pt;
+        font-size: 13pt;
     }
 
     #textbubble-container input{
@@ -139,19 +140,20 @@ html {
         width: 30vh;
         height: auto;
         top: 57%;
-        left: -30%;
+        left: -170%;
         visibility: hidden;
     }
 
     #textbubble-container #submit-label {
         top: 59%;
-        left: 0;
+        left: -80%;
     }
 
     #game-container #factoryworker {
         position: absolute;
-        top: 45%;
-        left: 50%;
+        width: 40vw;
+        top: 62%;
+        left: 55%;
     }
 
     #game-container #forklift {
