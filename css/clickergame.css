@@ -34,6 +34,7 @@ main {
     background-color: var(--secondary--color);
     margin-top: 5px;
 }
+
 .gameplay {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
