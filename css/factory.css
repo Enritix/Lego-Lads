@@ -16,11 +16,11 @@ body {
 body::before {
     content: "";
     position: absolute;
-    top: 10%;
+    top: 10vh;
     background-image: url(../assets/images/background.png);
     opacity: 0.2;
     z-index: 0;
-    width: 100%;
+    width: 100vw;
     height: 80vh;
 }
 
@@ -36,8 +36,8 @@ main#mobile {
 
 #factory-machine-desktop {
     position: absolute;
-    left: 0;
-    bottom: -5%;
+    left: 0vw;
+    bottom: -5vh;
     height: 80vh;
     width: auto;
     z-index: 3;
@@ -45,8 +45,8 @@ main#mobile {
 
 #factory-belt-desktop {
     position: absolute;
-    left: 5%;
-    bottom: -1%;
+    left: 5vw;
+    bottom: -1vh;
     height: 28vh;
     width: auto;
 }
@@ -56,8 +56,8 @@ main#mobile {
     justify-content: space-between;
     gap: 50px;
     position: absolute;
-    bottom: 18%;
-    right: 6.5%;
+    bottom: 18vh;
+    right: 6.5vw;
     width: auto;
 }
 
@@ -68,8 +68,8 @@ main#mobile {
 
 #factory-machine-tube-desktop {
     position: absolute;
-    top: 2%;
-    left: 10%;
+    top: 2vh;
+    left: 10vw;
     height: 35vh;
     width: auto;
 }
@@ -79,9 +79,9 @@ main#mobile {
     justify-content: space-between;
     gap: 50px;
     position: absolute;
-    bottom: 27%;
-    left: -50%;
-    /* eindigt met right: 8%; */
+    bottom: 27vh;
+    left: -50vw;
+    /* eindigt met right: -50vw; */
     width: auto;
     animation: activateFactoryBelt 7s ease-in-out forwards;
 }
@@ -102,7 +102,7 @@ main#mobile {
 
 @keyframes activateFactoryBelt {
     0% {
-        left: -50%;
+        left: -50vw; /* Converted from -50% */
         opacity: 0;
     }
 
@@ -111,13 +111,13 @@ main#mobile {
     }
 
     100% {
-        left: 8%;
+        left: 8vw; /* Converted from 8% */
     }
 }
 
 @keyframes activateFactoryBeltMobile {
     0% {
-        left: -250%;
+        left: -250vw;
         opacity: 0;
     }
 
@@ -126,7 +126,7 @@ main#mobile {
     }
 
     100% {
-        left: -175%;
+        left: -175vw;
     }
 }
 
@@ -140,8 +140,8 @@ main#mobile {
         padding: 5px;
         display: block;
         position: fixed;
-        bottom: 5px;
-        left: 15px;
+        bottom: 5vh;
+        left: 1.5vw;
         font-size: 35px;
         background: none;
         border: none;
@@ -158,8 +158,8 @@ main#mobile {
     #nav-menu {
         display: flex;
         position: fixed;
-        bottom: 5px;
-        left: 40px;
+        bottom: 5vh;
+        left: 4vw;
         background: rgba(37, 39, 51, 0.8);
         z-index: 10000;
         padding: 10px 15px;
@@ -177,18 +177,18 @@ main#mobile {
     .mobile-info-bar {
         position: fixed;
         font-family: sans-serif;
-        top: 0px;
-        left: 50%;
+        top: 0vh;
+        left: 50vw;
         transform: translateX(-50%);
         display: flex;
         justify-content: space-between;
         align-items: center;
-        width: 90%;
+        width: 90vw;
         border-radius: 15px;
         z-index: 1000;
         padding-left: 10px;
         padding-right: 10px;
-        width: 90%;
+        width: 90vw;
     }
 
     .coin-container,
@@ -285,8 +285,8 @@ main#mobile {
 
     #factory-machine-mobile {
         position: absolute;
-        left: -52%;
-        bottom: -10%;
+        left: -52vw;
+        bottom: -10vh;
         height: 80vh;
         width: auto;
         z-index: 3;
@@ -294,8 +294,8 @@ main#mobile {
 
     #factory-belt-mobile {
         position: absolute;
-        left: -140%;
-        bottom: -1%;
+        left: -140vw;
+        bottom: -1vh;
         height: 28vh;
         width: 150vh;
     }
@@ -305,8 +305,8 @@ main#mobile {
         justify-content: space-between;
         gap: 50px;
         position: absolute;
-        bottom: 18%;
-        right: 2%;
+        bottom: 18vh;
+        right: 2vw;
         width: auto;
     }
     
@@ -317,8 +317,8 @@ main#mobile {
 
     #factory-machine-tube-mobile {
         position: absolute;
-        top: 14%;
-        left: 6%;
+        top: 14vh;
+        left: 6vw;
         height: 35vh;
         width: auto;
     }
@@ -328,9 +328,9 @@ main#mobile {
         justify-content: space-between;
         gap: 50px;
         position: absolute;
-        bottom: 27%;
-        left: -50%;
-        /* eindigt met right: 8%; */
+        bottom: 27vh;
+        left: -50vw;
+        /* eindigt met right: -50vw; */
         width: auto;
         animation: activateFactoryBeltMobile 7s ease-in-out forwards;
     }
