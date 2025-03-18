@@ -178,6 +178,7 @@ button:hover {
 
 #popup-content {
     background-color: var(--primary-color);
+    font-family: Oswald;
     padding: 20px;
     text-align: center;
     border-radius: 10px;
