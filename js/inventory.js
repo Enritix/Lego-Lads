@@ -10,4 +10,17 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("scroll-right").addEventListener("click", function () {
         chestProducts.scrollBy({ left: 200, behavior: "smooth" });
     });
+
+    
 });
+function openInfoPopup() {
+    document.getElementById("info-popup").style.display = "block";
+
+}
+
+function closePopup() {
+    document.getElementById("info-popup").style.display = "none";
+}
+
+
+
