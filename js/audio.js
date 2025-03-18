@@ -2,22 +2,39 @@ document.addEventListener("DOMContentLoaded", function () {
     const sound = document.getElementById("clickSound");
     const musicButton = document.getElementById("music-toggle");
     const muteLine = document.getElementById("mute-line");
+    const soundToggle = document.getElementById("sound-toggle");
 
-    let soundEnabled = true; 
+    let soundEnabled = true;
+
+    function toggleSound() {
+        soundEnabled = !soundEnabled;
+        muteLine.style.display = soundEnabled ? "none" : "block";
+        if (soundToggle) {
+            soundToggle.checked = soundEnabled;
+        }
+        if (sound) {
+            sound.muted = !soundEnabled;
+        }
+    }
 
     if (musicButton) {
         musicButton.addEventListener("click", function (event) {
-            event.preventDefault(); 
-
-            soundEnabled = !soundEnabled; 
-            muteLine.style.display = soundEnabled ? "none" : "block"; 
+            event.preventDefault();
+            toggleSound();
         });
     }
+
+    if (soundToggle) {
+        soundToggle.addEventListener("change", function () {
+            toggleSound();
+        });
+    }
+    
     if (sound) {
         document.addEventListener("click", function (event) {
             if (soundEnabled) {
                 sound.currentTime = 0;
-                sound.play().catch(error => console.error("Audio kon nit worden afgespeeld:", error));
+                sound.play().catch(error => console.error("Audio kon niet worden afgespeeld:", error));
             }
         });
     }
