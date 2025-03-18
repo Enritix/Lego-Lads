@@ -1,77 +1,91 @@
-document.addEventListener('DOMContentLoaded', function() {
-  let currentIndex = 1;
-  const items = document.querySelectorAll('.carousel img');
-  const indicators = document.querySelectorAll('.indicator');
-  const totalItems = items.length;
-  const prevButton = document.querySelector('.carousel-button.prev');
-  const nextButton = document.querySelector('.carousel-button.next');
+const track = document.querySelector('.carousel-track');
+const items = [...document.querySelectorAll('.carousel-track > a .carousel-item')];
+const nextButton = document.querySelector('.carousel-btn.next');
+const prevButton = document.querySelector('.carousel-btn.prev');
+const carousel = document.querySelector('.carousel');
 
-  function updateCarousel() {
-      items.forEach((item, index) => {
-          if (index === currentIndex) {
-              item.className = 'middle';
-          } else if (index === (currentIndex - 1 + totalItems) % totalItems) {
-              item.className = 'left';
-          } else if (index === (currentIndex + 1) % totalItems) {
-              item.className = 'right';
-          } else {
-              item.className = '';
-          }
-      });
-      updateIndicators();
-  }
+let currentIndex = items.findIndex(item => item.classList.contains('active'));
+let touchStartX = 0;
+let touchEndX = 0;
 
-  function updateIndicators() {
-      indicators.forEach((indicator, index) => {
-          if (index === currentIndex) {
-              indicator.classList.add('active');
-          } else {
-              indicator.classList.remove('active');
-          }
-      });
-  }
+function updateCarousel(index) {
+    const totalItems = items.length;
 
-  function navigateCarousel(direction) {
-      if (direction === 'next') {
-          currentIndex = (currentIndex + 1) % totalItems;
-      } else if (direction === 'prev') {
-          currentIndex = (currentIndex - 1 + totalItems) % totalItems;
-      }
-      updateCarousel();
-  }
+    items.forEach((item, i) => {
+        item.classList.remove('active', 'left', 'right');
 
-  function navigateToItem(index) {
-      currentIndex = index;
-      updateCarousel();
-  }
+        if (i === index) {
+            item.classList.add('active');
+        } else if (i === (index - 1 + totalItems) % totalItems) {
+            item.classList.add('left');
+        } else if (i === (index + 1) % totalItems) {
+            item.classList.add('right');
+        }
+    });
 
-  prevButton.addEventListener('click', () => navigateCarousel('prev'));
-  nextButton.addEventListener('click', () => navigateCarousel('next'));
+    currentIndex = index;
+}
 
-  indicators.forEach((indicator, index) => {
-      indicator.addEventListener('click', () => navigateToItem(index));
-  });
-
-  updateCarousel();
-
-  const infoIcon = document.querySelector('.info-icon');
-  const popup = document.querySelector('.popup');
-  const closeButton = document.querySelector('.close-button');
-  
-  infoIcon.addEventListener('click', () => {
-    popup.style.display = 'flex';
-  });
-  
-  closeButton.addEventListener('click', () => {
-    popup.style.display = 'none';
-  });
-  
-  window.addEventListener('click', (event) => {
-    if (event.target === popup) {
-      popup.style.display = 'none';
-    }
-  });
-  
-  
+nextButton.addEventListener('click', (e) => {
+    e.stopPropagation();
+    updateCarousel((currentIndex + 1) % items.length);
 });
 
+prevButton.addEventListener('click', (e) => {
+    e.stopPropagation();
+    updateCarousel((currentIndex - 1 + items.length) % items.length);
+});
+
+carousel.addEventListener('touchstart', (e) => {
+    touchStartX = e.touches[0].clientX;
+});
+
+carousel.addEventListener('touchmove', (e) => {
+    touchEndX = e.touches[0].clientX;
+});
+
+carousel.addEventListener('touchend', () => {
+    if (touchStartX - touchEndX > 50) {
+        updateCarousel((currentIndex + 1) % items.length);
+    } else if (touchStartX - touchEndX < -50) {
+        updateCarousel((currentIndex - 1 + items.length) % items.length);
+    }
+});
+
+carousel.addEventListener('click', (e) => {
+    e.preventDefault();
+    const activeItem = items[currentIndex];
+    const rect = carousel.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const middle = rect.width / 2;
+
+    if (e.target === activeItem) {
+        return;
+    }
+
+    if (clickX < middle) {
+        updateCarousel((currentIndex - 1 + items.length) % items.length);
+    } else {
+        updateCarousel((currentIndex + 1) % items.length);
+    }
+});
+
+updateCarousel(currentIndex);
+
+const infoIcon = document.querySelector('.info-icon');
+const popup = document.querySelector('.popup');
+const closeButton = document.querySelector('.close-button');
+
+infoIcon.addEventListener('click', () => {
+  popup.style.display = 'flex';
+});
+
+closeButton.addEventListener('click', () => {
+  popup.style.display = 'none';
+});
+
+window.addEventListener('click', (event) => {
+  if (event.target === popup) {
+    popup.style.display = 'none';
+  }
+})
