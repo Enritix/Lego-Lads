@@ -30,7 +30,11 @@ main {
     width: 100vw;
 }
 
-#factory-machine {
+main#mobile {
+    display: none;
+}
+
+#factory-machine-desktop {
     position: absolute;
     left: 0;
     bottom: -5%;
@@ -39,7 +43,7 @@ main {
     z-index: 3;
 }
 
-#factory-belt {
+#factory-belt-desktop {
     position: absolute;
     left: 5%;
     bottom: -1%;
@@ -47,7 +51,7 @@ main {
     width: auto;
 }
 
-#gears {
+#gears-desktop {
     display: flex;
     justify-content: space-between;
     gap: 50px;
@@ -57,12 +61,12 @@ main {
     width: auto;
 }
 
-.factory-belt-gear {
+.factory-belt-gear-desktop {
     width: 3.75vw;
     animation: rotate 10s linear infinite;
 }
 
-#factory-machine-tube {
+#factory-machine-tube-desktop {
     position: absolute;
     top: 2%;
     left: 10%;
@@ -70,18 +74,19 @@ main {
     width: auto;
 }
 
-#minifigures {
+#minifigures-desktop {
     display: flex;
     justify-content: space-between;
     gap: 50px;
     position: absolute;
     bottom: 27%;
-    left: -50%; /* eindigt met right: 8%; */
+    left: -50%;
+    /* eindigt met right: 8%; */
     width: auto;
     animation: activateFactoryBelt 7s ease-in-out forwards;
 }
 
-#minifigures img {
+#minifigures-desktop img {
     height: 40vh;
 }
 
@@ -89,6 +94,7 @@ main {
     0% {
         transform: rotate(0deg);
     }
+
     100% {
         transform: rotate(360deg);
     }
@@ -99,11 +105,28 @@ main {
         left: -50%;
         opacity: 0;
     }
+
     20% {
         opacity: 1;
     }
+
     100% {
         left: 8%;
+    }
+}
+
+@keyframes activateFactoryBeltMobile {
+    0% {
+        left: -250%;
+        opacity: 0;
+    }
+
+    20% {
+        opacity: 1;
+    }
+
+    100% {
+        left: -175%;
     }
 }
 
@@ -248,5 +271,71 @@ main {
 
     header {
         display: none;
+    }
+}
+
+@media (max-width: 600px) {
+    main#desktop {
+        display: none;
+    }
+
+    main#mobile {
+        display: block;
+    }
+
+    #factory-machine-mobile {
+        position: absolute;
+        left: -52%;
+        bottom: -10%;
+        height: 80vh;
+        width: auto;
+        z-index: 3;
+    }
+
+    #factory-belt-mobile {
+        position: absolute;
+        left: -140%;
+        bottom: -1%;
+        height: 28vh;
+        width: 150vh;
+    }
+
+    #gears-mobile {
+        display: flex;
+        justify-content: space-between;
+        gap: 50px;
+        position: absolute;
+        bottom: 18%;
+        right: 2%;
+        width: auto;
+    }
+    
+    .factory-belt-gear-mobile {
+        width: 12.5vw;
+        animation: rotate 10s linear infinite;
+    }
+
+    #factory-machine-tube-mobile {
+        position: absolute;
+        top: 14%;
+        left: 6%;
+        height: 35vh;
+        width: auto;
+    }
+    
+    #minifigures-mobile {
+        display: flex;
+        justify-content: space-between;
+        gap: 50px;
+        position: absolute;
+        bottom: 27%;
+        left: -50%;
+        /* eindigt met right: 8%; */
+        width: auto;
+        animation: activateFactoryBeltMobile 7s ease-in-out forwards;
+    }
+
+    #minifigures-mobile img {
+        height: 40vh;
     }
 }

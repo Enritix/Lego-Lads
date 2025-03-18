@@ -271,6 +271,20 @@ menu {
     border: none;
 }
 
+.text-lego-stroke {
+    font-size: clamp(20px, 2vw, 30px) !important;
+    padding: 10px 5vw !important;
+}
+
+.text-lego-stroke::before {
+    -webkit-text-stroke: clamp(3px, 0.2vw, 3px) var(--stroke-inner-color) !important;
+}
+
+
+.text-lego-stroke::after {
+    -webkit-text-stroke: clamp(4px, 0.7vw, 7px) var(--stroke-outer-color) !important;
+}
+
 @keyframes flipAllCards {
     0% {
         transform: rotateY(0deg);
@@ -303,6 +317,7 @@ menu {
         font-size: 20px;
         text-align: center;
         font-family: Bangers;
+        margin-top: 20px;
     }
     
     .header-container h1::after {
@@ -338,5 +353,10 @@ menu {
         perspective: 1000px;
         transition: transform 0.6s;
         cursor: url('../assets/images/cursor_hand.cur'), pointer !important;
+    }
+
+    .tooltip-button svg {
+        width: 20px;
+        height: 20px;
     }
 }
