@@ -8,17 +8,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     
     const gameContainer = document.createElement("div");
     gameContainer.id = "memory-game";
-    document.querySelector(".container").appendChild(gameContainer);
-    
-    const correctCounter = document.createElement("p");
-    correctCounter.id = "correct-counter";
-    correctCounter.textContent = `Correct: 0`;
-    document.querySelector(".container").appendChild(correctCounter);
-
-    const incorrectCounter = document.createElement("p");
-    incorrectCounter.id = "incorrect-counter";
-    incorrectCounter.textContent = `Incorrect: 0`;
-    document.querySelector(".container").appendChild(incorrectCounter);
+    document.querySelector(".memory-container").appendChild(gameContainer);
 
     async function fetchLegoData() {
         const randomPage = Math.floor(Math.random() * 10) + 1;
@@ -44,8 +34,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         correctTries = 0;
         incorrectTries = 0;
         matchedPairs = 0;
-        correctCounter.textContent = `Correct: 0`;
-        incorrectCounter.textContent = `Incorrect: 0`;
 
         let cards = items.flatMap(item => [{ id: item.set_num, img: item.set_img_url }, { id: item.set_num, img: item.set_img_url }]);
         cards = shuffle(cards);
@@ -83,14 +71,12 @@ document.addEventListener("DOMContentLoaded", async () => {
                             flippedCards.forEach(c => c.classList.add("matched"));
                             matchedPairs++;
                             correctTries++;
-                            correctCounter.textContent = `Correct: ${correctTries}`;
                             if (matchedPairs === totalPairs) {
                                 openPopup();
                             }
                         } else {
                             flippedCards.forEach(c => c.classList.remove("flipped"));
                             incorrectTries++;
-                            incorrectCounter.textContent = `Incorrect: ${incorrectTries}`;
                         }
                         flippedCards = [];
                     }, 1000);
