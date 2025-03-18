@@ -36,40 +36,6 @@ prevButton.addEventListener('click', (e) => {
     updateCarousel((currentIndex - 1 + items.length) % items.length);
 });
 
-carousel.addEventListener('touchstart', (e) => {
-    touchStartX = e.touches[0].clientX;
-});
-
-carousel.addEventListener('touchmove', (e) => {
-    touchEndX = e.touches[0].clientX;
-});
-
-carousel.addEventListener('touchend', () => {
-    if (touchStartX - touchEndX > 50) {
-        updateCarousel((currentIndex + 1) % items.length);
-    } else if (touchStartX - touchEndX < -50) {
-        updateCarousel((currentIndex - 1 + items.length) % items.length);
-    }
-});
-
-carousel.addEventListener('click', (e) => {
-    e.preventDefault();
-    const activeItem = items[currentIndex];
-    const rect = carousel.getBoundingClientRect();
-    const clickX = e.clientX - rect.left;
-    const middle = rect.width / 2;
-
-    if (e.target === activeItem) {
-        return;
-    }
-
-    if (clickX < middle) {
-        updateCarousel((currentIndex - 1 + items.length) % items.length);
-    } else {
-        updateCarousel((currentIndex + 1) % items.length);
-    }
-});
-
 updateCarousel(currentIndex);
 
 const infoIcon = document.querySelector('.info-icon');
