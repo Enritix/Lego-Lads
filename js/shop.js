@@ -43,5 +43,47 @@ function nextSlide() {
     updateCarousel();
 }
 
-// Initialiseren
 updateCarousel();
+
+
+function openPopup() {
+    const popup = document.getElementById("popup");
+    const popupImg = document.getElementById("popup-img");
+    const popupPrice = document.getElementById("popup-price");
+    const currentImg = images[currentIndex];
+
+    popupImg.src = currentImg.src;
+    popupPrice.textContent = currentImg.dataset.price;
+    popupImg.classList.remove("animate-move");
+    popup.style.display = "block";
+}
+
+function closePopup() {
+    const popup = document.getElementById("popup");
+    const popupImg = document.getElementById("popup-img");
+
+    popupImg.classList.add("animate-move");
+
+    setTimeout(() => {
+        popup.style.display = "none";
+        popupImg.classList.remove("animate-move"); 
+    }, 700);
+}
+
+document.querySelector(".buy-btn").addEventListener("click", openPopup);
+document.querySelector(".buy-confirm").addEventListener("click", closePopup);
+
+function startCountdown(duration) {
+    let timerElement = document.getElementById("countdown");
+    let [hours, minutes, seconds] = duration.split(":").map(Number);
+    let totalSeconds = hours * 3600 + minutes * 60 + seconds;
+
+    const countdownInterval = setInterval(() => {
+        if (totalSeconds <= 0) return clearInterval(countdownInterval);
+        
+        totalSeconds--;
+        let time = new Date(totalSeconds * 1000).toISOString().substr(11, 8);
+        timerElement.textContent = time;
+    }, 1000);
+}
+startCountdown("11:59:59");

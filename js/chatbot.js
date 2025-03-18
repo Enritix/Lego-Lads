@@ -47,3 +47,6 @@ function getBotResponse(input) {
     };
     return responses[input.toLowerCase()] || "Ik begrijp je vraag niet, ik kan alleen maar antwoorden over vragen over dit project";
 }
+
+
+

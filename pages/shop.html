@@ -129,6 +129,10 @@
     </ul>
   </nav>
   <main>
+    <p id="timer-shop">
+      <span id="countdown">11:59:59</span>
+      <img src="../assets/images/timer-reverse.png" alt="">
+  </p>
     <header class="header-container">
       <h1>winkel
         <button class="tooltip-button" aria-label="Meer informatie" onclick="openInfoPopup()">
@@ -194,6 +198,18 @@
 
     </section>
   </main>
+
+
+  <div id="popup" class="popup">
+    <div class="popup-content">
+        <span class="close" onclick="closePopup()">&times;</span>
+        <img id="popup-img" class="popup-animation" src="" alt="Popup Image">
+
+        <p>Prijs: <img class="coin-popup" src="../assets/images/coin.png" alt="Coin"> <span id="popup-price"></span></p>
+        <p>Saldo: <img  class="coin-popup"src="../assets/images/coin.png" alt="Coin"> <span id="popup-balance">1000</span></p>
+        <button class="buy-confirm  text-lego-stroke  "  data-text="koop">KOOP</button>
+    </div>
+</div>
 
   <div id="overlay" class="hidden"></div>
   <aside id="settings-container">

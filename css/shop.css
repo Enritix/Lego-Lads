@@ -260,6 +260,87 @@ main {
     height: auto;
     width: 100px;
 }
+
+.popup {
+    display: none;
+    position: fixed;
+    top: 46%;
+    left:53%;
+    transform: translate(-50%, -50%);
+    background: var(--primary-color);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    z-index: 5;
+    border: solid 3px var(--secondary--color);
+    height: 50vh;
+    width: 20vw;
+}
+.popup-content p{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+#popup-img {
+    width: 150px ;
+    height: auto;
+    margin-bottom: 10px;
+}
+.coin-popup{
+    height: auto ;
+    width: 25px ;
+}
+
+.popup .close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 20px;
+    cursor: pointer;
+    color: red;
+}
+
+#popup-price,#popup-balance{
+    color: #00FF7F;
+}
+
+
+@keyframes moveAndShrink {
+    0% {
+        transform: scale(1) translate(0, 0);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(0.3) translate(-2000px, -100px);
+        opacity: 0;
+    }
+}
+
+.popup-animation {
+    transition: all 0.5s ease-in-out;
+}
+
+.animate-move {
+    animation: moveAndShrink 2s forwards;
+}
+
+#timer-shop{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    left: 10%;
+    font-size: x-large;
+    top: 10%;
+}
+#timer-shop img{
+    height: auto;
+    width: 40px;
+}
+
+
 @media (max-width: 600px) {
     body {
         grid-template-columns: 1fr; 
@@ -275,3 +356,7 @@ main {
         margin: 0 auto; 
     }
 }
+
+
+
+
