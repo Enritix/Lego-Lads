@@ -5,6 +5,9 @@ document.addEventListener("DOMContentLoaded", () => {
     minifigures.addEventListener("animationend", () => {
         gears.forEach(gear => {
             gear.style.animation = "none";
+            setTimeout(() => {
+                window.location.href = "figordenen.html";
+            }, 1000);
         });
     });
 
@@ -14,6 +17,9 @@ document.addEventListener("DOMContentLoaded", () => {
     minifiguresMobile.addEventListener("animationend", () => {
         gearsMobile.forEach(gear => {
             gear.style.animation = "none";
+            setTimeout(() => {
+                window.location.href = "figordenen.html";
+            }, 1000);
         });
     });
 });
