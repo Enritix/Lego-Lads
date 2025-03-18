@@ -31,6 +31,7 @@
 html {
     background-image: url(../assets/images/background.png);
     font-family: Bangers;
+    user-select: none;
 }
 
 html, body {
@@ -39,6 +40,10 @@ html, body {
 
 a, button, label, input {
     cursor: url('../assets/images/cursor_hand.cur'), pointer !important;
+}
+
+a {
+    text-decoration: none;
 }
 
 header{
