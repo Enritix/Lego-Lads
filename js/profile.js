@@ -56,3 +56,5 @@ function closePopup() {
 }
 
 updateFigure();
+
+

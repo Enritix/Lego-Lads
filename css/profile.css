@@ -108,6 +108,9 @@ main {
     background-color: var(--secondary--color);
     margin: 0 15px;
 }
+.popup-content{
+    display: none;
+}
 
 #prestatie-header {
     position: sticky;
@@ -310,7 +313,21 @@ figure img {
     color: gold; 
     border: 2px solid gold;
 }
+
+
+#amount-figs span{
+    font-size: xx-large;
+    border: solid 3px var(--tertiarty-color);
+    border-radius: 10px;
+}
+#amount-figs span:hover{
+    cursor: pointer;
+    border-color: var(--secondary--color);
+}
 @media (max-width: 600px) {
+    .popup-content{
+        display: block;
+    }
     .container {
         display: grid;
         grid-template-columns: 1fr; 
@@ -454,6 +471,19 @@ figure img {
         height: auto;
         width: 20px;
     }
+    .popup {
+        display: none; 
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 }
 @media (min-width: 600px) { 
     .open-popup{
@@ -464,19 +494,7 @@ figure img {
     }
 
 }
-.popup {
-    display: none; 
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+
 
 .popup-content {
     background-color: var(--primary-color);
@@ -564,3 +582,9 @@ figure img {
 .not:hover{
    border-color: darkred;
 }
+
+
+
+
+
+
