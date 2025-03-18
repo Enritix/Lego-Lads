@@ -1,7 +1,6 @@
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
 body {
   display: grid;
@@ -29,7 +28,7 @@ main {
   background-color: var(--primary-color);
   border-radius: 20px;
   width: 80vw;
-  height: 78vh;
+  height: 80vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -49,8 +48,6 @@ main {
   background-color: var(--secondary--color);
   margin-top: 5px;
 }
-
-/*  ------------------------------------------------------------ carrousel */
 
 .carousel-container {
   width: 90%;
@@ -103,8 +100,8 @@ main {
 
 .carousel-item {
   display: none;
-  width: 250px;
-  height: 250px;
+  width: 240px;
+  height: auto;
   transition: transform 0.5s ease, opacity 0.5s ease, filter 0.5s ease,
     box-shadow 0.5s ease, display 0.5s ease;
   transform: scale(0.8);
@@ -175,12 +172,12 @@ main {
 }
 
 .carousel-btn.prev {
-  left: calc(50% - 140px);
+  left: calc(50% - 170px);
   color: grey;
 }
 
 .carousel-btn.next {
-  right: calc(50% - 140px);
+  right: calc(50% - 170px);
   color: grey;
 }
 
@@ -260,8 +257,25 @@ main {
     position: relative;
     width: 100%;
   }
+
+  main {
+    height: 70vh;
+  }
   .carousel-container {
     height: 60%;
+  }
+
+  .carousel-item {
+    width: 200px;
+    height: auto;
+  }
+
+  .carousel-btn.prev {
+    left: calc(50% - 130px);
+  }
+
+  .carousel-btn.next {
+    right: calc(50% - 130px);
   }
 
   .carousel {
