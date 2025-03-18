@@ -209,7 +209,7 @@ body {
     right: 20px;
     font-size: 25px;
     height: 10%;
-    cursor: pointer;
+    cursor: url('../assets/images/cursor_hand.cur'), pointer !important;
     color: var(--text-color);
   }
   
@@ -218,7 +218,7 @@ body {
     right: 20px;
     font-size: 25px;
     height: 10%;
-    cursor: pointer;
+    cursor: url('../assets/images/cursor_hand.cur'), pointer !important;
     color: var(--text-color);
   }
   
@@ -229,7 +229,7 @@ body {
     background: none;
     border: none;
     font-size: 20px;
-    cursor: pointer;
+    cursor: url('../assets/images/cursor_hand.cur'), pointer !important;
   }
   
   @media (max-width: 600px) {
