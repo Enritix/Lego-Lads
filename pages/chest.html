@@ -132,6 +132,7 @@
     </nav>
     <audio id="openSound" src="./assets/audio/open.mp3"></audio>
     <main>
+      <a  class="close" href="./inventory.html">❌</a>
 
       <h1 id="titel">kist opening <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
           class="bi bi-info-circle" viewBox="0 0 16 16">
@@ -156,7 +157,7 @@
       </div>
 
       <button class="text-lego-stroke" data-text="open" id="startSpinner">open</button>
-      <div id="overlay"></div>
+      <div id="overlayChest"></div>
       <div id="winPopup" class="popup" style="display: none;">
         <div class="popup-content">
           <p id="winName"></p>
@@ -170,11 +171,46 @@
 
 
       <div class="content">
-        <ul id="test">
-          <li id="green"><img src="../assets/images/blackfig.png" alt=""></li>
-          <li id="purple"><img src="../assets/images/blackfig.png" alt=""></li>
-          <li id="gold"><img src="../assets/images/blackfig.png" alt=""></li>
-        </ul>
+        <section class="inventory-container">
+          <article class="inventory-item">
+           
+              <img src="../assets/images/cinder-shop.png" alt="chen">
+              <span class="details"><p>Cinder</p><p class="rarity legendary">legendary</p></span>
+
+          </article>
+          <article class="inventory-item">
+           
+              <img src="../assets/images/artic3-shop.png" alt="chen">
+              <span class="details"><p>Artic</p><p class="rarity episch">EPISCH</p></span>
+ 
+          </article>
+          <article class="inventory-item">
+           
+              <img src="../assets/images/raddus-shop.png" alt="chen">
+              <span class="details"><p>Raddus</p><p class="rarity gewoon">gewoon</p></span>
+
+          </article>
+          <article class="inventory-item">
+           
+              <img src="../assets/images/crugx-shop.png" alt="chen">
+              <span class="details"><p>Crugx</p><p class="rarity legendary">legendary</p></span>
+ 
+          </article>
+          <article class="inventory-item">
+           
+              <img src="../assets/images/crugs-shop.png" alt="chen">
+              <span class="details"><p>Crugs</p><p class="rarity episch">EPISCH</p></span>
+ 
+          </article>
+          <article class="inventory-item">
+           
+              <img src="../assets/images/crug-shop.png" alt="chen">
+              <span class="details"><p>Crug</p><p class="rarity gewoon">gewoon</p></span>
+
+ 
+          </article>
+      </section>
+
       </div>
       </div>
     </main>
@@ -185,7 +221,7 @@
       <p> 🟡goud = 11.11% </p>
     </section>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.3.2"></script>
-    <div id="overlay" class="hidden"></div>
+    <div id="overlayChest" class="hidden"></div>
     <aside id="settings-container">
       <h1 id="settings-title">Instellingen</h1>
       <div id="settings">

@@ -48,7 +48,7 @@ header {
 }
 
 .inventory-container {
-    width: 80%;
+    width: 70%;
     height: 40vh;
     overflow-y: auto;
     background-color: var(--primary-color);
@@ -83,7 +83,13 @@ header {
     width: 120px; 
     text-align: center;
 }
-
+.close{
+    position: absolute;
+    right: 5%;
+    top: 5%;
+    text-decoration: none;
+  
+  }
 
 .inventory-item {
     display: flex;

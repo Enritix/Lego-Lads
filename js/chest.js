@@ -115,7 +115,7 @@ function showPopup(name, imageSrc, color) {
     const winName = document.getElementById("winName");
     const winImage = document.getElementById("winImage");
     const winPopup = document.getElementById("winPopup");
-    const overlay = document.getElementById("overlay");
+    const overlay = document.getElementById("overlayChest");
 
     winName.textContent = name;
     winImage.src = imageSrc;
@@ -132,7 +132,7 @@ function showPopup(name, imageSrc, color) {
 
 function closePopup() {
     document.getElementById("winPopup").style.display = "none";
-    document.getElementById("overlay").style.display = "none"; 
+    document.getElementById("overlayChest").style.display = "none"; 
 }
 const startSpinnerBtn = document.getElementById("startSpinner");
 const animation = new SpinnerAnimation({ container: "spinnerContainer", list: "spinnerList" });

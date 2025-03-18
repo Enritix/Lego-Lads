@@ -34,13 +34,21 @@ main {
     margin: auto;
     margin-top: 60px;
     border-radius: 20px;
+    position: relative;
 }
 #titel{
   font-family: Bangers;
   letter-spacing: 2px;
 }
 
-
+#winPopup{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000000;
+  height: 40vh;
+  width: 20vw;
+}
 
  #titel::after {
     content: "";
@@ -128,7 +136,7 @@ main {
     text-align: center;
     z-index: 1000; 
 }
-#overlay {
+#overlayChest {
     position: fixed;
     top: 0;
     left: 0;
@@ -253,6 +261,24 @@ main {
       margin: 10px auto; 
       border-radius: 10px; 
   }
+  .inventory-container{
+    height: 150px !important;
+    width: 50% !important;
+    margin-top: 40px;
+  }
+  .inventory-item img {
+    width: 80px !important;;
+    height: auto;
+  }
+  .inventory-item{
+    height: 10vh;
+    padding: 10px !important;
+  }
+  .details{
+    margin: 0 !important;
+  }
+
+
 }
 
 #popup {
@@ -273,18 +299,7 @@ main {
   display: block; 
 }
 
-#overlay {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 999;
-}
-
-#overlay.active {
+#overlayChest.active {
   display: block; 
 }
 
@@ -311,3 +326,121 @@ main {
 #winName{
   font-family: Oswald;
 }
+
+.inventory-container {
+  width: 70%;
+  height: 40vh;
+  overflow-y: auto;
+  background-color: var(--primary-color);
+  border-radius: 10px;
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 50px;
+  justify-content: center;
+  position: relative;
+  border: solid 3px var(--tertiarty-color);
+  scroll-snap-type: y mandatory; 
+}
+#chest-products {
+  display: flex; 
+  flex-wrap: wrap; 
+  justify-content: center; 
+  gap: 15px;
+  padding: 0;
+  list-style: none; 
+  align-items: center;
+  margin: 0;
+}
+
+#chest-products li {
+  display: flex;
+  flex-direction: column; 
+  align-items: center;
+  justify-content: center;
+  background-color: var(--primary-color);
+  padding: 10px;
+  border-radius: 10px;
+  width: 100px;
+  text-align: center;
+}
+
+
+.inventory-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  justify-content: flex-start; 
+  width: 120px;
+  min-height: 200px; 
+  padding: 10px;
+  border-radius: 10px;
+  text-align: center;
+  transition: all 0.3s ease-in-out;
+  scroll-snap-align: start; 
+  padding: 30px;
+}
+
+.details{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  margin-top: auto;
+}
+.rarity {
+  display: inline-block;
+  font-size: 12px;
+  padding: 2px 05px;
+  text-transform: uppercase;
+  font-size: 14px;
+  display: inline-block;
+  text-transform: uppercase;
+  transform: skew(-20deg); 
+  border-radius: 0;
+}
+
+.rarity-amount{
+  display: flex;
+  align-items: center; 
+  gap: 10px; /
+}
+
+
+.episch {
+  background-color: rgb(77, 14, 77); 
+  color: #FF00FF; 
+  border: 2px solid #FF00FF;
+}
+
+.gewoon {
+  background-color: darkgreen;
+  color: #00FF7F; 
+  border: 2px solid #00FF7F;
+}
+
+.legendary {
+  background-color: darkgoldenrod; 
+  color: gold; 
+  border: 2px solid gold;
+}
+.key {
+  background-color: rgb(6, 6, 153); 
+  color: rgb(63, 127, 223); 
+  border: 2px solid rgb(63, 127, 223);
+}
+.inventory-item img {
+  width: 100%;
+  max-width: 120px;
+  height: auto;
+}
+.close{
+  position: absolute;
+  right: 5%;
+  top: 5%;
+  text-decoration: none;
+
+}
+
+
