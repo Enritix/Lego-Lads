@@ -57,14 +57,14 @@ main {
 
 }
 
-aside {
+#aside-chatbot {
     display: flex;
     flex-direction: column; 
     align-items: center;
     justify-content: flex-start;
 
     border-radius: 10px;
-    height: 100%; 
+    
 }
 .bot-message .avatar {
     margin-bottom: 50px;
@@ -155,15 +155,15 @@ aside {
     height: auto;
     width: 60px;
 }
-li:hover{
+.portret:hover{
 
     scale: 1.1;
 }
-ul{
+#self-portret-cont{
     font-family: Oswald;
     padding: 0;
 }
-li{
+.portret{
     list-style: none;
 }
 
@@ -201,7 +201,7 @@ h4 ::after{
     }
  
 
-    aside {
+    #self-portret-cont {
         width: 100%;
         text-align: center;
         height: auto;
