@@ -1,0 +1,320 @@
+/* *{
+    outline: red 3px solid;
+}
+ */
+
+body {
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+    background-color: var(--secondary--color);
+    font-family: Bangers, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+
+}
+body::before {
+    content: "";
+    position: absolute;
+     top: 10%;
+    background-image: url(../assets/images/background.png);
+    opacity: 0.2;
+    z-index: 0; 
+    width: 100%;
+    height: 80vh; 
+}
+h2 {
+    display: inline-block;
+    position: relative;
+    padding-bottom: 5px; 
+    font-size:40px ;
+    color: white;
+}
+h2::after {
+    content: "";
+    display: block;
+    width: 100%; 
+    height: 4px;
+    background-color: var(--secondary--color); 
+    margin-top: 5px; 
+}
+.registration-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; 
+    width: 100%;
+    height: 100vh; 
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+
+.form-group {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 130px;
+}
+
+label {
+    margin-bottom: 5px;
+    color: var(--text-color);
+    width: 65%;
+    display: flex;
+    justify-content: start;
+}
+
+
+input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    width: 60%;
+
+}
+
+.resultaat-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: var(--primary-color);
+    border-radius: 15px;
+    padding: 20px;
+    width: 90vh;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.9);
+    height: 90vh;
+    position: relative;
+}
+
+
+.figuren-lijst {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 20px; 
+    border-radius: 10px;
+    overflow-y: auto;
+    max-height: 300px;
+    justify-items: center; 
+    max-height: 500px;
+    width: 100%;
+}
+
+.figuur:hover{
+    border:  solid 5px var(--secondary--color);
+}
+
+.figuur {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+    background-color: var(--primary-color);
+    border: solid rgb(60, 63, 77) 5px;
+    border-radius: 30px;
+    gap: 10px;
+    width: 50%; 
+    
+}
+
+.figuur-images {
+    display: flex;
+    align-items: center; 
+    justify-content: center; 
+    gap: 5px;
+    width: 100%; 
+    height: 100%;
+
+}
+.figuur-naam {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    width: 80%;
+    border-radius: 5px;
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.figuur img {
+    width: 70%;
+    max-width: 80px;
+    height: auto;
+    object-fit: contain;
+}
+
+.text-lego-stroke {
+    font-size: clamp(20px, 2vw, 30px) !important;
+    padding: 10px 5vw !important;
+}
+
+.text-lego-stroke::before {
+    -webkit-text-stroke: clamp(3px, 0.2vw, 3px) var(--stroke-inner-color) !important;
+}
+
+
+.text-lego-stroke::after {
+    -webkit-text-stroke: clamp(4px, 0.7vw, 7px) var(--stroke-outer-color) !important;
+}
+
+p, a {
+    color: white;
+    text-align: center;
+    font-family: sans-serif;
+    
+    
+}
+
+.close{
+    display: flex;
+    position: absolute;
+    right: 2%;
+    top: 2%;   
+}
+
+a{
+    text-decoration: none;
+}
+
+.figuren-lijst {
+    position: relative;
+}
+
+input[type="checkbox"] {
+    -webkit-appearance: checkbox;
+       -moz-appearance: checkbox;
+            appearance: checkbox;
+    display: inline-block;
+    width: auto;
+  }
+
+  .forgot-password {
+    font-size: 0.6em; 
+    position: absolute; 
+    right: 5%; 
+    top: calc(100% - -10px); 
+    margin: 0; 
+    width: 60%;
+    text-decoration: underline;
+}
+
+
+
+
+.stay-logged-in {
+    font-size: 0.6em; 
+    position: absolute; 
+    left: 16%; 
+    top: calc(100% - -5px); 
+    margin: 0; 
+    width: 60%;
+    color: var(--text-color);
+}
+
+.stay-logged-in input[type="checkbox"] {
+    margin-right: 5px; 
+}
+
+.stay-logged-in label {
+    font-size: 0.6em; 
+}
+
+
+
+
+@media (max-width: 600px) {
+
+    body {
+        display: flex;
+        /* grid-template-columns: 1fr; */
+        /* grid-template-rows: auto; */
+        justify-content: center;
+        align-items: center;
+        height: auto;
+        overflow: hidden;
+    }
+
+
+    nav{
+        display: none;
+    }
+
+    main {
+        height: auto;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+    }
+
+
+    .resultaat-container {
+        height: 80vh; 
+        width: 80%; 
+        padding: 10px;
+        overflow: hidden; 
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .registration-form h2 {
+        font-size: 25px;
+    }
+
+    /* .figuren-lijst {
+        grid-template-columns: 1fr;
+
+    }
+
+    .figuur {
+        width: 100%;
+    } */
+
+    .form-group {
+        width: 50vh;
+        grid-template-columns: 1fr;
+    }
+  
+    .stay-logged-in{
+    position: absolute; 
+    left: 17%; 
+    top: calc(100% - -5px); 
+    margin: 0; 
+    width: 60%;
+    font-size: 0.6em; 
+
+    }
+    
+    .forgot-password {
+        font-size: 0.6em; 
+        position: absolute; 
+        right: 10%; 
+        top: calc(100% - -10px); 
+        margin: 0; 
+        width: 40%;
+        text-decoration: underline;
+    }
+
+}
