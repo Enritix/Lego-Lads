@@ -1,54 +1,27 @@
+function openInfoPopup() {
+    document.getElementById("info-popup").style.display = "block";
+
+}
+
+function closePopup() {
+    document.getElementById("info-popup").style.display = "none";
+}
 document.addEventListener("DOMContentLoaded", function () {
-    let currentIndex = 0; 
-    const figures = document.querySelectorAll('.figure'); 
-    const prevButton = document.querySelector('.carousel-button.prev');
-    const nextButton = document.querySelector('.carousel-button.next');
+    const list = document.getElementById("set-figs");
+    const prev = document.getElementById("prev");
+    const next = document.getElementById("next");
 
-    function showFigure(index) {
-        figures.forEach((figure) => {
-            figure.classList.remove('active');
-        });
+    let scrollAmount = 0;
+    const scrollStep = 120; 
 
-        if (figures[index]) {
-            figures[index].classList.add('active');
-        }
-    }
-
-    showFigure(currentIndex);
-
-    prevButton.addEventListener('click', function () {
-        currentIndex = (currentIndex === 0) ? figures.length - 1 : currentIndex - 1; 
-        showFigure(currentIndex);
+    next.addEventListener("click", function () {
+        scrollAmount += scrollStep;
+        list.style.transform = `translateX(-${scrollAmount}px)`;
     });
 
-
-    nextButton.addEventListener('click', function () {
-        currentIndex = (currentIndex === figures.length - 1) ? 0 : currentIndex + 1; 
-        showFigure(currentIndex);
+    prev.addEventListener("click", function () {
+        scrollAmount -= scrollStep;
+        if (scrollAmount < 0) scrollAmount = 0; 
+        list.style.transform = `translateX(-${scrollAmount}px)`;
     });
-
-    
-    window.addEventListener('resize', function () {
-        if (window.innerWidth <= 600) {
-            figures.forEach((figure) => {
-                figure.classList.remove('active');
-            });
-            showFigure(currentIndex); 
-        } else {
-
-            figures.forEach((figure) => {
-                figure.classList.add('active');
-            });
-        }
-    });
-
-    if (window.innerWidth <= 600) {
-        figures.forEach((figure) => {
-            figure.classList.remove('active');
-        });
-        showFigure(currentIndex); 
-    }
-
-
-    
 });

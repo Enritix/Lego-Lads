@@ -118,47 +118,45 @@
 
   </header>
   <main>
-    <section class="resultaat-container">
-      <a class="close" href="landingpage.html">❌</a>
-      <article class="lego-set">
-        <h2>FIGS IN SET <span class="info-icon">&#x24D8;
-            <div class="popup-overlay">
-              <div class="popup-content">
-                <p>Hier ziet u de aantal figuren die in deze lego set zitten.</p>
-              </div>
-            </div>
-          </span></h2>
-        <img src="../assets/images/download-removebg-preview.png" alt="LEGO Set">
-      </article>
+    <section id="info-popup" class="popup">
+      <div class="popup-content">
+          <span class="close-popup" onclick="closePopup()">❌</span>
+          <p>Hier kan je kijken welke figs in de set zitten</p>
 
-      <section class="figures">
-        <section class="figure-list">
-          <a href="detaillist.html">
-            <article class="figure">
-              <p>Superman</p>
-              <a href="./detaillist.html"><img src="../assets/images/superman.png" alt="Superman"></a>
-            </article>
-          </a>
-          <a href="detaillist.html">
-            <article class="figure">
-              <p>Batman</p>
-              <img src="../assets/images/batman.png" alt="Batman">
-            </article>
-          </a>
-          <a href="detaillist.html">
-            <article class="figure">
-              <p>Wonder Woman</p>
-              <img src="../assets/images/wonderwomen.png" alt="Wonder Woman">
-            </article>
-          </a>
-        </section>
-        <button class="carousel-button prev">❮</button>
-        <button class="carousel-button next">❯</button>
-      </section>
+      </div>
     </section>
+    <a  class="close" href="./detaillist.html">❌</a>
+    <header class="header-container">
+      <h1>figs in set
+        <button class="tooltip-button" aria-label="Meer informatie" onclick="openInfoPopup()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-info-circle"
+            viewBox="0 0 16 16">
+            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+            <path
+              d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 0 0 1 2 0" />
+          </svg>
+        </button>
+      </h1>
+    </header>
 
-
-
+    <section id="set">
+      <img src="../assets/images/DC-Set-1.png" alt="">
+    </section>
+    <div class="carousel-wrapper">
+      <button id="prev" class="arrow left-arrow">◀</button>
+      <div class="carousel-container">
+          <ul id="set-figs">
+              <li><p>Artic</p><img src="../assets/images/artic2.png" alt=""></li>
+              <li><p>Pirate</p><img src="../assets/images/pirate.png" alt=""></li>
+              <li><p>Chen</p><img src="../assets/images/chen.png" alt=""></li>
+              <li><p>Artic</p><img src="../assets/images/artic2.png" alt=""></li>
+              <li><p>Pirate</p><img src="../assets/images/pirate.png" alt=""></li>
+              <li><p>Chen</p><img src="../assets/images/chen.png" alt=""></li>
+          </ul>
+      </div>
+      <button id="next" class="arrow right-arrow">▶</button>
+  </div>
+  
   </main>
 </body>
 

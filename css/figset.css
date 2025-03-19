@@ -1,287 +1,163 @@
 body {
     display: grid;
     grid-template-columns: 100px auto; 
-    grid-template-rows: 80px auto; 
     height: 100vh;
     margin: 0;
     overflow: hidden;
     background-color: var(--secondary--color);
+    color: var(--text-color);
+    font-family: sans-serif;
 }
+
 body::before {
     content: "";
     position: absolute;
-     top: 10%;
+    top: 10%;
     background-image: url(../assets/images/background.png);
     opacity: 0.2;
     z-index: 0; 
     width: 100%;
     height: 80vh; 
 }
+
 main {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    letter-spacing: 2px;
-    z-index: 2;
-}
-
-.resultaat-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
     background-color: var(--primary-color);
-    border-radius: 15px;
+    border-radius: 20px;
+    width: 80vw;
+    height: 75vh;
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    margin: auto;
+    position: relative;
+    z-index: 1;
     padding: 20px;
-    width: min(100%, 900px);
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.9);
-    height: 90vh;    
+    overflow: hidden;
+    font-family: Oswald;
+    letter-spacing: 2px;
 }
-
-h2 {
-    position: relative;
-    padding-bottom: 5px; 
-    color: white;
-}
-h2::after {
-    content: "";
-    display: block;
-    width: 100%; 
-    height: 4px;
-    background-color: var(--secondary--color); 
-    margin-top: 5px; 
-}
-
-
-
-
-
-.figure-list {
-    display: flex;
-    gap: 100px;
-    background-color: #363737;;
-     
-    border-radius: 25px; 
-    border: 5px solid var(--tertiarty-color); 
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
-    margin-top: -60px; 
-    position: relative;
-}
-
-.figure {
-    text-align: center;
-}
-
-.figure img {
-    width: auto;
-    height: 170px;
-}
-
-.figure p {
-    font-size: 15px;
-    color: white;
-    margin-bottom: auto;
-}
-
-
-
-
-.lego-set {
-    display: flex;
-    justify-content: center; 
-    align-items: center;     
-    flex-direction: column;
-    position: relative;
-    height: 100vh; 
-    text-align: center;
-    margin-bottom: 150px; 
-    background-color: var(--primary-color);;
-
-}
-
-.lego-set img {
-    width: 200px; 
-    height: auto; 
-    border: 5px solid var(--tertiarty-color); 
-    border-radius: 30px; 
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
-}
-
-
-.lego-set h2 {
-    font-size: 2.5rem;
-    margin-bottom: 10px;
-}
-
-.carousel-button {
-    position: fixed;
-    top: 80%;
-    transform: translateY(-50%);
-    background: rgba(0, 0, 0, 0.5);
-    color: white;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    font-size: 18px;
-  }
-
-  .close{
-    display: flex;
+.close{
     position: absolute;
-    right: 17%;
-    top: 4%; 
-}
-a{
+    right: 5%;
+    top: 5%;
     text-decoration: none;
+  
 }
 
-  .carousel-button.prev { left: 510px; }
-.carousel-button.next { right: 410px; }
-
-.popup-overlay {
+  .header-container h1 {
+    margin: 0;
+    font-family: Bangers;
+    letter-spacing: 2px;
+}
+.header-container h1::after {
+      content: "";
+      display: block;
+      width: 100%;
+      height: 4px;
+      background-color: var(--secondary--color);
+      margin-top: 5px;
+     
+}
+  .popup {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 200px;
-    height: auto;
-    background-color: rgba(0, 0, 0, 0.8);
-    color: white;
+    display: flex;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
     padding: 20px;
-    display: none;  
+    background: var(--primary-color);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    text-align: center;
+    display: none;
+    z-index: 100000000;
+    border: solid 3px var(--secondary--color);
+}
+
+
+.close-popup {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 20px;
+    cursor: pointer;
+    color: red;
+}
+.tooltip-button{
+    color: var(--text-color);
+    border: none;
+    background-color: var(--primary-color);
+} 
+@media (max-width: 600px) {
+    body {
+        display: flex;
+        flex-direction: column;
+    }
+    main{
+        padding: 5px;
+        height: 80vh;
+    }
+
+    .header-container {
+        display: flex;
+        font-size: small;
+    }
+}
+#set{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+#set-figs li {
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+    text-align: center;
+}
+#set img {
+    height: auto;
+    width: 250px;
+    border: solid 4px var(--tertiarty-color);
+    padding: 15px;
+    border-radius: 20px;
+}
+
+#set-figs{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    list-style: none;
+    background-color: var(--tertiarty-color);
     border-radius: 10px;
 }
-
-.info-icon {
-    cursor: pointer;
+#set-figs img{
+    height: auto;
+    width: 180px;
+}
+.carousel-container {
+    width: 600px; 
+    overflow: hidden; 
+    display: flex;
+    align-items: center;
     position: relative;
+    padding: 10px;
+    border-radius: 10px;
 }
-
-.info-icon:hover .popup-overlay {
-    display: block;
+.arrow {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 10px;
 }
-
-.popup-content {
-    text-align: center;
-    font-size: 14px; 
-
-}
-
-
-
-@media (max-width: 600px) {
-
-    body {
-        grid-template-columns: 1fr;
-        grid-template-rows: auto;
-        height: 635px;
-        overflow: hidden;
-        position: relative;
-    }
-
-    header{
-        grid-column: 1 / -1;
-
-    }
-
-    nav{
-        display: none;
-    }
-
-    main {
-        height: auto;
-        padding: 40px;
-    }
-
-    .resultaat-container {
-        height: auto; 
-        min-height: 100px; 
-    }
-
-    
-    .figure-list {
-        display: flex;
-        flex-direction: column; 
-        justify-content: center;
-        align-items: center;
-        left: 18%;
-        width: 60%;
-        top: -50px;
-    }
-
-    .lego-set h2{
-        font-size: 26px;
-        bottom: 25px;
-    }
-    
-
-    .figure img {
-        width: 35%; 
-        height: auto; 
-        max-width: 250px; 
-    }
-    .figure{
-        display: none; 
-
-    }
-
-    .figure.active {
-        display: block; 
-    }
-    
-    .carousel-button {
-        position: fixed;
-        top: 65%;
-        transform: translateY(-50%);
-        background: rgba(0, 0, 0, 0.5);
-        color: white;
-        border: none;
-        padding: 10px;
-        cursor: pointer;
-        font-size: 18px;
-
-    }
-
-    .carousel-button.prev {
-        left: 70px; 
-    }
-
-    .carousel-button.next {
-        right: 70px; 
-    }
-
-    
-
-    .lego-set {
-        height: auto; 
-        margin-bottom: 150px; 
-    }
-
-    .lego-set img {
-        width: 150px;
-        height: auto;
-    }
-
-    .close{
-        display: flex;
-        position: absolute;
-        right: 12%;
-        top: 12%; 
-    }
-
-
-
-
-
-
-    .info-icon.active {
-        color: #ccc; 
-    }
-
-    .popup-overlay {
-        top: 20%; 
-        left: -150%; 
-        transform: translate(-50%, -50%); 
-    }
-    
+.carousel-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 600px; 
+    margin: auto;
+    height: 200px;
 }
