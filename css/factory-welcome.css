@@ -64,15 +64,15 @@ html {
 }
 
 #textbubble {
-    width: 100vh;
+    width: 130vh;
     height: auto;
 }
 
 #text-content {
     position: absolute;
     width: 55%;
-    top: 20%;
-    left: 20%;
+    top: 10%;
+    left: 22%;
 }
 
 #text-content p {

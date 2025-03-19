@@ -74,9 +74,11 @@ main {
     background-color: var(--tertiarty-color);
     padding: 10px;
     border-radius: 8px;
-    height: 50%;
-    margin-top: 40px;
-    margin-right: 20px;
+    height: 19vh;
+    position: relative;
+    top: 5%;
+    right: 5%;
+
 }
 
 .status-item {
@@ -243,6 +245,7 @@ figure img {
     background-color: var(--primary-color);
     padding: 20px;
     border-radius: 10px;
+    height: 60vh;
 }
 
 .figure-container {
@@ -341,6 +344,10 @@ figure img {
     border-color: var(--secondary--color);
 }
 @media (max-width: 600px) {
+    .carousel {
+
+        max-height: 300px;
+    }
     .popup-content{
         display: block;
     }
@@ -373,8 +380,10 @@ figure img {
         background-color: var(--tertiarty-color);
         padding: 8px; 
         border-radius: 8px;
-        width: 90%; 
-        margin: auto;
+        max-height: 50px;
+        position: relative;
+        right: 1%;
+       
     }
     .status h2, .status-info span {
         font-size: 12px; 

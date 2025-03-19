@@ -21,8 +21,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const textElement1 = document.getElementById("textbubble-text1");
     const textElement2 = document.getElementById("textbubble-text2");
 
-    textElement1.dataset.text = "Hallo! Welkom in de Lego\nMinifiguur fabriek!";
-    textElement2.dataset.text = "Help jij mij om de figuurtjes in de juiste sets te sorteren?";
+    textElement1.dataset.text = "Hallo! Welkom in de LegoMinifiguur\n fabriek!";
+    textElement2.dataset.text = "Help jij mij om de figuurtjes in de \n juiste sets te sorteren?";
 
     textElement2.style.visibility = "hidden";
 

@@ -124,9 +124,8 @@ main {
     align-items: center;
     justify-content: space-between; 
     border: solid 0.2vw var(--tertiarty-color);
-    padding: 0.9rem 1.2rem; 
+
     transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
-    height: auto;
     width: 100%; 
     max-width: clamp(200px, 25vw, 350px);
     min-width: 160px; 
