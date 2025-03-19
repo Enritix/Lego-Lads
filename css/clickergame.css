@@ -43,15 +43,10 @@ main {
     background-color: var(--primary-color);
     border-radius: 2vw;
     box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
-    
-    /* Responsive breedte */
-    width: clamp(300px, 80vw, 1100px); /* Min 300px, standaard 80vw, max 1100px */
+    width: clamp(300px, 80vw, 1100px);
     max-width: 1100px;
-
-    /* Responsive hoogte */
-    height: clamp(500px, 75vh, 900px); /* Min 500px, standaard 75vh, max 900px */
+    height: clamp(500px, 75vh, 900px); 
     max-height: 900px;
-
     padding: 2vw; 
     margin: 3vh auto; 
     position: relative;
@@ -143,7 +138,8 @@ main {
 .upgrade:hover {
     background-color: var(--primary-color-light);
     transform: scale(1.03); 
-    border-color: var(--secondary-color);
+    border-color: var(--secondary--color);
+   
 }
 
 .upgrade-icon img {

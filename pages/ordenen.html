@@ -8,7 +8,9 @@
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="../css/ordenen.css">
   <link rel="stylesheet" href="../css/settings.css">
+  <script src="../js/ordenen" defer></script>
   <script src="../js/settings.js" defer></script>
+  <script src="../js/audio.js"></script>
 </head>
 
 <body>
@@ -127,42 +129,63 @@
     </ul>
   </nav>
   <main>
-    <section class="resultaat-container">
-      <section class="aantal-container">
-        <h2 id="aantal-titel">Aantal te Ordenen</h2>
-      </section>
-
-      <section class="keuze-container">
-        <a href="factory.html">
-          <article class="keuze">
-            <div class="nummer">1</div>
-            <img src="../assets/images/batman.png" alt="Batman figuur">
-          </article>
-        </a>
-        <a href="factory.html">
-          <article class="keuze">
-            <div class="nummer">2</div>
-            <img src="../assets/images/batman.png" alt="Batman figuur">
-          </article>
-        </a>
-        <a href="factory.html">
-          <article class="keuze">
-            <div class="nummer">3</div>
-            <img src="../assets/images/batman.png" alt="Batman figuur">
-          </article>
-        </a>
-        <a href="factory.html">
-          <article class="keuze">
-            <div class="nummer">4</div>
-            <img src="../assets/images/batman.png" alt="Batman figuur">
-          </article>
-        </a>
-        <aside class="character-showcase">
-          <img src="../assets/images/group-figs.png" alt="Groep LEGO figuren">
-        </aside>
-      </section>
+    <section id="info-popup" class="popup">
+      <div class="popup-content">
+          <span class="close-popup" onclick="closePopup()">❌</span>
+          <p>kies hier het aantal figs dat je wilt ordenen 1-4</p>
+      </div>
     </section>
+    <a  class="close" href="../index.html">❌</a>
+    <header class="header-container">
+      <h1>inventory
+        <button class="tooltip-button" aria-label="Meer informatie" onclick="openInfoPopup()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-info-circle"
+            viewBox="0 0 16 16">
+            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+            <path
+              d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 0 0 1 2 0" />
+          </svg>
+        </button>
+      </h1>
+    </header>
+    <div id="wrapper">
+      <section class="figs-lijst-container">
+        <ul class="figs-container">
+          <span>1</span>
+          <li class="fig-box"><img  id="fig1" src="..//assets/images/pirate.png" alt=""></li>
+          <li class="fig-box"><img  class="grey"id="fig2" src="..//assets/images/artic.png" alt=""></li>
+          <li class="fig-box"><img class="grey" id="fig3" src="..//assets/images/chen.png" alt=""></li>
+          <li class="fig-box"><img class="grey" id="fig4" src="..//assets/images/cinder.png" alt=""></li>
+        </ul>
+        <ul class="figs-container">
+          <span>2</span>
+          <li class="fig-box"><img  id="fig1" src="..//assets/images/pirate.png" alt=""></li>
+          <li class="fig-box"><img id="fig2" src="..//assets/images/artic.png" alt=""></li>
+          <li class="fig-box"><img class="grey"id="fig3" src="..//assets/images/chen.png" alt=""></li>
+          <li class="fig-box"><img class="grey" id="fig4" src="..//assets/images/cinder.png" alt=""></li>
+        </ul>
+      </section>
+      <section class="figs-lijst-container">
+        <a href="./factory.html">        <ul class="figs-container">
+          <span>3</span>
+          <li class="fig-box"><img  id="fig1" src="..//assets/images/pirate.png" alt=""></li>
+          <li class="fig-box"><img id="fig2" src="..//assets/images/artic.png" alt=""></li>
+          <li class="fig-box"><img id="fig3" src="..//assets/images/chen.png" alt=""></li>
+          <li class="fig-box"><img class="grey" id="fig4" src="..//assets/images/cinder.png" alt=""></li>
+        </ul></a>
+
+        <ul class="figs-container">
+          <span>4</span>
+          <li class="fig-box"><img id="fig1" src="..//assets/images/pirate.png" alt=""></li>
+          <li class="fig-box"><img id="fig2" src="..//assets/images/artic.png" alt=""></li>
+          <li class="fig-box"><img id="fig3" src="..//assets/images/chen.png" alt=""></li>
+          <li class="fig-box"><img id="fig4" src="..//assets/images/cinder.png" alt=""></li>
+        </ul>
+      </section>
+    </div>
+    <img id="figs" src="../assets/images/group-figs.png" alt="">
   </main>
+ 
   <div id="overlay" class="hidden"></div>
   <aside id="settings-container">
     <h1 id="settings-title">Instellingen</h1>

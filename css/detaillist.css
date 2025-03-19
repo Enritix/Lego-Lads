@@ -30,6 +30,7 @@ body {
     max-height: 100vh;
     overflow-y: auto;
     border-radius: 10px;
+    position: relative;
   }
   .header-container h1::after {
     content: "";
@@ -75,7 +76,13 @@ body {
     height: 4px;
     background-color: var(--secondary--color);
   }
-  
+  .close{
+    position: absolute;
+    top: 3%;
+    right: 15%;
+    z-index: 10000000;
+
+  }
   .header-2 {
     font-family: Bangers;
     width: 100%;

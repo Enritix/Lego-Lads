@@ -103,6 +103,8 @@ header {
 }
 .header-container h1 {
   margin: 0;
+  font-family: Bangers;
+  letter-spacing: 2px;
 }
 .header-container h1::after {
     content: "";
@@ -111,6 +113,7 @@ header {
     height: 4px;
     background-color: var(--secondary--color);
     margin-top: 5px;
+   
 }
 .tooltip-button{
     color: var(--text-color);
@@ -122,6 +125,7 @@ header {
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    gap: 10px;
    
  
     margin-top: auto;

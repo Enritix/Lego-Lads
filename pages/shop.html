@@ -129,6 +129,13 @@
     </ul>
   </nav>
   <main>
+    <section id="info-popup" class="popup-shop">
+      <div class="popup-content">
+          <span class="close-popup" onclick="closePopup()">❌</span>
+          <p>Hier kan je figs en kisten/keys kopen </p>
+          <p>elke 12u veranderd de shop(alleende figs)</p>
+      </div>
+    </section>
     <p id="timer-shop">
       <span id="countdown">11:59:59</span>
       <img src="../assets/images/timer-reverse.png" alt="">
@@ -202,7 +209,7 @@
 
   <div id="popup" class="popup">
     <div class="popup-content">
-        <span class="close" onclick="closePopup()">&times;</span>
+        <span class="close" onclick="closePopup()">❌</span>
         <img id="popup-img" class="popup-animation" src="" alt="Popup Image">
 
         <p>Prijs: <img class="coin-popup" src="../assets/images/coin.png" alt="Coin"> <span id="popup-price"></span></p>

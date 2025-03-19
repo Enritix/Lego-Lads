@@ -20,6 +20,10 @@ html {
     left: 5%;
     
 }
+#textbubble-text1 {
+    white-space: pre-line;
+}
+
 
 #textbubble-container {
     position: absolute;

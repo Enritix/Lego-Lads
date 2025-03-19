@@ -49,6 +49,11 @@ main {
   height: 40vh;
   width: 20vw;
 }
+#open-chest{
+  position: absolute;
+  left: 5%;
+  top: 20%;
+}
 
  #titel::after {
     content: "";
@@ -276,6 +281,9 @@ main {
   }
   .details{
     margin: 0 !important;
+  }
+  #open-chest{
+    display: none;
   }
 
 
