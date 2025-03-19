@@ -104,6 +104,7 @@ main {
     max-width: 250px; 
     min-width: 120px; 
     transition: transform 0.1s ease-in-out;
+    cursor: url('../assets/images/cursor_hand.cur'), pointer !important;
 }
 .brick-cost {
     display: inline-block;
@@ -136,7 +137,7 @@ main {
     min-width: 160px; 
     border-radius: 0.8rem;
     margin-right: 100px;
-    
+    cursor: url('../assets/images/cursor_hand.cur'), pointer !important;
 }
 
 .upgrade:hover {

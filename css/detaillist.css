@@ -158,6 +158,10 @@ body {
     width: 20%;
     z-index: 1000;
   }
+
+  .info-icon {
+    cursor: url('../assets/images/cursor_hand.cur'), pointer !important;
+  }
   
   .popup {
     display: none;

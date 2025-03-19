@@ -299,7 +299,7 @@ main {
     top: 10px;
     right: 15px;
     font-size: 20px;
-    cursor: pointer;
+    cursor: url('../assets/images/cursor_hand.cur'), pointer !important;
     color: red;
 }
 

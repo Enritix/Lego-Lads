@@ -44,6 +44,10 @@ body {
     background-color: var(--secondary--color);
     margin-top: 5px;
   }
+
+  .info-icon {
+    cursor: url('../assets/images/cursor_hand.cur'), pointer !important;
+  }
   
   .carousel-container {
     width: 90%;
