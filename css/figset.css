@@ -131,6 +131,7 @@ main {
     list-style: none;
     background-color: var(--tertiarty-color);
     border-radius: 10px;
+    padding: 0;
 }
 #set-figs img{
     height: auto;
