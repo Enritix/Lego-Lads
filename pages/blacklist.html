@@ -140,33 +140,27 @@
           </p>
         </article>
       </section>
-
-      <section id="reden-popup" class="reden">
-        <article class="reden-content">
-          <span class="close-reden">❌</span>
-
-          <p>Reden</p>
-
-          <label class="option">
-            <input type="radio" name="reden" value="ken_ik_niet" />
-            Ken ik niet
-          </label>
-
-          <label class="option">
-            <input type="radio" name="reden" value="niet_leuk" />
-            Ik vind dit figuur niet leuk
-          </label>
-
-          <label class="option">
-            <input type="radio" name="reden" value="ander" />
-            Andere reden:
-          </label>
-
-          <textarea placeholder="Typ hier..."></textarea>
-
-          <button class="vernietig-button">VERNIETIG</button>
-        </article>
+      <section id="reasonPopUp" style="display: none;">
+        <span><h2>reden aanpassen</h2></span>
+        <label>
+          <input type="radio" name="reason" value="unknown">
+          <p>Ken ik niet</p>
+      </label>
+      <label>
+          <input type="radio" name="reason" value="not_like">
+          <p>Ik vind dit figuur niet leuk</p>
+      </label>
+      <label>
+          <input type="radio" name="reason" value="other">
+          <p>Andere reden</p>
+      </label>
+      <span><input type="text"></span>
+        
+        <p></p>
+        <span><a href="blacklist.html"><button id="closePopUp" class="select-button text-lego-stroke" data-text="klaar">klaar</button></a>
+        </span>
       </section>
+ 
 
       <section class="blacklist">
         <article class="blacklist-item">
@@ -175,7 +169,7 @@
             <img src="../assets/images/artic3.png" alt="Batman" />
           </div>
           <div class="reason">
-            <button class="reason-btn">REDEN</button>
+            <button id="vernietigKnop"  class="reason-btn">REDEN</button>
             <select class="reason-select">
               <option value="reden1">Deze figuur wil ik niet meer zien!</option>
               <option value="reden2">Deze figuur ken ik niet.</option>
