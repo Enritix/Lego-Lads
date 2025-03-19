@@ -255,17 +255,6 @@ menu {
     justify-content: center;
 }
 
-#closeInfoPopup {
-    all: unset;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 1rem;
-    background: red;
-    color: var(--text-color);
-}
-
 .tooltip-button {
     all: unset;
     border: none;

@@ -1,8 +1,4 @@
-* {
-    margin: 0;
-    padding: 0;
-  }
-  body {
+body {
     display: grid;
     grid-template-columns: 100px auto;
     height: 100vh;
@@ -121,7 +117,7 @@
   
   .carousel-alt {
     position: absolute;
-    top: -10px;
+    top: -40px;
     left: 50%;
     transform: translateX(-50%);
     color: #fff;

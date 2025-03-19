@@ -42,14 +42,14 @@ main {
     
 }
 
-h2 {
+#aantal-titel {
     display: inline-block;
     position: relative;
     padding-bottom: 5px; 
     font-size:40px ;
     color: white;
 }
-h2::after {
+#aantal-titel::after {
     content: "";
     display: block;
     width: 100%; 
