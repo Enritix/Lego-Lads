@@ -1,0 +1,16 @@
+{
+    "name": "Lego Lads Dev",
+    "dockerComposeFile": "../docker-compose.yml",
+    "service": "lego-app",
+    "workspaceFolder": "/app",
+    "settings": {
+      "terminal.integrated.defaultProfile.linux": "bash"
+    },
+    "extensions": [
+      "dbaeumer.vscode-eslint",
+      "esbenp.prettier-vscode",
+      "ms-vscode.vscode-typescript-next"
+    ],
+    "postCreateCommand": "npm install"
+  }
+  
