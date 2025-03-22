@@ -16,7 +16,7 @@ app.set('views', path.join(__dirname, '../views'));
 app.use(express.static(path.join(__dirname, '../public')));
 app.use(express.urlencoded({ extended: true }));
 
-// Abe: hier activeer ik de route. routes staan in de routes staan in de SRC -> ROUTES "dan alles zo goed mogelijk samen ge groupd" daar schrijf je de logica voor uw pages uw js omzetten dus uw html page zet ge un de map views.
+// Abe: hier activeer ik de route. routes staan in de SRC -> ROUTES "dan alles zo goed mogelijk samen ge groupd" daar schrijf je de logica voor uw pages uw js omzetten dus uw html page zet ge un de map views.
 app.use('/', authRoutes);
 app.use('/', gameRoutes);
 app.use('/', chatbotRoutes);
