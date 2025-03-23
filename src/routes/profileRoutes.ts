@@ -5,9 +5,17 @@ router.get('/profile', (req: Request, res: Response) => {
   res.render('profile');
 });
 
-router.get('/inventory', (req: Request, res: Response) => {
-  res.render('inventory');
+
+import { fetchInitialList } from '../apicalls';
+
+
+
+router.get('/inventory', async (req, res) => {
+  const { figs } = await fetchInitialList(); // haalt 10 figuren op
+  res.render('inventory', { figs }); // ✅ geef figs mee aan de EJS-pagina
 });
+
+
 
 router.get('/chest', (req: Request, res: Response) => {
   res.render('chest');
