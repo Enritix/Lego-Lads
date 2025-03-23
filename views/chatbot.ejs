@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>chat-bot</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/chatbot.css" />
+  <link rel="stylesheet" href="../css/settings.css">
+  <script src="../js/settings.js" defer></script>
+  <script src="../js/audio.js" defer></script>
+  <script src="../js/chatbot.js"></script>
+</head>
+
+<body>
+  <%- include('components/nav') %>
+  <main>
+    <div class="chatbot-container">
+      <div class="chatbot">
+        <a class="close" href="/">❌</a>
+        <aside id="aside-chatbot">
+          <header class="header-container" id="cahtbot-header">
+            <img src="../assets/images/bot.png" alt="">
+            <h1>Legolads-bot</h1>
+          </header>
+          <footer>
+            <h4>LegoLads team 💪</h4>
+            <ul id="self-portret-cont">
+              <li class="portret"> <img class="self-portret" src="../assets/images/lars.png" alt=""> Lars</li>
+              <li class="portret"> <img class="self-portret" src="../assets/images/abe.png" alt=""> Abe</li>
+              <li class="portret"> <img class="self-portret" src="../assets/images/gentian.png" alt=""> Gentian</li>
+              <li class="portret"> <img class="self-portret" src="../assets/images/enrico.png" alt=""> Enrico</li>
+            </ul>
+          </footer>
+        </aside>
+        <section id="chat" class="chat-container">
+          <section class="chat-box" id="chat-box">
+            <article class="message bot-message">
+              <img src="../assets/images/bot.png" alt="Bot Avatar" class="avatar">
+              <p class="text">hallo, ik ben de LegoLads AI, waar mee kan ik je helpen?</p>
+            </article>
+          </section>
+          <section class="input-container">
+            <input type="text" id="user-input" placeholder="stel je vraag">
+            <button class="text-lego-stroke" data-text="verstuur" onclick="sendMessage()">verstuur</button>
+
+          </section>
+        </section>
+      </div>
+    </div>
+
+  </main>
+  <%- include('components/settings') %>
+</body>
+
+</html>

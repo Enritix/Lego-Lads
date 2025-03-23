@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/settings.css">
+
+    <link rel="stylesheet" href="../css/inventory.css">
+
+    <script src="../js/settings.js" defer></script>
+    <script src="../js/audio.js" defer></script>
+    <script src="../js/inventory.js" defer></script>
+    <title>inventory</title>
+</head>
+<body>
+  <%- include('components/nav') %>
+     
+        <main>
+          <section id="info-popup" class="popup">
+            <div class="popup-content">
+                <span class="close-popup" onclick="closePopup()">❌</span>
+                <p>Hier kan je kijken wat er in je inventory zit</p>
+                <p>je kan een lego figure  selecteren en dat is dan joi popetje</p>
+                <p>ja kan ook kisten open doen als je een key hebt en een sleutel</p>
+            </div>
+          </section>
+          <a  class="close" href="profile">❌</a>
+          <header class="header-container">
+            <h1>inventory
+              <button class="tooltip-button" aria-label="Meer informatie" onclick="openInfoPopup()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-info-circle"
+                  viewBox="0 0 16 16">
+                  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                  <path
+                    d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 0 0 1 2 0" />
+                </svg>
+              </button>
+            </h1>
+          </header>
+            <section class="inventory-container">
+                <article id="selected" class="inventory-item">
+                 
+                    <img src="../assets/images/cinder-shop.png" alt="chen">
+                    <span class="details"><p>Cinder</p><p class="rarity legendary">legendary</p></span>
+
+                    <button class="select-button text-lego-stroke" data-text="actief">actief</button>  
+                </article>
+                <article class="inventory-item">
+                 
+                    <img src="../assets/images/artic3-shop.png" alt="chen">
+                    <span class="details"><p>Artic</p><p class="rarity episch">EPISCH</p></span>
+
+                    <button class="select-button text-lego-stroke" data-text="selecteer">selecteer</button>  
+                </article>
+                <article class="inventory-item">
+                 
+                    <img src="../assets/images/raddus-shop.png" alt="chen">
+                    <span class="details"><p>Raddus</p><p class="rarity gewoon">gewoon</p></span>
+
+                    <button class="select-button text-lego-stroke" data-text="selecteer">selecteer</button>  
+                </article>
+                <article class="inventory-item">
+                 
+                    <img src="../assets/images/crugx-shop.png" alt="chen">
+                    <span class="details"><p>Crugx</p><p class="rarity legendary">legendary</p></span>
+
+                    <button class="select-button text-lego-stroke" data-text="selecteer">selecteer</button>  
+                </article>
+                <article class="inventory-item">
+                 
+                    <img src="../assets/images/crugs-shop.png" alt="chen">
+                    <span class="details"><p>Crugs</p><p class="rarity episch">EPISCH</p></span>
+
+                    <button class="select-button text-lego-stroke" data-text="selecteer">selecteer</button>  
+                </article>
+                <article class="inventory-item">
+                 
+                    <img src="../assets/images/crug-shop.png" alt="chen">
+                    <span class="details"><p>Crug</p><p class="rarity gewoon">gewoon</p></span>
+
+                    <button class="select-button text-lego-stroke" data-text="selecteer">selecteer</button>  
+                </article>
+                <article class="inventory-item">
+                 
+                    <img src="../assets/images/cinder-shop.png" alt="chen">
+                    <span class="details"><p>Cinder</p><p class="rarity legendary">legendary</p></span>
+
+                    <button class="select-button text-lego-stroke" data-text="selecteer">selecteer</button>  
+                </article>
+                <article class="inventory-item">
+                 
+                    <img src="../assets/images/artic3-shop.png" alt="chen">
+                    <span class="details"><p>Artic</p><p class="rarity episch">EPISCH</p></span>
+
+                    <button class="select-button text-lego-stroke" data-text="selecteer">selecteer</button>  
+                </article>
+                <article class="inventory-item">
+                 
+                    <img src="../assets/images/raddus-shop.png" alt="chen">
+                    <span class="details"><p>Raddus</p><p class="rarity gewoon">gewoon</p></span>
+
+                    <button class="select-button text-lego-stroke" data-text="selecteer">selecteer</button>  
+                </article>
+                <article class="inventory-item">
+                 
+                    <img src="../assets/images/crugx-shop.png" alt="chen">
+                    <span class="details"><p>Crugx</p><p class="rarity legendary">legendary</p></span>
+
+                    <button class="select-button text-lego-stroke" data-text="selecteer">selecteer</button>  
+                </article>
+                <article class="inventory-item">
+                 
+                    <img src="../assets/images/crugs-shop.png" alt="chen">
+                    <span class="details"><p>Crugs</p><p class="rarity episch">EPISCH</p></span>
+
+                    <button class="select-button text-lego-stroke" data-text="selecteer">selecteer</button>  
+                </article>
+                <article class="inventory-item">
+                 
+                    <img src="../assets/images/crug-shop.png" alt="chen">
+                    <span class="details"><p>Crug</p><p class="rarity gewoon">gewoon</p></span>
+
+                    <button class="select-button text-lego-stroke" data-text="selecteer">selecteer</button>  
+                </article>
+                <article class="inventory-item">
+                 
+                    <img src="../assets/images/cinder-shop.png" alt="chen">
+                    <span class="details"><p>Cinder</p><p class="rarity legendary">legendary</p></span>
+
+                    <button class="select-button text-lego-stroke" data-text="selecteer">selecteer</button>  
+                </article>
+                <article class="inventory-item">
+                 
+                    <img src="../assets/images/artic3-shop.png" alt="chen">
+                    <span class="details"><p>Artic</p><p class="rarity episch">EPISCH</p></span>
+
+                    <button class="select-button text-lego-stroke" data-text="selecteer">selecteer</button>  
+                </article>
+                <article class="inventory-item">
+                 
+                    <img src="../assets/images/raddus-shop.png" alt="chen">
+                    <span class="details"><p>Raddus</p><p class="rarity gewoon">gewoon</p></span>
+
+                    <button class="select-button text-lego-stroke" data-text="selecteer">selecteer</button>  
+                </article>
+                <article class="inventory-item">
+                 
+                    <img src="../assets/images/crugx-shop.png" alt="chen">
+                    <span class="details"><p>Crugx</p><p class="rarity legendary">legendary</p></span>
+
+                    <button class="select-button text-lego-stroke" data-text="selecteer">selecteer</button>  
+                </article>
+                <article class="inventory-item">
+                 
+                    <img src="../assets/images/crugs-shop.png" alt="chen">
+                    <span class="details"><p>Crugs</p><p class="rarity episch">EPISCH</p></span>
+
+                    <button class="select-button text-lego-stroke" data-text="selecteer">selecteer</button>  
+                </article>
+                <article class="inventory-item">
+                 
+                    <img src="../assets/images/crug-shop.png" alt="chen">
+                    <span class="details"><p>Crug</p><p class="rarity gewoon">gewoon</p></span>
+
+                    <button class="select-button text-lego-stroke" data-text="selecteer">selecteer</button>  
+                </article>
+            </section>
+            <section class="bottom-items">
+              <ul id="chest-products">
+                <li><img id="test" src="../assets/images/common-chest.png" alt="chest">
+                  <section class="rarity-amount"><p class="gewoon rarity">Gewoon </p><span>10x</span></section><button class="buy-btn  text-lego-stroke"
+                  data-text="open"><a href="chest">open</a></button>
+                </li>
+                <li><img src="../assets/images/epic-chest.png" alt="chest">
+                  <section class="rarity-amount"><p class="episch rarity">episch </p> <span>4x</span></section><button class="buy-btn  text-lego-stroke"
+                  data-text="open"><a href="chest">open</a></button>
+                </li>
+                <li><img src="../assets/images/legnd-chest.png" alt="chest">
+                  <section class="rarity-amount"> <p class="legendary rarity">legendary </p><span>1x</span> </section><button class="buy-btn  text-lego-stroke"
+                    data-text="open"><a href="chest">open</a></button>
+                </li>
+                <li><img src="../assets/images/chest-key.png" alt="chest">
+                  <section class="rarity-amount"> <p class="key rarity">key</p><span>1x</span> </section>
+                </li>
+              </ul>
+            </section>
+        </main>
+
+        <%- include('components/settings') %>
+    
+</body>
+</html>

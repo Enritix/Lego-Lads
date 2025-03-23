@@ -9,7 +9,7 @@ import profileRoutes from './routes/profileRoutes';
 import figoverviewRoutes from './routes/figoverviewRoutes';
 
 const app = express();
-const PORT = 8091;
+const PORT = 8092;
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '../views'));

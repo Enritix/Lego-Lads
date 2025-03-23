@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/chest.css">
+  <link rel="stylesheet" href="../css/settings.css">
+  <script src="../js/settings.js" defer></script>
+  <script src="../js/audio.js" defer></script>
+  <script src="../js/chest.js" defer></script>
+  <title>chest</title>
+</head>
+
+<body>
+
+  <body>
+    <%- include('components/nav') %>
+    
+    <audio id="openSound" src="./assets/audio/open.mp3"></audio>
+    <main>
+      <img id="open-chest" src="../assets/images/epic-chest.png" alt="">
+      <a  class="close" href="inventory">❌</a>
+
+      <h1 id="titel">kist opening <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+          class="bi bi-info-circle" viewBox="0 0 16 16">
+          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+          <path
+            d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 0 0 1 2 0" />
+        </svg> </h1>
+
+      <div class="spinner" id="spinnerContainer">
+        <ul class="spinner-items" id="spinnerList">
+          <li class="spinner-items__item green"><img src="../assets/images/blackfig.png" alt=""></li>
+          <li class="spinner-items__item green"><img src="../assets/images/blackfig.png" alt=""></li>
+          <li class="spinner-items__item green"><img src="../assets/images/blackfig.png" alt=""></li>
+          <li class="spinner-items__item green"><img src="../assets/images/blackfig.png" alt=""></li>
+          <li class="spinner-items__item green"><img src="../assets/images/blackfig.png" alt=""></li>
+          <li class="spinner-items__item purple"><img src="../assets/images/blackfig.png" alt=""></li>
+          <li class="spinner-items__item purple"><img src="../assets/images/blackfig.png" alt=""></li>
+          <li class="spinner-items__item purple"><img src="../assets/images/blackfig.png" alt=""></li>
+          <li class="spinner-items__item gold"><img src="../assets/images/blackfig.png" alt=""></li>
+        </ul>
+        <div class="spinner__marker"></div>
+      </div>
+
+      <button class="text-lego-stroke" data-text="open" id="startSpinner">open</button>
+      <div id="overlayChest"></div>
+      <div id="winPopup" class="popup" style="display: none;">
+        <div class="popup-content">
+          <p id="winName"></p>
+          <div class="figure-card">
+            <img id="winImage" src="" alt="Winning Figure" style="width: 150px; height: 150px;">
+          </div>
+          <button class="text-lego-stroke" data-text="sluiten" onclick="closePopup()">sluiten</button>
+        </div>
+      </div>
+
+
+
+      <div class="content">
+        <section class="inventory-container">
+          <article class="inventory-item">
+           
+              <img src="../assets/images/cinder-shop.png" alt="chen">
+              <span class="details"><p>Cinder</p><p class="rarity legendary">legendary</p></span>
+
+          </article>
+          <article class="inventory-item">
+           
+              <img src="../assets/images/artic3-shop.png" alt="chen">
+              <span class="details"><p>Artic</p><p class="rarity episch">EPISCH</p></span>
+ 
+          </article>
+          <article class="inventory-item">
+           
+              <img src="../assets/images/raddus-shop.png" alt="chen">
+              <span class="details"><p>Raddus</p><p class="rarity gewoon">gewoon</p></span>
+
+          </article>
+          <article class="inventory-item">
+           
+              <img src="../assets/images/crugx-shop.png" alt="chen">
+              <span class="details"><p>Crugx</p><p class="rarity legendary">legendary</p></span>
+ 
+          </article>
+          <article class="inventory-item">
+           
+              <img src="../assets/images/crugs-shop.png" alt="chen">
+              <span class="details"><p>Crugs</p><p class="rarity episch">EPISCH</p></span>
+ 
+          </article>
+          <article class="inventory-item">
+           
+              <img src="../assets/images/crug-shop.png" alt="chen">
+              <span class="details"><p>Crug</p><p class="rarity gewoon">gewoon</p></span>
+
+ 
+          </article>
+      </section>
+
+      </div>
+      </div>
+    </main>
+    <section id="popup">
+      <p>Hier kan je je kist openen en een figure krijgen</p>
+      <p> 🟢groen = 55.56% </p>
+      <p> 🟣paars = 33.33% </p>
+      <p> 🟡goud = 11.11% </p>
+    </section>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.3.2"></script>
+    <%- include('components/settings') %>
+  </body>
+
+</html>

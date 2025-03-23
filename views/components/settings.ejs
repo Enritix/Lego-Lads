@@ -1,0 +1,77 @@
+<div id="overlay" class="hidden"></div>
+<aside id="settings-container">
+  <h1 id="settings-title">Instellingen</h1>
+  <div id="settings">
+    <div id="sound-container">
+      <h2 id="sound-title">Geluid</h2>
+      <div id="sound">
+        <input type="checkbox" id="sound-toggle" name="sound" class="toggle-input" checked>
+        <label for="sound-toggle" class="toggle-label">
+          <span class="toggle-slider">
+            <img src="../assets/images/yellow_slider_stud.png" alt="LEGO knop" class="toggle-knob">
+            <span class="toggle-text off">uit</span>
+            <span class="toggle-text on">aan</span>
+          </span>
+        </label>
+      </div>
+    </div>
+
+    <div id="music-container">
+      <h2 id="music-title">Muziek</h2>
+      <div id="music">
+        <input type="checkbox" id="music-slider" name="music" class="toggle-input" checked>
+        <label for="music-slider" class="toggle-label">
+          <span class="toggle-slider">
+            <img src="../assets/images/yellow_slider_stud.png" alt="LEGO knop" class="toggle-knob">
+            <span class="toggle-text off">uit</span>
+            <span class="toggle-text on">aan</span>
+          </span>
+        </label>
+      </div>
+    </div>
+
+    <div id="colormode-container">
+      <h2 id="colormode-title">Filter</h2>
+      <div class="select-wrapper">
+        <select name="colormode" id="colormode" class="settings-select" default="normal">
+          <option value="normal">Normaal</option>
+          <option value="achromatomaly">Achromatomalie</option>
+          <option value="achromatopsia">Achromatopsie</option>
+          <option value="daltonism">Daltonisme</option>
+          <option value="deuteranopia">Deuteranoop</option>
+          <option value="deuteranomaly">Dichromatopsie</option>
+          <option value="protanopia">Protanoop</option>
+          <option value="protanomaly">Protanomalie</option>
+          <option value="tritanomaly">Trichromatopsie</option>
+          <option value="tritanopia">Tritanoop</option>
+        </select>
+        <div class="arrow-box">
+          <div class="custom-arrow"></div>
+        </div>
+      </div>
+    </div>
+    <div id="language-container">
+      <h2 id="language-title">Taal</h2>
+      <div class="select-wrapper">
+        <select name="language" id="language" class="settings-select" default="dutch">
+          <option value="dutch">Nederlands</option>
+          <option value="english">Engels</option>
+        </select>
+        <div class="arrow-box">
+          <div class="custom-arrow"></div>
+        </div>
+      </div>
+    </div>
+    <div id="brightness-container">
+      <h2 id="brightness-title">Helder</h2>
+      <div id="brightness">
+        <button id="brightness-decrease">-</button>
+        <div id="brightness-bar"></div>
+        <button id="brightness-increase">+</button>
+      </div>
+    </div>
+    <div id="close-btn-container">
+      <button id="settings-close-btn" class="text-lego-stroke" data-text="sluiten">sluiten</button>
+    </div>
+  </div>
+</aside>
