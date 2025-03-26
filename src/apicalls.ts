@@ -99,7 +99,7 @@ interface LegoFig {
   set_img_url: string;
 }
 
-// Abe: lego figs fetchen en in array figs[] steken 
+// Abe: lego figs fetchen en in array figs[] steken voorlopig 5 (page_size=5)
 // Abe: nog een manier vinden om de namen mooi kort te krijgen (onmogelijk denk ik)
 export async function fetchfigs() {
   try {
@@ -125,7 +125,7 @@ export async function fetchfigs() {
   }
 }
 
-// Abe: lego stets fetchen en in array sets[] steken 
+// Abe: lego stets fetchen en in array sets[] steken   voorlopig 5 (page_size=5)
 interface LegoSet {
   set_num: string;
   name: string;
