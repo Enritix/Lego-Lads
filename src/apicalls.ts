@@ -88,8 +88,8 @@ export async function fetchInitialList(): Promise<{ figs: LegoItem[]; legoSets: 
   return { figs, legoSets };
 }
 */
-
-const API_KEY = '15f26f4e839a69264b4fb0d045edfc64';
+require('dotenv').config();
+const API_KEY = process.env.API_KEY;
 
 
 
