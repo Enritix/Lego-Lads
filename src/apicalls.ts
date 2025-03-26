@@ -1,4 +1,4 @@
-import axios from 'axios';
+/*import axios from 'axios';
 
 const API_KEY = '15f26f4e839a69264b4fb0d045edfc64';
 
@@ -86,6 +86,69 @@ export async function fetchInitialList(): Promise<{ figs: LegoItem[]; legoSets: 
   console.log('Figs:', figs);
   console.log('API 10 figs  klaar');
   return { figs, legoSets };
+}
+*/
+
+const API_KEY = '15f26f4e839a69264b4fb0d045edfc64';
+
+
+
+interface LegoFig {
+  set_num: string;
+  name: string;
+  set_img_url: string;
+}
+
+// Abe: lego figs fetchen en in array figs[] steken 
+// Abe: nog een manier vinden om de namen mooi kort te krijgen (onmogelijk denk ik)
+export async function fetchfigs() {
+  try {
+    const response = await fetch('https://rebrickable.com/api/v3/lego/minifigs?page_size=5', {
+      headers: {
+        'Authorization': `key ${API_KEY}`
+      }
+    });
+    const figData = await response.json();
+    const figs: LegoFig[] = figData.results;
+    console.log(" response apo . ");
+     console.log(figData);
+    /*figs.forEach(fig => {
+      console.log(`Naam: ${fig.name}`);
+      console.log(`Nummer: ${fig.set_num}`);
+      console.log(`Afbeelding: ${fig.set_img_url}`);
+    });*/
+    return figs;
+  }
+  catch(error: any){
+    console.log(error)
+    return [];
+  }
+}
+
+// Abe: lego stets fetchen en in array sets[] steken 
+interface LegoSet {
+  set_num: string;
+  name: string;
+  year: number;
+  theme_id: number;
+  num_parts: number;
+  set_img_url: string;
+  set_url: string;
+}
+export async function  fetchsets() {
+  try {
+    const response = await fetch ('https://rebrickable.com/api/v3/lego/sets?page_size=5',{
+      headers:{
+         'Authorization': `key ${API_KEY}`
+      }
+    });
+    const setData = await response.json();
+    const sets: LegoSet[] = setData.results;
+    console.log(setData)
+  }
+  catch(error: any){
+    console.log(error)
+  }
 }
 
 

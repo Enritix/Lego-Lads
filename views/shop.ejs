@@ -42,8 +42,16 @@
     </header>
 
     <section class="carousel-container">
-
       <div class="carousel">
+        <% figs.forEach(fig => { %>
+          <img 
+            src="<%= fig.set_img_url %>" 
+            alt="<%= fig.name %>" 
+            class="carousel-img" 
+            data-name="<%= fig.name %>" 
+            data-rarity="legendary"
+          >
+        <% }) %>
         <img src="../assets/images/cinder-shop.png" class="carousel-img" data-name="Chen" data-rarity="legendary"
           data-price="1000">
         <img src="../assets/images/raddus-shop.png" class="carousel-img" data-name="Raddus" data-rarity="gewoon"

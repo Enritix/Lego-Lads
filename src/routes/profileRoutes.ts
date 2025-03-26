@@ -1,4 +1,6 @@
 import express, { Request, Response } from 'express';
+import {fetchfigs, fetchsets} from'../apicalls';
+
 const router = express.Router();
 
 router.get('/profile', (req: Request, res: Response) => {
@@ -6,23 +8,24 @@ router.get('/profile', (req: Request, res: Response) => {
 });
 
 
-import { fetchInitialList } from '../apicalls';
-
-
-
 router.get('/inventory', async (req, res) => {
-  const { figs } = await fetchInitialList(); // haalt 10 figuren op
-  res.render('inventory', { figs }); // ✅ geef figs mee aan de EJS-pagina
+  res.render('inventory');
 });
-
-
 
 router.get('/chest', (req: Request, res: Response) => {
   res.render('chest');
 });
 
-router.get('/shop', (req: Request, res: Response) => {
-  res.render('shop');
+router.get('/shop', async (req: Request, res: Response) => {
+  try{
+    const figs = await fetchfigs();
+    res.render('shop',{figs});
+
+  }catch(error){
+    console.error("fout api")
+    // binne kort eeror status codes 
+  }
+
 });
 
 export default router;
