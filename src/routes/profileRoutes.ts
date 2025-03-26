@@ -7,7 +7,6 @@ router.get('/profile', (req: Request, res: Response) => {
   res.render('profile');
 });
 
-
 router.get('/inventory', async (req, res) => {
   res.render('inventory');
 });

@@ -91,12 +91,24 @@ export async function fetchInitialList(): Promise<{ figs: LegoItem[]; legoSets: 
 require('dotenv').config();
 const API_KEY = process.env.API_KEY;
 
-
-
 interface LegoFig {
   set_num: string;
   name: string;
   set_img_url: string;
+  rarity: 'gewoon'|'episch'|'legendary';
+}
+
+// Abe: hier zeggen we welke index welke rarety moet krijgen kan ng veranderd worden is voorlopig
+//  Indexen 0 tem 4 → gewoon
+// Indexen 5 tem 7 → episch
+// Index 8 → legendary
+// Daarna begint het opnieuww door modullo 9 te gebruiken
+function getRarity(index: number):'gewoon'|'episch'|'legendary'{
+  const cykleIndex = index % 9;
+
+  if(cykleIndex <5) return'gewoon';
+  if(cykleIndex <8 ) return 'episch';
+  return'legendary'
 }
 
 // Abe: lego figs fetchen en in array figs[] steken voorlopig 5 (page_size=5)
@@ -109,9 +121,16 @@ export async function fetchfigs() {
       }
     });
     const figData = await response.json();
-    const figs: LegoFig[] = figData.results;
+    const figs: LegoFig[] = figData.results.map((fig: any, index: number)=>({
+      set_num: fig.set_num,
+      name: fig.name,
+      set_img_url: fig.set_img_url,
+      rarity: getRarity(index),
+    }));
     console.log(" response apo . ");
-     console.log(figData);
+    figs.forEach(fig => {
+      console.log(`${fig.name} --rarety: ${fig.rarity}`);
+    });
     /*figs.forEach(fig => {
       console.log(`Naam: ${fig.name}`);
       console.log(`Nummer: ${fig.set_num}`);

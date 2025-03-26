@@ -77,8 +77,8 @@ async function startApp() {
   try {
     await startServer(PORT);       
     await connectToMongoDB();       
-    /*await fetchfigs();              
-    await fetchsets();*/
+    await fetchfigs();              
+    /*await fetchsets();*/
   } catch (err) {
     console.error( err);
   }
