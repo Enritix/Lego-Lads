@@ -115,7 +115,7 @@ function getRarity(index: number):'gewoon'|'episch'|'legendary'{
 // Abe: nog een manier vinden om de namen mooi kort te krijgen (onmogelijk denk ik)
 export async function fetchfigs() {
   try {
-    const response = await fetch('https://rebrickable.com/api/v3/lego/minifigs?page_size=5', {
+    const response = await fetch('https://rebrickable.com/api/v3/lego/minifigs?page_size=9', {
       headers: {
         'Authorization': `key ${API_KEY}`
       }

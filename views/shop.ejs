@@ -49,21 +49,9 @@
             alt="<%= fig.name %>" 
             class="carousel-img" 
             data-name="<%= fig.name %>" 
-            data-rarity="legendary"
-          >
-        <% }) %>
-        <img src="../assets/images/cinder-shop.png" class="carousel-img" data-name="Chen" data-rarity="legendary"
-          data-price="1000">
-        <img src="../assets/images/raddus-shop.png" class="carousel-img" data-name="Raddus" data-rarity="gewoon"
-          data-price="250">
-        <img src="../assets/images/artic3-shop.png" class="carousel-img" data-name="Artic3" data-rarity="episch"
-          data-price="500">
-        <img src="../assets/images/crug-shop.png" class="carousel-img" data-name="Crug" data-rarity="gewoon"
-          data-price="250">
-        <img src="../assets/images/crugs-shop.png" class="carousel-img" data-name="Crugs" data-rarity="episch"
-          data-price="500">
-        <img src="../assets/images/crugx-shop.png" class="carousel-img" data-name="Crugx" data-rarity="legendary"
-          data-price="1000">
+            data-rarity="<%= fig.rarity %>"
+            data-price="1000">
+        <% }) %>          
       </div>
 
     </section>
