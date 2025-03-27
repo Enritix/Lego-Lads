@@ -1,6 +1,6 @@
 /*import axios from 'axios';
 
-const API_KEY = '15f26f4e839a69264b4fb0d045edfc64';*/
+const API_KEY = '15f26f4e839a69264b4fb0d045edfc64';
 
 
 // Abe: api calls rebriable
@@ -14,7 +14,7 @@ interface LegoFig {
   rarity: 'gewoon'|'episch'|'legendary';
 }
 
-// Abe: hier zeggen we welke index welke rarety moet krijgen kan ng veranderd worden is voorlopig
+// Abe: hier eggen we welke index welke rarety moet krijgen kan ng veranderd worden is voorlopig
 //  Indexen 0 tem 4 → gewoon
 // Indexen 5 tem 7 → episch
 // Index 8 → legendary
@@ -84,7 +84,7 @@ export async function  fetchsets() {
   catch(error: any){
     console.log(error)
   }
-}
+}*/
 
 
 //Abe : minifigs ophalen eigen api ;)
@@ -99,7 +99,7 @@ export async function fetchMinifigs(): Promise<Minifig[]> {
   const res = await fetch('https://supabase-api-q362.onrender.com/minifigs');
 
   if (!res.ok) {
-    throw new Error(`Fout bij ophalen: ${res.status}`);
+    throw new Error(`Foutt ophalen: ${res.status}`);
   }
 
   const data: Minifig[] = await res.json();
@@ -109,6 +109,51 @@ export async function fetchMinifigs(): Promise<Minifig[]> {
 
   return data;
 }
+
+interface Sets{
+  id: number;
+  name: string;
+  img: string;
+  code: string;
+  theme: number;
+}
+
+export async function fetchSets(): Promise<Sets[]> {
+  const res = await fetch('https://supabase-api-q362.onrender.com/sets');
+
+  if (!res.ok) {
+    throw new Error(`Foutt ophalen: ${res.status}`);
+  }
+
+  const data: Sets[] = await res.json();
+
+  
+  console.log(data);
+
+  return data;
+}
+
+interface Themes{
+  id: number;
+  name: string;
+  img: string;
+}
+
+export async function fetchThemes(): Promise<Themes[]> {
+  const res = await fetch('https://supabase-api-q362.onrender.com/theme');
+
+  if (!res.ok) {
+    throw new Error(`Foutt ophalen: ${res.status}`);
+  }
+
+  const data: Themes[] = await res.json();
+
+  
+  console.log(data);
+
+  return data;
+}
+
 
 
 

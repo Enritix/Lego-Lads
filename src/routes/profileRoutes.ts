@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import {fetchfigs, fetchsets} from'../apicalls';
+import {fetchMinifigs} from'../apicalls';
 
 const router = express.Router();
 
@@ -17,8 +17,8 @@ router.get('/chest', (req: Request, res: Response) => {
 
 router.get('/shop', async (req: Request, res: Response) => {
   try{
-    const figs = await fetchfigs();
-    res.render('shop',{figs});
+    const figs = await fetchMinifigs();
+    res.render('shop', { minifigs: figs });
 
   }catch(error){
     console.error("fout api")

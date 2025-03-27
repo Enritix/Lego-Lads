@@ -43,15 +43,15 @@
 
     <section class="carousel-container">
       <div class="carousel">
-        <% figs.forEach(fig => { %>
+        <% minifigs.forEach(fig => { %>
           <img 
-            src="<%= fig.set_img_url %>" 
+            src="<%= fig.img %>" 
             alt="<%= fig.name %>" 
             class="carousel-img" 
             data-name="<%= fig.name %>" 
-            data-rarity="<%= fig.rarity %>"
+            data-rarity="<%= fig.rarity %>" 
             data-price="1000">
-        <% }) %>          
+        <% }) %>        
       </div>
 
     </section>
