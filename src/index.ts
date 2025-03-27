@@ -9,7 +9,7 @@ import profileRoutes from './routes/profileRoutes';
 import figoverviewRoutes from './routes/figoverviewRoutes';
 import {connectToMongoDB} from './database';
 /*import { fetchInitialData } from './apicalls';*/
-import {fetchfigs, fetchsets} from'./apicalls';
+import {fetchfigs, fetchsets, fetchMinifigs} from'./apicalls';
 
 const app = express();
 const PORT = 8092;
@@ -77,7 +77,7 @@ async function startApp() {
   try {
     await startServer(PORT);       
     await connectToMongoDB();       
-    await fetchfigs();              
+    await fetchMinifigs();              
     /*await fetchsets();*/
   } catch (err) {
     console.error( err);
