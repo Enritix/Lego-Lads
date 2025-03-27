@@ -105,7 +105,7 @@ export async function fetchMinifigs(): Promise<Minifig[]> {
   const data: Minifig[] = await res.json();
 
   
-  console.log(data);
+  console.log( '\x1b[34m figs \x1b[0m',data);
 
   return data;
 }
@@ -128,7 +128,7 @@ export async function fetchSets(): Promise<Sets[]> {
   const data: Sets[] = await res.json();
 
   
-  console.log(data);
+  console.log( '\x1b[34m sets \x1b[0m',data);
 
   return data;
 }
@@ -149,7 +149,7 @@ export async function fetchThemes(): Promise<Themes[]> {
   const data: Themes[] = await res.json();
 
   
-  console.log(data);
+  console.log( '\x1b[34mthemes \x1b[0m',data);
 
   return data;
 }

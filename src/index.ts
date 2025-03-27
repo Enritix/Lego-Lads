@@ -8,7 +8,6 @@ import factoryRoutes from './routes/factoryRoutes';
 import profileRoutes from './routes/profileRoutes';
 import figoverviewRoutes from './routes/figoverviewRoutes';
 import {connectToMongoDB} from './database';
-/*import { fetchInitialData } from './apicalls';*/
 import {fetchMinifigs,fetchSets,fetchThemes} from'./apicalls';
 
 const app = express();
