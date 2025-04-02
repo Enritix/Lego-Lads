@@ -308,17 +308,11 @@ header nav ul li svg:hover {
     #nav-menu ul li {
         padding: 0 15px;
     }
-    #nav-menu ul li a svg {
-        width: 30px; 
-        height: 30px;
-        transition: transform 0.2s ease-in-out;
     
-    }
     #nav-menu ul li a svg {
         width: 30px; 
         height: 30px;
         transition: transform 0.2s ease-in-out, fill 0.3s ease-in-out;
-        fill: var(--text-hover-color); 
     }
     #nav-menu ul li a:hover svg {
         transform: scale(1.2);
