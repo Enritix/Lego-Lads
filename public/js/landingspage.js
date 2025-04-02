@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const activeItem = document.querySelector(".carousel-item.active");
 
         if (activeItem.alt === "Lego Masters") {
-            window.location.href = "loader.html";
+            window.location.href = "/loader";
         } else {
             showPopup(activeItem);
         }
@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
             e.preventDefault();
             if (item.classList.contains("active")) {
                 if (item.alt === "Lego Masters") {
-                    window.location.href = "loader.html";
+                    window.location.href = "/loader";
                 } else {
                     showPopup(item);
                 }
