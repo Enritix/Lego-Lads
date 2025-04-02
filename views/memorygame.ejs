@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="nl-BE">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LegoLads - Memory game</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/memorygame.css">
+    <link rel="stylesheet" href="/css/settings.css">
+    <script src="/js/settings.js" defer></script>
+    <script src="/js/audio.js" defer></script>
+    <script src="/js/timer.js" defer></script>
+    <script src="/js/memorygame.js" defer></script>
+</head>
+
+<body>
+  <%- include('components/nav') %>
+    <main>
+        <div id="time-display"></div>
+        <header class="header-container">
+            <h1>Geheugen spel
+                <button class="tooltip-button" aria-label="Meer informatie" onclick="openInfoPopup()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                        class="bi bi-info-circle" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                        <path
+                            d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 0 0 1 2 0" />
+                    </svg>
+                </button>
+            </h1>
+        </header>
+        <a class="close" href="/">❌</a>
+        <section class="memory-container"></section>
+        </section>
+        <div id="popup">
+            <div id="popup-content">
+                <h2>Gefeliciteerd! Je bent gewonnen!</h2>
+                <p></p>
+                <button id="new-game-btn" class="text-lego-stroke" data-text="nieuw spel">Nieuw Spel</button>
+                <button id="main-menu-btn" class="text-lego-stroke" data-text="hoofdmenu">Hoofdmenu</button>
+            </div>
+        </div>
+        <dialog id="infoPopup">
+            <article class="popup-content">
+              <h2>Over het Geheugen Spel</h2>
+    
+              <div class="info-section">
+                <p><strong>🧩Lego Minifigure Geheugen spel</strong></p>
+                <p>Test je geheugen en snelheid! 🕰️</p>
+              </div>
+    
+              <div class="info-section">
+                <p><strong>🎮 Gameplay</strong></p>
+                <p>🃏 Draai de kaarten om en zoek de juiste paren van Lego-minifigs.<br>
+                    Maar pas op, je speelt tegen de klok! ⏳ <br>
+                    Elke seconde telt, dus denk snel en onthoud goed waar de minifigs zich bevinden.</p>
+              </div>
+    
+              <div class="info-section">
+                <p>✅ <strong>Goed geraden?</strong><br>
+                    Gefeliciteerd! Voor elk correct paar krijg je +5 seconden extra tijd op de timer.</p>
+              </div>
+    
+              <div class="info-section">
+                <p>❌ <strong>Fout geraden?</strong><br>
+                  Verdien genoeg stenen en ruil ze in voor coins.<br>
+                  Coins geven toegang tot exclusieve aankopen.</p>
+              </div>
+    
+              <div class="info-section">
+                <p>🎯 <strong>Doel</strong><br>
+                    Vind alle minifigure-paren voordat de tijd op is. Hoe sneller je speelt, hoe meer coins je ontvangt! 🚀</p>
+              </div>
+    
+              <div class="info-section">
+                <p>🏆 <strong>Tip</strong><br>
+                    Oefen je geheugen en probeer een nieuw record te halen. Kun jij alle paren vinden en de hoogste score behalen? Veel succes! 🎉</p>
+              </div>
+    
+              <menu>
+                <button class="text-lego-stroke" data-text="sluiten" id="closeInfoPopup" onclick="closeInfoPopup()">Sluiten</button>
+              </menu>
+            </article>
+          </dialog>
+    </main>
+    <%- include('components/settings') %>
+</body>
+
+</html>

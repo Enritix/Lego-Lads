@@ -133,7 +133,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     document.getElementById("main-menu-btn").addEventListener("click", () => {
         document.getElementById("popup").style.display = "none";
-        window.location.href = "../index.html";
+        window.location.href = "/";
     });
 
     async function loadGame() {
