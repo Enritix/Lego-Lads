@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LegoLads - Landingpage</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/genre.css" />
+    <link rel="stylesheet" href="../css/settings.css" />
+    <script src="../js/settings.js" defer></script>
+  </head>
+
+  <body>
+    <%- include('components/nav') %>
+    <main>
+      <div class="carousel-container">
+        <h2 class="carousel-title">
+          Kies een genre <span class="info-icon">&#x24D8;</span>
+        </h2>
+        <a href="/" class="back-button">❌</a>
+        <section id="info-popup" class="popup">
+          <article class="popup-content">
+            <span class="close-button">❌</span>
+
+            <p>Klik op het genre dat je wilt bekijken.</p>
+          </article>
+        </section>
+        <div class="carousel">
+          <button class="carousel-btn prev">❮</button>
+          <div class="carousel-track">
+            <a href="detaillist">
+              <div class="carousel-item active">
+                <p class="carousel-alt">Harry Potter</p>
+                <img
+                  src="../assets/images/harry-potter.png"
+                  alt="Harry-Potter"
+                />
+              </div>
+            </a>
+            <a href="detaillist">
+              <div class="carousel-item">
+                <p class="carousel-alt">Lego City</p>
+                <img src="../assets/images/lego-city.png" alt="Lego-city" />
+              </div>
+            </a>
+            <a href="detaillist">
+              <div class="carousel-item">
+                <p class="carousel-alt">DC-universe</p>
+                <img src="../assets/images/DC-genre.png" alt="DC-universe" />
+              </div>
+            </a>
+          </div>
+          <button class="carousel-btn next">❯</button>
+        </div>
+      </div>
+    </main>
+    <%- include('components/settings') %>
+
+    <script src="../js/genre.js"></script>
+    <script src="../js/audio.js"></script>
+  </body>
+</html>
