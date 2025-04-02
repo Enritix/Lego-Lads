@@ -83,15 +83,15 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     function loadTranslations(language) {
-        if (window.href === "index.html") {
-            fetch('data/translations.json')
+        if (window.href === "/") {
+            fetch('/data/translations.json')
                 .then(response => response.json())
                 .then(translations => {
                     applyTranslations(translations[language]);
                 })
                 .catch(error => console.error('Error loading translations:', error));
         } else {
-            fetch('../data/translations.json')
+            fetch('/data/translations.json')
                 .then(response => response.json())
                 .then(translations => {
                     applyTranslations(translations[language]);

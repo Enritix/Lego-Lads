@@ -82,6 +82,7 @@ main {
     top: 10px;
     left: 50px;
     scale: 0.3;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 1);
 }
 
 .pixel {
