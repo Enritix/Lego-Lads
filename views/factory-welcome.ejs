@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="nl-BE">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LegoLads - Lego Fabriek</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/factory-welcome.css">
+    <link rel="stylesheet" href="/css/settings.css">
+    <script src="/js/settings.js" defer></script>
+    <script src="/js/audio.js" defer></script>
+</head>
+
+<body>
+    <%- include('components/nav') %>
+    <main>
+        <section id="game-container">
+            <!-- <img id="legofactory-bg" src="assets/images/lego-background.png" alt="Background"> -->
+            <img src="/assets/images/forklift.png" alt="Forklift truck" id="forklift">
+            <div id="textbubble-container">
+                <img id="textbubble" src="/assets/images/textbubble.png" alt="Text bubble">
+                <div id="text-content">
+                    <p id="textbubble-text1">Hallo! Welkom in de<br> Lego Minifi-guur fabriek!</p>
+                    <p id="textbubble-text2">Help jij mij om de figuurtjes in de juiste sets te sorteren?</p>
+                </div>
+                <a href="ordenen">
+                    <label for="submit-button" id="submit-label">Ga verder!</label>
+                    <input type="image" id="submit-button" src="/assets/images/submit-button.png"
+                        alt="submit button" />
+                </a>
+            </div>
+            <img id="factoryworker" src="/assets/images/factoryworker.png" alt="Character">
+        </section>
+    </main>
+    <script src="/js/factory-welcome.js"></script>
+
+    <%- include('components/settings') %>
+</body>
+
+</html>

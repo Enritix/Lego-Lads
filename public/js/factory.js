@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
         gears.forEach(gear => {
             gear.style.animation = "none";
             setTimeout(() => {
-                window.location.href = "figordenen.html";
+                window.location.href = "/figordenen";
             }, 1000);
         });
     });
@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
         gearsMobile.forEach(gear => {
             gear.style.animation = "none";
             setTimeout(() => {
-                window.location.href = "figordenen.html";
+                window.location.href = "/figordenen";
             }, 1000);
         });
     });
