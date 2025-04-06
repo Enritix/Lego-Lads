@@ -16,15 +16,7 @@ router.get('/chest', (req: Request, res: Response) => {
 });
 
 router.get('/shop', async (req: Request, res: Response) => {
-  try{
-    const figs = await fetchMinifigs();
-    res.render('shop', { minifigs: figs });
-
-  }catch(error){
-    console.error("fout api")
-    // binne kort eeror status codes 
-  }
-
+    res.render('shop');
 });
 
 export default router;

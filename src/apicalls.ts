@@ -86,7 +86,7 @@ export async function  fetchsets() {
   }
 }*/
 
-
+import { Request, Response, NextFunction } from 'express';
 //Abe : minifigs ophalen eigen api ;)
 interface Minifig {
   id: number;
