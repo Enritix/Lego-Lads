@@ -1,0 +1,170 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+
+html {
+    background-image: url(../assets/images/lego-background.png);
+    background-size: cover;
+    background-position: center;
+    overflow: hidden !important;
+}
+
+/* #game-container {
+    overflow: hidden;
+} */
+
+#game-container #legofactory-bg {
+    position: absolute;
+    width: 85%;
+    filter: blur(2px);
+    z-index: -1;
+    top: 3%;
+    left: 5%;
+    
+}
+#textbubble-text1 {
+    white-space: pre-line;
+}
+
+
+#textbubble-container {
+    position: absolute;
+    width: 50%;
+    height: 60%;
+    top: 3%;
+    left: 42%;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#textbubble-container input{
+    position: absolute;
+    width: 30%;
+    height: auto;
+    top: 60%;
+    left: 20%;
+    visibility: hidden;
+    cursor: url('../assets/images/cursor_hand.cur'), pointer;
+}
+
+#textbubble-container #submit-label {
+    position: absolute;
+    width: 30%;
+    text-align: center;
+    top: 63%;
+    left: 19%;
+    font-size: 32pt;
+    cursor: pointer;
+    z-index: 3;
+    color: white;
+    text-shadow: 2px 2px 2px black;
+    visibility: hidden;
+    cursor: url('../assets/images/cursor_hand.cur'), pointer;
+    user-select: none;
+}
+
+#textbubble {
+    width: 130vh;
+    height: auto;
+}
+
+#text-content {
+    position: absolute;
+    width: 55%;
+    top: 10%;
+    left: 22%;
+}
+
+#text-content p {
+    font-size: 24pt;
+    color: #020202;
+    margin: 0;
+    padding: 0;
+    font-family: Oswald;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+#textbubble-text1, #textbubble-text2 {
+    font-size: 24pt;
+    color: #020202;
+    margin: 0;
+    padding: 0;
+    font-family: Oswald;
+    animation: blink 0.7s infinite;
+    visibility: hidden;
+}
+
+
+#game-container #factoryworker {
+    position: absolute;
+    width: 40vh;
+    top: 37%;
+    left: 75%;
+    z-index: 2;
+}
+
+#game-container #forklift {
+    position: absolute;
+    width: 100vh;
+    bottom: -7%;
+    left: 2%;
+    z-index: -1;
+}
+
+@media screen and (max-width: 786px) {
+    #game-container {
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+    }
+
+    #textbubble-container {
+        top: 3%;
+        left: 25%;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #textbubble {
+        width: 80vh;
+    }
+
+    #text-content {
+        position: absolute;
+        width: 43vh;
+        top: 25%;
+        left: -30%;
+    }
+
+    #text-content p {
+        font-size: 16pt;
+    }
+
+    #textbubble-container input{
+        position: absolute;
+        width: 35vh;
+        height: auto;
+        top: 59%;
+        left: -40%;
+        visibility: hidden;
+    }
+
+    #textbubble-container #submit-label {
+        width: 30vh;
+        top: 61%;
+        left: -35%;
+    }
+
+    #game-container #factoryworker {
+        position: absolute;
+        top: 45%;
+        left: 50%;
+    }
+
+    #game-container #forklift {
+        display: none;
+    }
+}

@@ -25,15 +25,19 @@ document.addEventListener('DOMContentLoaded', function () {
         document.body.style.filter = `brightness(${brightnessValue}) url('../assets/images/filters.svg#${currentColorMode}')`;
     }
 
-    settingsBtnMobile.addEventListener("click", function () {
+    settingsBtnMobile.addEventListener("click", function (e) {
+        e.preventDefault();
         overlay.style.display = "block";
         settingsContainer.style.display = "flex";
     });
 
-    settingsBtnDesktop.addEventListener("click", function () {
-        overlay.style.display = "block";
-        settingsContainer.style.display = "flex";
-    });
+    if (settingsBtnDesktop) {
+        settingsBtnDesktop.addEventListener("click", function (e) {
+            e.preventDefault();
+            overlay.style.display = "block";
+            settingsContainer.style.display = "flex";
+        });
+    }
 
     overlay.addEventListener("click", function () {
         overlay.style.display = "none";
@@ -79,12 +83,21 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     function loadTranslations(language) {
-        fetch('data/translations.json')
-            .then(response => response.json())
-            .then(translations => {
-                applyTranslations(translations[language]);
-            })
-            .catch(error => console.error('Error loading translations:', error));
+        if (window.href === "index.html") {
+            fetch('data/translations.json')
+                .then(response => response.json())
+                .then(translations => {
+                    applyTranslations(translations[language]);
+                })
+                .catch(error => console.error('Error loading translations:', error));
+        } else {
+            fetch('../data/translations.json')
+                .then(response => response.json())
+                .then(translations => {
+                    applyTranslations(translations[language]);
+                })
+                .catch(error => console.error('Error loading translations:', error));
+        }
     }
 
     function applyTranslations(translations) {
@@ -94,7 +107,6 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('colormode-title').textContent = translations.colormode;
         document.getElementById('language-title').textContent = translations.language;
         document.getElementById('brightness-title').textContent = translations.brightness;
-    
         const toggleLabels = document.querySelectorAll('.toggle-label');
         toggleLabels.forEach(label => {
             label.querySelector('.toggle-text.off').textContent = translations.off;
@@ -112,11 +124,11 @@ document.addEventListener('DOMContentLoaded', function () {
         colormodeSelect.options[7].textContent = translations.protanomaly;
         colormodeSelect.options[8].textContent = translations.tritanomaly;
         colormodeSelect.options[9].textContent = translations.tritanopia;
-    
+
         const languageSelect = document.getElementById('language');
         languageSelect.options[0].textContent = translations.dutch;
         languageSelect.options[1].textContent = translations.english;
-    
+
         closeBtn.textContent = translations.close;
         closeBtn.dataset.text = translations.close;
     }

@@ -66,6 +66,7 @@ main {
   padding: 10px;
   border-radius: 5px;
   margin-bottom: 10px;
+
 }
 
 #figs-dropdown.show,
@@ -82,7 +83,7 @@ main {
   margin: 5px 0;
   text-decoration: none;
   border-radius: 5px;
-  height: 30%;
+  height: 20%;
   width: 120%;
   font-size: 20px;
 }

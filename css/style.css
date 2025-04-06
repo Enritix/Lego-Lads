@@ -11,10 +11,9 @@
 :root {
     --primary-color: #252733;
     --secondary--color: #EFC61A;
-    --tertiarty-color:  #2D2F3E;
+    --tertiarty-color: #2D2F3E;
     --text-color: rgb(233, 232, 232);
     --text-hover-color: #dadada;
-
 
     /* .text-lego-stroke*/
     --button-bg: red;
@@ -32,14 +31,20 @@
 html {
     background-image: url(../assets/images/background.png);
     font-family: Bangers;
+    user-select: none;
 }
 
 html, body {
-    cursor: url('../assets/images/cursor_arrow.cur'), auto;
+    cursor: url('../assets/images/cursor_arrow.cur'), auto !important;
 }
 
-a, button {
-    cursor: url('../assets/images/cursor_hand.cur'), pointer;
+a, button, label, input {
+    cursor: url('../assets/images/cursor_hand.cur'), pointer !important;
+}
+
+a {
+    text-decoration: none;
+    color: var(--text-color);
 }
 
 header{
@@ -106,8 +111,8 @@ header nav ul li svg:hover {
 }
 
 #figure-head img {
-  width: 90px;
-  height: 90px;
+  width: 66px;
+  height: auto;
 }
 
 #user-name {
@@ -138,15 +143,15 @@ header nav ul li svg:hover {
     font-family: Oswald;
 }
 
+
 /* text in button geef elke button de class .text-lego-stroke */
 
 .text-lego-stroke {
     position: relative;
     background: var(--button-bg);
     color: var(--text-color);
-    font-size: var(--font-size);
-    font-family: var(--font-family);
-    padding: var(--padding);
+    font-size: clamp(0.6rem, 1.5vw, 2rem); 
+    padding: clamp(0.3rem, 0.6vw, 1rem);     
     border: none;
     cursor: pointer;
     border-radius: var(--border-radius);
@@ -172,6 +177,7 @@ header nav ul li svg:hover {
 }
 
 
+
 .text-lego-stroke::after {
     content: attr(data-text);
     position: absolute;
@@ -187,7 +193,6 @@ header nav ul li svg:hover {
     z-index: -2;
 }
 
-/*  class="text-lego-stroke"   data-text="u text dat in de button staat">/*
 
 
 /* CODE MOBILE NAV BAR + ZIE HTML ONDERAAN*/
@@ -197,6 +202,7 @@ header nav ul li svg:hover {
     }
 
     #hamburger-menu {
+        display: flex;
         padding: 5px;
         display: block;
         position: fixed;
@@ -205,9 +211,9 @@ header nav ul li svg:hover {
         font-size: 25px;
         background: none;
         border: none;
-        color: white;
+        color: var(--text-color);
         cursor: pointer;
-        z-index: 10001;
+        z-index: 1000000;
         background-color: var(--primary-color);
         border-radius: 10px;
         text-align: center;
@@ -215,6 +221,7 @@ header nav ul li svg:hover {
         width: 35px;
     } 
     #nav-menu {
+        display: flex;
         position: fixed;
         bottom: 5px;
         left: 40px;
@@ -231,39 +238,7 @@ header nav ul li svg:hover {
         visibility: hidden;
         transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
     }
-    #nav-menu.active {
-        opacity: 1;
-        visibility: visible;
-    }
-    #nav-menu ul {
-        list-style: none;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-        padding: 0;
-        margin: 0;
-    }
-    #nav-menu ul li a {
-        color: white;
-        text-decoration: none;
-    }
-
-    #nav-menu ul li {
-        padding: 0 15px;
-    }
-    #nav-menu ul li a svg {
-        width: 30px; 
-        height: 30px;
-        transition: transform 0.2s ease-in-out;
-
-    }
-    #nav-menu ul li a svg:hover {
-        transform: scale(1.2);
-        color: var(--secondary--color);
-
-    }
-
+    
     .mobile-info-bar {
         position: fixed;
         font-family: sans-serif;
@@ -288,14 +263,18 @@ header nav ul li svg:hover {
         background: #252733;
         padding: 5px 12px;
         border-radius: 20px;
-        color: white;
+        color: var(--text-color);
         font-weight: bold;
         font-size: 16px;
         gap: 8px;
     }
-    .coin-container img, .name-container img {
+    .coin-container img {
         width: 24px;
         height: 24px;
+    }
+    .name-container img{
+        height: auto;
+        width: 24px;
     }
     .logo-container {
         flex: 1;
@@ -307,6 +286,43 @@ header nav ul li svg:hover {
         max-width: 50px; 
         height: auto;
         border-radius: 10px;
+    }
+    #nav-menu.active {
+        opacity: 1;
+        visibility: visible;
+    }
+    #nav-menu ul {
+        list-style: none;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        margin: 0;
+    }
+    #nav-menu ul li a {
+        color: white;
+        text-decoration: none;
+    }
+    
+    #nav-menu ul li {
+        padding: 0 15px;
+    }
+    #nav-menu ul li a svg {
+        width: 30px; 
+        height: 30px;
+        transition: transform 0.2s ease-in-out;
+    
+    }
+    #nav-menu ul li a svg {
+        width: 30px; 
+        height: 30px;
+        transition: transform 0.2s ease-in-out, fill 0.3s ease-in-out;
+        fill: var(--text-hover-color); 
+    }
+    #nav-menu ul li a:hover svg {
+        transform: scale(1.2);
+        fill: var(--secondary--color) !important; 
     }
     header{
         display: none;
@@ -323,7 +339,6 @@ header nav ul li svg:hover {
     #nav-menu{
         display: none;
     }
-   
 
 
 }
@@ -332,9 +347,21 @@ header nav ul li svg:hover {
 }
 
 #music-toggle.muted svg path {
-    stroke: red;
+    stroke: red !important;
     stroke-width: 2;
 }
 
-
-
+::-webkit-scrollbar {
+    width: 5px; 
+}
+::-webkit-scrollbar-track {
+    background: var(--primary-color);
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+    background: var(--secondary--color);
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--tertiarty-color); 
+}
