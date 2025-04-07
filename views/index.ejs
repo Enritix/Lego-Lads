@@ -1,18 +1,4 @@
-<!DOCTYPE html>
-<html lang="nl-BE">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>LegoLads - Home</title>
-    <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="css/index.css" />
-    <link rel="stylesheet" href="css/settings.css" />
-    <script src="js/settings.js" defer></script>
-    <script src="js/audio.js" defer></script>
-    <script src="js/index.js" defer></script>
-  </head>
-
-  <body>
+<%- include('components/header') %>
     <%- include('components/nav') %>
 
     <main class="buttons">
@@ -48,7 +34,7 @@
       <img src="assets/images/bortselfig.png" alt="Mini Lego figuren" />
     </footer>
 
-    <div id="popup" class="popup hidden">
+    <div id="popup" class="popup">
       <span class="close-btn">❌</span>
       <h1 id="title">WAT KAN JE DOEN?</h1>
       <ul>

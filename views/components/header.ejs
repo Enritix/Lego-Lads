@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="nl-BE">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LegoLads - <%= title %></title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/settings.css" />
+    <% if (cssFiles) { %>
+        <% cssFiles.forEach(file => { %>
+            <link rel="stylesheet" href="<%= file %>">
+        <% }) %>
+    <% } %>
+    <script src="js/settings.js" defer></script>
+    <script src="js/audio.js" defer></script>
+    <% if (jsFiles) { %>
+        <% jsFiles.forEach(file => { %>
+            <script src="<%= file %>" defer></script>
+        <% }) %>
+    <% } %>
+  </head>
+
+  <body>
