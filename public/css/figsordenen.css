@@ -97,8 +97,8 @@ main {
     justify-content: space-between;
     list-style: none;
     gap: 80px;
-  
     
+   
 }
 
 .name {
@@ -139,6 +139,8 @@ main {
     align-items: center; 
     text-align: center; 
     position: relative;
+    width: 200px;
+    height: 150px;
 }
 #sets li:hover{
     border-color: var(--secondary--color);
