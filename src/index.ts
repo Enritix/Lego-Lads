@@ -7,7 +7,7 @@ import mainRoutes from './routes/mainRoutes';
 import factoryRoutes from './routes/factoryRoutes';
 import profileRoutes from './routes/profileRoutes';
 import figoverviewRoutes from './routes/figoverviewRoutes';
-import {connectToMongoDB} from './database';
+import {connectToMongoDB, insertTestUser, readAllUsers,deleteAllUsers} from './database';
 import {fetchMinifigs,fetchSets,fetchThemes} from'./apicalls';
 import { minifigsApi,setsApi,themesApi } from './middleware';
 
@@ -44,6 +44,7 @@ function startServer(port: number): Promise<void> {
       resolve(); 
     });
 
+    
     server.on('error', (err: any) => {
       if (err.code === 'EADDRINUSE') {
         console.log(`\x1b[31m Poort ${port} is al in gebruik. Probeer ${port + 1}...\x1b[0m`);
@@ -59,10 +60,13 @@ function startServer(port: number): Promise<void> {
 async function startApp() {
   try {
     await startServer(PORT);       
-    await connectToMongoDB();       
-    await fetchMinifigs();              
+    await connectToMongoDB();   
+    /*await insertTestUser();*/
+    await readAllUsers();     
+   /* await fetchMinifigs();              
     await fetchSets();
-    await fetchThemes()
+    await fetchThemes()*/
+    /*await deleteAllUsers();*/
   } catch (err) {
     console.error( err);
   }
