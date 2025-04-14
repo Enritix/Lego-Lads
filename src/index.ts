@@ -44,7 +44,7 @@ function startServer(port: number): Promise<void> {
       resolve(); 
     });
 
-    
+
     server.on('error', (err: any) => {
       if (err.code === 'EADDRINUSE') {
         console.log(`\x1b[31m Poort ${port} is al in gebruik. Probeer ${port + 1}...\x1b[0m`);
@@ -63,9 +63,9 @@ async function startApp() {
     await connectToMongoDB();   
     /*await insertTestUser();*/
     await readAllUsers();     
-   /* await fetchMinifigs();              
+    await fetchMinifigs();              
     await fetchSets();
-    await fetchThemes()*/
+    await fetchThemes()
     /*await deleteAllUsers();*/
   } catch (err) {
     console.error( err);

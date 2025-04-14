@@ -26,17 +26,17 @@
             <section class="inventory-container">
                 <article class="inventory-item">
                  
-                    <img src="<%= fig.image %>" alt="chen">
-                    <span class="details"><p>Crug</p><p class="rarity gewoon">gewoon</p></span>
+
 
                     <button class="select-button text-lego-stroke" data-text="selecteer">selecteer</button>  
                 </article>
-                <% figs.forEach((fig, index) => { %>
-                  <article class="inventory-item <%= index === 0 ? 'selected' : '' %>">
-                    <img src="<%= fig.image %>" alt="<%= fig.name %>">
-                    <span class="details"><p title="<%= fig.name_full %>"><%= fig.name %></p><p class="rarity episch">EPISCH</p></span>
-                    <button class="select-button text-lego-stroke" data-text="<%= index === 0 ? 'actief' : 'selecteer' %>">
-                      <%= index === 0 ? 'actief' : 'selecteer' %>
+                <% minifigs.forEach((fig,) => { %>
+                  <article class="inventory-item">
+                    <img src="<%= fig.img %>" alt="<%= fig.name %>">
+                    <span class="details"><p title=""><%= fig.name %></p><p class="rarity <%= fig.rarity %>"><%= fig.rarity %></p></span>
+                    <button class="select-button text-lego-stroke" data-text="selecteer">
+                      selecteer
+                      
                     </button>
                   </article>
                 <% }) %>
