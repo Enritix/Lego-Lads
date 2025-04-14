@@ -24,19 +24,12 @@
             </h1>
           </header>
             <section class="inventory-container">
-                <article class="inventory-item">
-                 
-
-
-                    <button class="select-button text-lego-stroke" data-text="selecteer">selecteer</button>  
-                </article>
-                <% minifigs.forEach((fig,) => { %>
+                <% figs.forEach((fig,) => { %>
                   <article class="inventory-item">
                     <img src="<%= fig.img %>" alt="<%= fig.name %>">
                     <span class="details"><p title=""><%= fig.name %></p><p class="rarity <%= fig.rarity %>"><%= fig.rarity %></p></span>
-                    <button class="select-button text-lego-stroke" data-text="selecteer">
+                    <button class="select-button text-lego-stroke" data-text="selecteer"   data-img="<%= fig.img %>">
                       selecteer
-                      
                     </button>
                   </article>
                 <% }) %>
@@ -45,25 +38,27 @@
             <section class="bottom-items">
               <ul id="chest-products">
                 <li><img id="test" src="../assets/images/common-chest.png" alt="chest">
-                  <section class="rarity-amount"><p class="gewoon rarity">Gewoon </p><span>10x</span></section><button class="buy-btn  text-lego-stroke"
+                  <section class="rarity-amount"><p class="gewoon rarity">Gewoon </p><span><%= ongewoon %></span></section><button class="buy-btn  text-lego-stroke"
                   data-text="open"><a href="chest">open</a></button>
                 </li>
                 <li><img src="../assets/images/epic-chest.png" alt="chest">
-                  <section class="rarity-amount"><p class="episch rarity">episch </p> <span>4x</span></section><button class="buy-btn  text-lego-stroke"
+                  <section class="rarity-amount"><p class="episch rarity">episch </p> <span><%= episch %></span></section><button class="buy-btn  text-lego-stroke"
                   data-text="open"><a href="chest">open</a></button>
                 </li>
                 <li><img src="../assets/images/legnd-chest.png" alt="chest">
-                  <section class="rarity-amount"> <p class="legendary rarity">legendary </p><span>1x</span> </section><button class="buy-btn  text-lego-stroke"
+                  <section class="rarity-amount"> <p class="legendary rarity">legendary </p><span> <%= legendarisch %></span> </section><button class="buy-btn  text-lego-stroke"
                     data-text="open"><a href="chest">open</a></button>
                 </li>
                 <li><img src="../assets/images/chest-key.png" alt="chest">
-                  <section class="rarity-amount"> <p class="key rarity">key</p><span>1x</span> </section>
+                  <section class="rarity-amount"> <p class="key rarity">key</p><span><%=keys%></span> </section>
                 </li>
               </ul>
             </section>
         </main>
 
         <%- include('components/settings') %>
+       
+
     
 </body>
 </html>

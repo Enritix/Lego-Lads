@@ -51,13 +51,13 @@ export function createUserTemplate(
   gebruikersnaam: string,
   wachtwoord: string,
   email: string,
-  profiel_fig: string
+
 ) {
   return {
     gebruikersnaam,
     wachtwoord,
     email,
-    profiel_fig,
+    profiel_fig: "https://github.com/AbeVerschueren/lego-img/blob/main/batman.png?raw=true",
     munten: 500,
     verdiende_munten: 800,
     uitgegeven_munten: 300,
@@ -137,7 +137,7 @@ export function createUserTemplate(
 // Abe: test data word toegevoegd 
 export async function insertTestUser() {
   const db = await connectToMongoDB(); 
-  const gebruiker = createUserTemplate("abe", "lego", "abe@email.com", "agent");
+  const gebruiker = createUserTemplate("abe", "lego", "abe@email.com",);
   const result = await db.collection("gebruikers").insertOne(gebruiker);
   console.log("Testgebruiker toegevoegd met ID:", result.insertedId);
 }
