@@ -61,7 +61,23 @@ export function createUserTemplate(
     munten: 500,
     verdiende_munten: 800,
     uitgegeven_munten: 300,
-    figs: ["batman", "driod", "joker"],
+    figs: [
+      {
+        naam: "batman",
+        img: "https://github.com/AbeVerschueren/lego-img/blob/main/batman.png?raw=true",
+        rarity: "episch"
+      },
+      {
+        naam: "driod",
+        img: "https://github.com/AbeVerschueren/lego-img/blob/main/droid.png?raw=true",
+        rarity: "legendarisch"
+      },
+      {
+        naam: "joker",
+        img: "https://github.com/AbeVerschueren/lego-img/blob/main/joker.png?raw=true",
+        rarity: "episch"
+      }
+    ],
     vuilbak: [
       {
         fig: "pirate",
