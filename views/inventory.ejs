@@ -6,8 +6,8 @@
             <div class="popup-content">
                 <span class="close-popup" onclick="closePopup()">❌</span>
                 <p>Hier kan je kijken wat er in je inventory zit</p>
-                <p>je kan een lego figure  selecteren en dat is dan joi popetje</p>
-                <p>ja kan ook kisten open doen als je een key hebt en een sleutel</p>
+                <p>je kan een lego figure  selecteren en dat is dan je popetje</p>
+                <p>ja kan ook kisten open doen als je een key hebt en een kist</p>
             </div>
           </section>
           <a  class="close" href="profile">❌</a>
@@ -27,7 +27,7 @@
                 <% figs.forEach((fig,) => { %>
                   <article class="inventory-item">
                     <img src="<%= fig.img %>" alt="<%= fig.name %>">
-                    <span class="details"><p title=""><%= fig.name %></p><p class="rarity <%= fig.rarity %>"><%= fig.rarity %></p></span>
+                    <span class="details"><p><%= fig.naam %></p><p class="rarity <%= fig.rarity %>"><%= fig.rarity %></p></span>
                     <button class="select-button text-lego-stroke" data-text="selecteer"   data-img="<%= fig.img %>">
                       selecteer
                     </button>
@@ -37,20 +37,50 @@
             </section>
             <section class="bottom-items">
               <ul id="chest-products">
-                <li><img id="test" src="../assets/images/common-chest.png" alt="chest">
-                  <section class="rarity-amount"><p class="gewoon rarity">Gewoon </p><span><%= ongewoon %></span></section><button class="buy-btn  text-lego-stroke"
-                  data-text="open"><a href="chest">open</a></button>
+                <li>
+                  <img src="../assets/images/common-chest.png" alt="chest">
+                  <section class="rarity-amount">
+                    <p class="gewoon rarity">Gewoon</p>
+                    <span><%= ongewoon %>x</span>
+                  </section>
+
+                  <button class="buy-btn text-lego-stroke" data-chest="common"
+                    data-text="open" 
+                     data-count="<%= ongewoon %>"
+                    data-keys="<%= keys %>">Open
+                  </button>
+
                 </li>
-                <li><img src="../assets/images/epic-chest.png" alt="chest">
-                  <section class="rarity-amount"><p class="episch rarity">episch </p> <span><%= episch %></span></section><button class="buy-btn  text-lego-stroke"
-                  data-text="open"><a href="chest">open</a></button>
+                <li>
+                  <img src="../assets/images/epic-chest.png" alt="chest">
+                  <section class="rarity-amount">
+                    <p class="episch rarity">Episch</p>
+                    <span><%= episch %>x</span>
+                  </section>
+                  <button class="buy-btn text-lego-stroke" data-chest="epic"
+                    data-text="open"
+                    data-count="<%= episch %>"
+                    data-keys="<%= keys %>"
+                    >Open</button>
                 </li>
-                <li><img src="../assets/images/legnd-chest.png" alt="chest">
-                  <section class="rarity-amount"> <p class="legendary rarity">legendary </p><span> <%= legendarisch %></span> </section><button class="buy-btn  text-lego-stroke"
-                    data-text="open"><a href="chest">open</a></button>
+                <li>
+                  <img src="../assets/images/legnd-chest.png" alt="chest">
+                  <section class="rarity-amount">
+                    <p class="legendarisch rarity">Legendary</p>
+                    <span><%= legendarisch %>x</span>
+                  </section>
+                  <button class="buy-btn text-lego-stroke" data-chest="legendary"
+                    data-text="open"
+                    data-count="<%= legendarisch %>"
+                    data-keys="<%= keys %>"
+                    >Open</button>
                 </li>
-                <li><img src="../assets/images/chest-key.png" alt="chest">
-                  <section class="rarity-amount"> <p class="key rarity">key</p><span><%=keys%></span> </section>
+                <li>
+                  <img src="../assets/images/chest-key.png" alt="chest">
+                  <section class="rarity-amount">
+                    <p class="key rarity">Key</p>
+                    <span><%= keys %>x</span>
+                  </section>
                 </li>
               </ul>
             </section>

@@ -1,7 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-    console.log("Inventory.js is geladen");
-  
-
     const chestProducts = document.getElementById("chest-products");
     if (chestProducts) {
       chestProducts.scrollLeft = 0;
@@ -22,14 +19,17 @@ document.addEventListener("DOMContentLoaded", function () {
       document.getElementById("info-popup").style.display = "none";
     };
 
+    //Abe: code voor profile fig te kiezen
     const buttons = document.querySelectorAll(".select-button");
-    const navImg = document.getElementById("nav-fig");
-
+    const navImgs = document.querySelectorAll(".nav-fig");
+  
     buttons.forEach((button) => {
       button.addEventListener("click", async () => {
         const newImg = button.dataset.img;
-        if (newImg && navImg) {
-          navImg.src = newImg;
+        if (newImg) { 
+          navImgs.forEach((img) => {
+            img.src = newImg;
+          });
   
           try {
             const response = await fetch("/set-profiel-fig", {
@@ -41,12 +41,35 @@ document.addEventListener("DOMContentLoaded", function () {
             });
   
             const result = await response.json();
-            console.log("Profielfig opgeslagen:", result);
+            console.log("Profielfiguur opgeslagen:", result);
           } catch (error) {
-            console.error("Fout profiel fig:", error);
+            console.error("Fout bij opslaan van profielfiguur:", error);
           }
         }
       });
     });
-  });
+
+     // Abe: code coor chest meegeven +check op key en chest zo niet class + disabled = opacety 0.2 -> css/inventory.css
+      const buyButtons = Array.from(document.querySelectorAll(".buy-btn"));
+    
+      buyButtons.forEach((button) => {
+        const chestCount = parseInt(button.getAttribute("data-count"), 10);
+        const keyCount = parseInt(button.getAttribute("data-keys"), 10);
+    
+        if (chestCount <= 0 || keyCount <= 0) {
+          button.disabled = true;
+          button.classList.add("disabled"); 
+        } else {
+          button.addEventListener("click", () => {
+            const chestType = button.getAttribute("data-chest");
+            if (chestType) {
+                    //ABbe:  encodeURIComponent is voor url tekens te generen zo dat de jkuist pege geladen word 
+              window.location.href = `/chest?type=${encodeURIComponent(chestType)}`;
+            }
+          });
+        }
+      });
+    });
+
+  
   

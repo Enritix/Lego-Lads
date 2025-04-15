@@ -37,19 +37,15 @@ router.get('/inventory', async (req, res) => {
 
 
 router.get('/chest', (req: Request, res: Response) => {
-  res.render('chest', { title: "Kistopening", cssFiles: ['/css/chest.css'], jsFiles: ['/js/chest.js'] });
+  const chestType = req.query.type;
+  res.render('chest', { title: "Kistopening", cssFiles: ['/css/chest.css'], jsFiles: ['/js/chest.js'], chestType });
 });
 
 router.get('/shop', async (req: Request, res: Response) => {
     res.render('shop', { title: "Winkel", cssFiles: ['/css/shop.css'], jsFiles: ['/js/shop.js'] });
 });
-
-
-
-
-
+ 
 // Abe: post routes 
-
 router.post("/set-profiel-fig", async (req, res) => {
   const db = await connectToMongoDB();
 
