@@ -1,0 +1,94 @@
+<%- include('components/header') %>
+  <%- include('components/nav') %>
+     
+        <main>
+          <section id="info-popup" class="popup">
+            <div class="popup-content">
+                <span class="close-popup" onclick="closePopup()">❌</span>
+                <p>Hier kan je kijken wat er in je rugzak zit</p>
+                <p>je kan een lego figure  selecteren en dat is dan je popetje</p>
+                <p>ja kan ook kisten open doen als je een key hebt en een kist</p>
+            </div>
+          </section>
+          <a  class="close" href="profile">❌</a>
+          <header class="header-container">
+            <h1>rugzak
+              <button class="tooltip-button" aria-label="Meer informatie" onclick="openInfoPopup()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-info-circle"
+                  viewBox="0 0 16 16">
+                  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                  <path
+                    d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 0 0 1 2 0" />
+                </svg>
+              </button>
+            </h1>
+          </header>
+            <section class="inventory-container">
+                <% figs.forEach((fig,) => { %>
+                  <article class="inventory-item">
+                    <img src="<%= fig.img %>" alt="<%= fig.name %>">
+                    <span class="details"><p><%= fig.naam %></p><p class="rarity <%= fig.rarity %>"><%= fig.rarity %></p></span>
+                    <button class="select-button text-lego-stroke" data-text="selecteer"   data-img="<%= fig.img %>">
+                      selecteer
+                    </button>
+                  </article>
+                <% }) %>
+                
+            </section>
+            <section class="bottom-items">
+              <ul id="chest-products">
+                <li>
+                  <img src="../assets/images/common-chest.png" alt="chest">
+                  <section class="rarity-amount">
+                    <p class="gewoon rarity">Gewoon</p>
+                    <span><%= ongewoon %>x</span>
+                  </section>
+
+                  <button class="buy-btn text-lego-stroke" data-chest="common"
+                    data-text="open" 
+                     data-count="<%= ongewoon %>"
+                    data-keys="<%= keys %>">Open
+                  </button>
+
+                </li>
+                <li>
+                  <img src="../assets/images/epic-chest.png" alt="chest">
+                  <section class="rarity-amount">
+                    <p class="episch rarity">Episch</p>
+                    <span><%= episch %>x</span>
+                  </section>
+                  <button class="buy-btn text-lego-stroke" data-chest="epic"
+                    data-text="open"
+                    data-count="<%= episch %>"
+                    data-keys="<%= keys %>"
+                    >Open</button>
+                </li>
+                <li>
+                  <img src="../assets/images/legnd-chest.png" alt="chest">
+                  <section class="rarity-amount">
+                    <p class="legendarisch rarity">Legendary</p>
+                    <span><%= legendarisch %>x</span>
+                  </section>
+                  <button class="buy-btn text-lego-stroke" data-chest="legendary"
+                    data-text="open"
+                    data-count="<%= legendarisch %>"
+                    data-keys="<%= keys %>"
+                    >Open</button>
+                </li>
+                <li>
+                  <img src="../assets/images/chest-key.png" alt="chest">
+                  <section class="rarity-amount">
+                    <p class="key rarity">Key</p>
+                    <span><%= keys %>x</span>
+                  </section>
+                </li>
+              </ul>
+            </section>
+        </main>
+
+        <%- include('components/settings') %>
+       
+
+    
+</body>
+</html>

@@ -1,0 +1,33 @@
+body {
+    background-color: #FDC800;
+    overflow: hidden;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.loader-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.lego-animation {
+    scale: 2;
+}
+
+.loading-text {
+    font-size: 3rem;
+    font-family: Bangers;
+    color: white;
+    letter-spacing: 2px;
+}
+
+@media screen and (max-width: 768px) {
+    .loading-text {
+        font-size: 2rem;
+    }
+}

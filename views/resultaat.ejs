@@ -1,0 +1,82 @@
+<%- include('components/header') %>
+  <%- include('components/nav') %>
+  <main>
+    <div class="resultaat-container">
+      <a class="close" href="/">❌</a>
+      <section id="info-popup" class="popup">
+        <div class="popup-content">
+            <span class="close-popup" onclick="closePopup()">❌</span>
+            <span class="tooltip-text">
+              hier zie je de resultaten van het ordenen
+              <div class="main-bricks">
+                <div class="brick">
+                  <img src="../assets/images/greenblock.png" alt="Greenblock">
+                  <span class="brick-label">Geordend</span>
+                </div>
+                <div class="brick">
+                  <img src="../assets/images/redbrick.png" alt="Redbrick">
+                  <span class="brick-label">Geblacklist</span>
+                </div>
+                <div class="brick">
+                  <img src="../assets/images/orangebrick.png" alt="Orangebrick">
+                  <span class="brick-label">Geskipt</span>
+                </div>
+              </div>
+            </span>
+        </div>
+      </section>
+      <header class="header-container">
+        <h1>Resultaat
+          <button class="tooltip-button" aria-label="Meer informatie" onclick="openInfoPopup()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-info-circle"
+              viewBox="0 0 16 16">
+              <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+              <path
+                d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 0 0 1 2 0" />
+            </svg>
+          </button>
+        </h1>
+      </header>
+      <br>
+      <div class="figuren-lijst">
+
+        <div class="figuur">
+          <span class="figuur-naam">Artic</span>
+          <div class="figuur-images">
+            <img class="figuur-status" src="../assets/images/redbrick.png" alt="Redbrick">
+            <img class="figuur-img" src="../assets/images/artic.png" alt="Batman">
+          </div>
+        </div>
+        <div class="figuur">
+          <span class="figuur-naam">Artic Snow</span>
+          <div class="figuur-images">
+            <img class="figuur-status" src="../assets/images/greenblock.png" alt="Redbrick">
+            <img class="figuur-img" src="../assets/images/artic2.png" alt="Batman">
+          </div>
+        </div>
+        <div class="figuur">
+          <span class="figuur-naam">Cinder</span>
+          <div class="figuur-images">
+            <img class="figuur-status" src="../assets/images/orangebrick.png" alt="Redbrick">
+            <img class="figuur-img" src="../assets/images/cinder.png" alt="Batman">
+          </div>
+        </div>
+        <div class="figuur">
+          <span class="figuur-naam">Pirate</span>
+          <div class="figuur-images">
+            <img class="figuur-status" src="../assets/images/greenblock.png" alt="Redbrick">
+            <img class="figuur-img" src="../assets/images/pirate2.png" alt="Pirate">
+          </div>
+        </div>
+
+
+      </div>
+      <button class="finish-btn   text-lego-stroke" data-text="sluiten"> <a href="/">sluiten</a></button>
+
+    </div>
+  </main>
+
+  <%- include('components/settings') %>
+</body>
+
+</html>
