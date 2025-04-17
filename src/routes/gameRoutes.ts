@@ -6,7 +6,7 @@ router.get("/clickergame", (req: Request, res: Response) => {
 });
 
 router.get("/memorygame", (req: Request, res: Response) => {
-  res.render("memorygame", { title: "Geheugenspel", cssFiles: ['/css/memorygame.css'], jsFiles: ['/js/memorygame.js'] });
+  res.render("memorygame", { title: "Geheugenspel", cssFiles: ['/css/memorygame.css'], jsFiles: ['/js/timer.js', '/js/memorygame.js'] });
 });
 
 export default router;
