@@ -6,7 +6,7 @@ router.get('/blacklist', (req: Request, res: Response) => {
 });
 
 router.get('/detaillist', (req: Request, res: Response) => {
-  res.render('detaillist', { title: "Lego Fabriek", cssFiles: ['/css/factory-welcome.css'], jsFiles: ['/js/factory-welcome.js'] });
+  res.render('detaillist', { title: "Lego Fabriek", cssFiles: ['/css/detaillist.css'], jsFiles: ['/js/detaillist.js'] });
 });
 
 router.get('/genre', (req: Request, res: Response) => {
