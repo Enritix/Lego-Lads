@@ -115,9 +115,16 @@ header nav ul li svg:hover {
   width: 100%;
 }
 
+#figure-head {
+  height: 66px;
+  overflow: hidden;
+}
+
 #figure-head img {
-  width: 66px;
+  width: 100%;
   height: auto;
+  object-fit: cover;
+  object-position: top;
 }
 
 #user-name {

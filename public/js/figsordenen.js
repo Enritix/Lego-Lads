@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 1000); 
 
         setTimeout(() => {
-            window.location.href = "factory.html";
+            window.location.href = "/factory";
         }, 500); 
     });
 });
