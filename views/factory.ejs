@@ -1,6 +1,18 @@
 <%- include('components/header') %>
   <%- include('components/nav') %>
     <main id="desktop">
+      <section id="factory-door-container">
+        <img src="/assets/images/factory/factory.png" alt="Factory" id="factory">
+        <img src="/assets/images/factory/factory-door.png" alt="Factory Door" id="factory-door">
+        <img src="/assets/images/factory/factory-door-controls.png" alt="Factory Door Controls" id="factory-door-controls-small" class="closed">
+        <img src="/assets/images/factory/factory-door-controls.png" alt="Factory Door Controls" id="factory-door-controls-large" class="opened">
+        <img src="/assets/images/factory/factory-door-controls-open.png" alt="Factory Door Controls" id="factory-door-controls-small-open" class="closed">
+        <img src="/assets/images/factory/factory-door-controls-open.png" alt="Factory Door Controls" id="factory-door-controls-large-open" class="opened">
+        <img src="/assets/images/hand-cursor.png" alt="Hand Cursor" id="hand-cursor">
+        <div id="factory-door-controls-background"></div>
+        <audio id="door-audio" src="/assets/audio/door-opening.mp3" preload="auto"></audio>
+    </section>
+    <section id="factory-machine-container-desktop">
           <img id="factory-machine-desktop" src="/assets/images/factory/factory-machine.png" alt="Factory Machine">
           <img id="factory-belt-desktop" src="/assets/images/factory/factory-belt.png" alt="Factory Belt">
           <section id="gears-desktop">
@@ -24,6 +36,7 @@
             <img src="/assets/images/artic3.png" alt="Superman Minifigure">
             <img src="/assets/images/batman.png" alt="Batman Minifigure">
           </section>
+        </section>
     </main>
     <main id="mobile">
       <img id="factory-machine-mobile" src="/assets/images/factory/factory-machine-mobile.png" alt="Factory Machine">
