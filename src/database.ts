@@ -1,4 +1,4 @@
-import { MongoClient, Db } from "mongodb";
+import { MongoClient, Db, ObjectId } from "mongodb";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -153,4 +153,62 @@ export async function deleteAllUsers() {
   const db = await connectToMongoDB();
   const result = await db.collection("gebruikers").deleteMany({});
   console.log(`${result.deletedCount} gebruikers verwijderd.`);
+}
+
+// Enrico: hier word de user uit de database gehaald met de id
+export async function getUserById(userId: string) {
+  const db = await connectToMongoDB(); 
+  const gebruiker = await db.collection("gebruikers").findOne({ _id: new ObjectId(userId) });
+  if (!gebruiker) {
+    throw new Error("Gebruiker niet gevonden");
+  }
+  return gebruiker;
+}
+
+// Enrico: hier worden de achievements van de user uitgelezen
+export async function getUserAchievements(userId: string) {
+  const db = await connectToMongoDB(); 
+  const gebruiker = await db.collection("gebruikers").findOne({ _id: new ObjectId(userId) });
+  if (!gebruiker) {
+    throw new Error("Gebruiker niet gevonden");
+  }
+  return gebruiker.achievements;
+}
+
+// Enrico: hier worden de achievements van de user geupdate
+export async function incrementAchievementProgress(
+  userId: string,
+  achievementKey: string,
+  incrementBy: number
+) {
+  const db = await connectToMongoDB();
+
+  const gebruiker = await db.collection("gebruikers").findOne(
+    { _id: new ObjectId(userId) },
+    { projection: { [`achievements.${achievementKey}`]: 1 } }
+  );
+
+  if (!gebruiker || !gebruiker.achievements || !gebruiker.achievements[achievementKey]) {
+    throw new Error(`Achievement '${achievementKey}' niet gevonden voor gebruiker.`);
+  }
+
+  const achievement = gebruiker.achievements[achievementKey];
+  const newCurrent = (achievement.current || 0) + incrementBy;
+  const isFinished = newCurrent >= (achievement.total || 0);
+
+  const result = await db.collection("gebruikers").updateOne(
+    { _id: new ObjectId(userId) },
+    {
+      $set: {
+        [`achievements.${achievementKey}.current`]: newCurrent,
+        [`achievements.${achievementKey}.finished`]: isFinished,
+      },
+    }
+  );
+
+  if (result.modifiedCount === 0) {
+    throw new Error("Geen wijzigingen aangebracht in de gebruiker");
+  }
+
+  return { current: newCurrent, finished: isFinished };
 }
