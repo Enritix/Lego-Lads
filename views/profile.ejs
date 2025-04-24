@@ -73,7 +73,7 @@
           <h1 class="titel">PRESTATIES</h1>
         </span>
 
-        <article class="prestatie">
+        <!-- <article class="prestatie">
           <figure>
             <img src="../assets/images/memory.png" alt="Memory game">
           </figure>
@@ -125,7 +125,28 @@
             <p><img src="../assets/images/coin.png" alt="Coins">5000</p>
           </aside>
         </article>
-      </section>
+      </section> -->
+
+      <% Object.keys(achievements).forEach(key => { %>
+        <article class="prestatie">
+          <figure>
+            <img src="../assets/images/coin.png" alt="<%= achievements[key].title %>">
+          </figure>
+          <section class="info">
+            <h2><%= achievements[key].title %></h2>
+            <p><%= achievements[key].description %></p>
+            <div class="progress-bar">
+              <!-- <div class="progress" style="width: <%= (achievements[key].current / achievements[key].goal) * 100 %>%;"></div> -->
+              <div class="progress" style="width: 40%;"></div>
+            </div>
+            <span><%= achievements[key].current %>/<%= achievements[key].goal %></span>
+          </section>
+          <aside class="reward <%= achievements[key].finished ? '' : 'not' %>">
+            <img src="../assets/images/coin.png" alt="Coins">
+            <p><%= achievements[key].reward %></p>
+          </aside>
+        </article>
+      <% }) %>
 
       <div id="prestaties-popup" class="popup">
         <div class="popup-content">

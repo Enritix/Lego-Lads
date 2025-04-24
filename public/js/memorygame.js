@@ -1,3 +1,5 @@
+// import { getUserById, incrementAchievementProgress, collectAchievementReward } from "../database";
+
 document.addEventListener("DOMContentLoaded", async () => {
     const apiKey = "7138b5e205e720e8eb6b839cd6971e37";
     const dataType = "minifigs";
@@ -94,7 +96,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         return remainingTime;
     }
 
-    function openPopup(success, earnedCoins = 0) {
+    async function openPopup(success, earnedCoins = 0) {
         const popup = document.getElementById("popup");
         const popupContent = document.getElementById("popup-content");
         popup.style.display = "flex";
@@ -102,6 +104,12 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (success) {
             popupContent.querySelector("h2").textContent = `Gefeliciteerd! Je bent gewonnen!`;
             popupContent.querySelector("p").textContent = `Je hebt ${earnedCoins} coins verdiend!`;
+
+            // const userId = "680a6fbe61a6900a985afe83";
+            // const achievementKey = "coins";
+        
+            // const progress = await incrementAchievementProgress(userId, achievementKey, earnedCoins);
+            // console.log("Progress:", progress);
         } else {
             popupContent.querySelector("h2").textContent = "Jammer, je hebt het niet gehaald. Volgende keer beter!";
         }

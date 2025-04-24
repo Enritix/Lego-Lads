@@ -8,10 +8,10 @@
           <a href="/"><img src="../assets/images/Lego-Lads Logo.png" alt="" /></a>
         </li>
         <li id="user-info">
-          <a href="profile" id="figure-head"><img  class="nav-fig" src="<%= profielFig %>" alt="" /></a>
-          <h1 id="user-name">Jean-Claude</h1>
+          <a href="profile" id="figure-head"><img  class="nav-fig" src="<%= profileFig %>" alt="" /></a>
+          <h1 id="user-name"><%= username %></h1>
           <div id="coin-container">
-            <p>3.2K</p>
+            <p><%= coins %></p>
           </div>
         </li>
         <li>
@@ -49,7 +49,7 @@
   <header class="mobile-info-bar">
     <section class="coin-container">
       <img src="../assets/images/coin.png" alt="Coin" />
-      <span>3.2K</span>
+      <span><%= coins %></span>
     </section>
 
     <section class="logo-container">
@@ -59,8 +59,8 @@
     </section>
 
     <section class="name-container">
-      <span>Jean-Claude</span>
-      <img class="nav-fig"  src="<%= profielFig %>" alt="Lego Hoofd" />
+      <span><%= username %></span>
+      <img class="nav-fig" src="<%= profileFig %>" alt="Lego Hoofd" />
     </section>
   </header>
 

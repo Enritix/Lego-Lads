@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import { getUserById, incrementAchievementProgress } from "../database";
+import { getUserById, incrementAchievementProgress, collectAchievementReward } from "../database";
 const router = express.Router();
 
 router.get("/clickergame", (req: Request, res: Response) => {
@@ -11,24 +11,25 @@ router.get("/clickergame", (req: Request, res: Response) => {
 });
 
 router.get("/memorygame", async (req: Request, res: Response) => {
-  const userId = "67fd62e96aa5b6e79491bea4";
-const achievementKey = "100_coins"; 
-const incrementBy = 45;
+  const userId = "680a75b7d6c5dbbbe121b4bf";
+  const achievementKey = "coins";
 
-try {
-  const result = await incrementAchievementProgress(userId, achievementKey, incrementBy);
-  console.log("Achievement bijgewerkt:", result);
-} catch (error: any) {
-  console.error("Fout bij updaten van achievement:", error.message);
-}
+  const progress = await incrementAchievementProgress(userId, achievementKey, 30);
+  console.log("Progress:", progress);
 
-  console.log(getUserById(userId));
+  let collectResult = null;
+  if (progress.finished) {
+    collectResult = await collectAchievementReward(userId, achievementKey);
+    console.log("Collected:", collectResult);
+  }
 
   res.render("memorygame", {
     title: "Geheugenspel",
     cssFiles: ["/css/memorygame.css"],
     jsFiles: ["/js/timer.js", "/js/memorygame.js"],
+    achievementProgress: progress
   });
 });
+
 
 export default router;

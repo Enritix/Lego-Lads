@@ -1,24 +1,27 @@
 import express, { Request, Response } from 'express';
 import {fetchMinifigs} from'../apicalls';
-import { connectToMongoDB } from '../database';
+import { connectToMongoDB, getUserAchievements, getUserById } from '../database';
 
 
 
 const router = express.Router();
 
 router.get('/profile', async (req: Request, res: Response) => {
- 
+  const userId = "680a75b7d6c5dbbbe121b4bf";
+
+  const user = await getUserById(userId);
+  const achievements = await getUserAchievements(userId);
   
-  res.render('profile', { title: "Profiel", cssFiles: ['/css/profile.css'], jsFiles: ['/js/profile.js'] });
+  res.render('profile', { title: "Profiel", achievements: achievements, cssFiles: ['/css/profile.css'], jsFiles: ['/js/profile.js'] });
 });
 
 router.get('/inventory', async (req, res) => {
   const db = await connectToMongoDB();
 
   // Abe: dit moet  sesie token worden moeten we nog zien op school hoe enwat 
-  const gebruikersnaam = "abe";
+  const username = "abe";
 
-  const user =  await db.collection("gebruikers").findOne({ gebruikersnaam});
+  const user =  await db.collection("gebruikers").findOne({ username});
 
   if(!user){
 

@@ -32,14 +32,16 @@ app.use(async (req, res ,next) => {
   const db = await connectToMongoDB();
 
  // Abe: dit moet  sesie token worden moeten we nog zien op school hoe enwat 
-  const gebruikersnaam = "abe";
+  const username = "abe";
 
-  const user = await db.collection("gebruikers").findOne({ gebruikersnaam });
+  const user = await db.collection("gebruikers").findOne({ username });
 
   if (user) {
-    res.locals.profielFig = user.profiel_fig; 
+    res.locals.profileFig = user.profile_fig; 
+    res.locals.username = user.username;
+    res.locals.coins = formatCoins(user.coins);
   } else {
-    res.locals.profielFig = null;
+    res.locals.profileFig = null;
   }
 
   next();
@@ -97,7 +99,13 @@ async function startApp() {
 }
 startApp()
 
-
+// Enrico: hier word de coins geformatteerd naar K als het meer dan 1000 is
+function formatCoins(coins: number): string {
+  if (coins >= 1000) {
+    return (coins / 1000).toFixed(1) + "K";
+  }
+  return coins.toString();
+}
 
 
 

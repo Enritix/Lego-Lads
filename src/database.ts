@@ -48,86 +48,90 @@ export async function connectToMongoDB(): Promise<Db> {
 // Abe: hier word een user test template gemaakt 
 
 export function createUserTemplate(
-  gebruikersnaam: string,
-  wachtwoord: string,
+  username: string,
+  password: string,
   email: string,
 
 ) {
   return {
-    gebruikersnaam,
-    wachtwoord,
+    username,
+    password,
     email,
-    profiel_fig: "https://github.com/AbeVerschueren/lego-img/blob/main/batman.png?raw=true",
-    munten: 500,
-    verdiende_munten: 800,
-    uitgegeven_munten: 300,
+    profile_fig: "https://github.com/AbeVerschueren/lego-img/blob/main/batman.png?raw=true",
+    coins: 500,
+    earned_coins: 800,
+    spent_coins: 300,
     figs: [
       {
-        naam: "batman",
+        name: "Batman",
         img: "https://github.com/AbeVerschueren/lego-img/blob/main/batman.png?raw=true",
         rarity: "episch"
       },
       {
-        naam: "driod",
+        name: "Droid",
         img: "https://github.com/AbeVerschueren/lego-img/blob/main/droid.png?raw=true",
         rarity: "legendarisch"
       },
       {
-        naam: "joker",
+        name: "Joker",
         img: "https://github.com/AbeVerschueren/lego-img/blob/main/joker.png?raw=true",
         rarity: "episch"
       }
     ],
-    vuilbak: [
+    bin: [
       {
-        fig: "pirate",
-        reden: "per ongeluk verwijderd"
+        fig: "Pirate",
+        reason: "per ongeluk verwijderd"
       }
     ],
-    geordendeFigs: [
+    ordenedFigs: [
       {
-        fig: "anakin",
+        fig: "Anakin",
         set: "ambush-on-errix",
         theme: "theme01"
       },
       {
-        fig: "chen",
+        fig: "Chen",
         set: "the-joker-steam-roller",
         theme: "theme02"
       }
     ],
     achievements: {
-      "100_coins": {
-        title: "100 munten",
-        description: "Verdien 100 munten",
+      coins: {
+        title: "Muntverzamelaar",
+        description: "Verzamel munten om beloningen te verdienen.",
         current: 55,
-        total: 100,
-        finished: false
+        goal: 100,
+        reward: 200,
+        finished: false,
+        collected: false
       },
-      "first_login": {
-        title: "Login",
-        description: "Log voor de eerste keer in",
+      login_streak: {
+        title: "Dagelijkse login",
+        description: "Log dagelijks in voor hogere beloningen.",
         current: 1,
-        total: 1,
-        finished: true
+        goal: 1,
+        reward: 100,
+        finished: false,
+        collected: false
       }
     },
-    kisten: {
-      ongewoon: 2,
-      episch: 1,
-      legendarisch: 0
+    chests: {
+      uncommon: 2,
+      epic: 1,
+      legendary: 0
     },
     keys: 5,
     clickerGame: {
       stenen: 150,
       tools: {
-        hamer: {
+        hammer: {
           level: 2
         },
-        zaag: {
+        saw: {
           level: 1
         },
-        boor: {
+        drill: {
           level: 3
         }
       }
@@ -188,13 +192,13 @@ export async function incrementAchievementProgress(
     { projection: { [`achievements.${achievementKey}`]: 1 } }
   );
 
-  if (!gebruiker || !gebruiker.achievements || !gebruiker.achievements[achievementKey]) {
+  const achievement = gebruiker?.achievements?.[achievementKey];
+  if (!achievement) {
     throw new Error(`Achievement '${achievementKey}' niet gevonden voor gebruiker.`);
   }
 
-  const achievement = gebruiker.achievements[achievementKey];
-  const newCurrent = (achievement.current || 0) + incrementBy;
-  const isFinished = newCurrent >= (achievement.total || 0);
+  const newCurrent = achievement.current + incrementBy;
+  const isFinished = newCurrent >= achievement.goal;
 
   const result = await db.collection("gebruikers").updateOne(
     { _id: new ObjectId(userId) },
@@ -202,13 +206,75 @@ export async function incrementAchievementProgress(
       $set: {
         [`achievements.${achievementKey}.current`]: newCurrent,
         [`achievements.${achievementKey}.finished`]: isFinished,
-      },
+      }
     }
   );
 
   if (result.modifiedCount === 0) {
-    throw new Error("Geen wijzigingen aangebracht in de gebruiker");
+    throw new Error("Geen wijzigingen aangebracht in de gebruiker.");
   }
 
-  return { current: newCurrent, finished: isFinished };
+  return {
+    current: newCurrent,
+    goal: achievement.goal,
+    finished: isFinished
+  };
 }
+
+// Enrico: hier worden de coins van een achievement gecollect en de user zijn coins geupdate
+export async function collectAchievementReward(
+  userId: string,
+  achievementKey: string
+) {
+  const db = await connectToMongoDB();
+
+  const gebruiker = await db.collection("gebruikers").findOne(
+    { _id: new ObjectId(userId) },
+    { projection: { coins: 1, [`achievements.${achievementKey}`]: 1 } }
+  );
+
+  const achievement = gebruiker?.achievements?.[achievementKey];
+  if (!achievement) {
+    throw new Error(`Achievement '${achievementKey}' niet gevonden voor gebruiker.`);
+  }
+
+  if (!achievement.finished || achievement.collected) {
+    throw new Error("Achievement is nog niet voltooid of al opgehaald.");
+  }
+
+  const newCoins = gebruiker.coins + achievement.reward;
+
+  const leftoverProgress = achievement.current - achievement.goal;
+
+  const newGoal = achievement.goal * 2;
+  const newReward = achievement.reward * 2;
+
+  const newFinished = leftoverProgress >= newGoal;
+
+  const result = await db.collection("gebruikers").updateOne(
+    { _id: new ObjectId(userId) },
+    {
+      $set: {
+        coins: newCoins,
+        [`achievements.${achievementKey}.current`]: leftoverProgress,
+        [`achievements.${achievementKey}.goal`]: newGoal,
+        [`achievements.${achievementKey}.reward`]: newReward,
+        [`achievements.${achievementKey}.finished`]: newFinished,
+        [`achievements.${achievementKey}.collected`]: false,
+      }
+    }
+  );
+
+  if (result.modifiedCount === 0) {
+    throw new Error("Kon beloning niet verzamelen.");
+  }
+
+  return {
+    coins: newCoins,
+    current: leftoverProgress,
+    goal: newGoal,
+    reward: newReward,
+    finished: newFinished
+  };
+}
+
