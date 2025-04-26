@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import {fetchMinifigs} from'../apicalls';
-import { connectToMongoDB, getUserAchievements, getUserById } from '../database';
+import { collectAchievementReward, connectToMongoDB, getUserAchievements, getUserById } from '../database';
 
 
 
@@ -32,9 +32,9 @@ router.get('/inventory', async (req, res) => {
      cssFiles: ['/css/inventory.css'], 
      jsFiles: ['/js/inventory.js'], 
      figs:user.figs,
-     ongewoon: user.kisten.ongewoon,
-     episch: user.kisten.episch,
-     legendarisch: user.kisten.legendarisch,
+     ongewoon: user.chests.uncommon,
+     episch: user.chests.epic,
+     legendarisch: user.chests.legendary,
      keys: user.keys });
 });
 
@@ -69,5 +69,18 @@ router.post("/set-profiel-fig", async (req, res) => {
   } else {
     res.status(500).json({ error: "Mislukt  profiel_fig" });
   }
+});
+
+// Enrico: dit is de post om een bepaalde achievement te collecten
+router.post("/collect-achievement", async (req, res) => {
+    const userId = req.body.userId;
+    const achievementKey = req.body.achievementKey;
+  
+    try {
+      const progress = await collectAchievementReward(userId, achievementKey);
+      res.json({ success: true, progress });
+    } catch (error: any) {
+      res.status(500).json({ success: false, error: error.message });
+    }
 });
 export default router;

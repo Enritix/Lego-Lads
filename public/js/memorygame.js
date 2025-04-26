@@ -110,6 +110,20 @@ document.addEventListener("DOMContentLoaded", async () => {
         
             // const progress = await incrementAchievementProgress(userId, achievementKey, earnedCoins);
             // console.log("Progress:", progress);
+            try {
+                const response = await fetch("/update-achievement", {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json"
+                  },
+                  body: JSON.stringify({ userId: "680a6fbe61a6900a985afe83", achievementKey: "coins", progress: earnedCoins })
+                });
+      
+                const result = await response.json();
+                console.log("Achievement geupdate:", result);
+              } catch (error) {
+                console.error("Fout bij updaten van achievement:", error);
+              }
         } else {
             popupContent.querySelector("h2").textContent = "Jammer, je hebt het niet gehaald. Volgende keer beter!";
         }
@@ -180,3 +194,4 @@ function openInfoPopup() {
 function closeInfoPopup() {
     document.getElementById("infoPopup").close();
 }
+

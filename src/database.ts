@@ -123,7 +123,7 @@ export function createUserTemplate(
     },
     keys: 5,
     clickerGame: {
-      stenen: 150,
+      blocks: 150,
       tools: {
         hammer: {
           level: 2
@@ -135,6 +135,13 @@ export function createUserTemplate(
           level: 3
         }
       }
+    },
+    settings: {
+      sound: true,
+      music: true,
+      filter: "normal",
+      language: "nl",
+      brightness: 7
     }
   };
 }
@@ -278,3 +285,24 @@ export async function collectAchievementReward(
   };
 }
 
+// Enrico: hier worden de settings van de user uitgelezen
+export async function getUserSettings(userId: string) {
+  const db = await connectToMongoDB(); 
+  const gebruiker = await db.collection("gebruikers").findOne({ _id: new ObjectId(userId) });
+  if (!gebruiker) {
+    throw new Error("Gebruiker niet gevonden");
+  }
+  return gebruiker.settings;
+}
+
+// Enrico: hier worden de settings van de user geupdate
+export async function updateUserSettings(userId: string, newSettings: any) {
+  const db = await connectToMongoDB(); 
+  const result = await db.collection("gebruikers").updateOne(
+    { _id: new ObjectId(userId) },
+    { $set: { settings: newSettings } }
+  );
+  if (result.modifiedCount === 0) {
+    throw new Error("Geen wijzigingen aangebracht in de gebruiker.");
+  }
+}
