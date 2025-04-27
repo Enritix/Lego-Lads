@@ -71,61 +71,7 @@
         </article>
       </dialog>
 
-      <div id="achievement-popup" class="lego-popup not-shown">
-        <div class="popup-header">
-          <h3>🎉 Nieuwe Achievement!</h3>
-        </div>
-        <div class="popup-body">
-          <p id="achievement-description">Je hebt <strong></strong> coins verzameld!</p>
-          <div class="progress-bar-wrapper">
-            <div class="progress-bar">
-              <div class="progress-fill" style="width: 45%;"></div>
-            </div>
-          </div>
-          <div class="progress-status">
-            <span id="progress-count"></span>
-            <span id="progress-check" class="not-shown">✅</span>
-          </div>
-        </div>
-      </div>
-      <script id="achievement-data" type="application/json">
-            <%- JSON.stringify(achievementProgress) %>
-          </script>
-
-      <script>
-        const progressData = JSON.parse(document.getElementById('achievement-data').textContent);
-        console.log(progressData);
-
-        showAchievementPopup(progressData.current, progressData.goal);
-
-        function showAchievementPopup(current, goal) {
-          const popup = document.getElementById("achievement-popup");
-          const desc = document.getElementById("achievement-description");
-          const progressFill = popup.querySelector(".progress-fill");
-          const countText = document.getElementById("progress-count");
-          const checkMark = document.getElementById("progress-check");
-
-          desc.textContent = current >= goal
-            ? `Je hebt je doel bereikt!`
-            : `Je hebt ${current} van de ${goal} coins verzameld!`;
-
-          progressFill.style.width = `${(current / goal) * 100}%`;
-          countText.textContent = `${current} / ${goal}`;
-
-          if (current >= goal) {
-            checkMark.classList.remove("not-shown");
-          } else {
-            checkMark.classList.add("not-shown");
-          }
-
-          popup.classList.remove("not-shown");
-
-          setTimeout(() => {
-            popup.classList.add("not-shown");
-          }, 5000);
-        }
-      </script>
-
+      <%- include('components/achievement') %>
 
     </main>
     <%- include('components/settings') %>

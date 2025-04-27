@@ -105,25 +105,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             popupContent.querySelector("h2").textContent = `Gefeliciteerd! Je bent gewonnen!`;
             popupContent.querySelector("p").textContent = `Je hebt ${earnedCoins} coins verdiend!`;
 
-            // const userId = "680a6fbe61a6900a985afe83";
-            // const achievementKey = "coins";
-        
-            // const progress = await incrementAchievementProgress(userId, achievementKey, earnedCoins);
-            // console.log("Progress:", progress);
-            try {
-                const response = await fetch("/update-achievement", {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json"
-                  },
-                  body: JSON.stringify({ userId: "680a6fbe61a6900a985afe83", achievementKey: "coins", progress: earnedCoins })
-                });
-      
-                const result = await response.json();
-                console.log("Achievement geupdate:", result);
-              } catch (error) {
-                console.error("Fout bij updaten van achievement:", error);
-              }
         } else {
             popupContent.querySelector("h2").textContent = "Jammer, je hebt het niet gehaald. Volgende keer beter!";
         }
@@ -139,6 +120,39 @@ document.addEventListener("DOMContentLoaded", async () => {
                 });
             };
             document.body.appendChild(confettiScript);
+
+            // Enrico: Code om achievement te updaten
+            try {
+                const response = await fetch("/update-achievement", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ userId: "680d098a9e371da5cefb77cb", achievementKey: "coins", incrementBy: earnedCoins })
+                });
+
+                const result = await response.json();
+                console.log("Achievement geupdate:", result);
+                showAchievementPopup(result.progress.title, result.progress.current, result.progress.goal);
+            } catch (error) {
+                console.error("Fout bij updaten van achievement:", error);
+            }
+
+            // Enrico: Code om coins te updaten
+            try {
+                const response = await fetch("/update-coins", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ userId: "680d098a9e371da5cefb77cb", coins: earnedCoins })
+                });
+
+                const result = await response.json();
+                console.log("Coins geupdate:", result);
+            } catch (error) {
+                console.error("Fout bij updaten van de coins:", error);
+            }
         }
     }
 
@@ -146,7 +160,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         document.querySelectorAll(".card").forEach(card => {
             card.classList.add("flip-back");
         });
-    
+
         setTimeout(() => {
             document.getElementById("popup").style.display = "none";
             loadGame();
@@ -170,12 +184,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     function setTimer(seconds) {
         display.style.height = pixel_width * height_pixels + "px";
-    
+
         const timerSeconds = parseInt(seconds);
         if (!isNaN(timerSeconds) && timerSeconds > 0) {
             StartTimer(timerSeconds);
         }
-    
+
         const timerCheckInterval = setInterval(() => {
             if (GetTime() <= 0) {
                 openPopup(false);
