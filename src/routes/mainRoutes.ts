@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import { getUserById, incrementAchievementProgress, collectAchievementReward } from "../database";
+import { incrementAchievementProgress, updateUserCoins } from "../database";
 const router = express.Router();
 
 router.get('/', (req: Request, res: Response) => {
@@ -12,6 +12,19 @@ router.get('/landingspage', (req: Request, res: Response) => {
 
 router.get('/loader', (req: Request, res: Response) => {
   res.render('loader');
+});
+
+// Enrico: hier worden de coins van de user geupdate
+router.post("/update-coins", async (req: Request, res: Response) => {
+  const userId = req.body.userId;
+  const coins = parseInt(req.body.coins, 10);
+
+  try {
+    await updateUserCoins(userId, coins);
+    res.json({ success: true });
+  } catch (error: any) {
+    res.status(500).json({ success: false, error: error.message });
+  }
 });
 
 // Enrico: dit is de post voor een bepaalde achievement te updaten

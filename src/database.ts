@@ -176,6 +176,18 @@ export async function getUserById(userId: string) {
   return gebruiker;
 }
 
+// Enrico: hier worden de coins van de user geupdate
+export async function updateUserCoins(userId: string, addedCoins: number) {
+  const db = await connectToMongoDB(); 
+  const result = await db.collection("gebruikers").updateOne(
+    { _id: new ObjectId(userId) },
+    { $inc: { coins: addedCoins } }
+  );
+  if (result.modifiedCount === 0) {
+    throw new Error("Geen wijzigingen aangebracht in de gebruiker.");
+  }
+}
+
 // Enrico: hier worden de achievements van de user uitgelezen
 export async function getUserAchievements(userId: string) {
   const db = await connectToMongoDB(); 
@@ -222,6 +234,7 @@ export async function incrementAchievementProgress(
   }
 
   return {
+    title: achievement.title,
     current: newCurrent,
     goal: achievement.goal,
     finished: isFinished

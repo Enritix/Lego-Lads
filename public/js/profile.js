@@ -1,52 +1,74 @@
-const figures = [
-    {
-        name: "CRUG",
-        image: "../assets/images/episch.png",
-        rarity: "episch"
-    },
-    {
-        name: "CRUGX",
-        image: "../assets/images/gewoon.png",
-        rarity: "ongewoon"
-    },
-    {
-        name: "CRUGS",
-        image: "../assets/images/legendary.png",
-        rarity: "legendary"
-    }
-];
-
+let figures = [];
 let currentIndex = 0;
 
+async function fetchUserFigures() {
+    try {
+        const response = await fetch('/get-user', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ userId: '680d098a9e371da5cefb77cb' })
+        });
+
+        const data = await response.json();
+        if (data.success) {
+            figures = data.user.figs;
+            currentIndex = 0;
+            updateFigure();
+        } else {
+            console.error('Error fetching user figures:', data.message);
+        }
+    } catch (error) {
+        console.error('Error fetching user figures:', error);
+    }
+}
+
 function updateFigure() {
+    if (figures.length === 0) return;
+
     const figure = figures[currentIndex];
-    document.getElementById("lego-figure").src = figure.image;
+    document.getElementById("lego-figure").src = figure.img;
+    document.getElementById("lego-figure").alt = figure.name;
     document.getElementById("name").textContent = figure.name;
-    
+
     const rarityElement = document.getElementById("rarity");
     rarityElement.textContent = figure.rarity.toUpperCase();
-    rarityElement.className = `rarity ${figure.rarity}`;
+    rarityElement.className = `rarity ${figure.rarity.toLowerCase()}`;
+
+    // Update index en behoud de rugzak-link
+    const amountFigsElement = document.getElementById("amount-figs");
+    amountFigsElement.innerHTML = `
+        <span id="current-index">${currentIndex + 1}</span>/${figures.length}
+        <span id="inventory"><a href="inventory">🎒</a></span>
+    `;
 }
 
 function nextFigure() {
+    if (figures.length === 0) return;
+
     currentIndex = (currentIndex + 1) % figures.length;
     updateFigure();
 }
 
 function prevFigure() {
+    if (figures.length === 0) return;
+
     currentIndex = (currentIndex - 1 + figures.length) % figures.length;
     updateFigure();
 }
 
+fetchUserFigures();
+
 
 function openPopup() {
-    let prestatiesContainer = document.getElementById("prestaties-container");
-    let popupContainer = document.querySelector("#prestaties-popup .prestaties-container");
+    // let prestatiesContainer = document.getElementById("prestaties-container");
+    // let popupContainer = document.querySelector("#prestaties-popup .popup-content .prestaties-container");
 
 
-    if (window.innerWidth <= 600) {
-        popupContainer.innerHTML = prestatiesContainer.innerHTML;
-    }
+    // if (window.innerWidth <= 600) {
+    //     popupContainer.innerHTML = prestatiesContainer.innerHTML;
+    // }
 
     document.getElementById("prestaties-popup").style.display = "flex";
 }

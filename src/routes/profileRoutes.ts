@@ -7,12 +7,19 @@ import { collectAchievementReward, connectToMongoDB, getUserAchievements, getUse
 const router = express.Router();
 
 router.get('/profile', async (req: Request, res: Response) => {
-  const userId = "680a75b7d6c5dbbbe121b4bf";
+  const userId = "680d098a9e371da5cefb77cb";
 
   const user = await getUserById(userId);
   const achievements = await getUserAchievements(userId);
   
-  res.render('profile', { title: "Profiel", achievements: achievements, cssFiles: ['/css/profile.css'], jsFiles: ['/js/profile.js'] });
+  res.render('profile', 
+    { earned_coins: user.earned_coins, 
+      spent_coins: user.spent_coins, 
+      figs: user.figs,
+      title: "Profiel", 
+      achievements: achievements, 
+      cssFiles: ['/css/profile.css'], 
+      jsFiles: ['/js/profile.js'] });
 });
 
 router.get('/inventory', async (req, res) => {
@@ -69,6 +76,21 @@ router.post("/set-profiel-fig", async (req, res) => {
   } else {
     res.status(500).json({ error: "Mislukt  profiel_fig" });
   }
+});
+
+// Enrico: dit is de post om een bepaalde user te krijgen
+router.post("/get-user", async (req, res) => {
+    const userId = req.body.userId;
+  
+    try {
+      const user = await getUserById(userId);
+      if (!user) {
+        return res.status(404).json({ success: false, message: "User not found" });
+      }
+      res.json({ success: true, user });
+    } catch (error: any) {
+      res.status(500).json({ success: false, error: error.message });
+    }
 });
 
 // Enrico: dit is de post om een bepaalde achievement te collecten
