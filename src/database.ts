@@ -176,6 +176,16 @@ export async function getUserById(userId: string) {
   return gebruiker;
 }
 
+// Enrico: hier worden de coins van de user uitgelezen
+export async function getUserCoins(userId: string) {
+  const db = await connectToMongoDB(); 
+  const gebruiker = await db.collection("gebruikers").findOne({ _id: new ObjectId(userId) });
+  if (!gebruiker) {
+    throw new Error("Gebruiker niet gevonden");
+  }
+  return gebruiker.coins;
+}
+
 // Enrico: hier worden de coins van de user geupdate
 export async function updateUserCoins(userId: string, addedCoins: number) {
   const db = await connectToMongoDB(); 

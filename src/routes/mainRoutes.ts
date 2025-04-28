@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import { incrementAchievementProgress, updateUserCoins } from "../database";
+import { incrementAchievementProgress, updateUserCoins, getUserCoins } from "../database";
 const router = express.Router();
 
 router.get('/', (req: Request, res: Response) => {
@@ -13,6 +13,19 @@ router.get('/landingspage', (req: Request, res: Response) => {
 router.get('/loader', (req: Request, res: Response) => {
   res.render('loader');
 });
+
+// Enrico: dit is de post voor de coins van de user
+router.post("/get-coins", async (req: Request, res: Response) => {
+  const userId = req.body.userId;
+
+  try {
+    const coins = await getUserCoins(userId);
+    res.json({ success: true, coins });
+  } catch (error: any) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
 
 // Enrico: hier worden de coins van de user geupdate
 router.post("/update-coins", async (req: Request, res: Response) => {

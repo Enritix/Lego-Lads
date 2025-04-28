@@ -11,7 +11,7 @@
           <a href="profile" id="figure-head"><img  class="nav-fig" src="<%= profileFig %>" alt="" /></a>
           <h1 id="user-name"><%= username %></h1>
           <div id="coin-container">
-            <p><%= coins %></p>
+            <p><%= formattedCoins %></p>
           </div>
         </li>
         <li>
@@ -49,7 +49,7 @@
   <header class="mobile-info-bar">
     <section class="coin-container">
       <img src="../assets/images/coin.png" alt="Coin" />
-      <span><%= coins %></span>
+      <span><%= formattedCoins %></span>
     </section>
 
     <section class="logo-container">

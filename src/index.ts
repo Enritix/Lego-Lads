@@ -39,7 +39,8 @@ app.use(async (req, res ,next) => {
   if (user) {
     res.locals.profileFig = user.profile_fig; 
     res.locals.username = user.username;
-    res.locals.coins = formatCoins(user.coins);
+    res.locals.coins = user.coins;
+    res.locals.formattedCoins = formatCoins(user.coins);
   } else {
     res.locals.profileFig = null;
   }
@@ -102,7 +103,7 @@ startApp()
 // Enrico: hier word de coins geformatteerd naar K als het meer dan 1000 is
 function formatCoins(coins: number): string {
   if (coins >= 1000) {
-    return (coins / 1000).toFixed(1) + "K";
+    return Math.floor(coins / 100) / 10 + "K";
   }
   return coins.toString();
 }
