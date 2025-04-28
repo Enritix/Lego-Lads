@@ -105,6 +105,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             popupContent.querySelector("h2").textContent = `Gefeliciteerd! Je bent gewonnen!`;
             popupContent.querySelector("p").textContent = `Je hebt ${earnedCoins} coins verdiend!`;
 
+            startCoinConfetti(earnedCoins);
         } else {
             popupContent.querySelector("h2").textContent = "Jammer, je hebt het niet gehaald. Volgende keer beter!";
         }
@@ -152,6 +153,26 @@ document.addEventListener("DOMContentLoaded", async () => {
                 console.log("Coins geupdate:", result);
             } catch (error) {
                 console.error("Fout bij updaten van de coins:", error);
+            }
+
+            // Enrico: Code om coins te retourneren
+            try {
+                const response = await fetch("/get-coins", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ userId: "680d098a9e371da5cefb77cb" })
+                });
+
+                const result = await response.json();
+                console.log("Coins gereturned:", result);
+                let desktopCoins = document.querySelector("#coin-container p");
+                let mobileCoins = document.querySelector(".coin-container span");
+                desktopCoins.textContent = `${formatCoins(result.coins)}`;
+                mobileCoins.textContent = `${formatCoins(result.coins)}`;
+            } catch (error) {
+                console.error("Fout bij returnen van de coins:", error);
             }
         }
     }
@@ -209,3 +230,70 @@ function closeInfoPopup() {
     document.getElementById("infoPopup").close();
 }
 
+function formatCoins(coins) {
+    if (coins >= 1000) {
+      return Math.floor(coins / 100) / 10 + "K";
+    }
+    return coins.toString();
+}
+
+function startCoinConfetti(earnedCoins) {
+    const coinContainer = document.querySelector("#coin-container p");
+    const body = document.body;
+    const batchSize = 10;
+    let coinsLeft = earnedCoins;
+
+    const currentCoins = parseFloat(coinContainer.textContent.replace("K", "")) || 0;
+    const totalCoins = currentCoins + earnedCoins;
+
+    coinContainer.textContent = formatCoins(totalCoins);
+
+    function createCoinBatch() {
+        const coinsToCreate = Math.min(batchSize, coinsLeft);
+        for (let i = 0; i < coinsToCreate; i++) {
+            const coin = document.createElement("img");
+            coin.src = "../assets/images/coin.png";
+            coin.classList.add("coin-confetti");
+
+            const centerX = window.innerWidth / 2;
+            const centerY = window.innerHeight / 2;
+            const spreadX = 500;
+            const spreadY = 400;
+
+            coin.style.left = centerX + (Math.random() * spreadX - spreadX / 2) + "px";
+            coin.style.top = centerY + (Math.random() * spreadY - spreadY / 2) + "px";
+
+            body.appendChild(coin);
+
+            coin.addEventListener("mouseover", () => {
+                moveCoinToContainer(coin, coinContainer);
+            });
+
+            setTimeout(() => {
+                if (body.contains(coin)) {
+                    moveCoinToContainer(coin, coinContainer);
+                }
+            }, 5000);
+        }
+
+        coinsLeft -= coinsToCreate;
+
+        if (coinsLeft > 0) {
+            createCoinBatch();
+        }
+    }
+
+    createCoinBatch();
+}
+
+function moveCoinToContainer(coin, coinContainer) {
+    const rect = coinContainer.getBoundingClientRect();
+    coin.style.transition = "all 0.5s ease-in-out";
+    coin.style.left = rect.left + rect.width / 2 + "px";
+    coin.style.top = rect.top + rect.height / 2 + "px";
+    coin.style.opacity = "0";
+
+    setTimeout(() => {
+        coin.remove();
+    }, 500);
+}
