@@ -2,8 +2,6 @@ import { MongoClient, Db, ObjectId } from "mongodb";
 import dotenv from "dotenv";
 dotenv.config();
 
-
-
 /*require('dotenv').config();
 const mongoose = require('mongoose');
 
@@ -21,9 +19,6 @@ const mongoose = require('mongoose');
   }
 }*/
 
-
-
-
 const uri = process.env.MONGO_URI;
 if (!uri) throw new Error("MONGO_URI staat niet in je .env bestand");
 
@@ -32,12 +27,12 @@ const client = new MongoClient(uri);
 export async function connectToMongoDB(): Promise<Db> {
   try {
     await client.connect();
-    console.log('\x1b[34mVerbonden met MongoDB\x1b[0m');
-    console.log('\x1b[34mJe mag beginnen met spaghetti code schrijven!\x1b[0m');
-    return client.db("LegoLads"); 
+    console.log("\x1b[34mVerbonden met MongoDB\x1b[0m");
+    console.log("\x1b[34mJe mag beginnen met spaghetti code schrijven!\x1b[0m");
+    return client.db("LegoLads");
   } catch (err) {
     if (err instanceof Error) {
-      console.error('Fout bij verbinden:', err.message);
+      console.error("Fout bij verbinden:", err.message);
     } else {
       console.error(err);
     }
@@ -45,19 +40,19 @@ export async function connectToMongoDB(): Promise<Db> {
   }
 }
 
-// Abe: hier word een user test template gemaakt 
+// Abe: hier word een user test template gemaakt
 
 export function createUserTemplate(
   username: string,
   password: string,
-  email: string,
-
+  email: string
 ) {
   return {
     username,
     password,
     email,
-    profile_fig: "https://github.com/AbeVerschueren/lego-img/blob/main/batman.png?raw=true",
+    profile_fig:
+      "https://github.com/AbeVerschueren/lego-img/blob/main/batman.png?raw=true",
     coins: 500,
     earned_coins: 800,
     spent_coins: 300,
@@ -65,36 +60,36 @@ export function createUserTemplate(
       {
         name: "Batman",
         img: "https://github.com/AbeVerschueren/lego-img/blob/main/batman.png?raw=true",
-        rarity: "episch"
+        rarity: "episch",
       },
       {
         name: "Droid",
         img: "https://github.com/AbeVerschueren/lego-img/blob/main/droid.png?raw=true",
-        rarity: "legendarisch"
+        rarity: "legendarisch",
       },
       {
         name: "Joker",
         img: "https://github.com/AbeVerschueren/lego-img/blob/main/joker.png?raw=true",
-        rarity: "episch"
-      }
+        rarity: "episch",
+      },
     ],
     bin: [
       {
         fig: "Pirate",
-        reason: "per ongeluk verwijderd"
-      }
+        reason: "per ongeluk verwijderd",
+      },
     ],
     ordenedFigs: [
       {
         fig: "Anakin",
         set: "ambush-on-errix",
-        theme: "theme01"
+        theme: "theme01",
       },
       {
         fig: "Chen",
         set: "the-joker-steam-roller",
-        theme: "theme02"
-      }
+        theme: "theme02",
+      },
     ],
     achievements: {
       coins: {
@@ -104,7 +99,7 @@ export function createUserTemplate(
         goal: 100,
         reward: 200,
         finished: false,
-        collected: false
+        collected: false,
       },
       login_streak: {
         title: "Dagelijkse login",
@@ -113,48 +108,48 @@ export function createUserTemplate(
         goal: 1,
         reward: 100,
         finished: false,
-        collected: false
-      }
+        collected: false,
+      },
     },
     chests: {
       uncommon: 2,
       epic: 1,
-      legendary: 0
+      legendary: 0,
     },
     keys: 5,
     clickerGame: {
       blocks: 150,
       tools: {
         hammer: {
-          level: 2
+          level: 2,
         },
         saw: {
-          level: 1
+          level: 1,
         },
         drill: {
-          level: 3
-        }
-      }
+          level: 3,
+        },
+      },
     },
     settings: {
       sound: true,
       music: true,
       filter: "normal",
       language: "nl",
-      brightness: 7
-    }
+      brightness: 7,
+    },
   };
 }
-// Abe: test data word toegevoegd 
+// Abe: test data word toegevoegd
 export async function insertTestUser() {
-  const db = await connectToMongoDB(); 
-  const gebruiker = createUserTemplate("abe", "lego", "abe@email.com",);
+  const db = await connectToMongoDB();
+  const gebruiker = createUserTemplate("abe", "lego", "abe@email.com");
   const result = await db.collection("gebruikers").insertOne(gebruiker);
   console.log("Testgebruiker toegevoegd met ID:", result.insertedId);
 }
 // Abe: gebruikers worden uitgelezen
 export async function readAllUsers() {
-  const db = await connectToMongoDB(); 
+  const db = await connectToMongoDB();
   const gebruikers = await db.collection("gebruikers").find().toArray();
   console.log("Alle gebruikers:", gebruikers);
 }
@@ -168,8 +163,10 @@ export async function deleteAllUsers() {
 
 // Enrico: hier word de user uit de database gehaald met de id
 export async function getUserById(userId: string) {
-  const db = await connectToMongoDB(); 
-  const gebruiker = await db.collection("gebruikers").findOne({ _id: new ObjectId(userId) });
+  const db = await connectToMongoDB();
+  const gebruiker = await db
+    .collection("gebruikers")
+    .findOne({ _id: new ObjectId(userId) });
   if (!gebruiker) {
     throw new Error("Gebruiker niet gevonden");
   }
@@ -178,8 +175,10 @@ export async function getUserById(userId: string) {
 
 // Enrico: hier worden de coins van de user uitgelezen
 export async function getUserCoins(userId: string) {
-  const db = await connectToMongoDB(); 
-  const gebruiker = await db.collection("gebruikers").findOne({ _id: new ObjectId(userId) });
+  const db = await connectToMongoDB();
+  const gebruiker = await db
+    .collection("gebruikers")
+    .findOne({ _id: new ObjectId(userId) });
   if (!gebruiker) {
     throw new Error("Gebruiker niet gevonden");
   }
@@ -188,11 +187,10 @@ export async function getUserCoins(userId: string) {
 
 // Enrico: hier worden de coins van de user geupdate
 export async function updateUserCoins(userId: string, addedCoins: number) {
-  const db = await connectToMongoDB(); 
-  const result = await db.collection("gebruikers").updateOne(
-    { _id: new ObjectId(userId) },
-    { $inc: { coins: addedCoins } }
-  );
+  const db = await connectToMongoDB();
+  const result = await db
+    .collection("gebruikers")
+    .updateOne({ _id: new ObjectId(userId) }, { $inc: { coins: addedCoins } });
   if (result.modifiedCount === 0) {
     throw new Error("Geen wijzigingen aangebracht in de gebruiker.");
   }
@@ -200,8 +198,10 @@ export async function updateUserCoins(userId: string, addedCoins: number) {
 
 // Enrico: hier worden de achievements van de user uitgelezen
 export async function getUserAchievements(userId: string) {
-  const db = await connectToMongoDB(); 
-  const gebruiker = await db.collection("gebruikers").findOne({ _id: new ObjectId(userId) });
+  const db = await connectToMongoDB();
+  const gebruiker = await db
+    .collection("gebruikers")
+    .findOne({ _id: new ObjectId(userId) });
   if (!gebruiker) {
     throw new Error("Gebruiker niet gevonden");
   }
@@ -216,14 +216,18 @@ export async function incrementAchievementProgress(
 ) {
   const db = await connectToMongoDB();
 
-  const gebruiker = await db.collection("gebruikers").findOne(
-    { _id: new ObjectId(userId) },
-    { projection: { [`achievements.${achievementKey}`]: 1 } }
-  );
+  const gebruiker = await db
+    .collection("gebruikers")
+    .findOne(
+      { _id: new ObjectId(userId) },
+      { projection: { [`achievements.${achievementKey}`]: 1 } }
+    );
 
   const achievement = gebruiker?.achievements?.[achievementKey];
   if (!achievement) {
-    throw new Error(`Achievement '${achievementKey}' niet gevonden voor gebruiker.`);
+    throw new Error(
+      `Achievement '${achievementKey}' niet gevonden voor gebruiker.`
+    );
   }
 
   const newCurrent = achievement.current + incrementBy;
@@ -235,7 +239,7 @@ export async function incrementAchievementProgress(
       $set: {
         [`achievements.${achievementKey}.current`]: newCurrent,
         [`achievements.${achievementKey}.finished`]: isFinished,
-      }
+      },
     }
   );
 
@@ -247,7 +251,7 @@ export async function incrementAchievementProgress(
     title: achievement.title,
     current: newCurrent,
     goal: achievement.goal,
-    finished: isFinished
+    finished: isFinished,
   };
 }
 
@@ -258,14 +262,18 @@ export async function collectAchievementReward(
 ) {
   const db = await connectToMongoDB();
 
-  const gebruiker = await db.collection("gebruikers").findOne(
-    { _id: new ObjectId(userId) },
-    { projection: { coins: 1, [`achievements.${achievementKey}`]: 1 } }
-  );
+  const gebruiker = await db
+    .collection("gebruikers")
+    .findOne(
+      { _id: new ObjectId(userId) },
+      { projection: { coins: 1, [`achievements.${achievementKey}`]: 1 } }
+    );
 
   const achievement = gebruiker?.achievements?.[achievementKey];
   if (!achievement) {
-    throw new Error(`Achievement '${achievementKey}' niet gevonden voor gebruiker.`);
+    throw new Error(
+      `Achievement '${achievementKey}' niet gevonden voor gebruiker.`
+    );
   }
 
   if (!achievement.finished || achievement.collected) {
@@ -291,7 +299,7 @@ export async function collectAchievementReward(
         [`achievements.${achievementKey}.reward`]: newReward,
         [`achievements.${achievementKey}.finished`]: newFinished,
         [`achievements.${achievementKey}.collected`]: false,
-      }
+      },
     }
   );
 
@@ -304,14 +312,16 @@ export async function collectAchievementReward(
     current: leftoverProgress,
     goal: newGoal,
     reward: newReward,
-    finished: newFinished
+    finished: newFinished,
   };
 }
 
 // Enrico: hier worden de settings van de user uitgelezen
 export async function getUserSettings(userId: string) {
-  const db = await connectToMongoDB(); 
-  const gebruiker = await db.collection("gebruikers").findOne({ _id: new ObjectId(userId) });
+  const db = await connectToMongoDB();
+  const gebruiker = await db
+    .collection("gebruikers")
+    .findOne({ _id: new ObjectId(userId) });
   if (!gebruiker) {
     throw new Error("Gebruiker niet gevonden");
   }
@@ -320,12 +330,27 @@ export async function getUserSettings(userId: string) {
 
 // Enrico: hier worden de settings van de user geupdate
 export async function updateUserSettings(userId: string, newSettings: any) {
-  const db = await connectToMongoDB(); 
-  const result = await db.collection("gebruikers").updateOne(
-    { _id: new ObjectId(userId) },
-    { $set: { settings: newSettings } }
-  );
+  const db = await connectToMongoDB();
+  const result = await db
+    .collection("gebruikers")
+    .updateOne(
+      { _id: new ObjectId(userId) },
+      { $set: { settings: newSettings } }
+    );
   if (result.modifiedCount === 0) {
     throw new Error("Geen wijzigingen aangebracht in de gebruiker.");
   }
+}
+
+// Lars: hier wordt de hele vuilbak getoond
+
+export async function getBin(userId: string) {
+  const db = await connectToMongoDB();
+  const gebruiker = await db
+    .collection("gebruikers")
+    .findOne({ _id: new ObjectId(userId) });
+  if (!gebruiker) {
+    throw new Error("Gebruiker niet gevonden");
+  }
+  return gebruiker.bin;
 }

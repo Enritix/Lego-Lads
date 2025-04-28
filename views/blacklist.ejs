@@ -45,7 +45,29 @@
       </section>
 
       <section class="blacklist">
-        <article class="blacklist-item">
+        <% bin.forEach((binElement, index) => { %>
+          <article class="blacklist-item">
+            <div class="figure">
+              <h2><%= binElement.fig %></h2>
+              <img src="<%= minifigs[index].img %>" alt="<%= binElement.fig %>" />
+            </div>
+            <div class="reason">
+              <button id="vernietigKnop" class="reason-btn">REDEN</button>
+              <!-- <select class="reason-select">
+                <option value="reden1">Deze figuur wil ik niet meer zien!</option>
+                <option value="reden2">Deze figuur ken ik niet.</option>
+                <option value="reden3">Ik heb een hekel aan deze figuur.</option>
+                <option value="reden4">Andere reden.</option>
+              </select> -->
+              <span><%= binElement.reason %></span>
+            </div>
+            <button class="remove-btn">❌</button>
+          </article>
+        <% }); %>
+         
+        
+
+        <!-- <article class="blacklist-item">
           <div class="figure">
             <h2>Luke</h2>
             <img src="../assets/images/artic3.png" alt="Batman" />
@@ -92,7 +114,7 @@
             </select>
           </div>
           <button class="remove-btn">❌</button>
-        </article>
+        </article> -->
       </section>
     </main>
     <%- include('components/settings') %>
