@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function() {
             event.preventDefault(); 
             overlay.style.display = "none";
             popup.style.display = "none";
-            window.location.href = "blacklist.html"; 
+            window.location.href = "/blacklist"; 
         });
     }
     overlay.addEventListener("click", function () {
