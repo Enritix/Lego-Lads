@@ -1,7 +1,22 @@
 document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.remove-btn').forEach(button => {
-      button.addEventListener('click', function() {
+      button.addEventListener('click', async function() {
         this.parentElement.remove();
+
+        try {
+          const response = await fetch("/delete-minifig", {
+              method: "POST",
+              headers: {
+                  "Content-Type": "application/json"
+              },
+              body: JSON.stringify({ userId: "680d098a9e371da5cefb77cb", minifig: this.parentElement.querySelector(".figure h2").textContent })
+          });
+
+          const result = await response.json();
+          console.log("Minifig verwijderd:", result);
+      } catch (error) {
+          console.error("Fout bij verwijderen van minifig:", error);
+      }
       });
     });
   

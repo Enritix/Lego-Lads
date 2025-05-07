@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
-import { getBin } from "../database";
+import { deleteMinifigFromBin, getBin } from "../database";
 import { fetchMinifigByName } from "../apicalls";
-import { binElement, Minifig } from "../interfaces"
+import { binElement, Minifig } from "../interfaces";
 const router = express.Router();
 
 router.get("/blacklist", async (req: Request, res: Response) => {
@@ -9,17 +9,34 @@ router.get("/blacklist", async (req: Request, res: Response) => {
   const bin = await getBin(userId);
 
   const minifigs: Minifig[] = [];
-  await Promise.all(bin.map(async (binElement: binElement) => {
-    const minifig = await fetchMinifigByName(binElement.fig);
-    minifigs.push(minifig);
-  }));
+  await Promise.all(
+    bin.map(async (binElement: binElement) => {
+      const minifig = await fetchMinifigByName(binElement.fig);
+      minifigs.push(minifig);
+    })
+  );
+
+  // await deleteMinifigFromBin(userId, "Pirate");
+
   res.render("blacklist", {
     title: "Blacklist",
     cssFiles: ["/css/blacklist.css"],
     jsFiles: ["/js/blacklist.js"],
     bin: bin,
-    minifigs: minifigs
+    minifigs: minifigs,
   });
+});
+
+router.post("/delete-minifig", async (req: Request, res: Response) => {
+  let userId = req.body.userId;
+  let minifig = req.body.minifig;
+
+  try {
+    const progress = await deleteMinifigFromBin(userId, minifig);
+    res.json({ success: true, progress });
+  } catch (error: any) {
+    res.status(500).json({ success: false, error: error.message });
+  }
 });
 
 router.get("/detaillist", (req: Request, res: Response) => {
