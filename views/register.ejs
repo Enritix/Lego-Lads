@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="nl-BE">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LegoLads - Registratie</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/register.css">
+    <script src="../js/audio.js" defer></script>
+    <script src="../js/register.js"defer></script>
+</head>
+
+<body>
+    <audio id="clickSound">
+        <source src="../assets/audio/kliksound.mp3" type="audio/mpeg">
+    </audio>
+
+    <main>
+
+        <div class="resultaat-container">
+            <a  class="close" href="landingspage.html">❌</a>
+            <h2>Registreren</h2>
+            <div class="registration-form">
+                <form action="/register" method="post">
+                    <div class="form-group">
+                        <label for="name">Naam</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="password">Wachtwoord</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">E-mail</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirm-password">Herhaal Wachtwoord</label>
+                        <input type="password" id="confirm-password" name="confirm-password" required>
+                    </div>
+                    <div class="figuren-lijst">
+
+                        
+                </form>
+                <div class="figuur">
+                    <span class="figuur-naam">Chen</span>
+                    <div class="figuur-images">
+                        <img class="figuur-img" src="../assets/images/cinder.png" alt="Chen">
+                    </div>
+                </div>
+                <div class="figuur">
+                    <span class="figuur-naam">Cinder</span>
+                    <div class="figuur-images">
+                        <img class="figuur-img" src="../assets/images/chen.png" alt="Cinder">
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-button prev">❮</button>
+        <button class="carousel-button next">❯</button>
+                <p>Heeft u al een account? <a href="login.html"> <u>Meld u nu aan</u></a></p>
+            </div>
+            <a href="../index.html"><button class="text-lego-stroke" data-text="registreren" type="submit">Registreren</button></a>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>

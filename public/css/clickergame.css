@@ -35,6 +35,11 @@ main {
     margin-top: 5px;
 }
 
+.header-container h1{
+    font-family: Bangers;
+    letter-spacing: 2px;
+}
+
 .gameplay {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;

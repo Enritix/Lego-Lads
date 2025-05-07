@@ -131,7 +131,7 @@ main {
   left: 50%;
   transform: translate(-50%, -50%);
   width: 80%;
-  height: 70%;
+  height: 60%;
   max-width: 600px;
   background: rgba(37, 39, 51, 0.97);
   color: white;
@@ -142,7 +142,7 @@ main {
   z-index: 1000000001;
   font-family: Oswald;
   font-size: large;
-  text-align: center;
+  text-align: left;
   overflow-y: auto;
 }
 
@@ -168,6 +168,7 @@ main {
 .popup li {
   text-align: center;
   margin: 5px 0;
+  text-align: left;
 }
 
 .close-btn {
