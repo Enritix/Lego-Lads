@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
 import { deleteMinifigFromBin, getBin } from "../database";
-import { fetchMinifigByName } from "../apicalls";
+import { fetchMinifigByName, getThemeById } from "../apicalls";
 import { binElement, Minifig } from "../interfaces";
 const router = express.Router();
 
@@ -39,9 +39,14 @@ router.post("/delete-minifig", async (req: Request, res: Response) => {
   }
 });
 
-router.get("/detaillist", (req: Request, res: Response) => {
+router.get("/detaillist/:id", (req: Request, res: Response) => {
+  let themeId = parseInt(req.params.id);
+  let theme = getThemeById(themeId);
+  console.log(theme);
+
   res.render("detaillist", {
     title: "Lego Fabriek",
+    theme: theme,
     cssFiles: ["/css/detaillist.css"],
     jsFiles: ["/js/detaillist.js"],
   });

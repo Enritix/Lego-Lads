@@ -124,8 +124,8 @@ export async function fetchMinifigByName(name: string): Promise<Minifig> {
         id: minifig.id,
         name: minifig.name,
         rarity: minifig.rarity,
-        img: minifig.img
-      }
+        img: minifig.img,
+      };
     }
   });
   return foundMinifig;
@@ -153,22 +153,36 @@ export async function fetchSets(): Promise<Sets[]> {
   return data;
 }
 
-interface Themes {
+interface Theme {
   id: number;
   name: string;
   img: string;
 }
 
-export async function fetchThemes(): Promise<Themes[]> {
+export async function fetchThemes(): Promise<Theme[]> {
   const res = await fetch("https://supabase-api-q362.onrender.com/theme");
 
   if (!res.ok) {
     throw new Error(`Foutt ophalen: ${res.status}`);
   }
 
-  const data: Themes[] = await res.json();
+  const data: Theme[] = await res.json();
 
   console.log("\x1b[34mthemes \x1b[0m", data);
 
   return data;
+}
+
+export async function getThemeById(id: number): Promise<Theme> {
+  try {
+    const themes = await fetchThemes();
+    const foundTheme = themes.find((theme) => theme.id === id);
+    if (!foundTheme) {
+      throw new Error("Theme niet gevonden.");
+    }
+    return foundTheme;
+  } catch (error) {
+    console.error("Fout bij ophalen theme:", error);
+    throw error;
+  }
 }
