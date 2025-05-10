@@ -9,10 +9,20 @@ document.addEventListener('DOMContentLoaded', function () {
     const decreaseButton = document.getElementById('brightness-decrease');
     const colorModeSelect = document.getElementById('colormode');
     const languageSelect = document.getElementById('language');
+    const soundSlider = document.querySelector("#sound-toggle");
+    const soundToggleLabel = document.querySelector(".toggle-label");
     let brightnessLevel = 7;
     const maxBrightness = 7;
     const minBrightness = 1;
     let currentColorMode = 'normal';
+
+    let settings = {
+        sound: true,
+        music: true,
+        filter: "normal",
+        language: "nl",
+        brightness: 7
+    }
 
     for (let i = 0; i < brightnessLevel; i++) {
         const block = document.createElement('div');
@@ -82,6 +92,15 @@ document.addEventListener('DOMContentLoaded', function () {
         loadTranslations(selectedLanguage);
     });
 
+    soundToggleLabel.addEventListener('click', function () {
+        if (soundSlider.checked) {
+            soundSlider.checked = false;
+        } else {
+            soundSlider.checked = true;
+        }
+
+    });
+
     function loadTranslations(language) {
         if (window.href === "/") {
             fetch('/data/translations.json')
@@ -132,6 +151,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
         closeBtn.textContent = translations.close;
         closeBtn.dataset.text = translations.close;
+    }
+
+    function checkSettings() {
+        let musicSlider = document.querySelector("#music-slider");
+
     }
 
     loadTranslations('dutch');
