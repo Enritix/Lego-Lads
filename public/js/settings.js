@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
+    loadSettingsFromServer();
     const settingsBtnMobile = document.getElementById("settings-btn-mobile");
     const settingsBtnDesktop = document.getElementById("settings-btn-desktop");
     const closeBtn = document.getElementById("settings-close-btn");
@@ -16,13 +17,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const minBrightness = 1;
     let currentColorMode = 'normal';
 
-    let settings = {
-        sound: true,
-        music: true,
-        filter: "normal",
-        language: "nl",
-        brightness: 7
-    }
+    let originalSettings = {};
+    let settings = {}
 
     for (let i = 0; i < brightnessLevel; i++) {
         const block = document.createElement('div');
@@ -66,6 +62,8 @@ document.addEventListener('DOMContentLoaded', function () {
             block.classList.add('brightness-block');
             brightnessBar.appendChild(block);
             updateFilters();
+            updateSettings('brightness', brightnessLevel);
+            checkForChanges();
         }
     });
 
@@ -77,6 +75,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 brightnessBar.removeChild(blocks[blocks.length - 1]);
             }
             updateFilters();
+            updateSettings('brightness', brightnessLevel);
+            checkForChanges();
         }
     });
 
@@ -84,21 +84,26 @@ document.addEventListener('DOMContentLoaded', function () {
         event.preventDefault();
         currentColorMode = this.value;
         updateFilters();
+        updateSettings('filter', this.value);
+        checkForChanges();
     });
 
     languageSelect.addEventListener('change', function (event) {
         event.preventDefault();
         const selectedLanguage = this.value;
         loadTranslations(selectedLanguage);
+        updateSettings('language', this.value);
+        checkForChanges();
     });
 
-    soundToggleLabel.addEventListener('click', function () {
-        if (soundSlider.checked) {
-            soundSlider.checked = false;
-        } else {
-            soundSlider.checked = true;
-        }
+    soundSlider.addEventListener('change', function () {
+        updateSettings('sound', soundSlider.checked);
+        checkForChanges();
+    });
 
+    document.getElementById('music-slider').addEventListener('change', function () {
+        updateSettings('music', this.checked);
+        checkForChanges();
     });
 
     function loadTranslations(language) {
@@ -153,11 +158,106 @@ document.addEventListener('DOMContentLoaded', function () {
         closeBtn.dataset.text = translations.close;
     }
 
-    function checkSettings() {
-        let musicSlider = document.querySelector("#music-slider");
-
+    function updateSettings(key, value) {
+        settings[key] = value;
+        console.log(`Instelling bijgewerkt: ${key} = ${value}`);
     }
 
     loadTranslations('dutch');
     updateFilters();
+
+    document.getElementById("settings-close-btn").addEventListener("click", function () {
+    saveSettingsToServer(settings);
+});
+
+function hasSettingsChanged() {
+    return JSON.stringify(settings) !== JSON.stringify(originalSettings);
+}
+
+function checkForChanges() {
+    const closeBtn = document.getElementById("settings-close-btn");
+    if (hasSettingsChanged()) {
+        if (languageSelect.value === "dutch") {
+            closeBtn.textContent = "Opslaan";
+            closeBtn.dataset.text = "Opslaan";
+        } else {
+            closeBtn.textContent = "Save";
+            closeBtn.dataset.text = "Save";
+        }
+    } else {
+        if (languageSelect.value === "dutch") {
+            closeBtn.textContent = "Sluiten";
+            closeBtn.dataset.text = "Sluiten";
+        } else {
+            closeBtn.textContent = "Close";
+            closeBtn.dataset.text = "Close";
+        }
+    }
+}
+
+async function loadSettingsFromServer() {
+    try {
+        const response = await fetch("/get-settings", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ userId: "680d098a9e371da5cefb77cb" }),
+        });
+
+        const result = await response.json();
+        if (result.success) {
+            settings = result.settings;
+            originalSettings = { ...settings };
+            console.log("Instellingen opgehaald:", settings);
+
+            document.querySelector("#sound-toggle").checked = settings.sound;
+            document.querySelector("#music-slider").checked = settings.music;
+            document.querySelector("#colormode").value = settings.filter;
+            document.querySelector("#language").value = settings.language;
+            loadTranslations(settings.language);
+
+            const brightnessBar = document.getElementById('brightness-bar');
+            brightnessBar.innerHTML = "";
+            for (let i = 0; i < settings.brightness; i++) {
+                const block = document.createElement('div');
+                block.classList.add('brightness-block');
+                brightnessBar.appendChild(block);
+            }
+            currentColorMode = settings.filter;
+            brightnessLevel = settings.brightness;
+            updateFilters();
+        } else {
+            console.error("Fout bij ophalen van instellingen:", result.error);
+        }
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+async function saveSettingsToServer(settings) {
+    try {
+        const response = await fetch("/update-settings", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                userId: "680d098a9e371da5cefb77cb",
+                newSettings: settings,
+            }),
+        });
+
+        const result = await response.json();
+        if (result.success) {
+            console.log("Instellingen succesvol opgeslagen.");
+            originalSettings = { ...settings };
+            checkForChanges();
+        } else {
+            console.error("Fout bij opslaan van instellingen:", result.error);
+        }
+    } catch (error) {
+        console.error(error);
+    }
+}
 });

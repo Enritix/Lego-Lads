@@ -39,10 +39,9 @@ router.post("/delete-minifig", async (req: Request, res: Response) => {
   }
 });
 
-router.get("/detaillist/:id", (req: Request, res: Response) => {
+router.get("/detaillist/:id", async (req: Request, res: Response) => {
   let themeId = parseInt(req.params.id);
-  let theme = getThemeById(themeId);
-  console.log(theme);
+  let theme = await getThemeById(themeId);
 
   res.render("detaillist", {
     title: "Lego Fabriek",
