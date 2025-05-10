@@ -10,7 +10,7 @@ router.get('/factory', (req: Request, res: Response) => {
 });
 
 router.get('/figordenen', (req: Request, res: Response) => {
-  res.render('figordenen', { title: "Figs Ordenen", cssFiles: ['/css/figordenen.css'], jsFiles: ['/js/figordenen.js'] });
+  res.render('figordenen', { title: "Figs Ordenen", cssFiles: ['/css/figsordenen.css'], jsFiles: ['/js/figsordenen.js'] });
 });
 
 router.get('/ordenen', (req: Request, res: Response) => {

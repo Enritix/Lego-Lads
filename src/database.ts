@@ -354,3 +354,46 @@ export async function getBin(userId: string) {
   }
   return gebruiker.bin;
 }
+
+// Lars: hier wordt een minifig verwijderd + voo testen functie toevoegen om fig toe te voegen
+
+export async function deleteMinifigFromBin(userId: string, figName: string) {
+  const db = await connectToMongoDB();
+  const result = await db
+    .collection("gebruikers")
+    .updateOne({ _id: new ObjectId(userId) }, {
+      $pull: { bin: { fig: figName } },
+    } as any);
+  if (result.matchedCount === 0) {
+    throw new Error("Gebruiker niet gevonden.");
+  }
+  if (result.modifiedCount === 0) {
+    throw new Error("Minifig niet gevonden in de bin of al verwiijderd.");
+  }
+}
+
+// Lars: in deze functie kan de reden worden aangepast
+
+export async function updateMinifigReason(
+  userId: string,
+  figName: string,
+  newReason: string
+) {
+  const db = await connectToMongoDB();
+  const result = await db.collection("gebruikers").updateOne(
+    {
+      _id: new ObjectId(userId),
+      "bin.fig": figName,
+    },
+    {
+      $set: { "bin.$.reason": newReason },
+    } as any
+  );
+
+  if (result.matchedCount === 0) {
+    throw new Error("Gebruiker of minifig niet gevonden.");
+  }
+  if (result.modifiedCount === 0) {
+    throw new Error("Geen wijzigingen aangebracht.");
+  }
+}
