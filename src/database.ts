@@ -397,3 +397,36 @@ export async function updateMinifigReason(
     throw new Error("Geen wijzigingen aangebracht.");
   }
 }
+
+
+// src/routes/authRoutes.ts (of waar je routebestand zich bevindt)
+import { Request, Response } from "express";
+
+export async function attemptSignup(req: Request, res: Response) {
+  const fname: string = req.body.fname;
+  const lname: string = req.body.lname;
+  const email: string = req.body.email;
+  const password: string = req.body.password;
+  const confirmPassword: string = req.body["confirm-password"];
+
+  // Validatie
+  if (!fname || !lname || !email || !password || !confirmPassword) {
+    return res.render("register", { error: "Alle velden zijn verplicht" });
+  }
+
+  if (!email.includes("@")) {
+    return res.render("register", { error: "Ongeldig e-mailadres" });
+  }
+
+  if (password !== confirmPassword) {
+    return res.render("register", { error: "Wachtwoorden komen niet overeen" });
+  }
+
+  
+  console.log("Data is valid, saving user");
+
+
+  return res.redirect("/success");
+
+}
+

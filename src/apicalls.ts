@@ -110,7 +110,7 @@ export async function fetchMinifigs(): Promise<Minifig[]> {
 }
 
 export async function fetchMinifigByName(name: string): Promise<Minifig> {
-  const minifigName = name.toLowerCase();
+  const minifigName = name;
   const minifigs = await fetchMinifigs();
   let foundMinifig: Minifig = {
     id: 0,
