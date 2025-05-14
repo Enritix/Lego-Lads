@@ -355,7 +355,7 @@ export async function getBin(userId: string) {
   return gebruiker.bin;
 }
 
-// Lars: hier wordt een minifig verwijderd + voo testen functie toevoegen om fig toe te voegen
+// Lars: hier wordt een minifig verwijderd + voor testen functie toevoegen om fig toe te voegen
 
 export async function deleteMinifigFromBin(userId: string, figName: string) {
   const db = await connectToMongoDB();
