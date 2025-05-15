@@ -343,15 +343,34 @@ header nav ul li svg:hover {
     width: 24px;
     height: 24px;
   }
-  .name-container img {
+
+  .name-container {
+    padding: 8px 12px;
+  }
+  .name-container div img {
     height: auto;
     width: 24px;
+  }
+
+  .name-container div {
+    position: absolute;
+    right: 5px;
+    height: 25px;
+    overflow: hidden;
+  }
+
+  .name-container div img {
+    width: 80%;
+    height: 50px;
+    object-fit: cover;
+    object-position: top;
   }
 
   .name-container span {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    margin-right: 20px;
   }
   
   .logo-container {

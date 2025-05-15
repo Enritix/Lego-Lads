@@ -78,5 +78,6 @@ function closePopup() {
 }
 
 updateFigure();
+closePopup();
 
 
