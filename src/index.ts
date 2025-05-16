@@ -1,5 +1,6 @@
 import express, { Request, Response} from 'express';
 import path from 'path';
+import cookieParser from 'cookie-parser';
 import authRoutes from './routes/authRoutes';
 import gameRoutes from './routes/gameRoutes';
 import chatbotRoutes from './routes/chatbotRoutes';
@@ -22,6 +23,8 @@ console.log("STATIC PATH →", path.join(__dirname, '../public'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+app.use(cookieParser());
+
 // middleware func en var meegeven 
 app.use(minifigsApi);
 app.use(setsApi);
@@ -40,6 +43,8 @@ app.use(async (req, res ,next) => {
     res.locals.profileFig = user.profile_fig; 
     res.locals.username = user.username;
     res.locals.coins = user.coins;
+    res.locals.spent_coins = formatCoins(user.spent_coins);
+    res.locals.earned_coins = formatCoins(user.earned_coins);
     res.locals.formattedCoins = formatCoins(user.coins);
   } else {
     res.locals.profileFig = null;
@@ -51,15 +56,27 @@ app.use(async (req, res ,next) => {
 
 // Routes -> routes map
 // Abe: hier activeer ik de route. routes staan in de SRC -> ROUTES "dan alles zo goed mogelijk samen ge groupd" daar schrijf je de logica voor uw pages uw js omzetten dus uw html page zet ge un de map views.
-app.use('/', authRoutes);
-app.use('/', gameRoutes);
-app.use('/', chatbotRoutes);
-app.use('/', mainRoutes);
-app.use('/', factoryRoutes);
-app.use('/', profileRoutes);
-app.use('/', figoverviewRoutes);
+app.use('/:lang(nl|en)', (req, res, next) => {
+  res.locals.lang = req.params.lang;
+  next();
+});
 
+app.use('/:lang(nl|en)', authRoutes);
+app.use('/:lang(nl|en)', gameRoutes);
+app.use('/:lang(nl|en)', chatbotRoutes);
+app.use('/:lang(nl|en)', mainRoutes);
+app.use('/:lang(nl|en)', factoryRoutes);
+app.use('/:lang(nl|en)', profileRoutes);
+app.use('/:lang(nl|en)', figoverviewRoutes);
 
+app.use((req, res, next) => {
+  const langMatch = req.path.match(/^\/(nl|en)(\/|$)/);
+  if (!langMatch) {
+    const lang = req.cookies.lang === 'en' ? 'en' : 'nl';
+    return res.redirect(`/${lang}${req.path}`);
+  }
+  next();
+});
 
 
 

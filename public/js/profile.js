@@ -3,7 +3,9 @@ let currentIndex = 0;
 
 async function fetchUserFigures() {
     try {
-        const response = await fetch('/get-user', {
+        const langMatch = window.location.pathname.match(/^\/(nl|en)/);
+            const langPrefix = langMatch ? langMatch[0] : '/nl';
+            const response = await fetch(`${langPrefix}/get-user`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -36,7 +38,6 @@ function updateFigure() {
     rarityElement.textContent = figure.rarity.toUpperCase();
     rarityElement.className = `rarity ${figure.rarity.toLowerCase()}`;
 
-    // Update index en behoud de rugzak-link
     const amountFigsElement = document.getElementById("amount-figs");
     amountFigsElement.innerHTML = `
         <span id="current-index">${currentIndex + 1}</span>/${figures.length}
@@ -78,6 +79,5 @@ function closePopup() {
 }
 
 updateFigure();
-closePopup();
 
 

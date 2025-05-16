@@ -13,8 +13,7 @@ router.get('/profile', async (req: Request, res: Response) => {
   const achievements = await getUserAchievements(userId);
   
   res.render('profile', 
-    { earned_coins: user.earned_coins, 
-      spent_coins: user.spent_coins, 
+    { 
       figs: user.figs,
       title: "Profiel", 
       achievements: achievements, 

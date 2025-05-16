@@ -261,7 +261,6 @@ figure img {
     width: auto;
     height: 50vh;
     object-fit: contain;
-    filter: brightness(1.2) contrast(1.5);
     margin: 0;
 }
 
@@ -351,7 +350,7 @@ figure img {
     border: 2px solid #FF00FF;
 }
 
-.ongewoon {
+.gewoon {
     background-color: darkgreen;
     color: #00FF7F;
     border: 2px solid #00FF7F;

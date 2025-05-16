@@ -9,25 +9,41 @@
         <section class="status">
           <article class="status-item">
             <header>
-              <h2>Verdiend</h2>
+              <h2>
+                <% if (lang==='nl' ) { %>
+                  Verdiend
+                  <% } else if (lang==='en' ) { %>
+                    Earned
+                    <% } %>
+              </h2>
             </header>
             <div class="status-info">
               <figure>
                 <img src="../assets/images/coin.png" alt="Coin">
               </figure>
-              <span class="verdiend"><%= earned_coins %></span>
+              <span class="verdiend">
+                <%= earned_coins %>
+              </span>
             </div>
           </article>
 
           <article class="status-item">
             <header>
-              <h2>Uitgegeven</h2>
+              <h2>
+                <% if (lang==='nl' ) { %>
+                  Uitgegeven
+                  <% } else if (lang==='en' ) { %>
+                    Spent
+                    <% } %>
+              </h2>
             </header>
             <div class="status-info">
               <figure>
                 <img src="../assets/images/coin.png" alt="Coin">
               </figure>
-              <span class="uitgegeven"><%= spent_coins %></span>
+              <span class="uitgegeven">
+                <%= spent_coins %>
+              </span>
             </div>
           </article>
 
@@ -35,20 +51,33 @@
 
           <article class="status-item">
             <header>
-              <h2>Huidig bedrag</h2>
+              <h2>
+                <% if (lang==='nl' ) { %>
+                  Huidig
+                  <% } else if (lang==='en' ) { %>
+                    Current
+                    <% } %>
+              </h2>
             </header>
             <div class="status-info">
               <figure>
                 <img src="../assets/images/coin.png" alt="Coin">
               </figure>
-              <span class="huidig-bedrag"><%= coins %></span>
+              <span class="huidig-bedrag">
+                <%= coins %>
+              </span>
             </div>
           </article>
         </section>
 
 
         <div class="name">
-          <h2>Welkom, <%= username %>
+          <h2>
+              <% if (lang==='nl' ) { %>
+                Welkom, <%= username %>!
+                <% } else if (lang==='en' ) { %>
+                  Welcome, <%= username %>!
+                  <% } %>
           </h2>
           <button class="open-popup" onclick="openPopup()"><img src="../assets/images/achief-icon.png" alt=""></button>
         </div>
@@ -73,7 +102,13 @@
         <script src="/js/profile.js"></script>
         <section id="prestaties-container" class="prestaties-container">
           <span id="prestatie-titel">
-            <h1 class="titel">PRESTATIES</h1>
+            <h1 class="titel">
+              <% if (lang==='nl' ) { %>
+                Prestaties
+                <% } else if (lang==='en' ) { %>
+                  Achievements
+                  <% } %>
+            </h1>
           </span>
 
           <!-- <article class="prestatie">
@@ -162,10 +197,22 @@
               <div id="prestaties-popup" class="popup">
                 <div class="popup-content">
                   <span class="close-popup" onclick="closePopup()">&times;</span>
-                  <h2 class="popup-title"> <img src="../assets/images/achief-icon.png" alt="">Prestaties</h2>
+                  <h2 class="popup-title"> <img src="../assets/images/achief-icon.png" alt="">
+                    <% if (lang==='nl' ) { %>
+                      Prestaties
+                      <% } else if (lang==='en' ) { %>
+                        Achievements
+                        <% } %>
+                  </h2>
                   <div class="prestaties-container">
                     <span id="prestatie-titel">
-                      <h1 class="titel">PRESTATIES</h1>
+                      <h1 class="titel">
+                        <% if (lang==='nl' ) { %>
+                          Prestaties
+                          <% } else if (lang==='en' ) { %>
+                            Achievements
+                            <% } %>
+                      </h1>
                     </span>
                     <% Object.keys(achievements).forEach(key=> { %>
                       <article class="prestatie">
