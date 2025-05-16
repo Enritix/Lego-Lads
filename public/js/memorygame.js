@@ -14,17 +14,32 @@ document.addEventListener("DOMContentLoaded", async () => {
     gameContainer.id = "memory-game";
     document.querySelector(".memory-container").appendChild(gameContainer);
 
-    async function fetchLegoData() {
-        const randomPage = Math.floor(Math.random() * 10) + 1;
-        const apiUrl = `https://rebrickable.com/api/v3/lego/${dataType}/?page_size=${totalPairs}&page=${randomPage}`;
+    async function fetchUnlockedFigs() {
         try {
-            const response = await fetch(apiUrl, {
-                headers: { Authorization: `key ${apiKey}` }
+            const langMatch = window.location.pathname.match(/^\/(nl|en)/);
+            const langPrefix = langMatch ? langMatch[0] : '/nl';
+            const response = await fetch(`${langPrefix}/get-user-figs`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ userId: "680d098a9e371da5cefb77cb" })
             });
             const data = await response.json();
-            return data.results;
+            if (data.success) {
+                const figs = data.figs.map(fig => ({
+                    id: fig.name,
+                    img: fig.img
+                }));
+                const shuffled = shuffle(figs);
+                if (shuffled.length > 6) {
+                    return shuffled.slice(0, 6);
+                } else if (shuffled.length > 0) {
+                    return shuffled;
+                }
+            } else {
+                return [];
+            }
         } catch (error) {
-            console.error(`Error fetching Lego ${dataType}:`, error);
+            console.error("Error fetching user figs:", error);
             return [];
         }
     }
@@ -39,7 +54,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         incorrectTries = 0;
         matchedPairs = 0;
 
-        let cards = items.flatMap(item => [{ id: item.set_num, img: item.set_img_url }, { id: item.set_num, img: item.set_img_url }]);
+        let cards = items.flatMap(item => [{ id: item.id, img: item.img }, { id: item.id, img: item.img }]);
         cards = shuffle(cards);
 
         cards.forEach(item => {
@@ -124,7 +139,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             // Enrico: Code om achievement te updaten
             try {
-                const response = await fetch("/update-achievement", {
+                const langMatch = window.location.pathname.match(/^\/(nl|en)/);
+            const langPrefix = langMatch ? langMatch[0] : '/nl';
+            const response = await fetch(`${langPrefix}/update-achievement`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
@@ -141,7 +158,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             // Enrico: Code om coins te updaten
             try {
-                const response = await fetch("/update-coins", {
+                const langMatch = window.location.pathname.match(/^\/(nl|en)/);
+            const langPrefix = langMatch ? langMatch[0] : '/nl';
+            const response = await fetch(`${langPrefix}/update-coins`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
@@ -157,7 +176,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             // Enrico: Code om coins te retourneren
             try {
-                const response = await fetch("/get-coins", {
+                const langMatch = window.location.pathname.match(/^\/(nl|en)/);
+            const langPrefix = langMatch ? langMatch[0] : '/nl';
+            const response = await fetch(`${langPrefix}/get-coins`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
@@ -166,7 +187,6 @@ document.addEventListener("DOMContentLoaded", async () => {
                 });
 
                 const result = await response.json();
-                console.log("Coins gereturned:", result);
                 let desktopCoins = document.querySelector("#coin-container p");
                 let mobileCoins = document.querySelector(".coin-container span");
                 desktopCoins.textContent = `${formatCoins(result.coins)}`;
@@ -194,7 +214,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
 
     async function loadGame() {
-        const items = await fetchLegoData();
+        const items = await fetchUnlockedFigs();
         if (items.length) {
             PauseTimer();
             setTimer(time);
@@ -232,7 +252,7 @@ function closeInfoPopup() {
 
 function formatCoins(coins) {
     if (coins >= 1000) {
-      return Math.floor(coins / 100) / 10 + "K";
+        return Math.floor(coins / 100) / 10 + "K";
     }
     return coins.toString();
 }

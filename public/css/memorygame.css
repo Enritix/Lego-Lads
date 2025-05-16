@@ -126,6 +126,7 @@ main {
     background-size: cover;
     background-position: center;
     transform: rotateY(180deg);
+    background-color: #d7d7d7;
 }
 
 .card .back {
