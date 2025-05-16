@@ -1,4 +1,5 @@
 import express, { Request, Response } from 'express';
+import { getGameData } from '../database';
 const router = express.Router();
 
 router.get('/factory-welcome', (req: Request, res: Response) => {
@@ -19,5 +20,21 @@ router.get('/ordenen', (req: Request, res: Response) => {
 router.get('/resultaat', (req: Request, res:Response) => {
     res.render('resultaat', { title: "Resultaat", cssFiles: ['/css/resultaat.css'], jsFiles: ['/js/resultaat.js'] });
 })
+
+router.post('/get-game-data', async (req: Request, res: Response) => {
+  const userId = req.body.userId;
+  
+  try {
+    const gameData = await getGameData(userId);
+    if (!gameData) {
+      return res.status(404).json({ success: false, message: "User game data not found" });
+    }
+    res.json({ success: true, gameData });
+  } catch (error: any) {
+        res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+
 
 export default router;

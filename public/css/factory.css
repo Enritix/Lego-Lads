@@ -79,7 +79,7 @@ main#mobile {
     justify-content: space-between;
     gap: 50px;
     position: absolute;
-    bottom: 27vh;
+    bottom: 25.5vh;
     left: -50vw;
     /* eindigt met right: -50vw; */
     height: 40vh;
@@ -179,7 +179,7 @@ main#mobile {
 
 @keyframes activateFactoryBelt {
     0% {
-        left: -60vw;
+        left: -5vw;
         opacity: 0;
     }
 
@@ -188,13 +188,13 @@ main#mobile {
     }
 
     100% {
-        left: 0vw;
+        left: 50vw;
     }
 }
 
 @keyframes activateFactoryBeltMobile {
     0% {
-        left: -250vw;
+        left: -5vw;
         opacity: 0;
     }
 
@@ -203,7 +203,7 @@ main#mobile {
     }
 
     100% {
-        left: -175vw;
+        left: 10vw;
     }
 }
 
