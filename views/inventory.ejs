@@ -27,7 +27,7 @@
                 <% figs.forEach((fig,) => { %>
                   <article class="inventory-item">
                     <img src="<%= fig.img %>" alt="<%= fig.name %>">
-                    <span class="details"><p><%= fig.naam %></p><p class="rarity <%= fig.rarity %>"><%= fig.rarity %></p></span>
+                    <span class="details"><p><%= fig.name %></p><p class="rarity <%= fig.rarity %>"><%= fig.rarity %></p></span>
                     <button class="select-button text-lego-stroke" data-text="selecteer"   data-img="<%= fig.img %>">
                       selecteer
                     </button>

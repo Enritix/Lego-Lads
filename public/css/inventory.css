@@ -88,18 +88,19 @@ header {
 }
 
 .inventory-item {
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     align-items: center; 
     justify-content: flex-start; 
-    width: 120px;
     min-height: 200px; 
     padding: 10px;
     border-radius: 10px;
     text-align: center;
-    transition: all 0.3s ease-in-out;
+    transition: border 0.3s ease-in-out;
     scroll-snap-align: start; 
     padding: 30px;
+    border: solid 3px var(--primary-color);
 }
 .header-container h1 {
   margin: 0;
@@ -177,12 +178,8 @@ header {
     color: inherit; 
 }
 
-
-
 .inventory-item:hover{
-    border: solid 2px var(--secondary--color);
-    border-radius: 5px;
-
+    border: solid 3px var(--secondary--color);
 }
 
 .inventory-item img {
