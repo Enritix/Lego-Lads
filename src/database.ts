@@ -188,9 +188,24 @@ export async function getUserCoins(userId: string) {
 // Enrico: hier worden de coins van de user geupdate
 export async function updateUserCoins(userId: string, addedCoins: number) {
   const db = await connectToMongoDB();
+
+  let update: any = {};
+  if (addedCoins > 0) {
+    update = {
+      $inc: { coins: addedCoins, earned_coins: addedCoins }
+    };
+  } else if (addedCoins < 0) {
+    update = {
+      $inc: { coins: addedCoins, spent_coins: Math.abs(addedCoins) }
+    };
+  } else {
+    return;
+  }
+
   const result = await db
     .collection("gebruikers")
-    .updateOne({ _id: new ObjectId(userId) }, { $inc: { coins: addedCoins } });
+    .updateOne({ _id: new ObjectId(userId) }, update);
+
   if (result.modifiedCount === 0) {
     throw new Error("Geen wijzigingen aangebracht in de gebruiker.");
   }
@@ -397,6 +412,20 @@ export async function updateMinifigReason(
     throw new Error("Geen wijzigingen aangebracht.");
   }
 }
+
+// Enrico: hier worden het game data bestand van de user uitgelezen
+export async function getGameData(userId: string) {
+  const db = await connectToMongoDB();
+  const gameData = await db
+    .collection("game_data")
+    .findOne({ playerId: userId });
+  if (!gameData) {
+    throw new Error("Gebruiker niet gevonden");
+  }
+  return gameData;
+}
+
+
 
 
 // src/routes/authRoutes.ts (of waar je routebestand zich bevindt)
