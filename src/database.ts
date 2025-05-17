@@ -458,4 +458,15 @@ export async function attemptSignup(req: Request, res: Response) {
   return res.redirect("/success");
 
 }
+export async function insertUser(user: any) {
+  const db = await connectToMongoDB();
+  return await db.collection("gebruikers").insertOne(user);
+}
 
+export async function findUserByEmailOrUsername(email: string, username: string) {
+  const db = await connectToMongoDB();
+  return await db.collection("gebruikers").findOne({
+    $and: [{ email }, { username }],
+  });
+
+}
