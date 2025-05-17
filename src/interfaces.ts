@@ -2,8 +2,8 @@
 
 // }
 
-interface User {
-  _id: {
+export interface User {
+  _id?: {
     $oid: string;
   };
   username: string;

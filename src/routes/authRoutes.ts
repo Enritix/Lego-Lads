@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 import { fetchMinifigByName } from '../apicalls';
-import { Minifig } from '../interfaces';
-import { createUserTemplate, findUserByEmailOrUsername, insertUser } from '../database';
+import { Minifig, User } from '../interfaces';
+import { findUserByEmailOrUsername, insertUser } from '../database';
 import bcrypt from "bcrypt";
 
 const router = express.Router();
@@ -14,19 +14,19 @@ router.get("/register", async (req: Request, res: Response) => {
   res.render("register", {
     error: null,
     popUp: false,
-    fname: null,
+    uname: null,
     figs: minifigs,
   });
 });
 
 router.post("/register", async (req: Request, res: Response) => {
+  console.log("POST /register ontvangen", req.body);
   const { uname, email, password, ["confirm-password"]: confirmPassword } = req.body;
 
   const defaultFig1 = await fetchMinifigByName("Peter Parker");
   const defaultFig2 = await fetchMinifigByName("Arctic Guy");
   const minifigs: Minifig[] = [defaultFig1, defaultFig2];
 
-  // ✅ Validatie
   if (!uname  ||  !email || !password || !confirmPassword) {
     return res.render("register", {
       error: "Alle velden zijn verplicht",
@@ -64,9 +64,7 @@ if (password !== confirmPassword) {
 
   try {
 
-    // ✅ Controleer of gebruiker al bestaat
     const existingUser = await findUserByEmailOrUsername(email, uname);
-
 
     
 
@@ -79,22 +77,16 @@ if (password !== confirmPassword) {
       });
     }
 
-    // ✅ Wachtwoord hashen
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // ✅ Gebruiker object aanmaken
-    const newUser = createUserTemplate(uname, hashedPassword, email);
+    const result = await insertUser(uname, hashedPassword, email);
 
-    // ✅ Opslaan in de database
-    const result = await insertUser(newUser);
-
-    console.log("Nieuwe gebruiker geregistreerd:", result.insertedId);
-
+    // return res.redirect("/login");
     return res.render("register", {
       error: null,
       popUp: true,
       uname,
-      figs: minifigs,
+      figs: minifigs
     });
   } catch (err) {
     console.error("Fout tijdens registratie:", err);

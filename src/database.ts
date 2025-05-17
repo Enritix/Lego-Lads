@@ -1,4 +1,5 @@
 import { MongoClient, Db, ObjectId } from "mongodb";
+import { User } from './interfaces';
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -425,48 +426,22 @@ export async function getGameData(userId: string) {
   return gameData;
 }
 
-
-
-
-// src/routes/authRoutes.ts (of waar je routebestand zich bevindt)
-import { Request, Response } from "express";
-
-export async function attemptSignup(req: Request, res: Response) {
-  const fname: string = req.body.fname;
-  const lname: string = req.body.lname;
-  const email: string = req.body.email;
-  const password: string = req.body.password;
-  const confirmPassword: string = req.body["confirm-password"];
-
-  // Validatie
-  if (!fname || !lname || !email || !password || !confirmPassword) {
-    return res.render("register", { error: "Alle velden zijn verplicht" });
-  }
-
-  if (!email.includes("@")) {
-    return res.render("register", { error: "Ongeldig e-mailadres" });
-  }
-
-  if (password !== confirmPassword) {
-    return res.render("register", { error: "Wachtwoorden komen niet overeen" });
-  }
-
-  
-  console.log("Data is valid, saving user");
-
-
-  return res.redirect("/success");
-
-}
-export async function insertUser(user: any) {
+// Gentian: hier wordt een nieuwe user aangemaakt
+export async function insertUser(uname: string, hashedPassword: string, email: string) {
+  console.log("insertUser wordt aangeroepen");
   const db = await connectToMongoDB();
-  return await db.collection("gebruikers").insertOne(user);
+  const newUser = createUserTemplate(uname, hashedPassword, email);
+  console.log(newUser);
+  return await db.collection("gebruikers").insertOne(newUser);
 }
 
+// Gentian: hier wordt de user gevonden met zijn email of username
 export async function findUserByEmailOrUsername(email: string, username: string) {
   const db = await connectToMongoDB();
   return await db.collection("gebruikers").findOne({
-    $and: [{ email }, { username }],
+    $or: [{ email }, { username }],
   });
 
 }
+
+// getUserByName nog toevoegen voor login
