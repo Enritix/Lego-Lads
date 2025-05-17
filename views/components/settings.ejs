@@ -60,7 +60,13 @@
         off
     <% } %>
             </span>
-            <span class="toggle-text on">aan</span>
+            <span class="toggle-text on">
+              <% if (lang === 'nl') { %>
+        aan
+    <% } else if (lang === 'en') { %>
+        on
+    <% } %>
+            </span>
           </span>
         </label>
       </div>
