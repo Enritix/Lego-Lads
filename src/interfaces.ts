@@ -81,6 +81,7 @@ export interface Minifig {
   name: string;
   rarity: string;
   img: string;
+  set?: number | null;
 }
 
 export interface binElement {

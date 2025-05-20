@@ -1,6 +1,12 @@
 import express, { Request, Response } from "express";
 import { deleteMinifigFromBin, getBin } from "../database";
-import { fetchMinifigByName, getThemeById } from "../apicalls";
+import {
+  fetchMinifigByName,
+  getThemeById,
+  fetchSets,
+  fetchThemes,
+  fetchMinifigs,
+} from "../apicalls";
 import { binElement, Minifig } from "../interfaces";
 const router = express.Router();
 
@@ -43,19 +49,41 @@ router.get("/detaillist/:id", async (req: Request, res: Response) => {
   let themeId = parseInt(req.params.id);
   let theme = await getThemeById(themeId);
 
+  const allSets = await fetchSets();
+
+  const sets = allSets.filter((set) => set.theme === themeId);
+
+  const setIds = sets.map((set) => set.id);
+
+  const allMinifigs = await fetchMinifigs();
+  const minifigs = allMinifigs.filter(
+    (fig) => fig.set && setIds.includes(fig.set)
+  );
+
+  const minifigsWithSets = minifigs.map((fig) => {
+    const matchingSet = sets.find((set) => set.id === fig.set);
+    return {
+      ...fig,
+      sets: matchingSet ? [matchingSet] : [],
+    };
+  });
+
   res.render("detaillist", {
     title: "Lego Fabriek",
     theme: theme,
+    minifigsWithSets,
     cssFiles: ["/css/detaillist.css"],
     jsFiles: ["/js/detaillist.js"],
   });
 });
 
-router.get("/genre", (req: Request, res: Response) => {
+router.get("/genre", async (req: Request, res: Response) => {
+  const themes = await fetchThemes();
   res.render("genre", {
     title: "Genre",
     cssFiles: ["/css/genre.css"],
     jsFiles: ["/js/genre.js"],
+    themes,
   });
 });
 

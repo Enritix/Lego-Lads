@@ -93,6 +93,7 @@ interface Minifig {
   name: string;
   rarity: string;
   img: string;
+  set?: number | null;
 }
 
 export async function fetchMinifigs(): Promise<Minifig[]> {
