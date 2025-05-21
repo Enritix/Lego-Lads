@@ -80,4 +80,8 @@ function closePopup() {
 
 updateFigure();
 
+document.querySelectorAll('.progress[data-progress]').forEach(div => {
+    const progress = parseFloat(div.getAttribute('data-progress'));
+    div.style.width = Math.min(Math.max(progress, 0), 100) + '%';
+  });
 

@@ -178,8 +178,8 @@
                   <%= achievements[key].description %>
                 </p>
                 <div class="progress-bar">
-                  <!-- <div class="progress" style="width: <%= (achievements[key].current / achievements[key].goal) * 100 %>%;"></div> -->
-                  <div class="progress" style="width: 40%;"></div>
+                    <div class="progress" data-progress="<%= (achievements[key].current / achievements[key].goal) * 100 %>"></div>
+                  <!-- <div class="progress" style="width: 40%;"></div> -->
                 </div>
                 <span>
                   <%= achievements[key].current %>/<%= achievements[key].goal %>
