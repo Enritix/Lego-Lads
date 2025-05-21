@@ -82,6 +82,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
                     factoryDoorContainer.addEventListener("animationend", () => {
                         startFactoryBeltAnimation();
+                        addCurrentFigToFactory();
                     });
 
                     setTimeout(() => {
