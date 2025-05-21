@@ -32,20 +32,17 @@
                 <% } %>
           </h2>
           <p></p>
-          <button id="new-game-btn" class="text-lego-stroke" data-text="nieuw spel">
-            <% if (lang==='nl' ) { %>
-              Nieuw spel
-              <% } else if (lang==='en' ) { %>
-                New game
-                <% } %>
-          </button>
-          <button id="main-menu-btn" class="text-lego-stroke" data-text="hoofdmenu">
-            <% if (lang==='nl' ) { %>
-              Hoofdmenu
-              <% } else if (lang==='en' ) { %>
-                Main menu
-                <% } %>
-          </button>
+          <% if (lang==='nl' ) { %>
+            <button id="new-game-btn" class="text-lego-stroke" data-text="nieuw spel">Nieuw spel</button>
+            <% } else if (lang==='en' ) { %>
+              <button id="new-game-btn" class="text-lego-stroke" data-text="new game">New game</button>
+              <% } %>
+
+                <% if (lang==='nl' ) { %>
+                  <button id="main-menu-btn" class="text-lego-stroke" data-text="hoofdmenu">Hoofdmenu</button>
+                  <% } else if (lang==='en' ) { %>
+                    <button id="main-menu-btn" class="text-lego-stroke" data-text="main menu">Main menu</button>
+                    <% } %>
         </div>
       </div>
       <dialog id="infoPopup">

@@ -10,7 +10,7 @@ async function fetchUserFigures() {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ userId: '680d098a9e371da5cefb77cb' })
+            // body: JSON.stringify({ userId: '680d098a9e371da5cefb77cb' })
         });
 
         const data = await response.json();

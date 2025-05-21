@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/login.css">
     <script src="./js/audio.js" defer></script>
-    <script src="carrousel.js"defer></script>
+    <script src="carrousel.js" defer></script>
 </head>
 
 <body>
@@ -19,37 +19,33 @@
     <main>
 
         <div class="resultaat-container">
-            <a  class="close" href="landingspage.html">❌</a>
+            <a class="close" href="/landingspage">❌</a>
             <h2>Inloggen</h2>
-            <div class="registration-form">
-                <form action="/inloggen" method="post">
-                    <div class="form-group">
-                        <label for="name">Naam</label>
-                        <input type="text" id="name" name="name" required>
-                        <label for="password">Wachtwoord</label>
-                        <input type="password" id="password" name="password" required>
-                        <div class="stay-logged-in">
-                            <input type="checkbox" id="stayLoggedIn" name="stayLoggedIn" label for="stayLoggedIn">Ingelogd blijven</label>
-                        </div>
-                        <p class="forgot-password"><a href="#">Wachtwoord vergeten?</a></p>
+            <% if (error) { %>
+                <p style="color:red;">
+                    <%= error %>
+                </p>
+                <% } %>
+                    <div class="registration-form">
+                        <form action="/<%= lang %>/login" method="post">
+                            <div class="form-group">
+                                <label for="uname">Naam</label>
+                                <input type="text" id="uname" name="uname" required>
+                                <label for="password">Wachtwoord</label>
+                                <input type="password" id="password" name="password" required>
+                                <div class="stay-logged-in">
+                                    <input type="checkbox" id="stayLoggedIn" name="stayLoggedIn" label
+                                        for="stayLoggedIn">Ingelogd blijven</label>
+                                </div>
+                                <a href="/forgot-password">
+                                    <p class="forgot-password">Wachtwoord vergeten?</p>
+                                </a>
+                            </div>
+                            <button class="text-lego-stroke" data-text="inloggen" type="submit">Inloggen</button>
+                        </form>
                     </div>
-                    
-
-
-
-                </form>
-                
-    
-
-            </div>
-            <p>Heeft u nog geen account? <a href="register.html"> <u>Registreer u</u></a></p>
-                
-
-            <a href="../index.html"><button class="text-lego-stroke" data-text="inloggen" type="submit">Inloggen</button></a>
-
-            
-
-            </div>
+                    <p>Heeft u nog geen account? <a href="/register"> <u>Registreer u</u></a></p>
+        </div>
         </div>
     </main>
 </body>

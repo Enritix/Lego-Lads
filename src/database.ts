@@ -20,7 +20,7 @@ const mongoose = require('mongoose');
   }
 }*/
 
-const uri = process.env.MONGO_URI;
+export const uri = process.env.MONGO_URI || "mongodb://localhost:27017";
 if (!uri) throw new Error("MONGO_URI staat niet in je .env bestand");
 
 const client = new MongoClient(uri);
@@ -172,6 +172,15 @@ export async function getUserById(userId: string) {
     throw new Error("Gebruiker niet gevonden");
   }
   return gebruiker;
+}
+
+// Abe: dit moet  sesie token worden moeten we nog zien op school hoe enwat 
+export async function updateUserFig(username: string, img: string) {
+  const db = await connectToMongoDB();
+  const result = await db.collection("gebruikers").updateOne(
+    { username },
+    { $set: { profile_fig: img } }
+  );
 }
 
 // Enrico: hier worden de coins van de user uitgelezen
@@ -436,12 +445,25 @@ export async function insertUser(uname: string, hashedPassword: string, email: s
 }
 
 // Gentian: hier wordt de user gevonden met zijn email of username
-export async function findUserByEmailOrUsername(email: string, username: string) {
+export async function findUserByEmailOrUsername(email: string, username: string): Promise<User | null> {
   const db = await connectToMongoDB();
-  return await db.collection("gebruikers").findOne({
+  return await db.collection<User>("gebruikers").findOne({
     $or: [{ email }, { username }],
   });
 
 }
 
-// getUserByName nog toevoegen voor login
+// Enrico: update het wachtwoord van een gebruiker op basis van gebruikersnaam
+export async function updateUserPassword(username: string, hashedPassword: string) {
+  const db = await connectToMongoDB();
+  const result = await db.collection("gebruikers").updateOne(
+    { username },
+    { $set: { password: hashedPassword } }
+  );
+  if (result.matchedCount === 0) {
+    throw new Error("Gebruiker niet gevonden.");
+  }
+  if (result.modifiedCount === 0) {
+    throw new Error("Wachtwoord niet gewijzigd.");
+  }
+}

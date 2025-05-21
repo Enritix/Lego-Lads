@@ -277,6 +277,7 @@ input[type="checkbox"] {
         display: flex;
         justify-content: center;
         align-items: center;
+        padding: 15px 5px;
     }
 
     .registration-form h2 {
@@ -295,6 +296,7 @@ input[type="checkbox"] {
     .form-group {
         width: 50vh;
         grid-template-columns: 1fr;
+        max-width: 100%;
     }
   
     .stay-logged-in{
@@ -317,4 +319,75 @@ input[type="checkbox"] {
         text-decoration: underline;
     }
 
+}
+
+@media (min-width: 900px) {
+  .form-group {
+    width: 500px;
+    gap: 20px;
+  }
+
+  label {
+    font-size: 1.3em;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="password"] {
+    font-size: 1.2em;
+    padding: 16px;
+    width: 90%;
+    margin-bottom: 15px;
+  }
+
+  .registration-form {
+    width: 100%;
+    max-width: 600px;
+  }
+}
+
+.form-group {
+  margin-bottom: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.form-group .stay-logged-in, a {
+  font-size: 1.2em;
+}
+
+label {
+  color: var(--text-color);
+  margin-bottom: 6px;
+  font-size: 1.1em;
+  font-family: inherit;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  border: 1.5px solid #ccc;
+  border-radius: 10px;
+  padding: 12px;
+  width: 100%;
+  font-size: 1em;
+  margin-bottom: 8px;
+  background: #fff;
+  color: #222;
+  box-sizing: border-box;
+}
+
+button.text-lego-stroke {
+  font-size: 1.2em !important;
+  padding: 14px 40px !important;
+  margin-top: 20px;
+}
+
+.resultaat-container {
+  max-width: 600px;
+  width: 100%;
+  padding: 40px 30px;
 }

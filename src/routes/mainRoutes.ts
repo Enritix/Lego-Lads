@@ -1,8 +1,9 @@
 import express, { Request, Response } from 'express';
 import { incrementAchievementProgress, updateUserCoins, getUserCoins, updateUserSettings, getUserSettings } from "../database";
+import { requireAuth } from '../middleware';
 const router = express.Router();
 
-router.get('/', (req: Request, res: Response) => {
+router.get('/', requireAuth, (req: Request, res: Response) => {
   res.render('index', { message: "main", title: "Home", cssFiles: ['/css/index.css'], jsFiles: ['/js/index.js'] });
 });
 
@@ -10,7 +11,7 @@ router.get('/landingspage', (req: Request, res: Response) => {
   res.render('landingspage');
 });
 
-router.get('/loader', (req: Request, res: Response) => {
+router.get('/loader', requireAuth, (req: Request, res: Response) => {
   res.render('loader');
 });
 

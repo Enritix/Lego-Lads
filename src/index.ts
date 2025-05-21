@@ -10,7 +10,8 @@ import profileRoutes from './routes/profileRoutes';
 import figoverviewRoutes from './routes/figoverviewRoutes';
 import {connectToMongoDB, insertTestUser, readAllUsers,deleteAllUsers} from './database';
 import {fetchMinifigs,fetchSets,fetchThemes} from'./apicalls';
-import { minifigsApi,setsApi,themesApi } from './middleware';
+import { minifigsApi,requireAuth,setsApi,themesApi } from './middleware';
+import sessionMiddleware from './sessions';
 
 const app = express();
 const PORT = 8092;
@@ -30,28 +31,33 @@ app.use(minifigsApi);
 app.use(setsApi);
 app.use(themesApi);
 
+app.use(sessionMiddleware);
+
 // middleware mongo db 
-app.use(async (req, res ,next) => {
+app.use(async (req, res, next) => {
   const db = await connectToMongoDB();
 
- // Abe: dit moet  sesie token worden moeten we nog zien op school hoe enwat 
-  const username = "abe";
+  // Gebruik de ingelogde gebruiker uit de session
+  const username = req.session.user?.username;
 
-  const user = await db.collection("gebruikers").findOne({ username });
-
-  if (user) {
-    res.locals.profileFig = user.profile_fig; 
-    res.locals.username = user.username;
-    res.locals.coins = user.coins;
-    res.locals.spent_coins = formatCoins(user.spent_coins);
-    res.locals.earned_coins = formatCoins(user.earned_coins);
-    res.locals.formattedCoins = formatCoins(user.coins);
+  if (username) {
+    const user = await db.collection("gebruikers").findOne({ username });
+    if (user) {
+      res.locals.profileFig = user.profile_fig; 
+      res.locals.username = user.username;
+      res.locals.coins = user.coins;
+      res.locals.spent_coins = formatCoins(user.spent_coins);
+      res.locals.earned_coins = formatCoins(user.earned_coins);
+      res.locals.formattedCoins = formatCoins(user.coins);
+    } else {
+      res.locals.profileFig = null;
+    }
   } else {
     res.locals.profileFig = null;
   }
 
   next();
-})
+});
 
 
 // Routes -> routes map
@@ -62,12 +68,12 @@ app.use('/:lang(nl|en)', (req, res, next) => {
 });
 
 app.use('/:lang(nl|en)', authRoutes);
-app.use('/:lang(nl|en)', gameRoutes);
-app.use('/:lang(nl|en)', chatbotRoutes);
+app.use('/:lang(nl|en)', requireAuth, gameRoutes);
+app.use('/:lang(nl|en)', requireAuth, chatbotRoutes);
 app.use('/:lang(nl|en)', mainRoutes);
-app.use('/:lang(nl|en)', factoryRoutes);
-app.use('/:lang(nl|en)', profileRoutes);
-app.use('/:lang(nl|en)', figoverviewRoutes);
+app.use('/:lang(nl|en)', requireAuth, factoryRoutes);
+app.use('/:lang(nl|en)', requireAuth, profileRoutes);
+app.use('/:lang(nl|en)', requireAuth, figoverviewRoutes);
 
 app.use((req, res, next) => {
   const langMatch = req.path.match(/^\/(nl|en)(\/|$)/);
