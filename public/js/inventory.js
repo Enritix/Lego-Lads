@@ -32,16 +32,24 @@ document.addEventListener("DOMContentLoaded", function () {
           });
   
           try {
-            const response = await fetch("/set-profiel-fig", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json"
-              },
-              body: JSON.stringify({ img: newImg })
-            });
+            const lang = window.location.pathname.split("/")[1];
+            const response = await fetch(`/${lang}/set-profiel-fig`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            credentials: "include", 
+            body: JSON.stringify({ img: newImg })
+          });
   
-            const result = await response.json();
-            console.log("Profielfiguur opgeslagen:", result);
+          if (!response.ok) {
+            const errorText = await response.text();
+            console.error("fout:", errorText);
+            return;
+          }
+
+          const result = await response.json();
+          console.log("Profielfiguur opgeslagen:", result);
           } catch (error) {
             console.error("Fout bij opslaan van profielfiguur:", error);
           }

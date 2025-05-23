@@ -28,10 +28,11 @@ router.get('/profile', async (req: Request, res: Response) => {
 router.get('/inventory', async (req, res) => {
   const db = await connectToMongoDB();
 
-  // Abe: dit moet  sesie token worden moeten we nog zien op school hoe enwat 
-  const username = "abe";
 
-  const user =  await db.collection("gebruikers").findOne({ username});
+  const username = req.session.user?.username;
+
+  const user = await db.collection("gebruikers").findOne({ username });
+
 
   if(!user){
 
@@ -74,6 +75,8 @@ router.post("/set-profiel-fig", async (req, res) => {
   
   try {
     await updateUserFig(gebruikersnaam, img);
+   req.session.user!.profile_fig = img;
+
     res.status(200).json({ message: "Profiel figuur succesvol geupdate" });
   } catch (error) {
     console.error("Fout bij het updaten van profiel figuur:", error);

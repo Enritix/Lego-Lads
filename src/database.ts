@@ -176,6 +176,8 @@ export async function getUserById(userId: string) {
 
 // Abe: dit moet  sesie token worden moeten we nog zien op school hoe enwat 
 export async function updateUserFig(username: string, img: string) {
+ console.log("👤 Gebruikersnaam in functie:", username);
+
   const db = await connectToMongoDB();
   const result = await db.collection("gebruikers").updateOne(
     { username },
