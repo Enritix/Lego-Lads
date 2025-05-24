@@ -12,13 +12,11 @@ function showAchievementPopup(achievementTitle, current, goal) {
         ? `Je hebt je doel bereikt!`
         : `Je hebt ${current} van de ${goal} coins verzameld!`;
 
-    // Reset progress bar width to 0 before animating
     progressFill.style.width = "0%";
 
-    // Trigger the animation
     setTimeout(() => {
         progressFill.style.width = `${(current / goal) * 100}%`;
-    }, 100); // Kleine vertraging om de animatie te starten
+    }, 100);
 
     countText.textContent = `${current} / ${goal}`;
 

@@ -73,11 +73,11 @@
 
         <div class="name">
           <h2>
-              <% if (lang==='nl' ) { %>
-                Welkom, <%= username %>!
+            <% if (lang==='nl' ) { %>
+              Welkom, <%= username %>!
                 <% } else if (lang==='en' ) { %>
                   Welcome, <%= username %>!
-                  <% } %>
+                    <% } %>
           </h2>
           <button class="open-popup" onclick="openPopup()"><img src="../assets/images/achief-icon.png" alt=""></button>
         </div>
@@ -99,7 +99,7 @@
           <button class="arrow right" aria-label="Volgende figuur" onclick="nextFigure()">▶</button>
         </section>
 
-        <script src="/js/profile.js"></script>
+
         <section id="prestaties-container" class="prestaties-container">
           <span id="prestatie-titel">
             <h1 class="titel">
@@ -178,18 +178,23 @@
                   <%= achievements[key].description %>
                 </p>
                 <div class="progress-bar">
-                    <div class="progress" data-progress="<%= (achievements[key].current / achievements[key].goal) * 100 %>"></div>
+                  <div class="progress"
+                    data-progress="<%= (achievements[key].current / achievements[key].goal) * 100 %>"></div>
                   <!-- <div class="progress" style="width: 40%;"></div> -->
                 </div>
                 <span>
                   <%= achievements[key].current %>/<%= achievements[key].goal %>
                 </span>
               </section>
-              <aside class="reward <%= achievements[key].finished ? '' : 'not' %>">
-                <img src="../assets/images/coin.png" alt="Coins">
-                <p>
-                  <%= achievements[key].reward %>
-                </p>
+              <aside class="reward <%= achievements[key].finished && !achievements[key].collected ? '' : 'not' %>" <% if
+                (achievements[key].finished && !achievements[key].collected) { %>
+                onclick="collectAchievement('<%= key %>')"
+                  <% } %>
+                    >
+                    <img src="../assets/images/coin.png" alt="Coins">
+                    <p>
+                      <%= achievements[key].reward %>
+                    </p>
               </aside>
             </article>
             <% }) %>
@@ -227,8 +232,9 @@
                             <%= achievements[key].description %>
                           </p>
                           <div class="progress-bar">
-                            <!-- <div class="progress" style="width: <%= (achievements[key].current / achievements[key].goal) * 100 %>%;"></div> -->
-                            <div class="progress" style="width: 40%;"></div>
+                            <div class="progress"
+                              data-progress="<%= (achievements[key].current / achievements[key].goal) * 100 %>"></div>
+                            <!-- <div class="progress" style="width: 40%;"></div> -->
                           </div>
                           <span>
                             <%= achievements[key].current %>/<%= achievements[key].goal %>
@@ -248,7 +254,6 @@
 
       </div>
     </main>
-
 
     <%- include('components/settings') %>
       </body>

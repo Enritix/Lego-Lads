@@ -105,12 +105,17 @@ router.post("/get-user", async (req, res) => {
 
 // Enrico: dit is de post om een bepaalde achievement te collecten
 router.post("/collect-achievement", async (req, res) => {
-    const userId = req.body.userId;
+    const userId = req.session.user?._id;
     const achievementKey = req.body.achievementKey;
-  
+
+    if (!userId || !achievementKey) {
+      return res.status(400).json({ success: false, message: "User ID of achievementKey ontbreekt" });
+    }
+
     try {
-      const progress = await collectAchievementReward(userId, achievementKey);
+      const progress = await collectAchievementReward(typeof userId === 'string' ? userId : userId.toString(), achievementKey);
       res.json({ success: true, progress });
+      res.redirect('/profile');
     } catch (error: any) {
       res.status(500).json({ success: false, error: error.message });
     }

@@ -63,25 +63,50 @@ fetchUserFigures();
 
 
 function openPopup() {
-    // let prestatiesContainer = document.getElementById("prestaties-container");
-    // let popupContainer = document.querySelector("#prestaties-popup .popup-content .prestaties-container");
-
-
-    // if (window.innerWidth <= 600) {
-    //     popupContainer.innerHTML = prestatiesContainer.innerHTML;
-    // }
-
     document.getElementById("prestaties-popup").style.display = "flex";
+    document.querySelector(".popup").style.display = "flex";
+    document.querySelector(".popup-content").style.display = "block";
+    updateAllProgressBars(document.getElementById("prestaties-popup"));
 }
 
 function closePopup() {
     document.getElementById("prestaties-popup").style.display = "none";
+    document.querySelector(".popup-content").style.display = "none";
 }
 
 updateFigure();
 
-document.querySelectorAll('.progress[data-progress]').forEach(div => {
-    const progress = parseFloat(div.getAttribute('data-progress'));
-    div.style.width = Math.min(Math.max(progress, 0), 100) + '%';
-  });
+function updateAllProgressBars(scope = document) {
+    scope.querySelectorAll('.progress[data-progress]').forEach(div => {
+        const progress = parseFloat(div.getAttribute('data-progress'));
+        div.style.width = Math.min(Math.max(progress, 0), 100) + '%';
+    });
+}
 
+document.addEventListener('DOMContentLoaded', () => {
+    updateAllProgressBars();
+});
+
+async function collectAchievement(achievementKey) {
+    try {
+        const langMatch = window.location.pathname.match(/^\/(nl|en)/);
+        const langPrefix = langMatch ? langMatch[0] : '/nl';
+        const response = await fetch(`${langPrefix}/collect-achievement`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                userId: null,
+                achievementKey 
+            })
+        });
+        const data = await response.json();
+        if (data.success) {
+            alert('Achievement opgehaald!');
+            // eventueel: achievements opnieuw ophalen en UI updaten
+        } else {
+            alert('Kan achievement niet ophalen: ' + data.error);
+        }
+    } catch (error) {
+        alert('Fout bij ophalen achievement: ' + error);
+    }
+}
