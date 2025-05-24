@@ -141,7 +141,10 @@ header nav ul li svg:hover {
 #coin-container {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 5px;
+  justify-content: center;
+  text-align: center;
 }
 
 #coin-container:before {
@@ -157,6 +160,7 @@ header nav ul li svg:hover {
   color: var(--text-color);
   font-size: 20px;
   font-family: Oswald;
+  margin: 0;
 }
 
 /* text in button geef elke button de class .text-lego-stroke */

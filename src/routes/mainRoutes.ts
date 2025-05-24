@@ -7,20 +7,19 @@ router.get('/', requireAuth, (req: Request, res: Response) => {
   res.render('index', { message: "main", title: "Home", cssFiles: ['/css/index.css'], jsFiles: ['/js/index.js'] });
 });
 
-router.get('/landingspage', (req: Request, res: Response) => {
-  res.render('landingspage');
-});
-
 router.get('/loader', requireAuth, (req: Request, res: Response) => {
   res.render('loader');
 });
 
 // Enrico: dit is de post voor de coins van de user
 router.post("/get-coins", async (req: Request, res: Response) => {
-  const userId = req.body.userId;
+  const userId = req.session.user?._id;
+  if (!userId) {
+    return res.status(400).json({ success: false, message: "User ID is required" });
+  }
 
   try {
-    const coins = await getUserCoins(userId);
+    const coins = await getUserCoins(userId.toString());
     res.json({ success: true, coins });
   } catch (error: any) {
     res.status(500).json({ success: false, error: error.message });
@@ -30,11 +29,14 @@ router.post("/get-coins", async (req: Request, res: Response) => {
 
 // Enrico: hier worden de coins van de user geupdate
 router.post("/update-coins", async (req: Request, res: Response) => {
-  const userId = req.body.userId;
+  const userId = req.session.user?._id;
+  if (!userId) {
+    return res.status(400).json({ success: false, message: "User ID is required" });
+  }
   const coins = parseInt(req.body.coins, 10);
 
   try {
-    await updateUserCoins(userId, coins);
+    await updateUserCoins(userId.toString(), coins);
     res.json({ success: true });
   } catch (error: any) {
     res.status(500).json({ success: false, error: error.message });
@@ -43,12 +45,15 @@ router.post("/update-coins", async (req: Request, res: Response) => {
 
 // Enrico: dit is de post voor een bepaalde achievement te updaten
 router.post("/update-achievement", async (req: Request, res: Response) => {
-  const userId = req.body.userId;
+  const userId = req.session.user?._id;
+  if (!userId) {
+    return res.status(400).json({ success: false, message: "User ID is required" });
+  }
   const achievementKey = req.body.achievementKey;
   const incrementBy = parseInt(req.body.incrementBy, 10);
 
   try {
-    const progress = await incrementAchievementProgress(userId, achievementKey, incrementBy);
+    const progress = await incrementAchievementProgress(userId.toString(), achievementKey, incrementBy);
     res.json({ success: true, progress });
   } catch (error: any) {
     res.status(500).json({ success: false, error: error.message });
@@ -57,10 +62,13 @@ router.post("/update-achievement", async (req: Request, res: Response) => {
 
 // Enrico: dit is de post voor de settings van de user op te halen
 router.post("/get-settings", async (req: Request, res: Response) => {
-  const userId = req.body.userId;
+  const userId = req.session.user?._id;
+  if (!userId) {
+    return res.status(400).json({ success: false, message: "User ID is required" });
+  }
 
   try {
-    const settings = await getUserSettings(userId);
+    const settings = await getUserSettings(userId.toString());
     res.json({ success: true, settings });
   } catch (error: any) {
     res.status(500).json({ success: false, error: error.message });
@@ -69,10 +77,15 @@ router.post("/get-settings", async (req: Request, res: Response) => {
 
 // Enrico: dit is de post voor de settings van de user te updaten
 router.post("/update-settings", async (req: Request, res: Response) => {
-  const { userId, newSettings } = req.body;
+  const { newSettings } = req.body;
+
+  const userId = req.session.user?._id;
+  if (!userId) {
+    return res.status(400).json({ success: false, message: "User ID is required" });
+  }
 
   try {
-    await updateUserSettings(userId, newSettings);
+    await updateUserSettings(userId.toString(), newSettings);
     res.json({ success: true, message: "Instellingen succesvol bijgewerkt." });
   } catch (error: any) {
     res.status(500).json({ success: false, error: error.message });
