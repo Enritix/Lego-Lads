@@ -24,12 +24,12 @@ router.get("/register", redirectIfLoggedIn, async (req: Request, res: Response) 
 });
 
 router.post("/register", redirectIfLoggedIn, async (req: Request, res: Response) => {
-    const { uname, email, password, ["confirm-password"]: confirmPassword } = req.body;
+    const { uname, email, password, ["confirm-password"]: confirmPassword, profileFig } = req.body;
     const defaultFig1 = await fetchMinifigByName("Peter Parker");
     const defaultFig2 = await fetchMinifigByName("Arctic Guy");
     const minifigs: Minifig[] = [defaultFig1, defaultFig2];
 
-    if (!uname || !email || !password || !confirmPassword) {
+    if (!uname || !email || !password || !confirmPassword || !profileFig) {
         return res.render("register", {
             error: "Alle velden zijn verplicht",
             popUp: false,
@@ -77,7 +77,7 @@ router.post("/register", redirectIfLoggedIn, async (req: Request, res: Response)
             });
         }
         const hashedPassword = await bcrypt.hash(password, 10);
-        await insertUser(uname, hashedPassword, email);
+        await insertUser(uname, hashedPassword, email, profileFig);
         return res.render("register", {
             error: null,
             popUp: true,

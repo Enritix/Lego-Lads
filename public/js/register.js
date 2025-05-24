@@ -48,5 +48,13 @@ document.addEventListener('DOMContentLoaded', function() {
   
     window.addEventListener('resize', handleResize);
     handleResize(); 
+
+    document.querySelectorAll('.figuur-img').forEach(img => {
+    img.addEventListener('click', function() {
+      document.getElementById('profileFig').value = this.src;
+      // document.querySelectorAll('.figuur').forEach(f => f.classList.remove('selected'));
+      // this.closest('.figuur').classList.add('selected');
+    });
+  });
   });
   
