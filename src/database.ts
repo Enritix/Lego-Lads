@@ -46,17 +46,17 @@ export async function connectToMongoDB(): Promise<Db> {
 export function createUserTemplate(
   username: string,
   password: string,
-  email: string
+  email: string,
+  profile_fig: string
 ) {
   return {
     username,
     password,
     email,
-    profile_fig:
-      "https://github.com/AbeVerschueren/lego-img/blob/main/batman.png?raw=true",
-    coins: 500,
-    earned_coins: 800,
-    spent_coins: 300,
+    profile_fig,
+    coins: 0,
+    earned_coins: 0,
+    spent_coins: 0,
     figs: [
       {
         name: "Batman",
@@ -73,30 +73,45 @@ export function createUserTemplate(
         img: "https://github.com/AbeVerschueren/lego-img/blob/main/joker.png?raw=true",
         rarity: "episch",
       },
+      {
+        name: "Jack Sparrow",
+        img: "https://raw.githubusercontent.com/Enritix/lego-images/refs/heads/main/jack_sparrow.png",
+        rarity: "legendarisch",
+      },
+      {
+        name: "Arctic Guy",
+        img: "https://github.com/AbeVerschueren/lego-img/blob/main/artic.png?raw=true",
+        rarity: "gewoon",
+      },
+      {
+        name: "Peter Parker",
+        img: "https://github.com/AbeVerschueren/lego-img/blob/main/peter.png?raw=true",
+        rarity: "gewoon",
+      },
     ],
     bin: [
-      {
-        fig: "Pirate",
-        reason: "per ongeluk verwijderd",
-      },
+      // {
+      //   fig: "Pirate",
+      //   reason: "per ongeluk verwijderd",
+      // },
     ],
     ordenedFigs: [
-      {
-        fig: "Anakin",
-        set: "ambush-on-errix",
-        theme: "theme01",
-      },
-      {
-        fig: "Chen",
-        set: "the-joker-steam-roller",
-        theme: "theme02",
-      },
+      // {
+      //   fig: "Anakin",
+      //   set: "ambush-on-errix",
+      //   theme: "theme01",
+      // },
+      // {
+      //   fig: "Chen",
+      //   set: "the-joker-steam-roller",
+      //   theme: "theme02",
+      // },
     ],
     achievements: {
       coins: {
         title: "Muntverzamelaar",
         description: "Verzamel munten om beloningen te verdienen.",
-        current: 55,
+        current: 0,
         goal: 100,
         reward: 200,
         finished: false,
@@ -105,7 +120,7 @@ export function createUserTemplate(
       login_streak: {
         title: "Dagelijkse login",
         description: "Log dagelijks in voor hogere beloningen.",
-        current: 1,
+        current: 0,
         goal: 1,
         reward: 100,
         finished: false,
@@ -144,7 +159,7 @@ export function createUserTemplate(
 // Abe: test data word toegevoegd
 export async function insertTestUser() {
   const db = await connectToMongoDB();
-  const gebruiker = createUserTemplate("abe", "lego", "abe@email.com");
+  const gebruiker = createUserTemplate("abe", "lego", "abe@email.com", "https://github.com/AbeVerschueren/lego-img/blob/main/batman.png?raw=true");
   const result = await db.collection("gebruikers").insertOne(gebruiker);
   console.log("Testgebruiker toegevoegd met ID:", result.insertedId);
 }
@@ -438,10 +453,10 @@ export async function getGameData(userId: string) {
 }
 
 // Gentian: hier wordt een nieuwe user aangemaakt
-export async function insertUser(uname: string, hashedPassword: string, email: string) {
+export async function insertUser(uname: string, hashedPassword: string, email: string, profileFig: string) {
   console.log("insertUser wordt aangeroepen");
   const db = await connectToMongoDB();
-  const newUser = createUserTemplate(uname, hashedPassword, email);
+  const newUser = createUserTemplate(uname, hashedPassword, email, profileFig);
   console.log(newUser);
   return await db.collection("gebruikers").insertOne(newUser);
 }
