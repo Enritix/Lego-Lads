@@ -32,9 +32,12 @@ router.get("/memorygame", async (req: Request, res: Response) => {
 });
 
 router.post("/get-user-figs", async (req, res) => {
-  const userId = req.body.userId;
+  const userId = req.session.user?._id;
+  if (!userId) {
+    return res.status(400).json({ success: false, message: "User ID is required" });
+  }
   try {
-    const user = await getUserById(userId);
+    const user = await getUserById(userId.toString());
     if (!user) {
       return res.status(404).json({ success: false, message: "User not found" });
     }

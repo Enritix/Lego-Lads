@@ -1,8 +1,6 @@
 // import { getUserById, incrementAchievementProgress, collectAchievementReward } from "../database";
 
 document.addEventListener("DOMContentLoaded", async () => {
-    const apiKey = "7138b5e205e720e8eb6b839cd6971e37";
-    const dataType = "minifigs";
     let correctTries = 0;
     let incorrectTries = 0;
     let matchedPairs = 0;
@@ -21,7 +19,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             const response = await fetch(`${langPrefix}/get-user-figs`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ userId: "680d098a9e371da5cefb77cb" })
+                // body: JSON.stringify({ userId: "680d098a9e371da5cefb77cb" })
             });
             const data = await response.json();
             if (data.success) {
@@ -146,7 +144,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     headers: {
                         "Content-Type": "application/json"
                     },
-                    body: JSON.stringify({ userId: "680d098a9e371da5cefb77cb", achievementKey: "coins", incrementBy: earnedCoins })
+                    body: JSON.stringify({ achievementKey: "coins", incrementBy: earnedCoins })
                 });
 
                 const result = await response.json();
@@ -165,7 +163,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     headers: {
                         "Content-Type": "application/json"
                     },
-                    body: JSON.stringify({ userId: "680d098a9e371da5cefb77cb", coins: earnedCoins })
+                    body: JSON.stringify({ coins: earnedCoins })
                 });
 
                 const result = await response.json();
@@ -183,7 +181,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     headers: {
                         "Content-Type": "application/json"
                     },
-                    body: JSON.stringify({ userId: "680d098a9e371da5cefb77cb" })
+                    // body: JSON.stringify({ userId: "680d098a9e371da5cefb77cb" })
                 });
 
                 const result = await response.json();
