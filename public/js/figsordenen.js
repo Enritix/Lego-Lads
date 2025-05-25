@@ -48,18 +48,64 @@ document.addEventListener("DOMContentLoaded", function () {
 document.addEventListener("DOMContentLoaded", function () {
     const skipButton = document.getElementById("skipButton");
     const figKeuze = document.getElementById("figKeuze");
+    const vernietigButton = document.getElementById("vernietigKnop");
+    const setsList = document.getElementById("sets");
 
-    skipButton.addEventListener("click", function () {
-        figKeuze.classList.add("hidden"); 
+    function updateCoins(minCoins) {
+        fetch("/nl/update-coins", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ coins: minCoins })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (!data.success) {
+                alert("Kon geen munten aftrekken: " + (data.error || data.message));
+            }
+        })
+        .catch(() => alert("Er is een fout opgetreden bij het updaten van de munten."));
+    }
 
-        setTimeout(() => {
-            figKeuze.style.display = "none";
-        }, 1000); 
+    if (setsList) {
+        setsList.querySelectorAll("li").forEach(function (li) {
+            li.addEventListener("click", function (e) {
+                updateCoins(100);
 
-        setTimeout(() => {
-            window.location.href = "/factory";
-        }, 500); 
-    });
+                if (figKeuze) figKeuze.classList.add("hidden");
+                setTimeout(() => {
+                    if (figKeuze) figKeuze.style.display = "none";
+                }, 1000);
+                setTimeout(() => {
+                    window.location.href = "/factory";
+                }, 500);
+            });
+        });
+    }
+
+    if (skipButton) {
+        skipButton.addEventListener("click", function () {
+            updateCoins(-100);
+
+            if (figKeuze) figKeuze.classList.add("hidden");
+            setTimeout(() => {
+                if (figKeuze) figKeuze.style.display = "none";
+            }, 1000);
+            setTimeout(() => {
+                window.location.href = "/factory";
+            }, 500);
+        });
+    }
+
+    if (vernietigButton) {
+        vernietigButton.addEventListener("click", function () {
+            updateCoins(-100);
+
+        });
+    }
+
+
 });
 
 
