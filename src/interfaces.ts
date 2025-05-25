@@ -88,3 +88,14 @@ export interface binElement {
   fig: string;
   reason: string;
 }
+
+import "express-session";
+declare module "express-session" {
+  interface SessionData {
+    currentFig?: {
+      name: string;
+      img: string;
+      [key: string]: any;
+    };
+  }
+}

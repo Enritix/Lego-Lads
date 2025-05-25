@@ -99,30 +99,53 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     function startFactoryBeltAnimation() {
-        minifiguresDesktop.style.animation = "activateFactoryBelt 7s ease-in-out forwards";
-        gears.forEach(gear => {
-            gear.style.animation = "rotate 7s linear";
-        });
+    minifiguresDesktop.style.animation = "activateFactoryBelt 7s ease-in-out forwards";
+    gears.forEach(gear => {
+        gear.style.animation = "rotate 7s linear";
+    });
 
-        minifiguresDesktop.addEventListener("animationend", () => {
+    minifiguresDesktop.addEventListener("animationend", () => {
+        const nextFig = gameData.figs.find(fig => fig.status === "pending");
+        if (nextFig) {
+            fetch('/nl/set-current-fig', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ fig: { name: nextFig.name, img: nextFig.img } })
+            }).then(() => {
+                setTimeout(() => {
+                    window.location.href = "/figordenen";
+                }, 1000);
+            });
+        } else {
             setTimeout(() => {
                 window.location.href = "/figordenen";
             }, 1000);
-        });
-    }
+        }
+    });
+}
 
     // Mobile version
     const minifiguresMobile = document.getElementById("minifigures-mobile");
     const gearsMobile = document.querySelectorAll(".factory-belt-gear-mobile");
 
     minifiguresMobile.addEventListener("animationend", () => {
-        gearsMobile.forEach(gear => {
-            gear.style.animation = "none";
+    const nextFig = gameData.figs.find(fig => fig.status === "pending");
+    if (nextFig) {
+        fetch('/nl/set-current-fig', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ fig: { name: nextFig.name, img: nextFig.img } })
+        }).then(() => {
             setTimeout(() => {
                 window.location.href = "/figordenen";
             }, 1000);
         });
-    });
+    } else {
+        setTimeout(() => {
+            window.location.href = "/figordenen";
+        }, 1000);
+    }
+});
 
 function addCurrentFigToFactory() {
     const nextFig = gameData.figs.find(fig => fig.status === "pending");
@@ -140,5 +163,19 @@ function addCurrentFigToFactory() {
         }
     }
 }
+
+document.querySelectorAll('.fig-choice').forEach(el => {
+    el.addEventListener('click', function() {
+        const fig = {
+            name: this.dataset.name,
+            img: this.dataset.img
+        };
+        fetch('/nl/set-current-fig', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ fig })
+        });
+    });
+});
 
 });
