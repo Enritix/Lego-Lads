@@ -1,30 +1,58 @@
-import { MailerSend, EmailParams, Sender, Recipient } from "mailersend";
+// import { MailerSend, EmailParams, Recipient, Sender } from "mailersend";
+// import dotenv from "dotenv";
+// dotenv.config();
 
-const mailersend = new MailerSend({
-  apiKey: process.env.MAILERSEND_API_KEY || "JOUW_API_KEY_HIER",
-});
+// const mailerSend = new MailerSend({
+//   apiKey: process.env.MAILERSEND_API_KEY || "",
+// });
 
-const sentFrom = new Sender("legolads@gmail.com", "LegoLads");
+// const sentFrom = new Sender("legoladsap@gmail.com", "LegoLads");
+
+// export async function sendVerificationEmail(to: string, code: string) {
+//   const recipients = [new Recipient(to, "")];
+
+//   const subject = "Welkom bij LegoLads! | Welcome to LegoLads!";
+//   const text = 
+// `ENGLISH VERSION BELOW
+
+// Welkom bij LegoLads! Dit is je verificatiecode: ${code}
+
+// ---
+
+// Welcome to LegoLads! This is your verification code: ${code}
+// `;
+
+//   const emailParams = new EmailParams()
+//     .setFrom(sentFrom)
+//     .setTo(recipients)
+//     .setReplyTo(sentFrom)
+//     .setSubject(subject)
+//     .setText(text);
+
+//   await mailerSend.email.send(emailParams);
+// }
+
+import nodemailer from "nodemailer";
+import dotenv from "dotenv";
+dotenv.config();
 
 export async function sendVerificationEmail(to: string, code: string) {
-  const recipients = [new Recipient(to, "")];
+  const transporter = nodemailer.createTransport({
+    service: "Gmail",
+    auth: {
+      user: "legoladsap@gmail.com",
+      pass: process.env.GMAIL_APP_PASSWORD,
+    },
+  });
 
-  const subject = "Welkom bij LegoLads! | Welcome to LegoLads!";
-  const text = 
-`ENGLISH VERSION BELOW
+  const mailOptions = {
+    from: '"LegoLads" <legoladsap@gmail.com>',
+    to,
+    subject: "Welkom bij LegoLads! | Welcome to LegoLads!",
+    text: `Welkom bij LegoLads! Dit is je verificatiecode: ${code}\n\n---\n\nWelcome to LegoLads! This is your verification code: ${code}`,
+    // html: `<b>Welkom bij LegoLads! Dit is je verificatiecode: ${code}</b><br><br>---<br><br><b>Welcome to LegoLads! This is your verification code: ${code}</b>`,
+  };
 
-Welkom bij LegoLads! Dit is je verificatiecode: ${code}
-
----
-
-Welcome to LegoLads! This is your verification code: ${code}
-`;
-
-  const emailParams = new EmailParams()
-    .setFrom(sentFrom)
-    .setTo(recipients)
-    .setSubject(subject)
-    .setText(text);
-
-  await mailersend.email.send(emailParams);
+  // Verstuur de e-mail
+  return await transporter.sendMail(mailOptions);
 }
