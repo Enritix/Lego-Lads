@@ -28,13 +28,14 @@
             <img class="factory-belt-gear-desktop" src="/assets/images/factory/factory-belt-gear.png" alt="Factory Belt Gear">
             <img class="factory-belt-gear-desktop" src="/assets/images/factory/factory-belt-gear.png" alt="Factory Belt Gear">
             <img class="factory-belt-gear-desktop" src="/assets/images/factory/factory-belt-gear.png" alt="Factory Belt Gear">
+            <img class="factory-belt-gear-desktop" src="/assets/images/factory/factory-belt-gear.png" alt="Factory Belt Gear">
           </section>
           <img id="factory-machine-tube-desktop" src="/assets/images/factory/factory-machine-tube.png" alt="Factory Machine Tube">
           <section id="minifigures-desktop">
-            <!-- <img src="/assets/images/chen.png" alt="Chen Minifigure">
-            <img src="/assets/images/cinder.png" alt="Cinder Minifigure">
-            <img src="/assets/images/artic3.png" alt="Superman Minifigure">
-            <img src="/assets/images/batman.png" alt="Batman Minifigure"> -->
+            <% if (typeof currentFig !== "undefined" && currentFig && currentFig.img) { %>
+              <img src="<%= currentFig.img %>" alt="<%= currentFig.name %>">
+              <p><%= currentFig.name %></p>
+            <% } %>
           </section>
         </section>
     </main>
@@ -57,10 +58,11 @@
       </section>
       <img id="factory-machine-tube-mobile" src="/assets/images/factory/factory-machine-tube-mobile.png" alt="Factory Machine Tube">
       <section id="minifigures-mobile">
-        <!-- <img src="/assets/images/chen.png" alt="Chen Minifigure">
-        <img src="/assets/images/cinder.png" alt="Cinder Minifigure">
-        <img src="/assets/images/artic3.png" alt="Superman Minifigure">
-        <img src="/assets/images/batman.png" alt="Batman Minifigure"> -->
+        <% if (typeof currentFig !== "undefined" && currentFig && currentFig.img) { %>
+          <img src="<%= currentFig.img %>" alt="<%= currentFig.name %>">
+          <p><%= currentFig.name %></p>
+        <% } %>
+
       </section>
     </main>
     

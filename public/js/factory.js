@@ -182,4 +182,14 @@ document.querySelectorAll('.fig-choice').forEach(el => {
     });
 });
 
+document.addEventListener("DOMContentLoaded", function() {
+  var minifigDesktop = document.querySelector('#minifigures-desktop img');
+  var minifigMobile = document.querySelector('#minifigures-mobile img');
+  if ((minifigDesktop && minifigDesktop.src) || (minifigMobile && minifigMobile.src)) {
+    setTimeout(function() {
+      window.location.href = '/figordenen';
+    }, 1200);
+  }
+});
+
 });

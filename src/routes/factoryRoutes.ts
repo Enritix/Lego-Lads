@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
 import { getGameData, connectToMongoDB } from "../database";
-import { fetchSets } from "../apicalls";
+import { fetchSets, fetchMinifigs } from "../apicalls";
 import { ObjectId } from "mongodb";
 const router = express.Router();
 
@@ -13,10 +13,26 @@ router.get("/factory-welcome", (req: Request, res: Response) => {
 });
 
 router.get("/factory", (req: Request, res: Response) => {
+  if (
+    (req.session.ordenenDone ?? 0) >= (req.session.ordenenCount ?? 0) &&
+    (req.session.ordenenCount ?? 0) > 0
+  ) {
+    return res.redirect("/resultaat");
+  }
+
+  const idx = req.session.ordenenDone ?? 0;
+  const fig = req.session.ordenenFigs ? req.session.ordenenFigs[idx] : null;
+  req.session.currentFig = fig;
+
+  console.log("ordenenFigs:", req.session.ordenenFigs);
+  console.log("ordenenDone:", req.session.ordenenDone);
+  console.log("currentFig:", fig);
+
   res.render("factory", {
     title: "Lego Fabriek",
     cssFiles: ["/css/factory.css"],
     jsFiles: ["/js/factory.js"],
+    currentFig: fig,
   });
 });
 
@@ -42,11 +58,14 @@ router.get("/ordenen", (req: Request, res: Response) => {
     jsFiles: ["/js/ordenen.js"],
   });
 });
+
 router.get("/resultaat", (req: Request, res: Response) => {
+  const geordendeFigs = req.session.ordenenFigs || [];
   res.render("resultaat", {
     title: "Resultaat",
     cssFiles: ["/css/resultaat.css"],
     jsFiles: ["/js/resultaat.js"],
+    geordendeFigs,
   });
 });
 
@@ -98,16 +117,13 @@ router.post("/orden-fig", async (req: Request, res: Response) => {
   const userId = req.session.user?._id;
   const { fig, set, status } = req.body;
 
-  console.log("ORDEN-FIG route aangeroepen:", { userId, fig, set, status });
-
   if (!userId || !fig || !status) {
-    console.log("ORDEN-FIG: ontbrekende data", { userId, fig, set, status });
     return res.status(400).json({ success: false, message: "Data ontbreekt" });
   }
 
   try {
     const db = await connectToMongoDB();
-    const result = await db.collection("geordende_figs").insertOne({
+    await db.collection("geordende_figs").insertOne({
       userId: typeof userId === "string" ? userId : userId.toString(),
       name: fig.name,
       img: fig.img,
@@ -115,12 +131,42 @@ router.post("/orden-fig", async (req: Request, res: Response) => {
       status: status,
       date: new Date(),
     });
-    console.log("ORDEN-FIG: insert result", result);
-    res.json({ success: true });
   } catch (error: any) {
-    console.log("ORDEN-FIG: error", error);
-    res.status(500).json({ success: false, error: error.message });
+    return res.status(500).json({ success: false, error: error.message });
   }
+
+  req.session.ordenenDone = (req.session.ordenenDone ?? 0) + 1;
+
+  if ((req.session.ordenenDone ?? 0) >= (req.session.ordenenCount ?? 0)) {
+    return res.json({ success: true, redirect: "/resultaat" });
+  } else {
+    return res.json({ success: true, redirect: "/factory" });
+  }
+});
+
+router.post("/set-ordenen-count", async (req, res) => {
+  const count = parseInt(req.body.count, 10);
+  req.session.ordenenCount = count;
+  req.session.ordenenDone = 0;
+
+  const allFigs = await fetchMinifigs();
+  const shuffled = allFigs.sort(() => 0.5 - Math.random());
+  req.session.ordenenFigs = shuffled.slice(0, count);
+
+  const userId = req.session.user?._id;
+  if (userId) {
+    const db = await connectToMongoDB();
+    await db
+      .collection("game_data")
+      .updateOne(
+        { playerId: typeof userId === "string" ? userId : userId.toString() },
+        { $set: { totalFigs: count } }
+      );
+  }
+
+  res.json({ success: true });
+
+  console.log("Gekozen figs:", req.session.ordenenFigs);
 });
 
 export default router;
