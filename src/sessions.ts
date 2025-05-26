@@ -1,7 +1,7 @@
 import session from "express-session";
 import mongoDbSession from "connect-mongodb-session";
 import { uri } from "./database";
-import { User } from "./interfaces";
+import { TempUser, User } from "./interfaces";
 
 const MongoDBStore = mongoDbSession(session);
 
@@ -14,6 +14,12 @@ const mongoStore = new MongoDBStore({
 declare module 'express-session' {
     export interface SessionData {
         user?: User;
+        tempUser?: TempUser;
+        currentFig?: {
+            name: string;
+            img: string;
+            [key: string]: any;
+        };
     }
 }
 

@@ -104,10 +104,12 @@ document.addEventListener("DOMContentLoaded", async () => {
         gear.style.animation = "rotate 7s linear";
     });
 
-    minifiguresDesktop.addEventListener("animationend", () => {
+    minifiguresDesktop.addEventListener("animationend", async () => {
         const nextFig = gameData.figs.find(fig => fig.status === "pending");
         if (nextFig) {
-            fetch('/nl/set-current-fig', {
+            const langMatch = window.location.pathname.match(/^\/(nl|en)/);
+            const langPrefix = langMatch ? langMatch[0] : '/nl';
+            const response = await fetch(`${langPrefix}/set-current-fig`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ fig: { name: nextFig.name, img: nextFig.img } })
@@ -128,10 +130,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     const minifiguresMobile = document.getElementById("minifigures-mobile");
     const gearsMobile = document.querySelectorAll(".factory-belt-gear-mobile");
 
-    minifiguresMobile.addEventListener("animationend", () => {
+    minifiguresMobile.addEventListener("animationend", async () => {
     const nextFig = gameData.figs.find(fig => fig.status === "pending");
     if (nextFig) {
-        fetch('/nl/set-current-fig', {
+            const langMatch = window.location.pathname.match(/^\/(nl|en)/);
+            const langPrefix = langMatch ? langMatch[0] : '/nl';
+            const response = await fetch(`${langPrefix}/set-current-fig`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ fig: { name: nextFig.name, img: nextFig.img } })

@@ -5,6 +5,8 @@ import { findUserByEmailOrUsername, insertUser, updateUserPassword } from '../da
 import sessionMiddleware from '../sessions';
 import { requireAuth, redirectIfLoggedIn } from '../middleware';
 import bcrypt from "bcrypt";
+import { generateVerificationCode } from '../utils/verification';
+import { sendVerificationEmail } from '../utils/email';
 
 
 const router = express.Router();
@@ -24,74 +26,137 @@ router.get("/register", redirectIfLoggedIn, async (req: Request, res: Response) 
 });
 
 router.post("/register", redirectIfLoggedIn, async (req: Request, res: Response) => {
-    const { uname, email, password, ["confirm-password"]: confirmPassword, profileFig } = req.body;
+    const { uname, email, password, ["confirm-password"]: confirmPassword, profileFig, verificationCode } = req.body;
     const defaultFig1 = await fetchMinifigByName("Peter Parker");
     const defaultFig2 = await fetchMinifigByName("Arctic Guy");
     const minifigs: Minifig[] = [defaultFig1, defaultFig2];
 
-    if (!uname || !email || !password || !confirmPassword || !profileFig) {
-        return res.render("register", {
-            error: "Alle velden zijn verplicht",
-            popUp: false,
-            uname: null,
-            figs: minifigs,
-            lang: res.locals.lang || "nl",
-        });
-    }
-    if (!email.includes("@")) {
-        return res.render("register", {
-            error: "Ongeldig e-mailadres",
-            popUp: false,
-            uname: null,
-            figs: minifigs,
-            lang: res.locals.lang || "nl",
-        });
-    }
-    if (password !== confirmPassword) {
-        return res.render("register", {
-            error: "Wachtwoorden komen niet overeen",
-            popUp: false,
-            uname: null,
-            figs: minifigs,
-            lang: res.locals.lang || "nl",
-        });
-    }
-    if (password.length < 8) {
-        return res.render("register", {
-            error: "Wachtwoord moet minimaal 8 tekens bevatten",
-            popUp: false,
-            uname: null,
-            figs: minifigs,
-            lang: res.locals.lang || "nl",
-        });
-    }
-    try {
-        const existingUser = await findUserByEmailOrUsername(email, uname);
-        if (existingUser) {
+    if (!verificationCode) {
+        if (!uname || !email || !password || !confirmPassword || !profileFig) {
             return res.render("register", {
-                error: "Gebruiker met dit e-mailadres of gebruikersnaam bestaat al",
+                error: "Alle velden zijn verplicht",
                 popUp: false,
                 uname: null,
                 figs: minifigs,
                 lang: res.locals.lang || "nl",
+                showVerification: false,
+                tempUser: { uname, email, password, profileFig }
             });
         }
-        const hashedPassword = await bcrypt.hash(password, 10);
-        await insertUser(uname, hashedPassword, email, profileFig);
+        if (!email.includes("@")) {
+            return res.render("register", {
+                error: "Ongeldig e-mailadres",
+                popUp: false,
+                uname: null,
+                figs: minifigs,
+                lang: res.locals.lang || "nl",
+                showVerification: false,
+                tempUser: { uname, email, password, profileFig }
+            });
+        }
+        if (password !== confirmPassword) {
+            return res.render("register", {
+                error: "Wachtwoorden komen niet overeen",
+                popUp: false,
+                uname: null,
+                figs: minifigs,
+                lang: res.locals.lang || "nl",
+                showVerification: false,
+                tempUser: { uname, email, password, profileFig }
+            });
+        }
+        if (password.length < 8) {
+            return res.render("register", {
+                error: "Wachtwoord moet minimaal 8 tekens bevatten",
+                popUp: false,
+                uname: null,
+                figs: minifigs,
+                lang: res.locals.lang || "nl",
+                showVerification: false,
+                tempUser: { uname, email, password, profileFig }
+            });
+        }
+        try {
+            const existingUser = await findUserByEmailOrUsername(email, uname);
+            if (existingUser) {
+                return res.render("register", {
+                    error: "Gebruiker met dit e-mailadres of gebruikersnaam bestaat al",
+                    popUp: false,
+                    uname: null,
+                    figs: minifigs,
+                    lang: res.locals.lang || "nl",
+                    showVerification: false,
+                    tempUser: { uname, email, password, profileFig }
+                });
+            }
+            const code = generateVerificationCode();
+            await sendVerificationEmail(email, code);
+
+            req.session.tempUser = {
+            uname,
+            email,
+            password,
+            profile_fig: profileFig,
+            code
+        };
+
+            return res.render("register", {
+                error: null,
+                popUp: false,
+                uname,
+                figs: minifigs,
+                lang: res.locals.lang || "nl",
+                showVerification: true,
+                tempUser: { uname, email, password, profileFig }
+            });
+        } catch (err) {
+            return res.render("register", {
+                error: "Er is iets misgegaan, probeer opnieuw.",
+                popUp: false,
+                uname: null,
+                figs: minifigs,
+                lang: res.locals.lang || "nl",
+                showVerification: false,
+                tempUser: { uname, email, password, profileFig }
+            });
+        }
+    } else {
+        const tempUser = req.session.tempUser;
+        if (!tempUser) {
+            return res.render("register", {
+                error: "Sessie verlopen, probeer opnieuw te registreren.",
+                popUp: false,
+                uname: null,
+                figs: minifigs,
+                lang: res.locals.lang || "nl",
+                showVerification: false,
+                tempUser: null
+            });
+        }
+        if (verificationCode !== tempUser.code) {
+            return res.render("register", {
+                error: "Verificatiecode is onjuist.",
+                popUp: false,
+                uname: tempUser.uname,
+                figs: minifigs,
+                lang: res.locals.lang || "nl",
+                showVerification: true,
+                tempUser
+            });
+        }
+
+        const hashedPassword = await bcrypt.hash(tempUser.password, 10);
+        await insertUser(tempUser.uname, hashedPassword, tempUser.email, tempUser.profile_fig);
+        
+        delete req.session.tempUser;
         return res.render("register", {
             error: null,
             popUp: true,
-            uname,
+            uname: tempUser.uname,
             figs: minifigs,
             lang: res.locals.lang || "nl",
-        });
-    } catch (err) {
-        return res.render("register", {
-            error: "Er is iets misgegaan, probeer opnieuw.",
-            popUp: false,
-            uname: null,
-            figs: minifigs,
-            lang: res.locals.lang || "nl",
+            showVerification: false,
+            tempUser: null
         });
     }
 });

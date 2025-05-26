@@ -89,13 +89,17 @@ export interface binElement {
   reason: string;
 }
 
-import "express-session";
-declare module "express-session" {
-  interface SessionData {
-    currentFig?: {
-      name: string;
-      img: string;
-      [key: string]: any;
-    };
-  }
+export interface TempUser {
+  uname: string;
+  email: string;
+  password: string;
+  profile_fig: string;
+  code: string;
 }
+
+// import "express-session";
+// declare module "express-session" {
+//   interface SessionData {
+    
+//   }
+// }
