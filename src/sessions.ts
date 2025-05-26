@@ -15,6 +15,8 @@ declare module 'express-session' {
     export interface SessionData {
         user?: User;
         tempUser?: TempUser;
+        successMessage: string;
+        errorMessage: string;
         currentFig?: {
             name: string;
             img: string;
