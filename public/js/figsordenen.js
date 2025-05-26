@@ -7,6 +7,26 @@ function closePopup() {
     document.getElementById("info-popup").style.display = "none";
 }
 
+function getLangPrefix() {
+    const match = window.location.pathname.match(/^\/(en|nl)\b/);
+    return match ? `/${match[1]}` : '';
+}
+
+function ordenFig(fig, set, status) {
+    fetch(getLangPrefix() + "/orden-fig", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            fig: {
+                name: fig?.alt,
+                img: fig?.src
+            },
+            set: set,
+            status: status
+        })
+    });
+}
+
 document.addEventListener("DOMContentLoaded", function () {
     const sets = document.getElementById("sets");
     const leftArrow = document.getElementById("left");
@@ -52,7 +72,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const setsList = document.getElementById("sets");
 
     function updateCoins(minCoins) {
-        fetch("/nl/update-coins", {
+        fetch(getLangPrefix() + "/update-coins", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -71,6 +91,8 @@ document.addEventListener("DOMContentLoaded", function () {
     if (setsList) {
         setsList.querySelectorAll("li").forEach(function (li) {
             li.addEventListener("click", function (e) {
+                const setCode = li.getAttribute("data-set");
+                ordenFig(figKeuze, setCode, "gesorteerd");
                 updateCoins(100);
 
                 if (figKeuze) figKeuze.classList.add("hidden");
@@ -87,6 +109,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (skipButton) {
         skipButton.addEventListener("click", function () {
             updateCoins(-100);
+            ordenFig(figKeuze, null, "overgeslagen");
 
             if (figKeuze) figKeuze.classList.add("hidden");
             setTimeout(() => {
@@ -101,7 +124,18 @@ document.addEventListener("DOMContentLoaded", function () {
     if (vernietigButton) {
         vernietigButton.addEventListener("click", function () {
             updateCoins(-100);
-
+            ordenFig(figKeuze, null, "vernietigd");
+            fetch(getLangPrefix() + "/bin-fig", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                fig: {
+                    name: figKeuze?.alt,
+                    img: figKeuze?.src
+                },
+                reason: "weggegooid"
+            })
+        });
         });
     }
 
