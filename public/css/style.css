@@ -115,14 +115,22 @@ header nav ul li svg:hover {
   width: 100%;
 }
 
+#figure-head {
+  height: 66px;
+  overflow: hidden;
+}
+
 #figure-head img {
-  width: 66px;
+  width: 100%;
   height: auto;
+  object-fit: cover;
+  object-position: top;
 }
 
 #user-name {
   color: var(--text-color);
   font-size: 20px;
+  font-family: 'Bangers', sans-serif !important;
   letter-spacing: 2px;
   margin: 0;
   max-width: 90%;
@@ -134,7 +142,10 @@ header nav ul li svg:hover {
 #coin-container {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 5px;
+  justify-content: center;
+  text-align: center;
 }
 
 #coin-container:before {
@@ -150,6 +161,7 @@ header nav ul li svg:hover {
   color: var(--text-color);
   font-size: 20px;
   font-family: Oswald;
+  margin: 0;
 }
 
 /* text in button geef elke button de class .text-lego-stroke */
@@ -197,6 +209,63 @@ header nav ul li svg:hover {
   color: transparent;
   -webkit-text-stroke: var(--stroke-outer-width) var(--stroke-outer-color);
   z-index: -2;
+}
+
+.achievement-popup {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background-color: var(--primary-color);
+  border: 5px solid var(--secondary--color);
+  border-radius: 15px;
+  padding: 1rem 1.5rem;
+  box-shadow: 0 0 15px rgba(0,0,0,0.4);
+  z-index: 1000;
+  width: 300px;
+  animation: fadeIn 0.5s ease;
+  font-family: 'Oswald', sans-serif;
+}
+
+.not-shown {
+  display: none;
+}
+
+.achievement-header h3 {
+  margin: 0;
+  color: var(--text-color);
+  font-size: 1.4rem;
+}
+
+.progress-bar-wrapper {
+  margin-top: 0.5rem;
+  background-color: var(--tertiarty-color);
+  border-radius: 10px;
+  overflow: hidden;
+  height: 20px;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 100%;
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: #00a300;
+  transition: width 1s ease;
+}
+
+.progress-status {
+  margin-top: 0.5rem;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* CODE MOBILE NAV BAR + ZIE HTML ONDERAAN*/
@@ -279,15 +348,34 @@ header nav ul li svg:hover {
     width: 24px;
     height: 24px;
   }
-  .name-container img {
+
+  .name-container {
+    padding: 8px 12px;
+  }
+  .name-container div img {
     height: auto;
     width: 24px;
+  }
+
+  .name-container div {
+    position: absolute;
+    right: 5px;
+    height: 25px;
+    overflow: hidden;
+  }
+
+  .name-container div img {
+    width: 80%;
+    height: 50px;
+    object-fit: cover;
+    object-position: top;
   }
 
   .name-container span {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    margin-right: 20px;
   }
   
   .logo-container {

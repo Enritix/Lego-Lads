@@ -26,17 +26,24 @@ document.addEventListener("DOMContentLoaded", function () {
     function openPopup() {
         popup.classList.remove("hidden");
         popup.classList.add("active");
-        overlay.classList.add("active");
+        if (overlay) overlay.classList.add("active");
     }
 
     function closePopup() {
         popup.classList.add("hidden");
         popup.classList.remove("active");
-        overlay.classList.remove("active");
+        if (overlay) overlay.classList.remove("active");
+        sessionStorage.setItem("popupShown", "true");
     }
-    openPopup();
+
+    if (!sessionStorage.getItem("popupShown")) {
+        openPopup();
+    } else {
+        popup.classList.add("hidden");
+        popup.classList.remove("active");
+        if (overlay) overlay.classList.remove("active");
+    }
 
     closePopupBtn.addEventListener("click", closePopup);
-
-    overlay.addEventListener("click", closePopup);
+    if (overlay) overlay.addEventListener("click", closePopup);
 });

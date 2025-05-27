@@ -148,8 +148,9 @@ main {
     z-index: 100;
 }
 .grey {
-    filter: grayscale(100%);
+    filter: grayscale(100%) blur(2px);
 }
+
 #figs{
     height: auto;
     width: 40vw;

@@ -19,7 +19,13 @@
             loop 
             autoplay>
         </lottie-player>
-        <p class="loading-text">Legoblokjes laden...</p>
+        <p class="loading-text">
+            <% if (lang === 'nl') { %>
+              Legoblokjes laden...
+            <% } else if (lang === 'en') { %>
+              Loading LEGO blocks...
+            <% } %>
+        </p>
     </section>
 
     <script src="/js/loader.js"></script>

@@ -1,21 +1,21 @@
 <audio id="clickSound">
-    <source src="../assets/audio/kliksound.mp3" type="audio/mpeg" />
+    <source src="/assets/audio/kliksound.mp3" type="audio/mpeg" />
   </audio>
   <header>
     <nav>
       <ul>
         <li>
-          <a href="/"><img src="../assets/images/Lego-Lads Logo.png" alt="" /></a>
+          <a href="/"><img src="/assets/images/Lego-Lads Logo.png" alt="" /></a>
         </li>
         <li id="user-info">
-          <a href="profile" id="figure-head"><img  class="nav-fig" src="<%= profielFig %>" alt="" /></a>
-          <h1 id="user-name">Jean-Claude</h1>
+          <a href="/profile" id="figure-head"><img  class="nav-fig" src="<%= profileFig %>" alt="" /></a>
+          <h1 id="user-name"><%= username %></h1>
           <div id="coin-container">
-            <p>3.2K</p>
+            <p><%= formattedCoins %></p>
           </div>
         </li>
         <li>
-          <a href="chatbot">
+          <a href="/chatbot">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-robot"
               viewBox="0 0 16 16">
               <path
@@ -35,7 +35,7 @@
           </a>
         </li>
         <li>
-          <a href="landingspage"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+          <a href="/logout"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
               stroke-width="1.5" stroke="currentColor" class="size-6">
               <path stroke-linecap="round" stroke-linejoin="round"
                 d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15" />
@@ -48,20 +48,22 @@
 
   <header class="mobile-info-bar">
     <section class="coin-container">
-      <img src="../assets/images/coin.png" alt="Coin" />
-      <span>3.2K</span>
+      <img src="/assets/images/coin.png" alt="Coin" />
+      <span><%= formattedCoins %></span>
     </section>
 
     <section class="logo-container">
       <a href="/">
-        <img src="../assets/images/Lego-Lads Logo.png" alt="Lego Lads Logo" />
+        <img src="/assets/images/Lego-Lads Logo.png" alt="Lego Lads Logo" />
       </a>
     </section>
 
-    <section class="name-container">
-      <span>Jean-Claude</span>
-      <img class="nav-fig"  src="<%= profielFig %>" alt="Lego Hoofd" />
-    </section>
+    <a href="/profile" class="name-container">
+        <span><%= username %></span>
+        <div>
+          <img class="nav-fig" src="<%= profileFig %>" alt="Lego Hoofd" />
+        </div>
+    </a>
   </header>
 
   <div id="hamburger-menu">☰</div>
@@ -92,7 +94,7 @@
         </a>
       </li>
       <li>
-        <a href="chatbot">
+        <a href="/chatbot">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-robot"
             viewBox="0 0 16 16">
             <path
@@ -103,7 +105,7 @@
         </a>
       </li>
       <li>
-        <a href="landingspage"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+        <a href="/logout"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
             stroke-width="1.5" stroke="currentColor" class="size-6">
             <path stroke-linecap="round" stroke-linejoin="round"
               d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15" />

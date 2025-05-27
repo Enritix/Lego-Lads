@@ -39,7 +39,13 @@
             </div>
             <div class="carousel-btns">
                 <button class="carousel-btn prev">◀</button>
-                <button class="play-btn">Speel</button>
+                <button class="play-btn">
+                    <% if (lang === 'nl') { %>
+                      Speel
+                    <% } else if (lang === 'en') { %>
+                      Play
+                    <% } %>
+                </button>
                 <button class="carousel-btn next">▶</button>
             </div>
         </div>

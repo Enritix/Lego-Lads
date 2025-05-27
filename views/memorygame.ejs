@@ -1,74 +1,188 @@
 <%- include('components/header') %>
   <%- include('components/nav') %>
     <main>
-        <div id="time-display"></div>
-        <header class="header-container">
-            <h1>Geheugen spel
+      <div id="time-display"></div>
+      <header class="header-container">
+        <h1>
+          <% if (lang==='nl' ) { %>
+            Geheugen Spel
+            <% } else if (lang==='en' ) { %>
+              Memory Game
+              <% } %>
                 <button class="tooltip-button" aria-label="Meer informatie" onclick="openInfoPopup()">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
-                        class="bi bi-info-circle" viewBox="0 0 16 16">
-                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
-                        <path
-                            d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 0 0 1 2 0" />
-                    </svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                    class="bi bi-info-circle" viewBox="0 0 16 16">
+                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                    <path
+                      d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 0 0 1 2 0" />
+                  </svg>
                 </button>
-            </h1>
-        </header>
-        <a class="close" href="/">❌</a>
-        <section class="memory-container"></section>
-        </section>
-        <div id="popup">
-            <div id="popup-content">
-                <h2>Gefeliciteerd! Je bent gewonnen!</h2>
-                <p></p>
-                <button id="new-game-btn" class="text-lego-stroke" data-text="nieuw spel">Nieuw Spel</button>
-                <button id="main-menu-btn" class="text-lego-stroke" data-text="hoofdmenu">Hoofdmenu</button>
-            </div>
+        </h1>
+      </header>
+      <a class="close" href="/">❌</a>
+      <section class="memory-container"></section>
+      </section>
+      <div id="popup">
+        <div id="popup-content">
+          <h2>
+            <% if (lang==='nl' ) { %>
+              Gefeliciteerd! Je bent gewonnen!
+              <% } else if (lang==='en' ) { %>
+                Congratulations! You have won!
+                <% } %>
+          </h2>
+          <p></p>
+          <% if (lang==='nl' ) { %>
+            <button id="new-game-btn" class="text-lego-stroke" data-text="nieuw spel">Nieuw spel</button>
+            <% } else if (lang==='en' ) { %>
+              <button id="new-game-btn" class="text-lego-stroke" data-text="new game">New game</button>
+              <% } %>
+
+                <% if (lang==='nl' ) { %>
+                  <button id="main-menu-btn" class="text-lego-stroke" data-text="hoofdmenu">Hoofdmenu</button>
+                  <% } else if (lang==='en' ) { %>
+                    <button id="main-menu-btn" class="text-lego-stroke" data-text="main menu">Main menu</button>
+                    <% } %>
         </div>
-        <dialog id="infoPopup">
-            <article class="popup-content">
-              <h2>Over het Geheugen Spel</h2>
-    
-              <div class="info-section">
-                <p><strong>🧩Lego Minifigure Geheugen spel</strong></p>
-                <p>Test je geheugen en snelheid! 🕰️</p>
-              </div>
-    
-              <div class="info-section">
-                <p><strong>🎮 Gameplay</strong></p>
-                <p>🃏 Draai de kaarten om en zoek de juiste paren van Lego-minifigs.<br>
-                    Maar pas op, je speelt tegen de klok! ⏳ <br>
-                    Elke seconde telt, dus denk snel en onthoud goed waar de minifigs zich bevinden.</p>
-              </div>
-    
-              <div class="info-section">
-                <p>✅ <strong>Goed geraden?</strong><br>
-                    Gefeliciteerd! Voor elk correct paar krijg je +5 seconden extra tijd op de timer.</p>
-              </div>
-    
-              <div class="info-section">
-                <p>❌ <strong>Fout geraden?</strong><br>
-                  Verdien genoeg stenen en ruil ze in voor coins.<br>
-                  Coins geven toegang tot exclusieve aankopen.</p>
-              </div>
-    
-              <div class="info-section">
-                <p>🎯 <strong>Doel</strong><br>
-                    Vind alle minifigure-paren voordat de tijd op is. Hoe sneller je speelt, hoe meer coins je ontvangt! 🚀</p>
-              </div>
-    
-              <div class="info-section">
-                <p>🏆 <strong>Tip</strong><br>
-                    Oefen je geheugen en probeer een nieuw record te halen. Kun jij alle paren vinden en de hoogste score behalen? Veel succes! 🎉</p>
-              </div>
-    
-              <menu>
-                <button class="text-lego-stroke" data-text="sluiten" id="closeInfoPopup" onclick="closeInfoPopup()">Sluiten</button>
-              </menu>
-            </article>
-          </dialog>
+      </div>
+      <dialog id="infoPopup">
+        <article class="popup-content">
+          <h2>
+            <% if (lang==='nl' ) { %>
+              Over het Geheugen Spel
+              <% } else if (lang==='en' ) { %>
+                About the Memory Game
+                <% } %>
+          </h2>
+
+          <div class="info-section">
+            <p><strong>
+                <% if (lang==='nl' ) { %>
+                  🧩Lego Minifigure Geheugen spel
+                  <% } else if (lang==='en' ) { %>
+                    🧩 Lego Minifigure Memory Game
+                    <% } %>
+              </strong></p>
+            <p>
+              <% if (lang==='nl' ) { %>
+                Test je geheugen en snelheid! 🕰️
+                <% } else if (lang==='en' ) { %>
+                  Test your memory and speed! 🕰️
+                  <% } %>
+            </p>
+          </div>
+
+          <div class="info-section">
+            <p><strong>
+                <% if (lang==='nl' ) { %>
+                  🎮 Gameplay
+                  <% } else if (lang==='en' ) { %>
+                    🎮 Gameplay
+                    <% } %>
+              </strong></p>
+            <p>
+              <% if (lang==='nl' ) { %>
+                🃏 Draai de kaarten om en zoek de juiste paren van Lego-minifigs.<br>
+                Maar pas op, je speelt tegen de klok! ⏳ <br>
+                Elke seconde telt, dus denk snel en onthoud goed waar de minifigs zich bevinden.
+                <% } else if (lang==='en' ) { %>
+                  🃏 Flip the cards and find the matching pairs of Lego minifigs.<br>
+                  But watch out, you're racing against the clock! ⏳ <br>
+                  Every second counts, so think fast and remember where the minifigs are located.
+                  <% } %>
+            </p>
+          </div>
+
+          <div class="info-section">
+            <p>✅ <strong>
+                <% if (lang==='nl' ) { %>
+                  Goed geraden?
+                  <% } else if (lang==='en' ) { %>
+                    Correct guess?
+                    <% } %>
+              </strong><br>
+
+              <% if (lang==='nl' ) { %>
+                🎉 Gefeliciteerd! Voor elk correct paar krijg je +5 seconden extra tijd op de timer.
+                <% } else if (lang==='en' ) { %>
+                  🎉 Congratulations! For each correct pair, you get +5 seconds extra time on the timer.
+                  <% } %>
+            </p>
+          </div>
+
+          <div class="info-section">
+            <p>❌ <strong>
+                <% if (lang==='nl' ) { %>
+                  Fout geraden?
+                  <% } else if (lang==='en' ) { %>
+                    Incorrect guess?
+                    <% } %>
+              </strong><br>
+
+              <% if (lang==='nl' ) { %>
+                Verdien genoeg stenen en ruil ze in voor coins.<br>
+                Coins geven toegang tot exclusieve aankopen.
+                <% } else if (lang==='en' ) { %>
+                  Earn enough bricks and exchange them for coins.<br>
+                  Coins give access to exclusive purchases.
+                  <% } %>
+            </p>
+          </div>
+
+          <div class="info-section">
+            <p>🎯 <strong>Doel
+                <% if (lang==='nl' ) { %>
+                  Doel
+                  <% } else if (lang==='en' ) { %>
+                    Goal
+                    <% } %>
+              </strong><br>
+
+              <% if (lang==='nl' ) { %>
+                Vind alle minifigure-paren voordat de tijd op is. Hoe sneller je speelt, hoe meer coins je ontvangt! 🚀
+                <% } else if (lang==='en' ) { %>
+                  Find all the minifigure pairs before time runs out. The faster you play, the more coins you earn! 🚀
+                  <% } %>
+            </p>
+          </div>
+
+          <div class="info-section">
+            <p>🏆 <strong>
+                <% if (lang==='nl' ) { %>
+                  Tip
+                  <% } else if (lang==='en' ) { %>
+                    Tip
+                    <% } %>
+              </strong><br>
+
+              <% if (lang==='nl' ) { %>
+                Oefen je geheugen en probeer een nieuw record te halen. Kun jij alle paren vinden en de hoogste score
+                behalen? Veel succes! 🎉
+                <% } else if (lang==='en' ) { %>
+                  Practice your memory and try to beat your record. Can you find all the pairs and achieve the highest
+                  score?
+                  Good luck! 🎉
+                  <% } %>
+            </p>
+          </div>
+
+          <menu>
+
+            <% if (lang==='nl' ) { %>
+              <button class="text-lego-stroke" data-text="sluiten" id="closeInfoPopup"
+                onclick="closeInfoPopup()">Sluiten</button>
+              <% } else if (lang==='en' ) { %>
+                <button class="text-lego-stroke" data-text="close" id="closeInfoPopup"
+                  onclick="closeInfoPopup()">Close</button>
+                <% } %>
+          </menu>
+        </article>
+      </dialog>
+
+      <%- include('components/achievement') %>
+
     </main>
     <%- include('components/settings') %>
-</body>
+      </body>
 
-</html>
+      </html>

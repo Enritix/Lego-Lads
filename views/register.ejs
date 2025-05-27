@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="nl-BE">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>
+    <% if (lang==='nl' ) { %>
+      LegoLads - Registreren
+      <% } else if (lang==='en' ) { %>
+        LegoLads - Register
+        <% } %>
+  </title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/index.css" />
+  <link rel="stylesheet" href="/css/register.css" />
+  <script src="/js/audio.js" defer></script>
+  <script src="/js/register.js" defer></script>
+</head>
+
+<body>
+  <audio id="clickSound">
+    <source src="/assets/audio/kliksound.mp3" type="audio/mpeg" />
+  </audio>
+  <main>
+    <div class="resultaat-container">
+      <a class="close" href="/landingspage">❌</a>
+      <h2>
+        <% if (lang==='nl' ) { %>
+          Registreren
+          <% } else if (lang==='en' ) { %>
+            Register
+            <% } %>
+      </h2>
+
+      <% if (error) { %>
+        <p style="color:red;">
+          <%= error %>
+        </p>
+        <% } %>
+
+          <div class="registration-form">
+            <% if (!showVerification) { %>
+              <form action="/<%= lang %>/register" method="post">
+                <div class="form-group">
+                  <label for="uname">
+                    <% if (lang==='nl' ) { %>
+                      Gebruikersnaam
+                      <% } else if (lang==='en' ) { %>
+                        Username
+                        <% } %>
+                  </label>
+                  <input type="text" id="uname" name="uname" required />
+                </div>
+
+                <div class="form-group">
+                  <label for="email">
+                    <% if (lang==='nl' ) { %>
+                      E-mail
+                      <% } else if (lang==='en' ) { %>
+                        Email
+                        <% } %>
+                  </label>
+                  <input type="email" id="email" name="email" required />
+                </div>
+
+                <div class="form-group">
+                  <label for="password">
+                    <% if (lang==='nl' ) { %>
+                      Wachtwoord
+                      <% } else if (lang==='en' ) { %>
+                        Password
+                        <% } %>
+                  </label>
+                  <div style="position: relative; width: 100%;">
+                    <input type="password" id="password" name="password" required
+                      style="width: 100%; padding-right: 40px;">
+                    <span id="togglePassword"
+                      style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer;">
+                      <span id="eye-open" style="display:none;">
+                        <!-- SVG open oog -->
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                          style="width:24px;height:24px;">
+                          <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
+                          <path fill-rule="evenodd"
+                            d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 0 1 0-1.113ZM17.25 12a5.25 5.25 0 1 1-10.5 0 5.25 5.25 0 0 1 10.5 0Z"
+                            clip-rule="evenodd" />
+                        </svg>
+                      </span>
+                      <span id="eye-closed">
+                        <!-- SVG gesloten oog -->
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                          style="width:24px;height:24px;">
+                          <path
+                            d="M3.53 2.47a.75.75 0 0 0-1.06 1.06l18 18a.75.75 0 1 0 1.06-1.06l-18-18ZM22.676 12.553a11.249 11.249 0 0 1-2.631 4.31l-3.099-3.099a5.25 5.25 0 0 0-6.71-6.71L7.759 4.577a11.217 11.217 0 0 1 4.242-.827c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113Z" />
+                          <path
+                            d="M15.75 12c0 .18-.013.357-.037.53l-4.244-4.243A3.75 3.75 0 0 1 15.75 12ZM12.53 15.713l-4.243-4.244a3.75 3.75 0 0 0 4.244 4.243Z" />
+                          <path
+                            d="M6.75 12c0-.619.107-1.213.304-1.764l-3.1-3.1a11.25 11.25 0 0 0-2.63 4.31c-.12.362-.12.752 0 1.114 1.489 4.467 5.704 7.69 10.675 7.69 1.5 0 2.933-.294 4.242-.827l-2.477-2.477A5.25 5.25 0 0 1 6.75 12Z" />
+                        </svg>
+                      </span>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="confirm-password">
+                    <% if (lang==='nl' ) { %>
+                      Herhaal wachtwoord
+                      <% } else if (lang==='en' ) { %>
+                        Confirm password
+                        <% } %>
+                  </label>
+                  <div style="position: relative; width: 100%;">
+                    <input type="password" id="confirm-password" name="confirm-password" required
+                      style="width: 100%; padding-right: 40px;">
+                    <span id="toggleConfirmPassword"
+                      style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer;">
+                      <span id="eye-open-confirm" style="display:none;">
+                        <!-- SVG open oog -->
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                          style="width:24px;height:24px;">
+                          <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
+                          <path fill-rule="evenodd"
+                            d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 0 1 0-1.113ZM17.25 12a5.25 5.25 0 1 1-10.5 0 5.25 5.25 0 0 1 10.5 0Z"
+                            clip-rule="evenodd" />
+                        </svg>
+                      </span>
+                      <span id="eye-closed-confirm">
+                        <!-- SVG gesloten oog -->
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                          style="width:24px;height:24px;">
+                          <path
+                            d="M3.53 2.47a.75.75 0 0 0-1.06 1.06l18 18a.75.75 0 1 0 1.06-1.06l-18-18ZM22.676 12.553a11.249 11.249 0 0 1-2.631 4.31l-3.099-3.099a5.25 5.25 0 0 0-6.71-6.71L7.759 4.577a11.217 11.217 0 0 1 4.242-.827c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113Z" />
+                          <path
+                            d="M15.75 12c0 .18-.013.357-.037.53l-4.244-4.243A3.75 3.75 0 0 1 15.75 12ZM12.53 15.713l-4.243-4.244a3.75 3.75 0 0 0 4.244 4.243Z" />
+                          <path
+                            d="M6.75 12c0-.619.107-1.213.304-1.764l-3.1-3.1a11.25 11.25 0 0 0-2.63 4.31c-.12.362-.12.752 0 1.114 1.489 4.467 5.704 7.69 10.675 7.69 1.5 0 2.933-.294 4.242-.827l-2.477-2.477A5.25 5.25 0 0 1 6.75 12Z" />
+                        </svg>
+                      </span>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="figuren-lijst">
+                  <% figs.forEach(fig=> {%>
+                    <div class="figuur">
+                      <span class="figuur-naam">
+                        <%= fig.name %>
+                      </span>
+                      <div class="figuur-images">
+                        <img class="figuur-img" src="<%= fig.img %>" alt="<%= fig.name  %>" />
+                      </div>
+                    </div>
+                    <%}); %>
+                      <input type="hidden" id="profileFig" name="profileFig" value="<%= figs[0].img %>">
+                </div>
+
+                <button class="carousel-button prev" type="button">❮</button>
+                <button class="carousel-button next" type="button">❯</button>
+
+                <div id="register-button-container">
+                  <% if (lang==='nl' ) { %>
+                    <button class="text-lego-stroke" data-text="registreren" type="submit">Registreren</button>
+                    <% } else if (lang==='en' ) { %>
+                      <button class="text-lego-stroke" data-text="register" type="submit">Register</button>
+                      <% } %>
+                        <% if (lang==='nl' ) { %>
+                          <p>Al een account? <a href="/login"><u>Meld je nu aan</u></a></p>
+                          <% } else if (lang==='en' ) { %>
+                            <p>Already have an account? <a href="/login"><u>Log in now</u></a></p>
+                            <% } %>
+                </div>
+
+              </form>
+              <% } else { %>
+                <form action="/<%= lang %>/register" method="post">
+                  <div class="form-group">
+                    <p>
+                      <% if (lang==='nl' ) { %>
+                        We hebben een verificatiecode naar je e-mailadres gestuurd. Voer deze code in om je registratie
+                        te
+                        voltooien.
+                        <% } else if (lang==='en' ) { %>
+                          We have sent a verification code to your email address. Please enter this code to complete
+                          your
+                          registration.
+                          <% } %>
+                    </p>
+                    <div style="display: flex; gap: 5px;">
+                      <% for(let i=0; i<6; i++) { %>
+                        <input type="text" maxlength="1" pattern="[0-9]" required style="width:3em;text-align:center;"
+                          class="code-input" />
+                        <% } %>
+                          <input type="hidden" name="verificationCode" id="verificationCode" />
+                    </div>
+                  </div>
+                  <input type="hidden" name="uname" value="<%= tempUser.uname %>">
+                  <input type="hidden" name="email" value="<%= tempUser.email %>">
+                  <input type="hidden" name="password" value="<%= tempUser.password %>">
+                  <input type="hidden" name="profileFig" value="<%= tempUser.profileFig %>">
+                  <input type="hidden" name="code" value="<%= tempUser.code %>">
+                  <% if (lang==='nl' ) { %>
+                    <button class="text-lego-stroke" data-text="verifiëren" type="submit">Verifiëren</button>
+                    <% } else if (lang==='en' ) { %>
+                      <button class="text-lego-stroke" data-text="verify" type="submit">Verify</button>
+                      <% } %>
+
+                        <script>
+                          document.querySelectorAll('.code-input').forEach(input => {
+                            input.addEventListener('input', function () {
+                              if (this.value.length === 1) {
+                                const nextInput = this.nextElementSibling;
+                                if (nextInput) {
+                                  nextInput.focus();
+                                }
+                              } else if (this.value.length === 0) {
+                                const prevInput = this.previousElementSibling;
+                                if (prevInput) {
+                                  prevInput.focus();
+                                }
+                              }
+                              updateVerificationCode();
+                            });
+                          });
+
+                          function updateVerificationCode() {
+                            const codeInputs = document.querySelectorAll('.code-input');
+                            const codeArray = Array.from(codeInputs).map(input => input.value);
+                            document.getElementById('verificationCode').value = codeArray.join('');
+                          }
+                        </script>
+                </form>
+                <% } %>
+                  <% if (popUp) { %>
+                    <aside class="reg-popUp">
+                      <div class="popup-content">
+                        <span class="popup-close"
+                          onclick="document.querySelector('.reg-popUp').style.display='none'">❌</span>
+                        <h3>Registratie voltooid!</h3>
+                        <p>Welkom bij LegoLads, <strong>
+                            <%= uname ? uname : 'gebruiker' %>
+                          </strong>! Je account werd succesvol aangemaakt.</p>
+                        <button class="text-lego-stroke" data-text="Ga naar LegoLads" type="submit">Ga naar
+                          LegoLads</button>
+                      </div>
+                    </aside>
+                    <% } %>
+
+          </div>
+    </div>
+  </main>
+</body>
+
+</html>

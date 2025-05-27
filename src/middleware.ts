@@ -35,3 +35,19 @@ export async function minifigsApi(req: Request, res: Response, next: NextFunctio
     next();
   }
   
+
+// Enrico: check of de user is ingelogd
+export function requireAuth(req: Request, res: Response, next: NextFunction) {
+    if (req.session.user) {
+        return next();
+    }
+    return res.redirect(`/${res.locals.lang || "nl"}/login`);
+}
+
+// Enrico: redirect als de user al is ingelogd
+export function redirectIfLoggedIn(req: Request, res: Response, next: NextFunction) {
+    if (req.session.user) {
+        return res.redirect(`/${res.locals.lang || "nl"}/`);
+    }
+    next();
+}

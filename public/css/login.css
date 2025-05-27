@@ -75,9 +75,9 @@ form {
 label {
     margin-bottom: 5px;
     color: var(--text-color);
-    width: 65%;
     display: flex;
     justify-content: start;
+    font-family: Oswald, sans-serif !important;
 }
 
 
@@ -200,44 +200,45 @@ a{
     position: relative;
 }
 
-input[type="checkbox"] {
-    -webkit-appearance: checkbox;
-       -moz-appearance: checkbox;
-            appearance: checkbox;
-    display: inline-block;
-    width: auto;
-  }
-
-  .forgot-password {
-    font-size: 0.6em; 
-    position: absolute; 
-    right: 5%; 
-    top: calc(100% - -10px); 
-    margin: 0; 
-    width: 60%;
-    text-decoration: underline;
+.login-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: 18px;
+    margin-bottom: 10px;
+    gap: 20px;
 }
 
-
-
-
 .stay-logged-in {
-    font-size: 0.6em; 
-    position: absolute; 
-    left: 16%; 
-    top: calc(100% - -5px); 
-    margin: 0; 
-    width: 60%;
+    display: flex;
+    align-items: center;
+    font-size: 1em;
     color: var(--text-color);
+    margin: 0;
+    width: auto;
 }
 
 .stay-logged-in input[type="checkbox"] {
-    margin-right: 5px; 
+    margin-right: 8px;
+    width: 20px;
+    height: 20px;
 }
 
 .stay-logged-in label {
-    font-size: 0.6em; 
+    font-size: 1em;
 }
+
+.forgot-password-link {
+    font-size: 1em;
+    text-decoration: underline;
+    color: var(--text-color);
+    white-space: nowrap;
+}
+
+#eye-open, #eye-closed {
+    cursor: url("../assets/images/cursor_hand.cur"), pointer !important;
+  }
 
 
 
@@ -277,6 +278,7 @@ input[type="checkbox"] {
         display: flex;
         justify-content: center;
         align-items: center;
+        padding: 15px 5px;
     }
 
     .registration-form h2 {
@@ -295,26 +297,81 @@ input[type="checkbox"] {
     .form-group {
         width: 50vh;
         grid-template-columns: 1fr;
+        max-width: 100%;
     }
   
-    .stay-logged-in{
-    position: absolute; 
-    left: 17%; 
-    top: calc(100% - -5px); 
-    margin: 0; 
-    width: 60%;
-    font-size: 0.6em; 
-
-    }
-    
-    .forgot-password {
-        font-size: 0.6em; 
-        position: absolute; 
-        right: 10%; 
-        top: calc(100% - -10px); 
-        margin: 0; 
-        width: 40%;
-        text-decoration: underline;
+    .forgot-password-link {
+        font-size: 0.95em;
     }
 
+}
+
+@media (min-width: 900px) {
+  .form-group {
+    width: 500px;
+  }
+
+  label {
+    font-size: 1.3em;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="password"] {
+    font-size: 1.2em;
+    padding: 16px;
+    width: 90%;
+    margin-bottom: 15px;
+  }
+
+  .registration-form {
+    width: 100%;
+    max-width: 600px;
+  }
+}
+
+.form-group {
+  margin-bottom: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.form-group .stay-logged-in, a {
+  font-size: 1.2em;
+}
+
+label {
+  color: var(--text-color);
+  margin-bottom: 6px;
+  font-size: 1.1em;
+  font-family: inherit;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  border: 1.5px solid #ccc;
+  border-radius: 10px;
+  padding: 12px;
+  width: 100%;
+  font-size: 1em;
+  margin-bottom: 8px;
+  background: #fff;
+  color: #222;
+  box-sizing: border-box;
+}
+
+button.text-lego-stroke {
+  font-size: 1.2em !important;
+  padding: 14px 40px !important;
+  margin-top: 20px;
+}
+
+.resultaat-container {
+  max-width: 600px;
+  width: 100%;
+  padding: 40px 30px;
 }

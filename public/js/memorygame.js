@@ -1,6 +1,6 @@
+// import { getUserById, incrementAchievementProgress, collectAchievementReward } from "../database";
+
 document.addEventListener("DOMContentLoaded", async () => {
-    const apiKey = "7138b5e205e720e8eb6b839cd6971e37";
-    const dataType = "minifigs";
     let correctTries = 0;
     let incorrectTries = 0;
     let matchedPairs = 0;
@@ -12,17 +12,32 @@ document.addEventListener("DOMContentLoaded", async () => {
     gameContainer.id = "memory-game";
     document.querySelector(".memory-container").appendChild(gameContainer);
 
-    async function fetchLegoData() {
-        const randomPage = Math.floor(Math.random() * 10) + 1;
-        const apiUrl = `https://rebrickable.com/api/v3/lego/${dataType}/?page_size=${totalPairs}&page=${randomPage}`;
+    async function fetchUnlockedFigs() {
         try {
-            const response = await fetch(apiUrl, {
-                headers: { Authorization: `key ${apiKey}` }
+            const langMatch = window.location.pathname.match(/^\/(nl|en)/);
+            const langPrefix = langMatch ? langMatch[0] : '/nl';
+            const response = await fetch(`${langPrefix}/get-user-figs`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                // body: JSON.stringify({ userId: "680d098a9e371da5cefb77cb" })
             });
             const data = await response.json();
-            return data.results;
+            if (data.success) {
+                const figs = data.figs.map(fig => ({
+                    id: fig.name,
+                    img: fig.img
+                }));
+                const shuffled = shuffle(figs);
+                if (shuffled.length > 6) {
+                    return shuffled.slice(0, 6);
+                } else if (shuffled.length > 0) {
+                    return shuffled;
+                }
+            } else {
+                return [];
+            }
         } catch (error) {
-            console.error(`Error fetching Lego ${dataType}:`, error);
+            console.error("Error fetching user figs:", error);
             return [];
         }
     }
@@ -37,7 +52,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         incorrectTries = 0;
         matchedPairs = 0;
 
-        let cards = items.flatMap(item => [{ id: item.set_num, img: item.set_img_url }, { id: item.set_num, img: item.set_img_url }]);
+        let cards = items.flatMap(item => [{ id: item.id, img: item.img }, { id: item.id, img: item.img }]);
         cards = shuffle(cards);
 
         cards.forEach(item => {
@@ -94,7 +109,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         return remainingTime;
     }
 
-    function openPopup(success, earnedCoins = 0) {
+    async function openPopup(success, earnedCoins = 0) {
         const popup = document.getElementById("popup");
         const popupContent = document.getElementById("popup-content");
         popup.style.display = "flex";
@@ -102,6 +117,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (success) {
             popupContent.querySelector("h2").textContent = `Gefeliciteerd! Je bent gewonnen!`;
             popupContent.querySelector("p").textContent = `Je hebt ${earnedCoins} coins verdiend!`;
+
+            startCoinConfetti(earnedCoins);
         } else {
             popupContent.querySelector("h2").textContent = "Jammer, je hebt het niet gehaald. Volgende keer beter!";
         }
@@ -117,6 +134,64 @@ document.addEventListener("DOMContentLoaded", async () => {
                 });
             };
             document.body.appendChild(confettiScript);
+
+            // Enrico: Code om achievement te updaten
+            try {
+                const langMatch = window.location.pathname.match(/^\/(nl|en)/);
+            const langPrefix = langMatch ? langMatch[0] : '/nl';
+            const response = await fetch(`${langPrefix}/update-achievement`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ achievementKey: "coins", incrementBy: earnedCoins })
+                });
+
+                const result = await response.json();
+                console.log("Achievement geupdate:", result);
+                showAchievementPopup(result.progress.title, result.progress.current, result.progress.goal);
+            } catch (error) {
+                console.error("Fout bij updaten van achievement:", error);
+            }
+
+            // Enrico: Code om coins te updaten
+            try {
+                const langMatch = window.location.pathname.match(/^\/(nl|en)/);
+            const langPrefix = langMatch ? langMatch[0] : '/nl';
+            const response = await fetch(`${langPrefix}/update-coins`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ coins: earnedCoins })
+                });
+
+                const result = await response.json();
+                console.log("Coins geupdate:", result);
+            } catch (error) {
+                console.error("Fout bij updaten van de coins:", error);
+            }
+
+            // Enrico: Code om coins te retourneren
+            try {
+                const langMatch = window.location.pathname.match(/^\/(nl|en)/);
+            const langPrefix = langMatch ? langMatch[0] : '/nl';
+            const response = await fetch(`${langPrefix}/get-coins`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    // body: JSON.stringify({ userId: "680d098a9e371da5cefb77cb" })
+                });
+
+                const result = await response.json();
+                let desktopCoins = document.querySelector("#coin-container p");
+                let mobileCoins = document.querySelector(".coin-container span");
+                desktopCoins.textContent = `${formatCoins(result.coins)}`;
+                mobileCoins.textContent = `${formatCoins(result.coins)}`;
+            } catch (error) {
+                console.error("Fout bij returnen van de coins:", error);
+            }
         }
     }
 
@@ -124,7 +199,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         document.querySelectorAll(".card").forEach(card => {
             card.classList.add("flip-back");
         });
-    
+
         setTimeout(() => {
             document.getElementById("popup").style.display = "none";
             loadGame();
@@ -137,7 +212,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
 
     async function loadGame() {
-        const items = await fetchLegoData();
+        const items = await fetchUnlockedFigs();
         if (items.length) {
             PauseTimer();
             setTimer(time);
@@ -148,12 +223,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     function setTimer(seconds) {
         display.style.height = pixel_width * height_pixels + "px";
-    
+
         const timerSeconds = parseInt(seconds);
         if (!isNaN(timerSeconds) && timerSeconds > 0) {
             StartTimer(timerSeconds);
         }
-    
+
         const timerCheckInterval = setInterval(() => {
             if (GetTime() <= 0) {
                 openPopup(false);
@@ -171,4 +246,72 @@ function openInfoPopup() {
 
 function closeInfoPopup() {
     document.getElementById("infoPopup").close();
+}
+
+function formatCoins(coins) {
+    if (coins >= 1000) {
+        return Math.floor(coins / 100) / 10 + "K";
+    }
+    return coins.toString();
+}
+
+function startCoinConfetti(earnedCoins) {
+    const coinContainer = document.querySelector("#coin-container p");
+    const body = document.body;
+    const batchSize = 10;
+    let coinsLeft = earnedCoins;
+
+    const currentCoins = parseFloat(coinContainer.textContent.replace("K", "")) || 0;
+    const totalCoins = currentCoins + earnedCoins;
+
+    coinContainer.textContent = formatCoins(totalCoins);
+
+    function createCoinBatch() {
+        const coinsToCreate = Math.min(batchSize, coinsLeft);
+        for (let i = 0; i < coinsToCreate; i++) {
+            const coin = document.createElement("img");
+            coin.src = "../assets/images/coin.png";
+            coin.classList.add("coin-confetti");
+
+            const centerX = window.innerWidth / 2;
+            const centerY = window.innerHeight / 2;
+            const spreadX = 500;
+            const spreadY = 400;
+
+            coin.style.left = centerX + (Math.random() * spreadX - spreadX / 2) + "px";
+            coin.style.top = centerY + (Math.random() * spreadY - spreadY / 2) + "px";
+
+            body.appendChild(coin);
+
+            coin.addEventListener("mouseover", () => {
+                moveCoinToContainer(coin, coinContainer);
+            });
+
+            setTimeout(() => {
+                if (body.contains(coin)) {
+                    moveCoinToContainer(coin, coinContainer);
+                }
+            }, 5000);
+        }
+
+        coinsLeft -= coinsToCreate;
+
+        if (coinsLeft > 0) {
+            createCoinBatch();
+        }
+    }
+
+    createCoinBatch();
+}
+
+function moveCoinToContainer(coin, coinContainer) {
+    const rect = coinContainer.getBoundingClientRect();
+    coin.style.transition = "all 0.5s ease-in-out";
+    coin.style.left = rect.left + rect.width / 2 + "px";
+    coin.style.top = rect.top + rect.height / 2 + "px";
+    coin.style.opacity = "0";
+
+    setTimeout(() => {
+        coin.remove();
+    }, 500);
 }

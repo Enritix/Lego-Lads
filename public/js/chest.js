@@ -94,18 +94,27 @@ class SpinnerAnimation {
     }
 
     pickWinner() {
-        const itemsArray = Array.from(this.spinnerItems);
-        const middleIndex = Math.floor(itemsArray.length / 2);
-        const winningItem = itemsArray[middleIndex];
-
+        const markerRect = this.spinnerMarker.getBoundingClientRect();
+        let winningItem = null;
+    
+        Array.from(this.spinnerItems).forEach((item) => {
+            const itemRect = item.getBoundingClientRect();
+            if (
+                itemRect.left < markerRect.right &&
+                itemRect.right > markerRect.left
+            ) {
+                winningItem = item;
+            }
+        });
+    
         let winningColor = "unknown";
         if (winningItem.classList.contains("green")) winningColor = "green";
         if (winningItem.classList.contains("purple")) winningColor = "purple";
         if (winningItem.classList.contains("gold")) winningColor = "gold";
-
+    
         const winningName = names[winningColor][Math.floor(Math.random() * names[winningColor].length)];
         const winningImageSrc = images[winningName] || "./assets/images/blackfig.png";
-
+    
         this.winSound.play();
         showPopup(winningName, winningImageSrc, winningColor);
     }

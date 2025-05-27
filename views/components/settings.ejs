@@ -1,49 +1,157 @@
 <div id="overlay"></div>
 <aside id="settings-container">
-  <h1 id="settings-title">Instellingen</h1>
+  <h1 id="settings-title">
+    <% if (lang==='nl' ) { %>
+      Instellingen
+      <% } else if (lang==='en' ) { %>
+        Settings
+        <% } %>
+  </h1>
   <div id="settings">
     <div id="sound-container">
-      <h2 id="sound-title">Geluid</h2>
+      <h2 id="sound-title">
+        <% if (lang==='nl' ) { %>
+          Geluid
+          <% } else if (lang==='en' ) { %>
+            Sound
+            <% } %>
+      </h2>
       <div id="sound">
         <input type="checkbox" id="sound-toggle" name="sound" class="toggle-input" checked>
         <label for="sound-toggle" class="toggle-label">
           <span class="toggle-slider">
-            <img src="../assets/images/yellow_slider_stud.png" alt="LEGO knop" class="toggle-knob">
-            <span class="toggle-text off">uit</span>
-            <span class="toggle-text on">aan</span>
+            <img src="/assets/images/yellow_slider_stud.png" alt="LEGO knop" class="toggle-knob">
+            <span class="toggle-text off">
+              <% if (lang==='nl' ) { %>
+                uit
+                <% } else if (lang==='en' ) { %>
+                  off
+                  <% } %>
+            </span>
+            <span class="toggle-text on">
+              <% if (lang==='nl' ) { %>
+                aan
+                <% } else if (lang==='en' ) { %>
+                  on
+                  <% } %>
+            </span>
           </span>
         </label>
       </div>
     </div>
 
     <div id="music-container">
-      <h2 id="music-title">Muziek</h2>
+      <h2 id="music-title">
+        <% if (lang === 'nl') { %>
+        Muziek
+    <% } else if (lang === 'en') { %>
+        Music
+    <% } %>
+      </h2>
       <div id="music">
         <input type="checkbox" id="music-slider" name="music" class="toggle-input" checked>
         <label for="music-slider" class="toggle-label">
           <span class="toggle-slider">
-            <img src="../assets/images/yellow_slider_stud.png" alt="LEGO knop" class="toggle-knob">
-            <span class="toggle-text off">uit</span>
-            <span class="toggle-text on">aan</span>
+            <img src="/assets/images/yellow_slider_stud.png" alt="LEGO knop" class="toggle-knob">
+            <span class="toggle-text off">
+              <% if (lang === 'nl') { %>
+        uit
+    <% } else if (lang === 'en') { %>
+        off
+    <% } %>
+            </span>
+            <span class="toggle-text on">
+              <% if (lang === 'nl') { %>
+        aan
+    <% } else if (lang === 'en') { %>
+        on
+    <% } %>
+            </span>
           </span>
         </label>
       </div>
     </div>
 
     <div id="colormode-container">
-      <h2 id="colormode-title">Filter</h2>
+      <h2 id="colormode-title">
+        <% if (lang === 'nl') { %>
+        Filter
+    <% } else if (lang === 'en') { %>
+        Filter
+    <% } %>
+      </h2>
       <div class="select-wrapper">
         <select name="colormode" id="colormode" class="settings-select" default="normal">
-          <option value="normal">Normaal</option>
-          <option value="achromatomaly">Achromatomalie</option>
-          <option value="achromatopsia">Achromatopsie</option>
-          <option value="daltonism">Daltonisme</option>
-          <option value="deuteranopia">Deuteranoop</option>
-          <option value="deuteranomaly">Dichromatopsie</option>
-          <option value="protanopia">Protanoop</option>
-          <option value="protanomaly">Protanomalie</option>
-          <option value="tritanomaly">Trichromatopsie</option>
-          <option value="tritanopia">Tritanoop</option>
+          <option value="normal">
+            <% if (lang === 'nl') { %>
+        Normaal
+    <% } else if (lang === 'en') { %>
+        Normal
+    <% } %>
+          </option>
+          <option value="achromatomaly">
+            <% if (lang === 'nl') { %>
+        Achromatomalie
+    <% } else if (lang === 'en') { %>
+        Achromatomaly
+    <% } %>
+          </option>
+          <option value="achromatopsia">
+            <% if (lang === 'nl') { %>
+        Achromatopsie
+    <% } else if (lang === 'en') { %>
+        Achromatopsia
+    <% } %>
+          </option>
+          <option value="daltonism">
+            <% if (lang === 'nl') { %>
+        Daltonisme
+    <% } else if (lang === 'en') { %>
+        Daltonism
+    <% } %>
+          </option>
+          <option value="deuteranopia">
+            <% if (lang === 'nl') { %>
+        Deuteranoop
+    <% } else if (lang === 'en') { %>
+        Deuteranopia
+    <% } %>
+          </option>
+          <option value="deuteranomaly">
+            <% if (lang === 'nl') { %>
+        Dichromatopsie
+    <% } else if (lang === 'en') { %>
+        Deuteranomaly
+    <% } %>
+          </option>
+          <option value="protanopia">
+            <% if (lang === 'nl') { %>
+        Protanoop
+    <% } else if (lang === 'en') { %>
+        Protanopia
+    <% } %>
+          </option>
+          <option value="protanomaly">
+            <% if (lang === 'nl') { %>
+        Protanomalie
+    <% } else if (lang === 'en') { %>
+        Protanomaly
+    <% } %>
+          </option>
+          <option value="tritanomaly">
+            <% if (lang === 'nl') { %>
+        Trichromatopsie
+    <% } else if (lang === 'en') { %>
+        Tritanomaly
+    <% } %>
+          </option>
+          <option value="tritanopia">
+            <% if (lang === 'nl') { %>
+        Tritanoop
+    <% } else if (lang === 'en') { %>
+        Tritanopia
+    <% } %>
+          </option>
         </select>
         <div class="arrow-box">
           <div class="custom-arrow"></div>
@@ -51,11 +159,29 @@
       </div>
     </div>
     <div id="language-container">
-      <h2 id="language-title">Taal</h2>
+      <h2 id="language-title">
+        <% if (lang === 'nl') { %>
+        Taal
+    <% } else if (lang === 'en') { %>
+        Language
+    <% } %>
+      </h2>
       <div class="select-wrapper">
         <select name="language" id="language" class="settings-select" default="dutch">
-          <option value="dutch">Nederlands</option>
-          <option value="english">Engels</option>
+          <option value="dutch">
+            <% if (lang === 'nl') { %>
+        Nederlands
+    <% } else if (lang === 'en') { %>
+        Dutch
+    <% } %>
+          </option>
+          <option value="english">
+            <% if (lang === 'nl') { %>
+        Engels
+    <% } else if (lang === 'en') { %>
+        English
+    <% } %>
+          </option>
         </select>
         <div class="arrow-box">
           <div class="custom-arrow"></div>
@@ -63,7 +189,13 @@
       </div>
     </div>
     <div id="brightness-container">
-      <h2 id="brightness-title">Helder</h2>
+      <h2 id="brightness-title">
+        <% if (lang === 'nl') { %>
+        Helderheid
+    <% } else if (lang === 'en') { %>
+        Brightness
+    <% } %>
+      </h2>
       <div id="brightness">
         <button id="brightness-decrease">-</button>
         <div id="brightness-bar"></div>
@@ -71,7 +203,12 @@
       </div>
     </div>
     <div id="close-btn-container">
-      <button id="settings-close-btn" class="text-lego-stroke" data-text="sluiten">sluiten</button>
+      <% if (lang === 'nl') { %>
+        <button id="settings-close-btn" class="text-lego-stroke" data-text="sluiten">sluiten</button>
+    <% } else if (lang === 'en') { %>
+        <button id="settings-close-btn" class="text-lego-stroke" data-text="close">close</button>
+    <% } %>
+      
     </div>
   </div>
 </aside>

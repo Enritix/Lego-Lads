@@ -126,6 +126,7 @@ main {
     background-size: cover;
     background-position: center;
     transform: rotateY(180deg);
+    background-color: #d7d7d7;
 }
 
 .card .back {
@@ -162,7 +163,7 @@ main {
 } */
 
 button:hover {
-    transform: scale(1.05);
+    transform: scale(1.02);
 }
 
 #popup {
@@ -349,4 +350,14 @@ menu {
         width: 20px;
         height: 20px;
     }
+}
+  
+.coin-confetti {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    z-index: 1000;
+    pointer-events: auto;
+    transition: transform 0.3s ease, opacity 0.5s ease;
+    cursor: pointer;
 }
