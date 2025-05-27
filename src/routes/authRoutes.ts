@@ -12,6 +12,63 @@ import { sendVerificationEmail } from '../utils/email';
 const router = express.Router();
 router.use(sessionMiddleware);
 
+const errorMessages = {
+  requiredFields: {
+    nl: "Alle velden zijn verplicht",
+    en: "All fields are required"
+  },
+  invalidEmail: {
+    nl: "Ongeldig e-mailadres",
+    en: "Invalid email address"
+  },
+  passwordMismatch: {
+    nl: "Wachtwoorden komen niet overeen",
+    en: "Passwords do not match"
+  },
+  passwordTooShort: {
+    nl: "Wachtwoord moet minimaal 8 tekens bevatten",
+    en: "Password must be at least 8 characters"
+  },
+  userExists: {
+    nl: "Gebruiker met dit e-mailadres of gebruikersnaam bestaat al",
+    en: "A user with this email or username already exists"
+  },
+  registrationError: {
+    nl: "Er is een fout opgetreden bij het registreren",
+    en: "An error occurred during registration"
+  },
+  sessionExpired: {
+    nl: "Sessie verlopen, probeer opnieuw te registreren.",
+    en: "Session expired, please try registering again."
+  },
+  verificationIncorrect: {
+    nl: "Verificatiecode is onjuist.",
+    en: "Verification code is incorrect."
+  },
+  userNotFound: {
+    nl: "Gebruiker niet gevonden",
+    en: "User not found"
+  },
+  passwordIncorrect: {
+    nl: "Wachtwoord klopt niet",
+    en: "Password is incorrect"
+  },
+  usernameRequired: {
+    nl: "Gebruikersnaam is verplicht",
+    en: "Username is required"
+  },
+  passwordChanged: {
+    nl: "Wachtwoord succesvol aangepast. Log nu in.",
+    en: "Password changed successfully. Please log in."
+  }
+};
+
+function translate(key: keyof typeof errorMessages, lang: string) {
+  const message = errorMessages[key];
+  const language = (lang === "nl" || lang === "en") ? lang : "nl";
+  return message[language as "nl" | "en"];
+}
+
 router.get("/register", redirectIfLoggedIn, async (req: Request, res: Response) => {
     const defaultFig1 = await fetchMinifigByName("Peter Parker");
     const defaultFig2 = await fetchMinifigByName("Arctic Guy");
@@ -36,7 +93,7 @@ router.post("/register", redirectIfLoggedIn, async (req: Request, res: Response)
     if (!verificationCode) {
         if (!uname || !email || !password || !confirmPassword || !profileFig) {
             return res.render("register", {
-                error: "Alle velden zijn verplicht",
+                error: translate("requiredFields", res.locals.lang || "nl"),
                 popUp: false,
                 uname: null,
                 figs: minifigs,
@@ -47,7 +104,7 @@ router.post("/register", redirectIfLoggedIn, async (req: Request, res: Response)
         }
         if (!email.includes("@")) {
             return res.render("register", {
-                error: "Ongeldig e-mailadres",
+                error: translate("invalidEmail", res.locals.lang || "nl"),
                 popUp: false,
                 uname: null,
                 figs: minifigs,
@@ -58,7 +115,7 @@ router.post("/register", redirectIfLoggedIn, async (req: Request, res: Response)
         }
         if (password !== confirmPassword) {
             return res.render("register", {
-                error: "Wachtwoorden komen niet overeen",
+                error: translate("passwordMismatch", res.locals.lang || "nl"),
                 popUp: false,
                 uname: null,
                 figs: minifigs,
@@ -69,7 +126,7 @@ router.post("/register", redirectIfLoggedIn, async (req: Request, res: Response)
         }
         if (password.length < 8) {
             return res.render("register", {
-                error: "Wachtwoord moet minimaal 8 tekens bevatten",
+                error: translate("passwordTooShort", res.locals.lang || "nl"),
                 popUp: false,
                 uname: null,
                 figs: minifigs,
@@ -82,7 +139,7 @@ router.post("/register", redirectIfLoggedIn, async (req: Request, res: Response)
             const existingUser = await findUserByEmailOrUsername(email, uname);
             if (existingUser) {
                 return res.render("register", {
-                    error: "Gebruiker met dit e-mailadres of gebruikersnaam bestaat al",
+                    error: translate("userExists", res.locals.lang || "nl"),
                     popUp: false,
                     uname: null,
                     figs: minifigs,
@@ -113,7 +170,7 @@ router.post("/register", redirectIfLoggedIn, async (req: Request, res: Response)
             });
         } catch (err) {
             return res.render("register", {
-                error: "Er is een fout opgetreden bij het registreren",
+                error: translate("registrationError", res.locals.lang || "nl"),
                 popUp: false,
                 uname: null,
                 figs: minifigs,
@@ -126,7 +183,7 @@ router.post("/register", redirectIfLoggedIn, async (req: Request, res: Response)
         const tempUser = req.session.tempUser;
         if (!tempUser) {
             return res.render("register", {
-                error: "Sessie verlopen, probeer opnieuw te registreren.",
+                error: translate("sessionExpired", res.locals.lang || "nl"),
                 popUp: false,
                 uname: null,
                 figs: minifigs,
@@ -137,7 +194,7 @@ router.post("/register", redirectIfLoggedIn, async (req: Request, res: Response)
         }
         if (verificationCode !== tempUser.code) {
             return res.render("register", {
-                error: "Verificatiecode is onjuist.",
+                error: translate("verificationIncorrect", res.locals.lang || "nl"),
                 popUp: false,
                 uname: tempUser.uname,
                 figs: minifigs,
@@ -165,15 +222,15 @@ router.get("/login", redirectIfLoggedIn, (req: Request, res: Response) => {
 router.post("/login", redirectIfLoggedIn, async (req: Request, res: Response) => {
     const { uname, password, stayLoggedIn } = req.body;
     if (!uname || !password) {
-        return res.render("login", { error: "Alle velden zijn verplicht" });
+        return res.render("login", { error: translate("requiredFields", res.locals.lang || "nl") });
     }
     const user: User | null = await findUserByEmailOrUsername("", uname);
     if (!user) {
-        return res.render("login", { error: "Gebruiker niet gevonden" });
+        return res.render("login", { error: translate("userNotFound", res.locals.lang || "nl")});
     }
     const match = await bcrypt.compare(password, user.password);
     if (!match) {
-        return res.render("login", { error: "Wachtwoord klopt niet" });
+        return res.render("login", { error: translate("passwordIncorrect", res.locals.lang || "nl") });
     }
     req.session.user = user;
     if (stayLoggedIn) {
@@ -198,22 +255,22 @@ router.get("/forgot-password", redirectIfLoggedIn, (req, res) => {
 router.post("/forgot-password", redirectIfLoggedIn, async (req, res) => {
     const { uname, password, ["confirm-password"]: confirmPassword } = req.body;
     if (!uname) {
-        return res.render("forgot-password", { error: "Gebruikersnaam is verplicht", showResetForm: false, uname: null });
+        return res.render("forgot-password", { error: translate("usernameRequired", res.locals.lang || "nl"), showResetForm: false, uname: null });
     }
     const user = await findUserByEmailOrUsername("", uname);
     if (!user) {
-        return res.render("forgot-password", { error: "Gebruiker niet gevonden", showResetForm: false, uname: null });
+        return res.render("forgot-password", { error: translate("userNotFound", res.locals.lang || "nl"), showResetForm: false, uname: null });
     }
     if (password && confirmPassword) {
         if (password !== confirmPassword) {
-            return res.render("forgot-password", { error: "Wachtwoorden komen niet overeen", showResetForm: true, uname });
+            return res.render("forgot-password", { error: translate("passwordMismatch", res.locals.lang || "nl"), showResetForm: true, uname });
         }
         if (password.length < 8) {
-            return res.render("forgot-password", { error: "Wachtwoord moet minimaal 8 tekens bevatten", showResetForm: true, uname });
+            return res.render("forgot-password", { error: translate("passwordTooShort", res.locals.lang || "nl"), showResetForm: true, uname });
         }
         const hashedPassword = await bcrypt.hash(password, 10);
         await updateUserPassword(uname, hashedPassword);
-        return res.render("login", { error: "Wachtwoord succesvol aangepast. Log nu in.", lang: res.locals.lang || "nl" });
+        return res.render("login", { error: translate("passwordChanged", res.locals.lang || "nl"), lang: res.locals.lang || "nl" });
     }
     return res.render("forgot-password", { error: null, showResetForm: true, uname });
 });

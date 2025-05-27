@@ -130,6 +130,7 @@ header nav ul li svg:hover {
 #user-name {
   color: var(--text-color);
   font-size: 20px;
+  font-family: 'Bangers', sans-serif !important;
   letter-spacing: 2px;
   margin: 0;
   max-width: 90%;

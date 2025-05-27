@@ -115,9 +115,10 @@ router.post("/collect-achievement", async (req, res) => {
     try {
       const progress = await collectAchievementReward(typeof userId === 'string' ? userId : userId.toString(), achievementKey);
       res.json({ success: true, progress });
-      res.redirect('/profile');
+      
     } catch (error: any) {
       res.status(500).json({ success: false, error: error.message });
     }
+    res.redirect('/profile');
 });
 export default router;
