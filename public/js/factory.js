@@ -37,7 +37,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.log('Game data:', gameData);
     
     if (!gameData || gameData.gameStatus !== "inProgress") {
-        // Genereer random figs en haal de nieuwe gameData op
         gameData = await generateRandomFigures();
         if (!gameData) {
             alert("Kon geen nieuwe game data genereren.");
@@ -160,11 +159,13 @@ function addCurrentFigToFactory() {
     const nextFig = gameData.figs.find(fig => fig.status === "pending");
     if (nextFig) {
         if (window.innerWidth > 768) {
+            minifiguresDesktop.innerHTML = "";
             minifiguresDesktop.insertAdjacentHTML(
                 "beforeend",
                 `<img src="${nextFig.img}" alt="${nextFig.name} Minifigure">`
             );
         } else {
+            minifiguresMobile.innerHTML = "";
             minifiguresMobile.insertAdjacentHTML(
                 "beforeend",
                 `<img src="${nextFig.img}" alt="${nextFig.name} Minifigure">`

@@ -5,6 +5,7 @@ import {
   insertUserGameData,
   getUserById,
   updateGameDataFromFactory,
+  updateGameDataFromOrdenen,
 } from "../database";
 import { fetchSets, fetchMinifigs } from "../apicalls";
 import { ObjectId } from "mongodb";
@@ -279,7 +280,7 @@ router.post("/set-status", async (req, res) => {
   }
 
   try {
-    const gameData = await updateGameDataFromFactory(
+    const gameData = await updateGameDataFromOrdenen(
       userId.toString(),
       status,
       gameStatus

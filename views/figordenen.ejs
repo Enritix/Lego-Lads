@@ -28,16 +28,7 @@
         
           <span class="arrow" id="left">◀</span>
           <ul id="sets">
-            <% if (typeof sets !== 'undefined' && sets.length) { %>
-              <% sets.forEach(function(set, idx) { %>
-                <li data-set="<%= set.code %>">
-                  <a href="resultaat">
-                    <p class="name" id="set<%= idx+1 %>"><%= set.code %></p>
-                    <img src="<%= set.img %>" alt="">
-                  </a>
-                </li>
-              <% }) %>
-            <% } %>
+            
           </ul>
           <span class="arrow" id="right">▶</span>
 

@@ -1,272 +1,228 @@
-function openInfoPopup() {
-    document.getElementById("info-popup").style.display = "block";
-
-}
-
-function closePopup() {
-    document.getElementById("info-popup").style.display = "none";
-}
-
-function getLangPrefix() {
-    const match = window.location.pathname.match(/^\/(en|nl)\b/);
-    return match ? `/${match[1]}` : '';
-}
-
-function ordenFig(fig, set, status) {
-    fetch(getLangPrefix() + "/orden-fig", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            fig: {
-                name: fig?.alt,
-                img: fig?.src
-            },
-            set: set,
-            status: status
-        })
-    })
-    .then(res => res.json())
-    .then(data => {
-        if (data.redirect) {
-            window.location.href = data.redirect;
-        }
-    });
-}
-
-document.addEventListener("DOMContentLoaded", function () {
-    const sets = document.getElementById("sets");
-    const leftArrow = document.getElementById("left");
-    const rightArrow = document.getElementById("right");
-
-    const scrollAmount = sets.clientWidth;
-
-    rightArrow.addEventListener("click", function () {
-        sets.scrollBy({ left: scrollAmount, behavior: "smooth" });
-    });
-    leftArrow.addEventListener("click", function () {
-        sets.scrollBy({ left: -scrollAmount, behavior: "smooth" });
-    });
-});
-document.addEventListener("DOMContentLoaded", function () {
-    const overlay = document.getElementById("overlayOrdenen");
-    const popup = document.getElementById("reasonPopUp");
+document.addEventListener("DOMContentLoaded", async function () {
+    const setsUl = document.getElementById("sets");
+    const figImg = document.getElementById("figKeuze");
+    const plusAnim = document.getElementById("pluss");
+    const minAnim = document.getElementById("min");
+    const skipButton = document.getElementById("skipButton");
     const vernietigButton = document.getElementById("vernietigKnop");
     const closeButton = document.getElementById("closePopUp");
+    const overlay = document.getElementById("overlayOrdenen");
+    const popup = document.getElementById("reasonPopUp");
+
+    let currentFig = null;
+    let sets = [];
+
+    // Helper: animatie
+    function animateChange(elem, value) {
+        elem.textContent = value > 0 ? `+${value}` : `${value}`;
+        elem.classList.add("animate");
+        setTimeout(() => elem.classList.remove("animate"), 1000);
+    }
+
+    // Helper: redirect
+    function redirectTo(path) {
+        window.location.href = path;
+    }
+
+    // 1. Haal game data op
+    async function fetchGameData() {
+        const langMatch = window.location.pathname.match(/^\/(nl|en)/);
+        const langPrefix = langMatch ? langMatch[0] : '/nl';
+        const res = await fetch(`${langPrefix}/get-game-data`, { method: "POST" });
+        const data = await res.json();
+        if (!data.success) return null;
+        return data.gameData;
+    }
+
+    // 2. Haal alle sets op
+    async function fetchAllSets() {
+        const langMatch = window.location.pathname.match(/^\/(nl|en)/);
+        const langPrefix = langMatch ? langMatch[0] : '/nl';
+        const res = await fetch(`${langPrefix}/get-all-sets`, { method: "POST" });
+        const data = await res.json();
+        if (!data.success) return [];
+        return data.sets;
+    }
+
+    // 3. Vind eerste pending fig
+    function findFirstPendingFig(gameData) {
+        if (!gameData || !Array.isArray(gameData.figs)) return null;
+        return gameData.figs.find(fig => fig.status === "pending");
+    }
+
+    // 4. Toon sets in de UI
+    function showSets(setsToShow) {
+        setsUl.innerHTML = "";
+        setsToShow.forEach(set => {
+            const li = document.createElement("li");
+            li.dataset.id = set.id;
+            li.innerHTML = `
+                <a href="#" class="set-choice">
+                    <p class="name">${set.code}</p>
+                    <img src="${set.img}" alt="">
+                </a>
+            `;
+            setsUl.appendChild(li);
+        });
+    }
+
+    // 5. Main logica
+    async function init() {
+        const gameData = await fetchGameData();
+        if (!gameData) return;
+
+        currentFig = findFirstPendingFig(gameData);
+        if (!currentFig) {
+            redirectTo("/resultaat");
+            return;
+        }
+
+        // Toon fig
+        if (figImg) {
+            figImg.src = currentFig.img;
+            figImg.alt = currentFig.name;
+        }
+
+        // Sets ophalen en randomiseren
+        sets = await fetchAllSets();
+        const correctSet = sets.find(set => set.id === currentFig.set);
+        const otherSets = sets.filter(set => set.id !== currentFig.set);
+        const shuffled = otherSets.sort(() => 0.5 - Math.random());
+        const randomSets = [correctSet, ...shuffled.slice(0, 2)].sort(() => 0.5 - Math.random());
+
+        showSets(randomSets);
+
+        // Koppel click events aan sets
+        setsUl.querySelectorAll("li").forEach(li => {
+            li.addEventListener("click", async (e) => {
+                e.preventDefault();
+                const chosenSet = li.dataset.id;
+                let caseType = Number(chosenSet) === Number(currentFig.set) ? "juist" : "verkeerd";
+                await handleCase(caseType, chosenSet);
+            });
+        });
+    }
+
+    // 6. Case handler
+    async function handleCase(type, chosenSet = null) {
+        switch (type) {
+            case "juist":
+                await updateGameData("sorted");
+                await updateCoins(100);
+                animateChange(plusAnim, 100);
+                await addToOrdenedFigs();
+                break;
+            case "verkeerd":
+                await updateGameData("wrong");
+                await updateCoins(-100);
+                animateChange(minAnim, -100);
+                break;
+            case "overslaan":
+                await updateGameData("skipped");
+                await updateCoins(-100);
+                animateChange(minAnim, -100);
+                break;
+            case "wegwerpen":
+                await updateGameData("sorted");
+                await updateCoins(-100);
+                await addToBin();
+                animateChange(minAnim, -100);
+                break;
+        }
+        // Check of er nog pending figs zijn
+        const gameData = await fetchGameData();
+        if (gameData && Array.isArray(gameData.figs) && gameData.figs.some(fig => fig.status === "pending")) {
+            redirectTo("/factory");
+        } else {
+            redirectTo("/resultaat");
+        }
+    }
+
+    // 7. API helpers
+    async function updateGameData(status) {
+        const langMatch = window.location.pathname.match(/^\/(nl|en)/);
+        const langPrefix = langMatch ? langMatch[0] : '/nl';
+        await fetch(`${langPrefix}/set-status`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ status, gameStatus: "inProgress" })
+        });
+    }
+
+    async function updateCoins(amount) {
+        const langMatch = window.location.pathname.match(/^\/(nl|en)/);
+        const langPrefix = langMatch ? langMatch[0] : '/nl';
+        await fetch(`${langPrefix}/update-coins`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ coins: amount })
+        });
+    }
+
+    async function addToOrdenedFigs() {
+        const langMatch = window.location.pathname.match(/^\/(nl|en)/);
+        const langPrefix = langMatch ? langMatch[0] : '/nl';
+        await fetch(`${langPrefix}/orden-fig`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                fig: { name: currentFig.name, img: currentFig.img },
+                set: currentFig.set,
+                status: "sorted"
+            })
+        });
+    }
+
+    async function addToBin() {
+        const langMatch = window.location.pathname.match(/^\/(nl|en)/);
+        const langPrefix = langMatch ? langMatch[0] : '/nl';
+        await fetch(`${langPrefix}/bin-fig`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                fig: { name: currentFig.name, img: currentFig.img },
+                reason: getSelectedReason()
+            })
+        });
+    }
+
+    function getSelectedReason() {
+        const checked = popup.querySelector('input[name="reason"]:checked');
+        if (checked && checked.value === "other") {
+            const txt = popup.querySelector('input[type="text"]');
+            return txt ? txt.value : "";
+        }
+        return checked ? checked.value : "";
+    }
+
+    // 8. Button events
+    if (skipButton) {
+        skipButton.addEventListener("click", async () => {
+            await handleCase("overslaan");
+        });
+    }
 
     if (vernietigButton && overlay && popup) {
         vernietigButton.addEventListener("click", function () {
             overlay.style.display = "block";
-            popup.style.display = "block"; 
+            popup.style.display = "block";
         });
     }
 
     if (closeButton) {
-        closeButton.addEventListener("click", function () {
-            overlay.style.display = "none"; 
-            popup.style.display = "none";   
+        closeButton.addEventListener("click", async function (e) {
+            e.preventDefault();
+            overlay.style.display = "none";
+            popup.style.display = "none";
+            await handleCase("wegwerpen");
         });
     }
+
     overlay.addEventListener("click", function () {
         overlay.style.display = "none";
         popup.style.display = "none";
     });
+
+    // Start
+    init();
 });
-document.addEventListener("DOMContentLoaded", function () {
-    const skipButton = document.getElementById("skipButton");
-    const figKeuze = document.getElementById("figKeuze");
-    const vernietigButton = document.getElementById("vernietigKnop");
-    const setsList = document.getElementById("sets");
-
-    function updateCoins(minCoins) {
-        fetch(getLangPrefix() + "/update-coins", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ coins: minCoins })
-        })
-        .then(res => res.json())
-        .then(data => {
-            if (!data.success) {
-                alert("Kon geen munten aftrekken: " + (data.error || data.message));
-            }
-        })
-        .catch(() => alert("Er is een fout opgetreden bij het updaten van de munten."));
-    }
-
-    if (setsList) {
-        setsList.querySelectorAll("li").forEach(function (li) {
-            li.addEventListener("click", function (e) {
-                const setCode = li.getAttribute("data-set");
-                ordenFig(figKeuze, setCode, "gesorteerd");
-                updateCoins(100);
-
-                if (figKeuze) figKeuze.classList.add("hidden");
-                setTimeout(() => {
-                    if (figKeuze) figKeuze.style.display = "none";
-                }, 1000);
-                setTimeout(() => {
-                    window.location.href = "/factory";
-                }, 500);
-            });
-        });
-    }
-
-    if (skipButton) {
-        skipButton.addEventListener("click", function () {
-            updateCoins(-100);
-            ordenFig(figKeuze, null, "overgeslagen");
-
-            if (figKeuze) figKeuze.classList.add("hidden");
-            setTimeout(() => {
-                if (figKeuze) figKeuze.style.display = "none";
-            }, 1000);
-            setTimeout(() => {
-                window.location.href = "/factory";
-            }, 500);
-        });
-    }
-
-    if (vernietigButton) {
-        vernietigButton.addEventListener("click", function () {
-            updateCoins(-100);
-            ordenFig(figKeuze, null, "vernietigd");
-            fetch(getLangPrefix() + "/bin-fig", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                fig: {
-                    name: figKeuze?.alt,
-                    img: figKeuze?.src
-                },
-                reason: "weggegooid"
-            })
-        });
-        });
-    }
-
-
-});
-
-document.addEventListener("DOMContentLoaded", async function () {
-    async function getGameData() {
-       try {
-            const langMatch = window.location.pathname.match(/^\/(nl|en)/);
-            const langPrefix = langMatch ? langMatch[0] : '/nl';
-            const response = await fetch(`${langPrefix}/get-game-data`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-            });
-            const data = await response.json();
-            if (data.success) return data.gameData;
-        } catch (err) {
-            console.error('Kon game data niet ophalen:', err);
-        }
-        return null;
-    }
-
-    function findFirstPendingFig(figs) {
-        return figs.find(f => f.status === "pending");
-    }
-
-    function getRandomSets(allSets, correctSet) {
-        const otherSets = allSets.filter(s => s !== correctSet);
-        const shuffled = otherSets.sort(() => 0.5 - Math.random());
-        const randomTwo = shuffled.slice(0, 2);
-        return [...randomTwo, correctSet].sort(() => 0.5 - Math.random());
-    }
-
-    function showFigAndSets(fig, sets) {
-        const figKeuze = document.getElementById("figKeuze");
-        figKeuze.src = fig.img;
-        figKeuze.alt = fig.name;
-
-        const setsList = document.getElementById("sets");
-        setsList.innerHTML = "";
-        sets.forEach(set => {
-            const li = document.createElement("li");
-            li.setAttribute("data-set", set);
-            li.textContent = set;
-            setsList.appendChild(li);
-        });
-    }
-
-    async function checkGameStatusAndRedirect() {
-        const data = await getGameData();
-        const hasPending = data.figs.some(f => f.status === "pending");
-        if (!hasPending) {
-            await fetch(getLangPrefix() + "/api/game-completed", { method: "POST" });
-            window.location.href = "/resultaat";
-        } else {
-            window.location.href = "/factory";
-        }
-    }
-
-    const data = await getGameData();
-    const pendingFig = findFirstPendingFig(data.figs);
-    if (!pendingFig) {
-        window.location.href = "/resultaat";
-        return;
-    }
-
-    const allSets = data.allSets;
-    const sets = getRandomSets(allSets, pendingFig.set);
-
-    showFigAndSets(pendingFig, sets);
-
-    document.querySelectorAll("#sets li").forEach(li => {
-        li.addEventListener("click", async function () {
-            const gekozenSet = li.getAttribute("data-set");
-            const juist = gekozenSet === pendingFig.set;
-            await fetch(getLangPrefix() + "/api/update-fig-status", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    figName: pendingFig.name,
-                    status: juist ? "sorted" : "wrong",
-                    date: new Date().toISOString()
-                })
-            });
-            updateCoins(juist ? 100 : -100);
-            await checkGameStatusAndRedirect();
-        });
-    });
-
-    document.getElementById("skipButton").addEventListener("click", async function () {
-        await fetch(getLangPrefix() + "/api/update-fig-status", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                figName: pendingFig.name,
-                status: "skipped",
-                date: new Date().toISOString()
-            })
-        });
-        updateCoins(-100);
-        await checkGameStatusAndRedirect();
-    });
-
-    document.getElementById("vernietigKnop").addEventListener("click", async function () {
-        await fetch(getLangPrefix() + "/api/update-fig-status", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                figName: pendingFig.name,
-                status: "sorted",
-                date: new Date().toISOString()
-            })
-        });
-        await fetch(getLangPrefix() + "/bin-fig", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                fig: { name: pendingFig.name, img: pendingFig.img },
-                reason: "weggegooid"
-            })
-        });
-        updateCoins(-100);
-        await checkGameStatusAndRedirect();
-    });
-});
-
-

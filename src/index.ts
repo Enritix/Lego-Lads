@@ -68,7 +68,12 @@ app.use('/:lang(nl|en)', (req, res, next) => {
   next();
 });
 
-
+app.get('/:lang(nl|en)', (req, res, next) => {
+  if (!req.session.user) {
+    return res.redirect(`/${req.params.lang}/landingspage`);
+  }
+  next();
+});
 
 // Enrico: dit moet hier staan omdat de landingspage geen auth nodig heeft
 app.get('/:lang(nl|en)/landingspage', (req: Request, res: Response) => {

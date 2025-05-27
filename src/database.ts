@@ -90,10 +90,10 @@ export function createUserTemplate(
       },
     ],
     bin: [
-      // {
-      //   fig: "Pirate",
-      //   reason: "per ongeluk verwijderd",
-      // },
+      {
+        fig: "Pirate",
+        reason: "per ongeluk verwijderd",
+      },
     ],
     ordenedFigs: [
       // {
@@ -579,7 +579,7 @@ export async function updateGameDataFromOrdenen(
     {
       $set: {
         figs: updatedFigs,
-        gameStatus: gameStatus,
+        gameStatus: gameStatus
       },
     }
   );
