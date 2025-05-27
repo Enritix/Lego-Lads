@@ -12,6 +12,7 @@ import {connectToMongoDB, insertTestUser, readAllUsers,deleteAllUsers} from './d
 import {fetchMinifigs,fetchSets,fetchThemes} from'./apicalls';
 import { minifigsApi,requireAuth,setsApi,themesApi } from './middleware';
 import sessionMiddleware from './sessions';
+import apiRoutes from'./routes/profileRoutes';
 
 const app = express();
 const PORT = 8092;
@@ -67,11 +68,13 @@ app.use('/:lang(nl|en)', (req, res, next) => {
   next();
 });
 
+
+
 // Enrico: dit moet hier staan omdat de landingspage geen auth nodig heeft
 app.get('/:lang(nl|en)/landingspage', (req: Request, res: Response) => {
   res.render('landingspage');
 });
-
+app.use("/api", apiRoutes);
 app.use('/:lang(nl|en)', authRoutes);
 app.use('/:lang(nl|en)', requireAuth, gameRoutes);
 app.use('/:lang(nl|en)', requireAuth, chatbotRoutes);
@@ -79,6 +82,12 @@ app.use('/:lang(nl|en)', mainRoutes);
 app.use('/:lang(nl|en)', requireAuth, factoryRoutes);
 app.use('/:lang(nl|en)', requireAuth, profileRoutes);
 app.use('/:lang(nl|en)', requireAuth, figoverviewRoutes);
+app.use('/api', apiRoutes);
+app.use('/:lang(nl|en)/api', apiRoutes);
+
+
+
+
 
 app.use((req, res, next) => {
   const langMatch = req.path.match(/^\/(nl|en)(\/|$)/);

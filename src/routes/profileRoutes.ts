@@ -1,6 +1,9 @@
 import express, { Request, Response } from 'express';
 import {fetchMinifigs} from'../apicalls';
-import { collectAchievementReward, connectToMongoDB, getUserAchievements, getUserById, updateUserFig } from '../database';
+import { collectAchievementReward, connectToMongoDB, getUserAchievements, getUserById, updateUserFig,updateUserCoins, getUserCoins } from '../database';
+import { fetchRandomMinifigs} from '../apicalls';
+import { ObjectId } from "mongodb";
+
 
 
 
@@ -56,8 +59,44 @@ router.get('/chest', (req: Request, res: Response) => {
 });
 
 router.get('/shop', async (req: Request, res: Response) => {
-    res.render('shop', { title: "Winkel", cssFiles: ['/css/shop.css'], jsFiles: ['/js/shop.js'] });
+  try {
+    const minifigs  = await fetchRandomMinifigs(10);
+
+    res.render('shop', {
+      title: "Winkel",
+      cssFiles: ['/css/shop.css'],
+      jsFiles: ['/js/shop.js'],
+      minifigs 
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Fout laden winkel.");
+  }
 });
+
+router.get("/api/random-figs", async (req: Request, res: Response) => {
+  try {
+    const username = req.session.user?.username;
+    if (!username) return res.status(401).json({ error: "Niet ingelogd" });
+
+    const db = await connectToMongoDB();
+    const gebruiker = await db.collection("gebruikers").findOne({ username });
+
+    if (!gebruiker) {
+      return res.status(404).json({ error: "Gebruiker niet gevonden" });
+    }
+
+    const excludeNames = gebruiker.figs?.map((fig: any) => fig.name) || [];
+
+    const figs = await fetchRandomMinifigs(10, excludeNames);
+
+    res.json(figs);
+  } catch (err) {
+    console.error("❌ Fout bij ophalen random figs:", err);
+    res.status(500).json({ error: "Interne serverfout" });
+  }
+});
+
  
 // Abe: post routes 
 router.post("/set-profiel-fig", async (req, res) => {
@@ -121,4 +160,40 @@ router.post("/collect-achievement", async (req, res) => {
     }
     res.redirect('/profile');
 });
+
+
+//Abe: post om fig te kopen
+router.post("/buy-fig", async (req: Request, res: Response) => {
+  try {
+    const username = req.session.user?.username;
+    if (!username) return res.status(401).json({ error: "Niet ingelogd" });
+
+    const fig = req.body.fig;
+    if (!fig?.name || !fig?.rarity || !fig?.img || !fig?.price) {
+      return res.status(400).json({ error: "Ongeldige fig-gegevens" });
+    }
+
+    const db = await connectToMongoDB();
+    const gebruiker = await db.collection("gebruikers").findOne({ username });
+    if (!gebruiker) return res.status(404).json({ error: "Gebruiker niet gevonden" });
+
+    if (gebruiker.coins < fig.price) {
+      return res.status(400).json({ error: "Niet genoeg munten" });
+    }
+    await updateUserCoins(gebruiker._id.toString(), -fig.price);
+
+    await db.collection("gebruikers").updateOne(
+      { _id: gebruiker._id },
+      { $addToSet: { figs: fig } }
+    );
+    const updatedUser = await db.collection("gebruikers").findOne({ _id: gebruiker._id });
+
+    res.json({ message: "Figuur gekocht!", newBalance: updatedUser?.coins ?? 0 });
+
+  } catch (err) {
+    console.error("❌ Fout bij kopen:", err);
+    res.status(500).json({ error: "Interne fout bij kopen" });
+  }
+});
+
 export default router;

@@ -1,5 +1,5 @@
 let currentIndex = 1; 
-const images = document.querySelectorAll(".carousel-img");
+let images = document.querySelectorAll(".carousel-img");
 const nameEl = document.getElementById("char-name");
 const rarityEl = document.getElementById("char-rarity");
 const priceEl = document.getElementById("char-price");
@@ -73,17 +73,134 @@ function closePopup() {
 document.querySelector(".buy-btn").addEventListener("click", openPopup);
 document.querySelector(".buy-confirm").addEventListener("click", closePopup);
 
-function startCountdown(duration) {
-    let timerElement = document.getElementById("countdown");
-    let [hours, minutes, seconds] = duration.split(":").map(Number);
-    let totalSeconds = hours * 3600 + minutes * 60 + seconds;
+let countdownInterval;
 
-    const countdownInterval = setInterval(() => {
-        if (totalSeconds <= 0) return clearInterval(countdownInterval);
-        
-        totalSeconds--;
-        let time = new Date(totalSeconds * 1000).toISOString().substr(11, 8);
-        timerElement.textContent = time;
+function startCountdown(durationStr) {
+    const timerElement = document.getElementById("countdown");
+
+    if (countdownInterval) {
+        clearInterval(countdownInterval);
+    }
+
+    if (!localStorage.getItem("countdownEndTime")) {
+        const [hours, minutes, seconds] = durationStr.split(":").map(Number);
+        const now = Date.now();
+        const endTime = now + ((hours * 3600 + minutes * 60 + seconds) * 1000);
+        localStorage.setItem("countdownEndTime", endTime.toString());
+        console.log( new Date(endTime).toLocaleTimeString());
+    } else {
+    }
+
+    countdownInterval = setInterval(() => {
+        const now = Date.now();
+        const endTime = parseInt(localStorage.getItem("countdownEndTime")); 
+
+        const remaining = Math.floor((endTime - now) / 1000);
+
+        if (remaining <= 0) {
+            clearInterval(countdownInterval);
+            localStorage.removeItem("countdownEndTime");
+            timerElement.textContent = "00:00:00";
+            refreshFigs(); 
+            return;
+        }
+
+        const hrs = String(Math.floor(remaining / 3600)).padStart(2, '0');
+        const mins = String(Math.floor((remaining % 3600) / 60)).padStart(2, '0');
+        const secs = String(remaining % 60).padStart(2, '0');
+
+        timerElement.textContent = `${hrs}:${mins}:${secs}`;
     }, 1000);
 }
-startCountdown("11:59:59");
+
+async function refreshFigs() {
+
+    try {
+        const res = await fetch("/api/random-figs");
+        if (!res.ok) throw new Error(`Fetch mislukt: ${res.status}`);
+
+        const newFigs = await res.json();
+        console.log(newFigs);
+
+        const carousel = document.querySelector(".carousel");
+        if (!carousel) {
+            return;
+        }
+
+        carousel.innerHTML = "";
+
+        newFigs.forEach((fig, index) => {
+            const price = fig.rarity === "legendary" ? 1000 :
+                          fig.rarity === "episch" ? 750 : 500;
+
+            const img = document.createElement("img");
+            img.src = fig.img;
+            img.alt = fig.name;
+            img.classList.add("carousel-img");
+            img.dataset.name = fig.name;
+            img.dataset.rarity = fig.rarity;
+            img.dataset.price = price;
+
+            carousel.appendChild(img);
+        });
+
+        images = document.querySelectorAll(".carousel-img");
+ 
+        currentIndex = 1;
+        updateCarousel();
+  
+    } catch (err) {
+        console.error(err);
+    }
+    localStorage.removeItem("countdownEndTime"); 
+    startCountdown("00:00:05"); 
+}
+
+    startCountdown("00:00:05");
+
+function formatCoins(coins) {
+  if (coins >= 1000) {
+    return Math.floor(coins / 100) / 10 + "K";
+  }
+  return coins.toString();
+}
+
+document.querySelector(".buy-confirm").addEventListener("click", async () => {
+  const currentImg = images[currentIndex];
+  const selectedFig = {
+    name: currentImg.dataset.name,
+    rarity: currentImg.dataset.rarity,
+    img: currentImg.src,
+    price: parseInt(currentImg.dataset.price)
+  };
+
+  try {
+    const langPrefix = window.location.pathname.startsWith("/en") ? "/en" : "/nl";
+
+    const res = await fetch(`${langPrefix}/api/buy-fig`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ fig: selectedFig })
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+      const formattedCoins = formatCoins(data.newBalance);
+
+      const popupBalance = document.getElementById("popup-balance");
+      if (popupBalance) popupBalance.textContent = formattedCoins;
+
+      const desktopCoins = document.querySelector("#coin-container p");
+      if (desktopCoins) desktopCoins.textContent = formattedCoins;
+
+      const mobileCoins = document.querySelector(".coin-container span");
+      if (mobileCoins) mobileCoins.textContent = formattedCoins;
+
+      refreshFigs();
+    } else {
+    }
+
+  } catch (err) {
+  }
+});
