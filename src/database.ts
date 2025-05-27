@@ -1,6 +1,7 @@
 import { MongoClient, Db, ObjectId } from "mongodb";
 import { User } from './interfaces';
 import dotenv from "dotenv";
+import { create } from "domain";
 dotenv.config();
 
 /*require('dotenv').config();
@@ -155,6 +156,19 @@ export function createUserTemplate(
       brightness: 7,
     },
   };
+}
+
+export function createUserGameData(
+  playerId: string,
+  totalFigs: number
+) {
+  return {
+    playerId,
+    figs: [],
+    totalFigs,
+    gameStatus: "pending",
+    createdAt: new Date()
+  }
 }
 // Abe: test data word toegevoegd
 export async function insertTestUser() {
@@ -440,17 +454,27 @@ export async function updateMinifigReason(
   }
 }
 
-// Enrico: hier worden het game data bestand van de user uitgelezen
-export async function getGameData(userId: string) {
+// Lars: hier wordt een nieuwe user aangemaakt
+export async function insertUserGameData(playerId: string, totalFigs: number) {
   const db = await connectToMongoDB();
-  const gameData = await db
-    .collection("game_data")
-    .findOne({ playerId: userId });
-  if (!gameData) {
-    throw new Error("Gebruiker niet gevonden");
-  }
-  return gameData;
+  const newUserGameData = createUserGameData(playerId, totalFigs);
+  return await db.collection("game_data").insertOne(newUserGameData);
 }
+
+// Enrico: hier worden het game data bestand van de user uitgelezen
+export async function getGameData(playerId: string) {
+  const db = await connectToMongoDB();
+    const gameData = await db
+    .collection("game_data")
+    .find({ playerId: playerId })
+    .sort({ createdAt: -1 }) // nieuwste eerst
+    .limit(1)
+    .toArray();
+  return gameData[0];
+}
+
+
+// Enrico: TODO: updateGameData
 
 // Gentian: hier wordt een nieuwe user aangemaakt
 export async function insertUser(uname: string, hashedPassword: string, email: string, profileFig: string) {

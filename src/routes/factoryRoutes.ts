@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import { getGameData, connectToMongoDB } from "../database";
+import { getGameData, connectToMongoDB, insertUserGameData } from "../database";
 import { fetchSets, fetchMinifigs } from "../apicalls";
 import { ObjectId } from "mongodb";
 const router = express.Router();
@@ -13,20 +13,10 @@ router.get("/factory-welcome", (req: Request, res: Response) => {
 });
 
 router.get("/factory", (req: Request, res: Response) => {
-  if (
-    (req.session.ordenenDone ?? 0) >= (req.session.ordenenCount ?? 0) &&
-    (req.session.ordenenCount ?? 0) > 0
-  ) {
-    return res.redirect("/resultaat");
-  }
-
   const idx = req.session.ordenenDone ?? 0;
   const fig = req.session.ordenenFigs ? req.session.ordenenFigs[idx] : null;
   req.session.currentFig = fig;
-
-  console.log("ordenenFigs:", req.session.ordenenFigs);
-  console.log("ordenenDone:", req.session.ordenenDone);
-  console.log("currentFig:", fig);
+  req.session.currentFig = fig;
 
   res.render("factory", {
     title: "Lego Fabriek",
@@ -41,6 +31,17 @@ router.get("/figordenen", async (req: Request, res: Response) => {
   const shuffled = allSets.sort(() => 0.5 - Math.random());
   const randomSets = shuffled.slice(0, 3);
   const currentFig = req.session.currentFig || null;
+
+  // if (
+  //   (req.session.ordenenDone ?? 0) >= (req.session.ordenenCount ?? 0) &&
+  //   (req.session.ordenenCount ?? 0) > 0
+  // ) {
+  //   return res.redirect("/resultaat");
+  // }
+
+  const idx = req.session.ordenenDone ?? 0;
+  const fig = req.session.ordenenFigs ? req.session.ordenenFigs[idx] : null;
+  req.session.currentFig = fig;
 
   res.render("figordenen", {
     title: "Figs Ordenen",
@@ -70,10 +71,16 @@ router.get("/resultaat", (req: Request, res: Response) => {
 });
 
 router.post("/get-game-data", async (req: Request, res: Response) => {
-  const userId = req.body.userId;
+  const userId = req.session.user?._id;
+
+  if (!userId) {
+    return res
+      .status(400)
+      .json({ success: false, message: "User of fig ontbreekt" });
+  }
 
   try {
-    const gameData = await getGameData(userId);
+    const gameData = await getGameData(userId.toString());
     if (!gameData) {
       return res
         .status(404)
@@ -147,26 +154,43 @@ router.post("/orden-fig", async (req: Request, res: Response) => {
 router.post("/set-ordenen-count", async (req, res) => {
   const count = parseInt(req.body.count, 10);
   req.session.ordenenCount = count;
-  req.session.ordenenDone = 0;
+  // req.session.ordenenDone = 0;
 
-  const allFigs = await fetchMinifigs();
-  const shuffled = allFigs.sort(() => 0.5 - Math.random());
-  req.session.ordenenFigs = shuffled.slice(0, count);
+  // const allFigs = await fetchMinifigs();
+  // const shuffled = allFigs.sort(() => 0.5 - Math.random());
+  // req.session.ordenenFigs = shuffled.slice(0, count);
 
   const userId = req.session.user?._id;
-  if (userId) {
-    const db = await connectToMongoDB();
-    await db
-      .collection("game_data")
-      .updateOne(
-        { playerId: typeof userId === "string" ? userId : userId.toString() },
-        { $set: { totalFigs: count } }
-      );
+
+  if (!userId) {
+    return res
+      .status(400)
+      .json({ success: false, message: "User of fig ontbreekt" });
   }
+  // if (userId) {
+  //   const db = await connectToMongoDB();
+  //   await db
+  //     .collection("game_data")
+  //     .updateOne(
+  //       { playerId: typeof userId === "string" ? userId : userId.toString() },
+  //       { $set: { totalFigs: count } }
+  //     );
+  // }
 
-  res.json({ success: true });
+  // res.json({ success: true });
 
-  console.log("Gekozen figs:", req.session.ordenenFigs);
+  // console.log("Gekozen figs:", req.session.ordenenFigs);
+  try {
+    const gameData = await insertUserGameData(userId.toString(), count);
+    if (!gameData) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User game data not found" });
+    }
+    res.json({ success: true, gameData });
+  } catch (error: any) {
+    res.status(500).json({ success: false, error: error.message });
+  }
 });
 
 export default router;
