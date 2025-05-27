@@ -475,6 +475,34 @@ export async function getGameData(playerId: string) {
 
 
 // Enrico: TODO: updateGameData
+export async function updateGameDataFromFactory(
+  playerId: string,
+  figs: any[],
+  gameStatus: string
+) {
+  const db = await connectToMongoDB();
+  const latestGameData = await getGameData(playerId);
+
+  if (!latestGameData) {
+    throw new Error("Game data niet gevonden voor deze speler.");
+  }
+
+  const gameDataId = latestGameData._id;
+
+  const result = await db.collection("game_data").updateOne(
+    { _id: gameDataId },
+    {
+      $set: {
+        figs,
+        gameStatus
+      },
+    }
+  );
+  if (result.matchedCount === 0) {
+    throw new Error("Game data niet gevonden voor deze speler.");
+  }
+  return await db.collection("game_data").findOne({ _id: gameDataId });
+}
 
 // Gentian: hier wordt een nieuwe user aangemaakt
 export async function insertUser(uname: string, hashedPassword: string, email: string, profileFig: string) {

@@ -24,7 +24,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             const response = await fetch(`${langPrefix}/get-game-data`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ userId: "680d098a9e371da5cefb77cb" })
             });
             const data = await response.json();
             if (data.success) return data.gameData;
@@ -34,10 +33,16 @@ document.addEventListener("DOMContentLoaded", async () => {
         return null;
     }
 
-    const gameData = await fetchGameData();
+    let gameData = await fetchGameData();
     console.log('Game data:', gameData);
     
-    if (gameData && gameData.gameStatus !== "inProgress") {
+    if (!gameData || gameData.gameStatus !== "inProgress") {
+        // Genereer random figs en haal de nieuwe gameData op
+        gameData = await generateRandomFigures();
+        if (!gameData) {
+            alert("Kon geen nieuwe game data genereren.");
+            return;
+        }
         if (factoryDoorContainer) factoryDoorContainer.style.display = 'block';
 
         let handCursorTimer = setTimeout(() => {
@@ -105,24 +110,24 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
 
     minifiguresDesktop.addEventListener("animationend", async () => {
-        const nextFig = gameData.figs.find(fig => fig.status === "pending");
-        if (nextFig) {
-            const langMatch = window.location.pathname.match(/^\/(nl|en)/);
-            const langPrefix = langMatch ? langMatch[0] : '/nl';
-            const response = await fetch(`${langPrefix}/set-current-fig`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ fig: { name: nextFig.name, img: nextFig.img } })
-            }).then(() => {
-                setTimeout(() => {
-                    window.location.href = "/figordenen";
-                }, 1000);
-            });
-        } else {
+        // const nextFig = gameData.figs.find(fig => fig.status === "pending");
+        // if (nextFig) {
+        //     const langMatch = window.location.pathname.match(/^\/(nl|en)/);
+        //     const langPrefix = langMatch ? langMatch[0] : '/nl';
+        //     const response = await fetch(`${langPrefix}/set-current-fig`, {
+        //         method: 'POST',
+        //         headers: { 'Content-Type': 'application/json' },
+        //         body: JSON.stringify({ fig: { name: nextFig.name, img: nextFig.img } })
+        //     }).then(() => {
+        //         setTimeout(() => {
+        //             window.location.href = "/figordenen";
+        //         }, 1000);
+        //     });
+        // } else {
             setTimeout(() => {
                 window.location.href = "/figordenen";
             }, 1000);
-        }
+        // }
     });
 }
 
@@ -131,24 +136,24 @@ document.addEventListener("DOMContentLoaded", async () => {
     const gearsMobile = document.querySelectorAll(".factory-belt-gear-mobile");
 
     minifiguresMobile.addEventListener("animationend", async () => {
-    const nextFig = gameData.figs.find(fig => fig.status === "pending");
-    if (nextFig) {
-            const langMatch = window.location.pathname.match(/^\/(nl|en)/);
-            const langPrefix = langMatch ? langMatch[0] : '/nl';
-            const response = await fetch(`${langPrefix}/set-current-fig`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ fig: { name: nextFig.name, img: nextFig.img } })
-        }).then(() => {
-            setTimeout(() => {
-                window.location.href = "/figordenen";
-            }, 1000);
-        });
-    } else {
+    // const nextFig = gameData.figs.find(fig => fig.status === "pending");
+    // if (nextFig) {
+    //         const langMatch = window.location.pathname.match(/^\/(nl|en)/);
+    //         const langPrefix = langMatch ? langMatch[0] : '/nl';
+    //         const response = await fetch(`${langPrefix}/set-current-fig`, {
+    //         method: 'POST',
+    //         headers: { 'Content-Type': 'application/json' },
+    //         body: JSON.stringify({ fig: { name: nextFig.name, img: nextFig.img } })
+    //     }).then(() => {
+    //         setTimeout(() => {
+    //             window.location.href = "/figordenen";
+    //         }, 1000);
+    //     });
+    // } else {
         setTimeout(() => {
             window.location.href = "/figordenen";
         }, 1000);
-    }
+    // }
 });
 
 function addCurrentFigToFactory() {
@@ -191,5 +196,24 @@ document.addEventListener("DOMContentLoaded", function() {
     }, 1200);
   }
 });
+
+async function generateRandomFigures() {
+    try {
+        const langMatch = window.location.pathname.match(/^\/(nl|en)/);
+        const langPrefix = langMatch ? langMatch[0] : '/nl';
+        const response = await fetch(`${langPrefix}/set-random-figs`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+        });
+        const data = await response.json();
+        if (data.success) {
+            // Optioneel: update sessionStorage of een globale variabele als je die gebruikt
+            return data.gameData;
+        }
+    } catch (err) {
+        console.error('Kon game data niet ophalen:', err);
+    }
+    return null;
+}
 
 });

@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import { getGameData, connectToMongoDB, insertUserGameData } from "../database";
+import { getGameData, connectToMongoDB, insertUserGameData, getUserById, updateGameDataFromFactory } from "../database";
 import { fetchSets, fetchMinifigs } from "../apicalls";
 import { ObjectId } from "mongodb";
 const router = express.Router();
@@ -192,5 +192,39 @@ router.post("/set-ordenen-count", async (req, res) => {
     res.status(500).json({ success: false, error: error.message });
   }
 });
+
+// Enrico: dit is een post die random figs in de game data zet
+router.post("/set-random-figs", async (req, res) => {
+  const userId = req.session.user?._id;
+
+  if (!userId) {
+    return res
+      .status(400)
+      .json({ success: false, message: "User of fig ontbreekt" });
+  }
+
+  try {
+    const user = await getUserById(userId.toString());
+    const allFigs = user.figs;
+    const allFigsWithoutBin = allFigs.filter(
+      (fig: any) => !user.bin.some((b: any) => b.fig === fig.name)
+    );
+    const shuffled = allFigsWithoutBin.sort(() => 0.5 - Math.random());
+    const randomFigs = shuffled.slice(0, req.session.ordenenCount || 10);
+    const gameStatus = "pending";
+
+    const gameData = await updateGameDataFromFactory(userId.toString(), randomFigs, gameStatus);
+    if (!gameData) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User game data not found" });
+    }
+    req.session.ordenenFigs = randomFigs;
+    res.json({ success: true, gameData });
+  } catch (error: any) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+}
+);
 
 export default router;
