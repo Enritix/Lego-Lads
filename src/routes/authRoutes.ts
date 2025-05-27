@@ -22,6 +22,8 @@ router.get("/register", redirectIfLoggedIn, async (req: Request, res: Response) 
         uname: null,
         figs: minifigs,
         lang: res.locals.lang || "nl",
+        showVerification: false,
+        tempUser: null
     });
 });
 
@@ -97,7 +99,7 @@ router.post("/register", redirectIfLoggedIn, async (req: Request, res: Response)
             email,
             password,
             profile_fig: profileFig,
-            code
+            code: code
         };
 
             return res.render("register", {
@@ -111,7 +113,7 @@ router.post("/register", redirectIfLoggedIn, async (req: Request, res: Response)
             });
         } catch (err) {
             return res.render("register", {
-                error: "Er is iets misgegaan, probeer opnieuw.",
+                error: "Er is een fout opgetreden bij het registreren",
                 popUp: false,
                 uname: null,
                 figs: minifigs,
@@ -149,24 +151,19 @@ router.post("/register", redirectIfLoggedIn, async (req: Request, res: Response)
         await insertUser(tempUser.uname, hashedPassword, tempUser.email, tempUser.profile_fig);
         
         delete req.session.tempUser;
-        return res.render("register", {
-            error: null,
-            popUp: true,
-            uname: tempUser.uname,
-            figs: minifigs,
-            lang: res.locals.lang || "nl",
-            showVerification: false,
-            tempUser: null
-        });
+        req.session.successMessage = "Je account is succesvol aangemaakt! Log nu in.";
+        return res.redirect(`/${res.locals.lang || "nl"}/login`);
     }
 });
 
 router.get("/login", redirectIfLoggedIn, (req: Request, res: Response) => {
-    res.render("login", { error: null, lang: res.locals.lang || "nl" });
+    const successMessage = req.session.successMessage;
+    delete req.session.successMessage;
+    res.render("login", { error: null, successMessage: successMessage, lang: res.locals.lang || "nl" });
 });
 
 router.post("/login", redirectIfLoggedIn, async (req: Request, res: Response) => {
-    const { uname, password } = req.body;
+    const { uname, password, stayLoggedIn } = req.body;
     if (!uname || !password) {
         return res.render("login", { error: "Alle velden zijn verplicht" });
     }
@@ -179,6 +176,12 @@ router.post("/login", redirectIfLoggedIn, async (req: Request, res: Response) =>
         return res.render("login", { error: "Wachtwoord klopt niet" });
     }
     req.session.user = user;
+    if (stayLoggedIn) {
+        req.session.cookie.maxAge = 1000 * 60 * 60 * 24 * 14;
+    } else {
+        req.session.cookie.maxAge = 1000 * 60 * 60 * 2;
+    }
+
     return res.redirect(`/${res.locals.lang || "nl"}/`);
 });
 

@@ -75,9 +75,9 @@ form {
 label {
     margin-bottom: 5px;
     color: var(--text-color);
-    width: 65%;
     display: flex;
     justify-content: start;
+    font-family: Oswald, sans-serif !important;
 }
 
 
@@ -200,44 +200,45 @@ a{
     position: relative;
 }
 
-input[type="checkbox"] {
-    -webkit-appearance: checkbox;
-       -moz-appearance: checkbox;
-            appearance: checkbox;
-    display: inline-block;
-    width: auto;
-  }
-
-  .forgot-password {
-    font-size: 0.6em; 
-    position: absolute; 
-    right: 5%; 
-    top: calc(100% - -10px); 
-    margin: 0; 
-    width: 60%;
-    text-decoration: underline;
+.login-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: 18px;
+    margin-bottom: 10px;
+    gap: 20px;
 }
 
-
-
-
 .stay-logged-in {
-    font-size: 0.6em; 
-    position: absolute; 
-    left: 16%; 
-    top: calc(100% - -5px); 
-    margin: 0; 
-    width: 60%;
+    display: flex;
+    align-items: center;
+    font-size: 1em;
     color: var(--text-color);
+    margin: 0;
+    width: auto;
 }
 
 .stay-logged-in input[type="checkbox"] {
-    margin-right: 5px; 
+    margin-right: 8px;
+    width: 20px;
+    height: 20px;
 }
 
 .stay-logged-in label {
-    font-size: 0.6em; 
+    font-size: 1em;
 }
+
+.forgot-password-link {
+    font-size: 1em;
+    text-decoration: underline;
+    color: var(--text-color);
+    white-space: nowrap;
+}
+
+#eye-open, #eye-closed {
+    cursor: url("../assets/images/cursor_hand.cur"), pointer !important;
+  }
 
 
 
@@ -299,24 +300,8 @@ input[type="checkbox"] {
         max-width: 100%;
     }
   
-    .stay-logged-in{
-    position: absolute; 
-    left: 17%; 
-    top: calc(100% - -5px); 
-    margin: 0; 
-    width: 60%;
-    font-size: 0.6em; 
-
-    }
-    
-    .forgot-password {
-        font-size: 0.6em; 
-        position: absolute; 
-        right: 10%; 
-        top: calc(100% - -10px); 
-        margin: 0; 
-        width: 40%;
-        text-decoration: underline;
+    .forgot-password-link {
+        font-size: 0.95em;
     }
 
 }
@@ -324,7 +309,6 @@ input[type="checkbox"] {
 @media (min-width: 900px) {
   .form-group {
     width: 500px;
-    gap: 20px;
   }
 
   label {
