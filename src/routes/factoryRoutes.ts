@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
-import { getGameData, connectToMongoDB } from "../database";
-import { fetchSets } from "../apicalls";
+import { getGameData, connectToMongoDB, insertUserGameData, getUserById, updateGameDataFromFactory } from "../database";
+import { fetchSets, fetchMinifigs } from "../apicalls";
 import { ObjectId } from "mongodb";
 const router = express.Router();
 
@@ -13,10 +13,16 @@ router.get("/factory-welcome", (req: Request, res: Response) => {
 });
 
 router.get("/factory", (req: Request, res: Response) => {
+  const idx = req.session.ordenenDone ?? 0;
+  const fig = req.session.ordenenFigs ? req.session.ordenenFigs[idx] : null;
+  req.session.currentFig = fig;
+  req.session.currentFig = fig;
+
   res.render("factory", {
     title: "Lego Fabriek",
     cssFiles: ["/css/factory.css"],
     jsFiles: ["/js/factory.js"],
+    currentFig: fig,
   });
 });
 
@@ -25,6 +31,17 @@ router.get("/figordenen", async (req: Request, res: Response) => {
   const shuffled = allSets.sort(() => 0.5 - Math.random());
   const randomSets = shuffled.slice(0, 3);
   const currentFig = req.session.currentFig || null;
+
+  // if (
+  //   (req.session.ordenenDone ?? 0) >= (req.session.ordenenCount ?? 0) &&
+  //   (req.session.ordenenCount ?? 0) > 0
+  // ) {
+  //   return res.redirect("/resultaat");
+  // }
+
+  const idx = req.session.ordenenDone ?? 0;
+  const fig = req.session.ordenenFigs ? req.session.ordenenFigs[idx] : null;
+  req.session.currentFig = fig;
 
   res.render("figordenen", {
     title: "Figs Ordenen",
@@ -42,19 +59,28 @@ router.get("/ordenen", (req: Request, res: Response) => {
     jsFiles: ["/js/ordenen.js"],
   });
 });
+
 router.get("/resultaat", (req: Request, res: Response) => {
+  const geordendeFigs = req.session.ordenenFigs || [];
   res.render("resultaat", {
     title: "Resultaat",
     cssFiles: ["/css/resultaat.css"],
     jsFiles: ["/js/resultaat.js"],
+    geordendeFigs,
   });
 });
 
 router.post("/get-game-data", async (req: Request, res: Response) => {
-  const userId = req.body.userId;
+  const userId = req.session.user?._id;
+
+  if (!userId) {
+    return res
+      .status(400)
+      .json({ success: false, message: "User of fig ontbreekt" });
+  }
 
   try {
-    const gameData = await getGameData(userId);
+    const gameData = await getGameData(userId.toString());
     if (!gameData) {
       return res
         .status(404)
@@ -98,16 +124,13 @@ router.post("/orden-fig", async (req: Request, res: Response) => {
   const userId = req.session.user?._id;
   const { fig, set, status } = req.body;
 
-  console.log("ORDEN-FIG route aangeroepen:", { userId, fig, set, status });
-
   if (!userId || !fig || !status) {
-    console.log("ORDEN-FIG: ontbrekende data", { userId, fig, set, status });
     return res.status(400).json({ success: false, message: "Data ontbreekt" });
   }
 
   try {
     const db = await connectToMongoDB();
-    const result = await db.collection("geordende_figs").insertOne({
+    await db.collection("geordende_figs").insertOne({
       userId: typeof userId === "string" ? userId : userId.toString(),
       name: fig.name,
       img: fig.img,
@@ -115,12 +138,93 @@ router.post("/orden-fig", async (req: Request, res: Response) => {
       status: status,
       date: new Date(),
     });
-    console.log("ORDEN-FIG: insert result", result);
-    res.json({ success: true });
   } catch (error: any) {
-    console.log("ORDEN-FIG: error", error);
+    return res.status(500).json({ success: false, error: error.message });
+  }
+
+  req.session.ordenenDone = (req.session.ordenenDone ?? 0) + 1;
+
+  if ((req.session.ordenenDone ?? 0) >= (req.session.ordenenCount ?? 0)) {
+    return res.json({ success: true, redirect: "/resultaat" });
+  } else {
+    return res.json({ success: true, redirect: "/factory" });
+  }
+});
+
+router.post("/set-ordenen-count", async (req, res) => {
+  const count = parseInt(req.body.count, 10);
+  req.session.ordenenCount = count;
+  // req.session.ordenenDone = 0;
+
+  // const allFigs = await fetchMinifigs();
+  // const shuffled = allFigs.sort(() => 0.5 - Math.random());
+  // req.session.ordenenFigs = shuffled.slice(0, count);
+
+  const userId = req.session.user?._id;
+
+  if (!userId) {
+    return res
+      .status(400)
+      .json({ success: false, message: "User of fig ontbreekt" });
+  }
+  // if (userId) {
+  //   const db = await connectToMongoDB();
+  //   await db
+  //     .collection("game_data")
+  //     .updateOne(
+  //       { playerId: typeof userId === "string" ? userId : userId.toString() },
+  //       { $set: { totalFigs: count } }
+  //     );
+  // }
+
+  // res.json({ success: true });
+
+  // console.log("Gekozen figs:", req.session.ordenenFigs);
+  try {
+    const gameData = await insertUserGameData(userId.toString(), count);
+    if (!gameData) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User game data not found" });
+    }
+    res.json({ success: true, gameData });
+  } catch (error: any) {
     res.status(500).json({ success: false, error: error.message });
   }
 });
+
+// Enrico: dit is een post die random figs in de game data zet
+router.post("/set-random-figs", async (req, res) => {
+  const userId = req.session.user?._id;
+
+  if (!userId) {
+    return res
+      .status(400)
+      .json({ success: false, message: "User of fig ontbreekt" });
+  }
+
+  try {
+    const user = await getUserById(userId.toString());
+    const allFigs = user.figs;
+    const allFigsWithoutBin = allFigs.filter(
+      (fig: any) => !user.bin.some((b: any) => b.fig === fig.name)
+    );
+    const shuffled = allFigsWithoutBin.sort(() => 0.5 - Math.random());
+    const randomFigs = shuffled.slice(0, req.session.ordenenCount || 10);
+    const gameStatus = "pending";
+
+    const gameData = await updateGameDataFromFactory(userId.toString(), randomFigs, gameStatus);
+    if (!gameData) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User game data not found" });
+    }
+    req.session.ordenenFigs = randomFigs;
+    res.json({ success: true, gameData });
+  } catch (error: any) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+}
+);
 
 export default router;

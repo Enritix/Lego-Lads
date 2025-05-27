@@ -24,6 +24,12 @@ function ordenFig(fig, set, status) {
             set: set,
             status: status
         })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.redirect) {
+            window.location.href = data.redirect;
+        }
     });
 }
 
