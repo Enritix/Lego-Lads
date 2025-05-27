@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
               headers: {
                   "Content-Type": "application/json"
               },
-              body: JSON.stringify({ userId: "680d098a9e371da5cefb77cb", minifig: this.parentElement.querySelector(".figure h2").textContent })
+              body: JSON.stringify({minifig: this.parentElement.querySelector(".figure h2").textContent })
           });
 
           const result = await response.json();

@@ -11,8 +11,13 @@ import { binElement, Minifig } from "../interfaces";
 const router = express.Router();
 
 router.get("/blacklist", async (req: Request, res: Response) => {
-  const userId = "680d098a9e371da5cefb77cb";
-  const bin = await getBin(userId);
+  const userId = req.session.user?._id;
+  if (!userId) {
+    return res
+      .status(400)
+      .json({ success: false, message: "User ID is required" });
+  }
+  const bin = await getBin(userId.toString());
 
   const minifigs: Minifig[] = [];
   await Promise.all(
@@ -34,11 +39,16 @@ router.get("/blacklist", async (req: Request, res: Response) => {
 });
 
 router.post("/delete-minifig", async (req: Request, res: Response) => {
-  let userId = req.body.userId;
+  const userId = req.session.user?._id;
+  if (!userId) {
+    return res
+      .status(400)
+      .json({ success: false, message: "User ID is required" });
+  }
   let minifig = req.body.minifig;
 
   try {
-    const progress = await deleteMinifigFromBin(userId, minifig);
+    const progress = await deleteMinifigFromBin(userId.toString(), minifig);
     res.json({ success: true, progress });
   } catch (error: any) {
     res.status(500).json({ success: false, error: error.message });
