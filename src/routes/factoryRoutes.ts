@@ -1,5 +1,11 @@
 import express, { Request, Response } from "express";
-import { getGameData, connectToMongoDB, insertUserGameData, getUserById, updateGameDataFromFactory } from "../database";
+import {
+  getGameData,
+  connectToMongoDB,
+  insertUserGameData,
+  getUserById,
+  updateGameDataFromFactory,
+} from "../database";
 import { fetchSets, fetchMinifigs } from "../apicalls";
 import { ObjectId } from "mongodb";
 const router = express.Router();
@@ -20,7 +26,9 @@ router.get("/factory", async (req: Request, res: Response) => {
       .json({ success: false, message: "User of fig ontbreekt" });
   }
   const gameData = await getGameData(userId.toString());
-  const currentFig = gameData.figs.find((fig: { status: string; }) => fig.status === "pending");
+  const currentFig = gameData.figs.find(
+    (fig: { status: string }) => fig.status === "pending"
+  );
 
   res.render("factory", {
     title: "Lego Fabriek",
@@ -31,10 +39,24 @@ router.get("/factory", async (req: Request, res: Response) => {
 });
 
 router.get("/figordenen", async (req: Request, res: Response) => {
+  const userId = req.session.user?._id;
+  if (!userId) {
+    return res.status(400).json({ success: false, message: "User ontbreekt" });
+  }
+  const gameData = await getGameData(userId.toString());
+  const pendingFig = gameData.figs.find((fig: any) => fig.status === "pending");
+  if (!pendingFig) {
+    return res.redirect("/resultaat");
+  }
+
   const allSets = await fetchSets();
-  const shuffled = allSets.sort(() => 0.5 - Math.random());
-  const randomSets = shuffled.slice(0, 3);
-  const currentFig = req.session.currentFig || null;
+
+  const correctSet = allSets.find((set: any) => set.code === pendingFig.set);
+  const otherSets = allSets.filter((set: any) => set.code !== pendingFig.set);
+  const shuffled = otherSets.sort(() => 0.5 - Math.random());
+  const randomSets = [correctSet, ...shuffled.slice(0, 2)].sort(
+    () => 0.5 - Math.random()
+  );
 
   // if (
   //   (req.session.ordenenDone ?? 0) >= (req.session.ordenenCount ?? 0) &&
@@ -43,16 +65,16 @@ router.get("/figordenen", async (req: Request, res: Response) => {
   //   return res.redirect("/resultaat");
   // }
 
-  const idx = req.session.ordenenDone ?? 0;
-  const fig = req.session.ordenenFigs ? req.session.ordenenFigs[idx] : null;
-  req.session.currentFig = fig;
+  // const idx = req.session.ordenenDone ?? 0;
+  // const fig = req.session.ordenenFigs ? req.session.ordenenFigs[idx] : null;
+  // req.session.currentFig = fig;
 
   res.render("figordenen", {
     title: "Figs Ordenen",
     cssFiles: ["/css/figsordenen.css"],
     jsFiles: ["/js/figsordenen.js"],
     sets: randomSets,
-    currentFig,
+    currentFig: pendingFig,
   });
 });
 
@@ -218,16 +240,22 @@ router.post("/set-random-figs", async (req, res) => {
 
     const allMinifigs = await fetchMinifigs();
     const randomFigsWithSet = randomFigs.map((fig: any) => {
-      const found = allMinifigs.find((minifig: any) => minifig.name === fig.name);
+      const found = allMinifigs.find(
+        (minifig: any) => minifig.name === fig.name
+      );
       return {
         ...fig,
         set: found ? found.set : null,
-        status: "pending"
+        status: "pending",
       };
     });
     const gameStatus = "pending";
 
-    const gameData = await updateGameDataFromFactory(userId.toString(), randomFigsWithSet, gameStatus);
+    const gameData = await updateGameDataFromFactory(
+      userId.toString(),
+      randomFigsWithSet,
+      gameStatus
+    );
     if (!gameData) {
       return res
         .status(404)
@@ -238,7 +266,33 @@ router.post("/set-random-figs", async (req, res) => {
   } catch (error: any) {
     res.status(500).json({ success: false, error: error.message });
   }
-}
-);
+});
+
+router.post("/set-status", async (req, res) => {
+  const userId = req.session.user?._id;
+  const { status, gameStatus } = req.body;
+
+  if (!userId) {
+    return res
+      .status(400)
+      .json({ success: false, message: "User of fig ontbreekt" });
+  }
+
+  try {
+    const gameData = await updateGameDataFromFactory(
+      userId.toString(),
+      status,
+      gameStatus
+    );
+    if (!gameData) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User game data not found" });
+    }
+    res.json({ success: true, gameData });
+  } catch (error: any) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
 
 export default router;

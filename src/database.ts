@@ -1,5 +1,5 @@
 import { MongoClient, Db, ObjectId } from "mongodb";
-import { User } from './interfaces';
+import { User } from "./interfaces";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -157,22 +157,24 @@ export function createUserTemplate(
   };
 }
 
-export function createUserGameData(
-  playerId: string,
-  totalFigs: number
-) {
+export function createUserGameData(playerId: string, totalFigs: number) {
   return {
     playerId,
     figs: [],
     totalFigs,
     gameStatus: "pending",
-    createdAt: new Date()
-  }
+    createdAt: new Date(),
+  };
 }
 // Abe: test data word toegevoegd
 export async function insertTestUser() {
   const db = await connectToMongoDB();
-  const gebruiker = createUserTemplate("abe", "lego", "abe@email.com", "https://github.com/AbeVerschueren/lego-img/blob/main/batman.png?raw=true");
+  const gebruiker = createUserTemplate(
+    "abe",
+    "lego",
+    "abe@email.com",
+    "https://github.com/AbeVerschueren/lego-img/blob/main/batman.png?raw=true"
+  );
   const result = await db.collection("gebruikers").insertOne(gebruiker);
   console.log("Testgebruiker toegevoegd met ID:", result.insertedId);
 }
@@ -202,15 +204,14 @@ export async function getUserById(userId: string) {
   return gebruiker;
 }
 
-// Abe: dit moet  sesie token worden moeten we nog zien op school hoe enwat 
+// Abe: dit moet  sesie token worden moeten we nog zien op school hoe enwat
 export async function updateUserFig(username: string, img: string) {
- console.log("👤 Gebruikersnaam in functie:", username);
+  console.log("👤 Gebruikersnaam in functie:", username);
 
   const db = await connectToMongoDB();
-  const result = await db.collection("gebruikers").updateOne(
-    { username },
-    { $set: { profile_fig: img } }
-  );
+  const result = await db
+    .collection("gebruikers")
+    .updateOne({ username }, { $set: { profile_fig: img } });
 }
 
 // Enrico: hier worden de coins van de user uitgelezen
@@ -232,11 +233,11 @@ export async function updateUserCoins(userId: string, addedCoins: number) {
   let update: any = {};
   if (addedCoins > 0) {
     update = {
-      $inc: { coins: addedCoins, earned_coins: addedCoins }
+      $inc: { coins: addedCoins, earned_coins: addedCoins },
     };
   } else if (addedCoins < 0) {
     update = {
-      $inc: { coins: addedCoins, spent_coins: Math.abs(addedCoins) }
+      $inc: { coins: addedCoins, spent_coins: Math.abs(addedCoins) },
     };
   } else {
     return;
@@ -463,7 +464,7 @@ export async function insertUserGameData(playerId: string, totalFigs: number) {
 // Enrico: hier worden het game data bestand van de user uitgelezen
 export async function getGameData(playerId: string) {
   const db = await connectToMongoDB();
-    const gameData = await db
+  const gameData = await db
     .collection("game_data")
     .find({ playerId: playerId })
     .sort({ createdAt: -1 }) // nieuwste eerst
@@ -471,7 +472,6 @@ export async function getGameData(playerId: string) {
     .toArray();
   return gameData[0];
 }
-
 
 // Enrico: TODO: updateGameData
 export async function updateGameDataFromFactory(
@@ -494,7 +494,7 @@ export async function updateGameDataFromFactory(
       $set: {
         figs,
         gameStatus,
-        totalFigs: figs.length
+        totalFigs: figs.length,
       },
     }
   );
@@ -505,7 +505,12 @@ export async function updateGameDataFromFactory(
 }
 
 // Gentian: hier wordt een nieuwe user aangemaakt
-export async function insertUser(uname: string, hashedPassword: string, email: string, profileFig: string) {
+export async function insertUser(
+  uname: string,
+  hashedPassword: string,
+  email: string,
+  profileFig: string
+) {
   console.log("insertUser wordt aangeroepen");
   const db = await connectToMongoDB();
   const newUser = createUserTemplate(uname, hashedPassword, email, profileFig);
@@ -514,25 +519,72 @@ export async function insertUser(uname: string, hashedPassword: string, email: s
 }
 
 // Gentian: hier wordt de user gevonden met zijn email of username
-export async function findUserByEmailOrUsername(email: string, username: string): Promise<User | null> {
+export async function findUserByEmailOrUsername(
+  email: string,
+  username: string
+): Promise<User | null> {
   const db = await connectToMongoDB();
   return await db.collection<User>("gebruikers").findOne({
     $or: [{ email }, { username }],
   });
-
 }
 
 // Enrico: update het wachtwoord van een gebruiker op basis van gebruikersnaam
-export async function updateUserPassword(username: string, hashedPassword: string) {
+export async function updateUserPassword(
+  username: string,
+  hashedPassword: string
+) {
   const db = await connectToMongoDB();
-  const result = await db.collection("gebruikers").updateOne(
-    { username },
-    { $set: { password: hashedPassword } }
-  );
+  const result = await db
+    .collection("gebruikers")
+    .updateOne({ username }, { $set: { password: hashedPassword } });
   if (result.matchedCount === 0) {
     throw new Error("Gebruiker niet gevonden.");
   }
   if (result.modifiedCount === 0) {
     throw new Error("Wachtwoord niet gewijzigd.");
   }
+}
+
+export async function updateGameDataFromOrdenen(
+  playerId: string,
+  status: string,
+  gameStatus: string
+) {
+  const db = await connectToMongoDB();
+  const latestGameData = await getGameData(playerId);
+
+  if (!latestGameData) {
+    throw new Error("Game data niet gevonden voor deze speler.");
+  }
+
+  const gameDataId = latestGameData._id;
+
+  const pendingFigIndex = latestGameData.figs.findIndex(
+    (fig: any) => fig.status === "pending"
+  );
+
+  if (pendingFigIndex === -1) {
+    throw new Error("Geen pending fig gevonden.");
+  }
+
+  const updatedFigs = [...latestGameData.figs];
+  updatedFigs[pendingFigIndex] = {
+    ...updatedFigs[pendingFigIndex],
+    status: status,
+  };
+
+  const result = await db.collection("game_data").updateOne(
+    { _id: gameDataId },
+    {
+      $set: {
+        figs: updatedFigs,
+        gameStatus: gameStatus,
+      },
+    }
+  );
+  if (result.matchedCount === 0) {
+    throw new Error("Game data niet gevonden voor deze speler.");
+  }
+  return await db.collection("game_data").findOne({ _id: gameDataId });
 }
