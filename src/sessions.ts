@@ -20,6 +20,7 @@ declare module "express-session" {
     currentFig?: {
       name: string;
       img: string;
+      set: string;
       [key: string]: any;
     };
     ordenenCount?: number;

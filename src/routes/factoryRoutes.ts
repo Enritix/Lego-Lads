@@ -12,17 +12,21 @@ router.get("/factory-welcome", (req: Request, res: Response) => {
   });
 });
 
-router.get("/factory", (req: Request, res: Response) => {
-  const idx = req.session.ordenenDone ?? 0;
-  const fig = req.session.ordenenFigs ? req.session.ordenenFigs[idx] : null;
-  req.session.currentFig = fig;
-  req.session.currentFig = fig;
+router.get("/factory", async (req: Request, res: Response) => {
+  const userId = req.session.user?._id;
+  if (!userId) {
+    return res
+      .status(400)
+      .json({ success: false, message: "User of fig ontbreekt" });
+  }
+  const gameData = await getGameData(userId.toString());
+  const currentFig = gameData.figs.find((fig: { status: string; }) => fig.status === "pending");
 
   res.render("factory", {
     title: "Lego Fabriek",
     cssFiles: ["/css/factory.css"],
     jsFiles: ["/js/factory.js"],
-    currentFig: fig,
+    currentFig: currentFig,
   });
 });
 
@@ -211,9 +215,19 @@ router.post("/set-random-figs", async (req, res) => {
     );
     const shuffled = allFigsWithoutBin.sort(() => 0.5 - Math.random());
     const randomFigs = shuffled.slice(0, req.session.ordenenCount || 10);
+
+    const allMinifigs = await fetchMinifigs();
+    const randomFigsWithSet = randomFigs.map((fig: any) => {
+      const found = allMinifigs.find((minifig: any) => minifig.name === fig.name);
+      return {
+        ...fig,
+        set: found ? found.set : null,
+        status: "pending"
+      };
+    });
     const gameStatus = "pending";
 
-    const gameData = await updateGameDataFromFactory(userId.toString(), randomFigs, gameStatus);
+    const gameData = await updateGameDataFromFactory(userId.toString(), randomFigsWithSet, gameStatus);
     if (!gameData) {
       return res
         .status(404)

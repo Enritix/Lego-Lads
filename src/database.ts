@@ -1,7 +1,6 @@
 import { MongoClient, Db, ObjectId } from "mongodb";
 import { User } from './interfaces';
 import dotenv from "dotenv";
-import { create } from "domain";
 dotenv.config();
 
 /*require('dotenv').config();
@@ -494,7 +493,8 @@ export async function updateGameDataFromFactory(
     {
       $set: {
         figs,
-        gameStatus
+        gameStatus,
+        totalFigs: figs.length
       },
     }
   );
