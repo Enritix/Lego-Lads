@@ -1,21 +1,35 @@
-import express, { Request, Response } from 'express';
-import { incrementAchievementProgress, updateUserCoins, getUserCoins, updateUserSettings, getUserSettings } from "../database";
-import { requireAuth } from '../middleware';
+import express, { Request, Response } from "express";
+import {
+  incrementAchievementProgress,
+  updateUserCoins,
+  getUserCoins,
+  updateUserSettings,
+  getUserSettings,
+} from "../database";
+import { requireAuth } from "../middleware";
+import { fetchSets } from "../apicalls";
 const router = express.Router();
 
-router.get('/', requireAuth, (req: Request, res: Response) => {
-  res.render('index', { message: "main", title: "Home", cssFiles: ['/css/index.css'], jsFiles: ['/js/index.js'] });
+router.get("/", requireAuth, (req: Request, res: Response) => {
+  res.render("index", {
+    message: "main",
+    title: "Home",
+    cssFiles: ["/css/index.css"],
+    jsFiles: ["/js/index.js"],
+  });
 });
 
-router.get('/loader', requireAuth, (req: Request, res: Response) => {
-  res.render('loader');
+router.get("/loader", requireAuth, (req: Request, res: Response) => {
+  res.render("loader");
 });
 
 // Enrico: dit is de post voor de coins van de user
 router.post("/get-coins", async (req: Request, res: Response) => {
   const userId = req.session.user?._id;
   if (!userId) {
-    return res.status(400).json({ success: false, message: "User ID is required" });
+    return res
+      .status(400)
+      .json({ success: false, message: "User ID is required" });
   }
 
   try {
@@ -26,12 +40,13 @@ router.post("/get-coins", async (req: Request, res: Response) => {
   }
 });
 
-
 // Enrico: hier worden de coins van de user geupdate
 router.post("/update-coins", async (req: Request, res: Response) => {
   const userId = req.session.user?._id;
   if (!userId) {
-    return res.status(400).json({ success: false, message: "User ID is required" });
+    return res
+      .status(400)
+      .json({ success: false, message: "User ID is required" });
   }
   const coins = parseInt(req.body.coins, 10);
 
@@ -47,13 +62,19 @@ router.post("/update-coins", async (req: Request, res: Response) => {
 router.post("/update-achievement", async (req: Request, res: Response) => {
   const userId = req.session.user?._id;
   if (!userId) {
-    return res.status(400).json({ success: false, message: "User ID is required" });
+    return res
+      .status(400)
+      .json({ success: false, message: "User ID is required" });
   }
   const achievementKey = req.body.achievementKey;
   const incrementBy = parseInt(req.body.incrementBy, 10);
 
   try {
-    const progress = await incrementAchievementProgress(userId.toString(), achievementKey, incrementBy);
+    const progress = await incrementAchievementProgress(
+      userId.toString(),
+      achievementKey,
+      incrementBy
+    );
     res.json({ success: true, progress });
   } catch (error: any) {
     res.status(500).json({ success: false, error: error.message });
@@ -64,7 +85,9 @@ router.post("/update-achievement", async (req: Request, res: Response) => {
 router.post("/get-settings", async (req: Request, res: Response) => {
   const userId = req.session.user?._id;
   if (!userId) {
-    return res.status(400).json({ success: false, message: "User ID is required" });
+    return res
+      .status(400)
+      .json({ success: false, message: "User ID is required" });
   }
 
   try {
@@ -81,12 +104,24 @@ router.post("/update-settings", async (req: Request, res: Response) => {
 
   const userId = req.session.user?._id;
   if (!userId) {
-    return res.status(400).json({ success: false, message: "User ID is required" });
+    return res
+      .status(400)
+      .json({ success: false, message: "User ID is required" });
   }
 
   try {
     await updateUserSettings(userId.toString(), newSettings);
     res.json({ success: true, message: "Instellingen succesvol bijgewerkt." });
+  } catch (error: any) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// Lars: Haalt alle sets op
+router.post("/get-all-sets", async (req: Request, res: Response) => {
+  try {
+    const sets = await fetchSets();
+    res.json({ success: true, sets });
   } catch (error: any) {
     res.status(500).json({ success: false, error: error.message });
   }

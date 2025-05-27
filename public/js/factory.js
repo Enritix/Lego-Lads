@@ -207,7 +207,6 @@ async function generateRandomFigures() {
         });
         const data = await response.json();
         if (data.success) {
-            // Optioneel: update sessionStorage of een globale variabele als je die gebruikt
             return data.gameData;
         }
     } catch (err) {
