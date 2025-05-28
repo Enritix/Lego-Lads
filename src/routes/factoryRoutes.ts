@@ -87,14 +87,33 @@ router.get("/ordenen", (req: Request, res: Response) => {
   });
 });
 
-router.get("/resultaat", (req: Request, res: Response) => {
-  const geordendeFigs = req.session.ordenenFigs || [];
-  res.render("resultaat", {
-    title: "Resultaat",
-    cssFiles: ["/css/resultaat.css"],
-    jsFiles: ["/js/resultaat.js"],
-    geordendeFigs,
-  });
+
+interface Fig {
+  name: string;
+  img: string;
+  status: "pending" | "assigned" | "destroyed";
+  date?: string;
+  set?: string;
+}
+
+router.get("/resultaat", async (req: Request, res: Response) => {
+  const playerId = req.session.user?._id;
+
+  if (!playerId) return res.redirect("/login");
+
+  try {
+    const gameData = await getGameData(playerId.toString());
+    const figs: Fig[] = gameData?.figs || [];
+    res.render("resultaat", {
+      title: "Resultaat",
+      cssFiles: ["/css/resultaat.css"],
+      jsFiles: ["/js/resultaat.js"],
+      figs
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Fout bij ophalen van resultaten");
+  }
 });
 
 router.post("/get-game-data", async (req: Request, res: Response) => {

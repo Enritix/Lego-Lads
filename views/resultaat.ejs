@@ -40,34 +40,24 @@
       <br>
       <div class="figuren-lijst">
 
-        <div class="figuur">
-          <span class="figuur-naam">Artic</span>
-          <div class="figuur-images">
-            <img class="figuur-status" src="../assets/images/redbrick.png" alt="Redbrick">
-            <img class="figuur-img" src="../assets/images/artic.png" alt="Batman">
-          </div>
-        </div>
-        <div class="figuur">
-          <span class="figuur-naam">Artic Snow</span>
-          <div class="figuur-images">
-            <img class="figuur-status" src="../assets/images/greenblock.png" alt="Redbrick">
-            <img class="figuur-img" src="../assets/images/artic2.png" alt="Batman">
-          </div>
-        </div>
-        <div class="figuur">
-          <span class="figuur-naam">Cinder</span>
-          <div class="figuur-images">
-            <img class="figuur-status" src="../assets/images/orangebrick.png" alt="Redbrick">
-            <img class="figuur-img" src="../assets/images/cinder.png" alt="Batman">
-          </div>
-        </div>
-        <div class="figuur">
-          <span class="figuur-naam">Pirate</span>
-          <div class="figuur-images">
-            <img class="figuur-status" src="../assets/images/greenblock.png" alt="Redbrick">
-            <img class="figuur-img" src="../assets/images/pirate2.png" alt="Pirate">
-          </div>
-        </div>
+          <% figs.forEach(fig => { %>
+            <div class="figuur">
+              <span class="figuur-naam"><%= fig.name %></span>
+              <div class="figuur-images">
+                  <% if (fig.status === "wrong") { %>
+                    <img class="figuur-status" src="/assets/images/wrong.png" alt="Vernietigd">
+                  <% } else if (fig.status === "sorted") { %>
+                    <img class="figuur-status" src="/assets/images/sorted.png" alt="Geordend">
+                  <% } else if (fig.status === "skipped") { %>
+                    <img class="figuur-status" src="/assets/images/skipped.png" alt="In afwachting">
+                  <% } else if (fig.status === "removed") { %>
+                    <img class="figuur-status" src="/assets/images/removed.png" alt="In afwachting">
+                  <% } %>
+
+                <img class="figuur-img" src="<%= fig.img %>" alt="<%= fig.name %>">
+              </div>
+            </div>
+          <% }) %>
 
 
       </div>
