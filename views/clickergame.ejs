@@ -1,5 +1,13 @@
 <%- include('components/header') %>
   <%- include('components/nav') %>
+  <script id="clicker-data" type="application/json">
+  {
+    "blocks": <%= blocks %>,
+    "hammerLevel": <%= hammerLevel %>,
+    "sawLevel": <%= sawLevel %>,
+    "drillLevel": <%= drillLevel %>
+  }
+</script>
   <main>
     <section class="gameplay">
       <a class="close" href="/">❌</a>
@@ -31,11 +39,13 @@
  
       </header>
       <article class="brick-counter">
-        <% if (lang === 'nl') { %>
-        <h2>stenen <span class="brick-cost">5000</span></h2>
-        <% } else if (lang === 'en') { %>
-        <h2>stones <span class="brick-cost">5000</span></h2>
-        <% } %>
+          <h2>
+          <% if (lang === 'nl') { %>
+            stenen <span class="brick-cost"><%= blocks %></span>
+          <% } else if (lang === 'en') { %>
+            stones <span class="brick-cost"><%= blocks %></span>
+          <% } %>
+        </h2>
 
         <img src="../assets/images/greenblock.png" alt="Green Brick" class="brick-img" onclick="incrementBrick()"
           draggable="false">
@@ -96,28 +106,25 @@
       <div class="skills">
       </div>
       <aside class="upgrades">
+
         <article class="upgrade" onclick="buyClick()">
           <figure class="upgrade-icon">
             <img src="../assets/images/lego-tool-2.png" alt="Clicker Upgrade" class="upgrade-img">
           </figure>
           <section class="upgrade-details">
-                   <% if (lang === 'nl') { %>
-            <h3>hamer</h3>
-
-            <p>kost: <span class="clicker-cost">10</span> <img src="../assets/images/greenblock.png" alt="Brick"
-                class="upgrade-brick-img"></p>
-            <p>niveau: <span class="clicker-level">0</span></p>
-            <p>+<span class="clicker-increase">1</span> Stenen per klik</p>
-
-              <% } else if (lang === 'en') { %>
-                <h3>hammer</h3>
-                 <p>cost: <span class="clicker-cost">10</span> <img src="../assets/images/greenblock.png" alt="Brick"
-                class="upgrade-brick-img"></p>
-            <p>tier: <span class="clicker-level">0</span></p>
-            <p>+<span class="clicker-increase">1</span> Stones per click</p>
-
-              <% } %>
-           
+            <% if (lang === 'nl') { %>
+              <h3>hamer</h3>
+              <p>kost: <span class="clicker-cost"><%= Math.round(10 * Math.pow(1.18, hammerLevel)) %></span> 
+                <img src="../assets/images/greenblock.png" alt="Brick" class="upgrade-brick-img"></p>
+              <p>niveau: <span class="clicker-level"><%= hammerLevel %></span></p>
+              <p>+<span class="clicker-increase"><%= (1 * Math.pow(1.03, hammerLevel)).toFixed(2) %></span> Stenen per klik</p>
+            <% } else { %>
+              <h3>hammer</h3>
+              <p>cost: <span class="clicker-cost"><%= Math.round(10 * Math.pow(1.18, hammerLevel)) %></span> 
+                <img src="../assets/images/greenblock.png" alt="Brick" class="upgrade-brick-img"></p>
+              <p>tier: <span class="clicker-level"><%= hammerLevel %></span></p>
+              <p>+<span class="clicker-increase"><%= (1 * Math.pow(1.03, hammerLevel)).toFixed(2) %></span> Stones per click</p>
+            <% } %>
           </section>
         </article>
 
@@ -127,42 +134,42 @@
           </figure>
           <section class="upgrade-details">
             <% if (lang === 'nl') { %>
-            <p>kost: <span class="saw-cost">130</span> <img src="../assets/images/greenblock.png" alt="Brick"
-                class="upgrade-brick-img"></p>
-            <p>niveau: <span class="saw-level">0</span></p>
-            <p>+<span class="saw-increase">4</span> stenen per seconde</p>
-
-
-            <% } else if (lang === 'en') { %>
-            <p>cost: <span class="saw-cost">130</span> <img src="../assets/images/greenblock.png" alt="Brick"
-                class="upgrade-brick-img"></p>
-            <p>tier: <span class="saw-level">0</span></p>
-            <p>+<span class="saw-increase">4</span> stones per second</p>
+              <h3>zaag</h3>
+              <p>kost: <span class="saw-cost"><%= Math.round(130 * Math.pow(1.18, sawLevel)) %></span> 
+                <img src="../assets/images/greenblock.png" alt="Brick" class="upgrade-brick-img"></p>
+              <p>niveau: <span class="saw-level"><%= sawLevel %></span></p>
+              <p>+<span class="saw-increase"><%= (4 * Math.pow(1.03, sawLevel)).toFixed(2) %></span> stenen per seconde</p>
+            <% } else { %>
+              <h3>saw</h3>
+              <p>cost: <span class="saw-cost"><%= Math.round(130 * Math.pow(1.18, sawLevel)) %></span> 
+                <img src="../assets/images/greenblock.png" alt="Brick" class="upgrade-brick-img"></p>
+              <p>tier: <span class="saw-level"><%= sawLevel %></span></p>
+              <p>+<span class="saw-increase"><%= (4 * Math.pow(1.03, sawLevel)).toFixed(2) %></span> stones per second</p>
             <% } %>
-
           </section>
         </article>
+
         <article class="upgrade" onclick="buyDril()">
           <figure class="upgrade-icon">
             <img src="../assets/images/lego-tool-3.png" alt="Drill Upgrade" class="upgrade-img">
           </figure>
           <section class="upgrade-details">
             <% if (lang === 'nl') { %>
-            <h3>boor</h3>
-            <p>kost: <span class="dril-cost">850</span> <img src="../assets/images/greenblock.png" alt="Brick"
-                class="upgrade-brick-img"></p>
-            <p>niveau: <span class="dril-level">0</span></p>
-            <p>+<span class="dril-increase">24</span> stenen per seconde</p>
-            <% } else if (lang === 'en') { %>
-            <h3>drill</h3>
-            <p>cost: <span class="dril-cost">850</span> <img src="../assets/images/greenblock.png" alt="Brick"
-                class="upgrade-brick-img"></p>
-            <p>tier: <span class="dril-level">0</span></p>
-            <p>+<span class="dril-increase">24</span> stones per second</p>
+              <h3>boor</h3>
+              <p>kost: <span class="dril-cost"><%= Math.round(850 * Math.pow(1.18, drillLevel)) %></span> 
+                <img src="../assets/images/greenblock.png" alt="Brick" class="upgrade-brick-img"></p>
+              <p>niveau: <span class="dril-level"><%= drillLevel %></span></p>
+              <p>+<span class="dril-increase"><%= (24 * Math.pow(1.03, drillLevel)).toFixed(2) %></span> stenen per seconde</p>
+            <% } else { %>
+              <h3>drill</h3>
+              <p>cost: <span class="dril-cost"><%= Math.round(850 * Math.pow(1.18, drillLevel)) %></span> 
+                <img src="../assets/images/greenblock.png" alt="Brick" class="upgrade-brick-img"></p>
+              <p>tier: <span class="dril-level"><%= drillLevel %></span></p>
+              <p>+<span class="dril-increase"><%= (24 * Math.pow(1.03, drillLevel)).toFixed(2) %></span> stones per second</p>
             <% } %>
-
           </section>
         </article>
+
       </aside>
 
       <div class="popup-overlay" id="popupOverlay" onclick="closeUpgrades()"></div>

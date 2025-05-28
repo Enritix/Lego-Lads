@@ -1,15 +1,27 @@
 import express, { Request, Response } from "express";
-import { getUserById } from "../database";
+import { getUserById,connectToMongoDB } from "../database";
 // import { getUserById, incrementAchievementProgress, collectAchievementReward } from "../database";
 const router = express.Router();
 
-router.get("/clickergame", (req: Request, res: Response) => {
+router.get("/clickergame", async (req: Request, res: Response) => {
+  const user = req.session.user;
+  if (!user) return res.redirect("/login");
+
+  const db = await connectToMongoDB();
+  const gebruiker = await db.collection("gebruikers").findOne({ username: user.username });
+  if (!gebruiker) return res.redirect("/login");
+
   res.render("clickergame", {
     title: "Klikkerspel",
     cssFiles: ["/css/clickergame.css"],
     jsFiles: ["/js/clicker.js"],
+    blocks: gebruiker.clickerGame?.blocks || 0,
+    hammerLevel: gebruiker.clickerGame?.tools?.hammer?.level || 0,
+    sawLevel: gebruiker.clickerGame?.tools?.saw?.level || 0,
+    drillLevel: gebruiker.clickerGame?.tools?.drill?.level || 0,
   });
 });
+
 
 router.get("/memorygame", async (req: Request, res: Response) => {
   // const userId = "680d098a9e371da5cefb77cb";
