@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         const result = await response.json();
+        window.location.reload();
         console.log("Minifig verwijderd:", result);
       } catch (error) {
         console.error("Fout bij verwijderen van minifig:", error);
@@ -36,8 +37,6 @@ document.addEventListener('DOMContentLoaded', function () {
       infoPopup.style.display = 'none';
     }
   });
-
-  //Reden
 
   const redenPopup = document.getElementById('reden-popup');
   document.querySelector('.reason-btn').addEventListener('click', () => {

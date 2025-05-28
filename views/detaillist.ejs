@@ -1,63 +1,70 @@
 <%- include('components/header') %>
-<%- include('components/nav') %>
-<main>
-  <section class="genre-container">
-    <a class="close" href="/<%= lang %>/genre">❌</a>
-    <section class="genre-header">
-      <h1>
-        Geordende Minifigs Bekijken <span class="info-icon">&#x24D8;</span>
-      </h1>
-      <article class="header-2">
-        <h2><%= theme.name %></h2>
-        <img src="<%= theme.img %>" alt="<%= theme.name %>" />
-      </article>
-    </section>
-
-    <section id="info-popup" class="popup">
-      <article class="popup-content">
-        <span class="close-button">❌</span>
-        <h1 id="popup-title">Info:</h1>
-        <p>
-          Hier kan je zien welke minifigs je geordend hebt en tot welke sets
-          ze behoren.
-        </p>
-      </article>
-    </section>
-
-    <section class="items">
-      <% minifigsWithSets.forEach(function(fig) { %>
-        <section id="content">
-          <section class="superheroes-section">
-            <span class="remove-btn">❌</span>
-            <article class="figure-container">
-              <figure>
-                <img src="<%= fig.img %>" alt="<%= fig.name %>" />
-                <figcaption>
-                  <%= fig.name %><br /><span id="code">Code: <%= fig.id %></span>
-                </figcaption>
-              </figure>
-            </article>
-            <section class="legoset-container">
-              <% fig.sets.forEach(function(set) { %>
-                <article class="legoset-item">
-                  <a href="/figset">
-                    <img src="<%= set.img %>" alt="Legoset <%= set.name %>" />
-                  </a>
-                  <h3>Set: <%= set.code %></h3>
-                </article>
-              <% }) %>
-            </section>
-          </section>
+  <%- include('components/nav') %>
+    <main>
+      <section class="genre-container">
+        <a class="close" href="/<%= lang %>/genre">❌</a>
+        <section class="genre-header">
+          <h1>
+            Geordende Minifigs Bekijken <span class="info-icon">&#x24D8;</span>
+          </h1>
+          <article class="header-2">
+            <h2>
+              <%= theme.name %>
+            </h2>
+            <img src="<%= theme.img %>" alt="<%= theme.name %>" />
+          </article>
         </section>
-      <% }) %>
-      <img
-        id="swinging-spiderman"
-        src="/assets/images/spiderman.png"
-        alt="Swingende Spiderman"
-      />
-    </section>
-  </section>
-</main>
-<%- include('components/settings') %>
-</body>
-</html>
+
+        <section id="info-popup" class="popup">
+          <article class="popup-content">
+            <span class="close-button">❌</span>
+            <h1 id="popup-title">Info:</h1>
+            <p>
+              Hier kan je zien welke minifigs je geordend hebt en tot welke sets
+              ze behoren.
+            </p>
+          </article>
+        </section>
+
+        <section class="items">
+          <% if (noSortedFigs) { %>
+            <p style="font-size:1.5rem; text-align:center; margin:2rem 0;">
+              Geen gesorteerde figs gevonden voor dit thema
+            </p>
+            <% } else { %>
+              <% minifigsWithSets.forEach(function(fig) { %>
+                <section id="content">
+                  <section class="superheroes-section">
+                    <span class="remove-btn" data-fig="<%= fig.name %>"
+                      data-set="<%= fig.sets[0] ? fig.sets[0].id : '' %>" data-theme="<%= theme.id %>">❌</span>
+                    <article class="figure-container">
+                      <figure>
+                        <img src="<%= fig.img %>" alt="<%= fig.name %>" />
+                        <figcaption>
+                          <%= fig.name %><br /><span id="code">Code: <%= fig.id %></span>
+                        </figcaption>
+                      </figure>
+                    </article>
+                    <section class="legoset-container">
+                      <% fig.sets.forEach(function(set) { %>
+                        <article class="legoset-item">
+                          <a href="/figset">
+                            <img src="<%= set.img %>" alt="Legoset <%= set.name %>" />
+                          </a>
+                          <h3>Set: <%= set.code %>
+                          </h3>
+                        </article>
+                        <% }) %>
+                    </section>
+                  </section>
+                </section>
+                <% }) %>
+                  <% } %>
+                    <img id="swinging-spiderman" src="/assets/images/spiderman.png" alt="Swingende Spiderman" />
+        </section>
+      </section>
+    </main>
+    <%- include('components/settings') %>
+      </body>
+
+      </html>
