@@ -23,12 +23,23 @@
           <section class="chat-box" id="chat-box">
             <article class="message bot-message">
               <img src="../assets/images/bot.png" alt="Bot Avatar" class="avatar">
-              <p class="text">hallo, ik ben de LegoLads AI, waar mee kan ik je helpen?</p>
+              <p class="text">
+                <% if (lang === 'nl') { %>
+                hallo, ik ben de LegoLads AI, waar mee kan ik je helpen?
+                <% } else if (lang === 'en') { %>
+                Hello, I am the LegoLads AI — how can I help you?
+                <% } %>
+              </p>
             </article>
           </section>
           <section class="input-container">
             <input type="text" id="user-input" placeholder="stel je vraag">
+
+            <% if (lang === 'nl') { %>
             <button class="text-lego-stroke" data-text="verstuur" onclick="sendMessage()">verstuur</button>
+                <% } else if (lang === 'en') { %>
+            <button class="text-lego-stroke" data-text="Send" onclick="sendMessage()">send</button>
+                <% } %>
 
           </section>
         </section>

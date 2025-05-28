@@ -1,3 +1,5 @@
+// clicker.js
+
 let brick = document.querySelector('.brick-cost');
 let parsedBrick = parseFloat(brick.innerHTML);
 
@@ -28,9 +30,13 @@ let bpsText = document.getElementById("BPS-text");
 let bpc = 1;
 let bps = 0;
 
+const rawData = document.getElementById("clicker-data").textContent;
+const clickerData = JSON.parse(rawData);
+
 function incrementBrick() {
     parsedBrick += bpc;
     brick.innerHTML = Math.floor(parsedBrick);
+    updateClickerData();
 }
 
 function updateUpgrades() {
@@ -48,6 +54,37 @@ function updateUpgrades() {
     document.querySelectorAll(".dril-increase").forEach(el => el.innerHTML = parseDrilIncrease.toFixed(2));
 }
 
+async function updateClickerData() {
+    const langPrefix = window.langPrefix || "nl";
+
+    const bricks = parseInt(document.querySelector(".brick-cost").innerText) || 0;
+
+    const hammerLevel = parseInt(document.querySelector(".clicker-level").innerText) || 0;
+    const sawLevel = parseInt(document.querySelector(".saw-level").innerText) || 0;
+    const drillLevel = parseInt(document.querySelector(".dril-level").innerText) || 0;
+
+    try {
+        const response = await fetch(`/${langPrefix}/api/update-clicker`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                blocks: bricks,
+                tools: {
+                    hammer: { level: hammerLevel },
+                    saw: { level: sawLevel },
+                    drill: { level: drillLevel }
+                }
+            })
+        });
+
+        if (!response.ok) {
+            console.error("Update mislukt:", await response.text());
+        }
+    } catch (err) {
+        console.error("Fout bij opslaan:", err);
+    }
+}
+
 function buyClick() {
     if (parsedBrick >= parsedClickerCost) {
         parsedBrick -= parsedClickerCost;
@@ -58,6 +95,7 @@ function buyClick() {
         parsedClickerCost *= 1.18;
 
         updateUpgrades();
+        updateClickerData();
     }
 }
 
@@ -71,6 +109,7 @@ function buySaw() {
         parsedSawCost *= 1.18;
 
         updateUpgrades();
+        updateClickerData();
     }
 }
 
@@ -84,6 +123,7 @@ function buyDril() {
         parsedDrilCost *= 1.18;
 
         updateUpgrades();
+        updateClickerData();
     }
 }
 
@@ -98,90 +138,6 @@ setInterval(() => {
     updatePopupStats(); 
 }, 100);
 
-function openUpgrades() {
-    const upgradesContainer = document.querySelector(".upgrades");
-    const statisticsContainer = document.querySelector(".statistics");
-    const popupContent = document.getElementById("upgradesPopup");
-
-    if (!upgradesContainer || !statisticsContainer) {
-        console.error("Upgrades of statistics container niet gevonden!");
-        return;
-    }
-
-    popupContent.innerHTML = `
-        <h3>Upgrades</h3>
-        <div class="popup-content">
-            ${upgradesContainer.innerHTML}
-        </div>
-        <footer class="statistics">
-            <p>SPC: <span id="popup-BPC-text">${bpc}</span></p>
-            <p>SPS: <span id="popup-BPS-text">${bps}</span></p>
-        </footer>
-        <button class="popup-close" onclick="closeUpgrades()">Sluiten</button>
-    `;
-
-    setTimeout(() => {
-        document.querySelectorAll(".upgrade").forEach((upgrade) => {
-            let functionName = upgrade.getAttribute("onclick");
-            if (functionName) {
-                functionName = functionName.replace("()", "");
-                upgrade.onclick = window[functionName];
-            }
-        });
-    }, 50);
-
-    updatePopupStats(); 
-
-    document.getElementById("popupOverlay").style.display = "block";
-    popupContent.style.display = "block";
-}
-function closeUpgrades() {
-    document.getElementById("popupOverlay").style.display = "none";
-    document.getElementById("upgradesPopup").style.display = "none";
-}
-
-function openUpgrades() {
-    const upgradesContainer = document.querySelector(".upgrades");
-    const statisticsContainer = document.querySelector(".statistics");
-    const popupContent = document.getElementById("upgradesPopup");
-
-    if (!upgradesContainer || !statisticsContainer) {
-        console.error("Upgrades of statistics container niet gevonden!");
-        return;
-    }
-
-    popupContent.innerHTML = `
-        <h3>Upgrades</h3>
-        <div class="popup-content">
-            ${upgradesContainer.innerHTML}
-        </div>
-        <footer class="statistics">
-            <p>SPC: <span id="popup-BPC-text">${bpc}</span></p>
-            <p>SPS: <span id="popup-BPS-text">${bps}</span></p>
-        </footer>
-        <button class="text-lego-stroke popup-close" data-text="Sluiten" >Sluiten</button>
-    `;
-
-    setTimeout(() => {
-        document.querySelector(".popup-close").addEventListener("click", closeUpgrades);
-    }, 50);
-
-    setTimeout(() => {
-        document.querySelectorAll(".upgrade").forEach((upgrade) => {
-            let functionName = upgrade.getAttribute("onclick");
-            if (functionName) {
-                functionName = functionName.replace("()", "");
-                upgrade.onclick = window[functionName];
-            }
-        });
-    }, 50);
-
-    updatePopupStats(); 
-
-    document.getElementById("popupOverlay").style.display = "block";
-    popupContent.style.display = "block";
-}
-
 function updatePopupStats() {
     let popupBPC = document.getElementById("popup-BPC-text");
     let popupBPS = document.getElementById("popup-BPS-text");
@@ -190,55 +146,4 @@ function updatePopupStats() {
         popupBPC.innerHTML = Math.round(bpc);
         popupBPS.innerHTML = Math.round(bps);
     }
-}
-function openInfoPopup() {
-    document.getElementById("infoPopup").showModal();
-}
-
-function closeInfoPopup() {
-    document.getElementById("infoPopup").close();
-}
-
- 
-
-/* muntenn shop*/
-
-
-
-const shopPopup = document.getElementById("shop-popup");
-const clickerShop = document.getElementById("clicker-shop");
-const closeShop = document.getElementById("close-shop");
-const buyForm = document.getElementById("buy-form");
-const quantityInput = document.getElementById("quantity");
-const totalCost = document.getElementById("total-cost");
-
-const COIN_PRICE = 100; 
-
-
-clickerShop.addEventListener("click", () => {
-    shopPopup.showModal();
-});
-
-closeShop.addEventListener("click", () => {
-    shopPopup.close();
-});
-
-
-quantityInput.addEventListener("input", () => {
-    let quantity = parseInt(quantityInput.value) || 1; 
-    totalCost.textContent = quantity * COIN_PRICE;
-});
-
-
-buyForm.addEventListener("submit", (event) => {
-    event.preventDefault(); 
-    let quantity = parseInt(quantityInput.value);
-    
-    if (quantity > 0) {
-        alert(`Je hebt ${quantity} munten gekocht voor ${quantity * COIN_PRICE} stenen!`);
-        shopPopup.close();
-    } else {
-        alert("niet mogelijkk");
-    }
-});
-
+} // einde

@@ -204,3 +204,28 @@ document.querySelector(".buy-confirm").addEventListener("click", async () => {
   } catch (err) {
   }
 });
+
+document.querySelectorAll(".buy-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const type = btn.getAttribute("data-type");
+console.log("VERZEND NAAR BACKEND:", type); 
+
+
+   const langPrefix = window.location.pathname.split("/")[1]; 
+    fetch(`/${langPrefix}/buy-item`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ itemType: type })
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.message) {
+        alert(data.message);
+        location.reload();
+      } else {
+        alert(data.error);
+      }
+    });
+  });
+});
+
