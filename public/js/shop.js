@@ -153,10 +153,10 @@ async function refreshFigs() {
         console.error(err);
     }
     localStorage.removeItem("countdownEndTime"); 
-    startCountdown("00:00:05"); 
+    startCountdown("11:59:59"); 
 }
 
-    startCountdown("00:00:05");
+    startCountdown("11:59:59");
 
 function formatCoins(coins) {
   if (coins >= 1000) {
