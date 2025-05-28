@@ -5,13 +5,21 @@
     <main>
       <img id="open-chest" src="../assets/images/epic-chest.png" alt="">
       <a  class="close" href="inventory">❌</a>
-
-      <h1 id="titel">kist opening <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+      <% if (lang === 'nl') { %>
+          <h1 id="titel">kist opening <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
           class="bi bi-info-circle" viewBox="0 0 16 16">
           <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
           <path
             d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 0 0 1 2 0" />
-        </svg> </h1>
+        </svg> </h1>      <% } else if (lang === 'en') { %>
+    <h1 id="titel">chest opening <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+          class="bi bi-info-circle" viewBox="0 0 16 16">
+          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+          <path
+            d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 0 0 1 2 0" />
+        </svg> </h1>        <% } %>
+
+     
 
       <div class="spinner" id="spinnerContainer">
         <ul class="spinner-items" id="spinnerList">
@@ -36,7 +44,11 @@
           <div class="figure-card">
             <img id="winImage" src="" alt="Winning Figure" style="width: 150px; height: 150px;">
           </div>
+          <% if (lang === 'nl') { %>
           <button class="text-lego-stroke" data-text="sluiten" onclick="closePopup()">sluiten</button>
+          <% } else if (lang === 'en') { %>
+          <button class="text-lego-stroke" data-text="close" onclick="closePopup()">close</button>
+          <% } %>
         </div>
       </div>
 
@@ -88,10 +100,18 @@
       </div>
     </main>
     <section id="popup">
+      <% if (lang === 'nl') { %>
       <p>Hier kan je je kist openen en een figure krijgen</p>
       <p> 🟢groen = 55.56% </p>
       <p> 🟣paars = 33.33% </p>
       <p> 🟡goud = 11.11% </p>
+      <% } else if (lang === 'en') { %>
+      <p>Here you can open your chest and get a figure</p>
+       <p> 🟢green = 55.56% </p>
+      <p> 🟣purple = 33.33% </p>
+      <p> 🟡gold = 11.11% </p>
+      <% } %>
+
     </section>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.3.2"></script>
     <%- include('components/settings') %>
