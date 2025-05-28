@@ -180,41 +180,21 @@ router.post("/orden-fig", async (req: Request, res: Response) => {
 
 router.post("/set-ordenen-count", async (req, res) => {
   const count = parseInt(req.body.count, 10);
-  req.session.ordenenCount = count;
-  // req.session.ordenenDone = 0;
-
-  // const allFigs = await fetchMinifigs();
-  // const shuffled = allFigs.sort(() => 0.5 - Math.random());
-  // req.session.ordenenFigs = shuffled.slice(0, count);
-
   const userId = req.session.user?._id;
 
   if (!userId) {
     return res
       .status(400)
-      .json({ success: false, message: "User of fig ontbreekt" });
+      .json({ success: false, message: "User ontbreekt" });
   }
-  // if (userId) {
-  //   const db = await connectToMongoDB();
-  //   await db
-  //     .collection("game_data")
-  //     .updateOne(
-  //       { playerId: typeof userId === "string" ? userId : userId.toString() },
-  //       { $set: { totalFigs: count } }
-  //     );
-  // }
 
-  // res.json({ success: true });
-
-  // console.log("Gekozen figs:", req.session.ordenenFigs);
   try {
-    const gameData = await insertUserGameData(userId.toString(), count);
-    if (!gameData) {
-      return res
-        .status(404)
-        .json({ success: false, message: "User game data not found" });
-    }
-    res.json({ success: true, gameData });
+    const db = await connectToMongoDB();
+    const insertResult = await insertUserGameData(userId.toString(), count);
+    const newGameData = await db
+      .collection("game_data")
+      .findOne({ _id: insertResult.insertedId });
+    return res.json({ success: true, gameData: newGameData });
   } catch (error: any) {
     res.status(500).json({ success: false, error: error.message });
   }
@@ -237,7 +217,11 @@ router.post("/set-random-figs", async (req, res) => {
       (fig: any) => !user.bin.some((b: any) => b.fig === fig.name)
     );
     const shuffled = allFigsWithoutBin.sort(() => 0.5 - Math.random());
-    const randomFigs = shuffled.slice(0, req.session.ordenenCount || 10);
+
+    const gameData = await getGameData(userId.toString());
+    const totalFigs = gameData?.totalFigs;
+
+    const randomFigs = shuffled.slice(0, totalFigs);
 
     const allMinifigs = await fetchMinifigs();
     const randomFigsWithSet = randomFigs.map((fig: any) => {
@@ -252,18 +236,18 @@ router.post("/set-random-figs", async (req, res) => {
     });
     const gameStatus = "pending";
 
-    const gameData = await updateGameDataFromFactory(
+    const updatedGameData = await updateGameDataFromFactory(
       userId.toString(),
       randomFigsWithSet,
       gameStatus
     );
-    if (!gameData) {
+    if (!updatedGameData) {
       return res
         .status(404)
         .json({ success: false, message: "User game data not found" });
     }
     req.session.ordenenFigs = randomFigs;
-    res.json({ success: true, gameData });
+    res.json({ success: true, gameData: updatedGameData });
   } catch (error: any) {
     res.status(500).json({ success: false, error: error.message });
   }

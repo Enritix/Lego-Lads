@@ -12,19 +12,16 @@ document.addEventListener("DOMContentLoaded", async function () {
     let currentFig = null;
     let sets = [];
 
-    // Helper: animatie
     function animateChange(elem, value) {
         elem.textContent = value > 0 ? `+${value}` : `${value}`;
         elem.classList.add("animate");
         setTimeout(() => elem.classList.remove("animate"), 1000);
     }
 
-    // Helper: redirect
     function redirectTo(path) {
         window.location.href = path;
     }
 
-    // 1. Haal game data op
     async function fetchGameData() {
         const langMatch = window.location.pathname.match(/^\/(nl|en)/);
         const langPrefix = langMatch ? langMatch[0] : '/nl';
@@ -34,7 +31,6 @@ document.addEventListener("DOMContentLoaded", async function () {
         return data.gameData;
     }
 
-    // 2. Haal alle sets op
     async function fetchAllSets() {
         const langMatch = window.location.pathname.match(/^\/(nl|en)/);
         const langPrefix = langMatch ? langMatch[0] : '/nl';
@@ -44,13 +40,11 @@ document.addEventListener("DOMContentLoaded", async function () {
         return data.sets;
     }
 
-    // 3. Vind eerste pending fig
     function findFirstPendingFig(gameData) {
         if (!gameData || !Array.isArray(gameData.figs)) return null;
         return gameData.figs.find(fig => fig.status === "pending");
     }
 
-    // 4. Toon sets in de UI
     function showSets(setsToShow) {
         setsUl.innerHTML = "";
         setsToShow.forEach(set => {
@@ -66,7 +60,6 @@ document.addEventListener("DOMContentLoaded", async function () {
         });
     }
 
-    // 5. Main logica
     async function init() {
         const gameData = await fetchGameData();
         if (!gameData) return;
@@ -77,13 +70,11 @@ document.addEventListener("DOMContentLoaded", async function () {
             return;
         }
 
-        // Toon fig
         if (figImg) {
             figImg.src = currentFig.img;
             figImg.alt = currentFig.name;
         }
 
-        // Sets ophalen en randomiseren
         sets = await fetchAllSets();
         const correctSet = sets.find(set => set.id === currentFig.set);
         const otherSets = sets.filter(set => set.id !== currentFig.set);
@@ -92,7 +83,6 @@ document.addEventListener("DOMContentLoaded", async function () {
 
         showSets(randomSets);
 
-        // Koppel click events aan sets
         setsUl.querySelectorAll("li").forEach(li => {
             li.addEventListener("click", async (e) => {
                 e.preventDefault();
@@ -103,7 +93,6 @@ document.addEventListener("DOMContentLoaded", async function () {
         });
     }
 
-    // 6. Case handler
     async function handleCase(type, chosenSet = null) {
         switch (type) {
             case "juist":
@@ -129,7 +118,6 @@ document.addEventListener("DOMContentLoaded", async function () {
                 animateChange(minAnim, -100);
                 break;
         }
-        // Check of er nog pending figs zijn
         const gameData = await fetchGameData();
         if (gameData && Array.isArray(gameData.figs) && gameData.figs.some(fig => fig.status === "pending")) {
             redirectTo("/factory");
@@ -138,7 +126,6 @@ document.addEventListener("DOMContentLoaded", async function () {
         }
     }
 
-    // 7. API helpers
     async function updateGameData(status) {
         const langMatch = window.location.pathname.match(/^\/(nl|en)/);
         const langPrefix = langMatch ? langMatch[0] : '/nl';
@@ -195,7 +182,6 @@ document.addEventListener("DOMContentLoaded", async function () {
         return checked ? checked.value : "";
     }
 
-    // 8. Button events
     if (skipButton) {
         skipButton.addEventListener("click", async () => {
             await handleCase("overslaan");
@@ -223,6 +209,5 @@ document.addEventListener("DOMContentLoaded", async function () {
         popup.style.display = "none";
     });
 
-    // Start
     init();
 });

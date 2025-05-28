@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.log('Game data:', gameData);
     
     if (!gameData || gameData.gameStatus !== "inProgress") {
-        gameData = await generateRandomFigures();
+        // gameData = await generateRandomFigures();
         if (!gameData) {
             alert("Kon geen nieuwe game data genereren.");
             return;
@@ -198,22 +198,22 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 });
 
-async function generateRandomFigures() {
-    try {
-        const langMatch = window.location.pathname.match(/^\/(nl|en)/);
-        const langPrefix = langMatch ? langMatch[0] : '/nl';
-        const response = await fetch(`${langPrefix}/set-random-figs`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-        });
-        const data = await response.json();
-        if (data.success) {
-            return data.gameData;
-        }
-    } catch (err) {
-        console.error('Kon game data niet ophalen:', err);
-    }
-    return null;
-}
+// async function generateRandomFigures() {
+//     try {
+//         const langMatch = window.location.pathname.match(/^\/(nl|en)/);
+//         const langPrefix = langMatch ? langMatch[0] : '/nl';
+//         const response = await fetch(`${langPrefix}/set-random-figs`, {
+//             method: 'POST',
+//             headers: { 'Content-Type': 'application/json' },
+//         });
+//         const data = await response.json();
+//         if (data.success) {
+//             return data.gameData;
+//         }
+//     } catch (err) {
+//         console.error('Kon game data niet ophalen:', err);
+//     }
+//     return null;
+// }
 
 });
