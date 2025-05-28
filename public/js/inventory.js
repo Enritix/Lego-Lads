@@ -72,7 +72,9 @@ document.addEventListener("DOMContentLoaded", function () {
             const chestType = button.getAttribute("data-chest");
             if (chestType) {
                     //ABbe:  encodeURIComponent is voor url tekens te generen zo dat de jkuist pege geladen word 
-              window.location.href = `/chest?type=${encodeURIComponent(chestType)}`;
+              const langPrefix = window.location.pathname.split('/')[1]; // 'nl' of 'en'
+              window.location.href = `/${langPrefix}/chest?type=${encodeURIComponent(chestType)}`;
+
             }
           });
         }
