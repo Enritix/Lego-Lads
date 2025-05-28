@@ -1,6 +1,7 @@
 import { MongoClient, Db, ObjectId } from "mongodb";
 import { binElement, User } from "./interfaces";
 import dotenv from "dotenv";
+import { randomUUID } from "crypto";
 dotenv.config();
 
 /*require('dotenv').config();
@@ -668,3 +669,78 @@ export async function updateGameDataFromOrdenen(
   }
   return await db.collection("game_data").findOne({ _id: gameDataId });
 }
+
+//Abe : chest template
+
+type Minifig = {
+  name: string;
+  img: string;
+  rarity: "gewoon" | "episch" | "legendarisch";
+};
+
+async function fetchMinifigs(): Promise<Minifig[]> {
+  const res = await fetch("https://supabase-api-q362.onrender.com/minifigs");
+
+  if (!res.ok) {
+    throw new Error(`Fout bij ophalen minifigs: ${res.status}`);
+  }
+
+  const data: Minifig[] = await res.json();
+  return data;
+}
+
+function getRandomFigs(source: Minifig[], count: number): Minifig[] {
+  const copy = [...source];
+  const result: Minifig[] = [];
+
+  while (result.length < count && copy.length > 0) {
+    const index = Math.floor(Math.random() * copy.length);
+    result.push(copy.splice(index, 1)[0]);
+  }
+
+  return result;
+}
+
+async function generateChest(type: "common" | "epic" | "legendary") {
+  try {
+    await client.connect();
+    const db = client.db("LegoLads");
+    const chests = db.collection("chests");
+
+    const allFigs = await fetchMinifigs();
+
+    const commons = allFigs.filter(fig => fig.rarity === "gewoon");
+    const epics = allFigs.filter(fig => fig.rarity === "episch");
+    const legendaries = allFigs.filter(fig => fig.rarity === "legendarisch");
+
+    if (commons.length < 5 || epics.length < 3 || legendaries.length < 1) {
+      throw new Error("Niet genoeg fig rarity");
+    }
+
+    const chestFigs = [
+      ...getRandomFigs(commons, 5),
+      ...getRandomFigs(epics, 3),
+      ...getRandomFigs(legendaries, 1),
+    ];
+
+    await chests.insertOne({
+      type,
+      figs: chestFigs,
+      created_at: new Date(),
+    });
+
+    console.log(`✅ Chest (${type}) aangemaakt met 9 figuren`);
+  } catch (err) {
+    console.error("❌ Fout:", err);
+  } finally {
+    await client.close();
+  }
+}
+
+ export async function generatecluster() {
+  await generateChest("common");
+  await generateChest("epic");
+  await generateChest("legendary");
+}
+
+
