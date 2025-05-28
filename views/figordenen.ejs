@@ -33,16 +33,20 @@
           <span class="arrow" id="right">▶</span>
 
           <ul id="keuze">
-            <li> <button id="skipButton" class="select-button text-lego-stroke" data-text="overslaan">overslaan</button><p id="min">-100</p></li>
+            <li> <button id="skipButton" class="select-button text-lego-stroke" data-text="overslaan">overslaan</button>
+              <!-- <p id="min">-100</p> -->
+            </li>
             <li>
-              <p id="pluss">+100</p>
+              <!-- <p id="pluss">+100</p> -->
               <% if (currentFig) { %>
                 <img id="figKeuze" src="<%= currentFig.img %>" alt="<%= currentFig.name %>">
               <% } else { %>
                 <img id="figKeuze" src="../assets/images/batman.png" alt="">
               <% } %>
             </li>
-            <li> <button id="vernietigKnop" class="select-button text-lego-stroke" data-text="wegwerpen">wegwerpen</button><p id="plus">-100</p></li>
+            <li> <button id="vernietigKnop" class="select-button text-lego-stroke" data-text="wegwerpen">wegwerpen</button>
+              <!-- <p id="plus">-100</p> -->
+            </li>
           </ul>
 
 

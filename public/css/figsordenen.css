@@ -165,9 +165,10 @@ main {
 #pluss{
     color: green;
 }
-#sets li img{
+#sets li img {
     height: auto;
-    width: 150px;  
+    width: 220px;
+    max-width: 100%;
 }
 #keuze{
     display: flex;
@@ -283,14 +284,14 @@ main {
     }
     #sets li img{
         height: auto;
-        width: 120px;  
+        width: 160px;  
     }
     #keuze{
         gap: 0px;
     }
     #keuze li img{
         height: auto;
-        width: 100px; 
+        width: 130px; 
         position: relative;
         bottom: 20px;
     }
@@ -375,10 +376,76 @@ main {
     }
 }
 #figKeuze {
+    width: 220px;
+    height: auto;
+    max-width: 100%;
     transition: transform 1s ease-out, opacity 0.5s ease-out;
 }
 
 .hidden {
     transform: translateX(-200px); 
     opacity: 0; 
+}
+
+@keyframes floatUp {
+    0% { opacity: 1; transform: translateY(0);}
+    100% { opacity: 0; transform: translateY(-40px);}
+}
+@keyframes floatDown {
+    0% { opacity: 1; transform: translateY(0);}
+    100% { opacity: 0; transform: translateY(40px);}
+}
+
+.fig-move-anim {
+    transition: transform 1.5s cubic-bezier(.68,-0.55,.27,1.55), opacity 1.5s;
+    z-index: 10000;
+    position: absolute !important;
+    pointer-events: none;
+}
+
+.floating-score {
+    position: absolute;
+    font-size: 2rem;
+    font-weight: bold;
+    left: 50%;
+    transform: translateX(-50%);
+    pointer-events: none;
+    z-index: 10001;
+    color: #00c853;
+    text-shadow: 1px 1px 4px #000;
+    opacity: 0;
+}
+.floating-score.minus {
+    color: #d50000;
+}
+.floating-score.float-up {
+    animation: floatUp 1.5s forwards;
+    opacity: 1;
+}
+.floating-score.float-down {
+    animation: floatDown 1.5s forwards;
+    opacity: 1;
+}
+
+.emoji-feedback {
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 8rem;
+    z-index: 200000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+}
+.emoji-feedback.show {
+    opacity: 1;
+    animation: popEmoji 1.2s cubic-bezier(.68,-0.55,.27,1.55);
+}
+@keyframes popEmoji {
+    0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
+    20% { opacity: 1; }
+    60% { transform: translate(-50%, -50%) scale(1.2); }
+    80% { transform: translate(-50%, -50%) scale(0.95);}
+    100% { transform: translate(-50%, -50%) scale(1); opacity: 1;}
 }

@@ -94,35 +94,67 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
 
     async function handleCase(type, chosenSet = null) {
-        switch (type) {
-            case "juist":
-                await updateGameData("sorted");
-                await updateCoins(100);
-                animateChange(plusAnim, 100);
-                await addToOrdenedFigs();
-                break;
-            case "verkeerd":
-                await updateGameData("wrong");
-                await updateCoins(-100);
-                animateChange(minAnim, -100);
-                break;
-            case "overslaan":
+        const figEl = document.getElementById("figKeuze");
+        const skipBtn = document.getElementById("skipButton");
+        const vernietigBtn = document.getElementById("vernietigKnop");
+        let targetSetEl = null;
+        if (chosenSet) {
+            const li = [...document.querySelectorAll("#sets li")].find(li => li.dataset.id == chosenSet);
+            targetSetEl = li ? li.querySelector("img") : null;
+        }
+
+        if (type === "overslaan") {
+            animateFigToTarget(figEl, skipBtn, async () => {
+                showFloatingScore(skipBtn, "-100", "down");
                 await updateGameData("skipped");
                 await updateCoins(-100);
-                animateChange(minAnim, -100);
-                break;
-            case "wegwerpen":
-                await updateGameData("sorted");
+                await afterAnim();
+            });
+            return;
+        }
+        if (type === "wegwerpen") {
+            animateFigToTarget(figEl, vernietigBtn, async () => {
+                showFloatingScore(vernietigBtn, "-100", "down");
+                await updateGameData("removed");
                 await updateCoins(-100);
                 await addToBin();
-                animateChange(minAnim, -100);
-                break;
+                await afterAnim();
+            });
+            return;
         }
-        const gameData = await fetchGameData();
-        if (gameData && Array.isArray(gameData.figs) && gameData.figs.some(fig => fig.status === "pending")) {
-            redirectTo("/factory");
-        } else {
-            redirectTo("/resultaat");
+        if (type === "juist" && targetSetEl) {
+            animateFigToTarget(figEl, targetSetEl, async () => {
+                showFloatingScore(figEl, "+100", "up");
+                showEmojiFeedback("juist");
+                await updateGameData("sorted");
+                await updateCoins(100);
+                await addToOrdenedFigs();
+                await afterAnim();
+            });
+            return;
+        }
+        if (type === "verkeerd" && targetSetEl) {
+            animateFigToTarget(figEl, targetSetEl, async () => {
+                showFloatingScore(figEl, "-100", "up");
+                showEmojiFeedback("fout");
+                await updateGameData("wrong");
+                await updateCoins(-100);
+                await afterAnim();
+            });
+            return;
+        }
+
+        await afterAnim();
+
+        async function afterAnim() {
+            const gameData = await fetchGameData();
+            setTimeout(() => {
+                if (gameData && Array.isArray(gameData.figs) && gameData.figs.some(fig => fig.status === "pending")) {
+                    redirectTo("/factory");
+                } else {
+                    redirectTo("/resultaat");
+                }
+            }, 400);
         }
     }
 
@@ -210,4 +242,67 @@ document.addEventListener("DOMContentLoaded", async function () {
     });
 
     init();
+
+    function showFloatingScore(targetEl, value, direction = "up") {
+        const score = document.createElement("div");
+        score.className = "floating-score" + (value.startsWith('-') ? " minus" : "");
+        score.textContent = value;
+        document.body.appendChild(score);
+
+        const rect = targetEl.getBoundingClientRect();
+        score.style.left = `${rect.left + rect.width / 2}px`;
+        score.style.top = `${rect.top + rect.height / 2}px`;
+
+        score.classList.add(direction === "up" ? "float-up" : "float-down");
+
+        setTimeout(() => {
+            score.remove();
+        }, 2000);
+    }
+
+    function animateFigToTarget(figEl, targetEl, cb) {
+        const figRect = figEl.getBoundingClientRect();
+        const targetRect = targetEl.getBoundingClientRect();
+
+        const figCenterX = figRect.left + window.scrollX + figRect.width / 2;
+        const figCenterY = figRect.top + window.scrollY + figRect.height / 2;
+        const targetCenterX = targetRect.left + window.scrollX + targetRect.width / 2;
+        const targetCenterY = targetRect.top + window.scrollY + targetRect.height / 2;
+
+        const deltaX = targetCenterX - figCenterX;
+        const deltaY = targetCenterY - figCenterY;
+
+        figEl.style.position = "absolute";
+        figEl.style.zIndex = 10000;
+        figEl.style.left = `${figRect.left + window.scrollX}px`;
+        figEl.style.top = `${figRect.top + window.scrollY}px`;
+        figEl.classList.add("fig-move-anim");
+
+        void figEl.offsetWidth;
+
+        figEl.style.transform = `translate(${deltaX}px, ${deltaY}px) scale(0.7)`;
+        figEl.style.opacity = "0.5";
+
+        setTimeout(() => {
+            figEl.classList.remove("fig-move-anim");
+            figEl.style = "";
+            if (cb) cb();
+        }, 1500);
+    }
+
+    function showEmojiFeedback(type) {
+        let emoji = type === "juist" ? "✅" : "❌";
+        let feedback = document.getElementById("emoji-feedback");
+        if (!feedback) {
+            feedback = document.createElement("div");
+            feedback.id = "emoji-feedback";
+            feedback.className = "emoji-feedback";
+            document.body.appendChild(feedback);
+        }
+        feedback.textContent = emoji;
+        feedback.classList.add("show");
+        setTimeout(() => {
+            feedback.classList.remove("show");
+        }, 1200);
+    }
 });
