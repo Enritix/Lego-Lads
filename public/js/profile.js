@@ -100,12 +100,7 @@ async function collectAchievement(achievementKey) {
             })
         });
         const data = await response.json();
-        if (data.success) {
-            alert('Achievement opgehaald!');
-            // eventueel: achievements opnieuw ophalen en UI updaten
-        } else {
-            alert('Kan achievement niet ophalen: ' + data.error);
-        }
+        window.location.reload();
     } catch (error) {
         alert('Fout bij ophalen achievement: ' + error);
     }

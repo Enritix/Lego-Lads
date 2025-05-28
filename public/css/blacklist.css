@@ -465,8 +465,10 @@ main {
 }
 
 #reasonPopUp {
-  position: absolute;
-  top: 10%;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
   background-color: var(--primary-color);
   border-radius: 25px;
   padding: 20px;
@@ -521,7 +523,7 @@ main {
   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
   border: none;
 }
-#overlayOrdenen {
+#redenOverlay {
   position: fixed;
   top: 0;
   left: 0;

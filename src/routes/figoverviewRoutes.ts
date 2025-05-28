@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import { addMinifigToBin, deleteMinifigFromBin, deleteSortedFig, getBin, getSortedFigs } from "../database";
+import { addMinifigToBin, deleteMinifigFromBin, deleteSortedFig, getBin, getSortedFigs, updateMinifigReason } from "../database";
 import {
   fetchMinifigByName,
   getThemeById,
@@ -35,6 +35,20 @@ router.get("/blacklist", async (req: Request, res: Response) => {
     bin: bin,
     minifigs: minifigs,
   });
+});
+
+router.post("/update-minifig-reason", async (req: Request, res: Response) => {
+  const userId = req.session.user?._id;
+  const { fig, reason } = req.body;
+  if (!userId || !fig || !reason) {
+    return res.status(400).json({ success: false, message: "Data ontbreekt" });
+  }
+  try {
+    await updateMinifigReason(userId.toString(), fig, reason);
+    res.json({ success: true });
+  } catch (error: any) {
+    res.status(500).json({ success: false, error: error.message });
+  }
 });
 
 router.post("/delete-minifig", async (req: Request, res: Response) => {

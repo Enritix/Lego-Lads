@@ -3,27 +3,61 @@
 
     <main class="buttons">
       <a class="lego-button" href="factory-welcome">
-        <img src="/assets/images/green_button.png" alt="Lego steen" />
+        
+        <% if (lang === 'nl') { %>
+     <img src="/assets/images/green_button.png" alt="Lego steen" />
+<% } else if (lang === 'en') { %>
+      <img src="/assets/images/green-button-en.png" alt="Lego brick" />
+<% } %>
       </a>
       <a class="lego-button" id="sets">
         <img src="/assets/images/orange-button.png" alt="Lego steen" />
       </a>
       <div id="figs-dropdown">
-        <a href="genre" class="dropdown-button">Geordende Figs &#128230; </a>
-        <a href="blacklist" class="dropdown-button">Vuilbak &#128465; </a>
+        <a href="genre" class="dropdown-button">
+          <% if (lang === 'nl') { %>
+     Geordende Figs 
+<% } else if (lang === 'en') { %>
+      Sorted Figs
+<% } %>
+          &#128230; </a>
+        
+        <a href="blacklist" class="dropdown-button">
+          <% if (lang === 'nl') { %>
+     Vuilbak 
+<% } else if (lang === 'en') { %>
+      Trash Bin
+<% } %>
+          &#128465; </a>
       </div>
 
       <a class="lego-button" id="minigames">
-        <img src="/assets/images/blue-button.png" alt="Lego steen" />
+        <% if (lang === 'nl') { %>
+     <img src="/assets/images/blue-button.png" alt="Lego steen" />
+<% } else if (lang === 'en') { %>
+      <img src="/assets/images/blue-button.png" alt="Lego brick" />
+<% } %>
       </a>
       <div id="minigames-dropdown">
-        <a href="clickergame" class="dropdown-button">Klikkerspel &#128070;</a>
+        
+        <% if (lang === 'nl') { %>
+     <a href="clickergame" class="dropdown-button">Klikkerspel &#128070;</a>
         <a href="memorygame" class="dropdown-button">Geheugenspel &#129504;</a>
         <a href="fighter" class="dropdown-button">vechtspel &#9876;</a>
+<% } else if (lang === 'en') { %>
+      <a href="clickergame" class="dropdown-button">Clickergame &#128070;</a>
+        <a href="memorygame" class="dropdown-button">Memorygame &#129504;</a>
+        <a href="fighter" class="dropdown-button">Fightgame &#9876;</a>
+<% } %>
       </div>
 
       <a class="lego-button" href="shop">
-        <img src="/assets/images/red-button.png" alt="Lego steen" />
+        
+        <% if (lang === 'nl') { %>
+     <img src="/assets/images/red-button.png" alt="Lego steen" />
+<% } else if (lang === 'en') { %>
+      <img src="/assets/images/red-button-en.png" alt="Lego brick" />
+<% } %>
       </a>
     </main>
 

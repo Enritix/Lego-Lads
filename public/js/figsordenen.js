@@ -308,4 +308,19 @@ document.addEventListener("DOMContentLoaded", async function () {
             feedback.classList.remove("show");
         }, 1200);
     }
+
+    const otherRadio = document.querySelector('input[name="reason"][value="other"]');
+    const otherReasonWrapper = document.getElementById('otherReasonWrapper');
+    const allReasonRadios = document.querySelectorAll('input[name="reason"]');
+    if (otherRadio && otherReasonWrapper) {
+        allReasonRadios.forEach(radio => {
+            radio.addEventListener('change', function () {
+                if (otherRadio.checked) {
+                    otherReasonWrapper.style.display = 'inline';
+                } else {
+                    otherReasonWrapper.style.display = 'none';
+                }
+            });
+        });
+    }
 });

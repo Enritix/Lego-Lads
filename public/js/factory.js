@@ -108,68 +108,90 @@ document.addEventListener("DOMContentLoaded", async () => {
         gear.style.animation = "rotate 7s linear";
     });
 
-    minifiguresDesktop.addEventListener("animationend", async () => {
-        // const nextFig = gameData.figs.find(fig => fig.status === "pending");
-        // if (nextFig) {
-        //     const langMatch = window.location.pathname.match(/^\/(nl|en)/);
-        //     const langPrefix = langMatch ? langMatch[0] : '/nl';
-        //     const response = await fetch(`${langPrefix}/set-current-fig`, {
-        //         method: 'POST',
-        //         headers: { 'Content-Type': 'application/json' },
-        //         body: JSON.stringify({ fig: { name: nextFig.name, img: nextFig.img } })
-        //     }).then(() => {
-        //         setTimeout(() => {
-        //             window.location.href = "/figordenen";
-        //         }, 1000);
-        //     });
-        // } else {
-            setTimeout(() => {
-                window.location.href = "/figordenen";
-            }, 1000);
-        // }
-    });
+    // minifiguresDesktop.addEventListener("animationend", async () => {
+    //     // const nextFig = gameData.figs.find(fig => fig.status === "pending");
+    //     // if (nextFig) {
+    //     //     const langMatch = window.location.pathname.match(/^\/(nl|en)/);
+    //     //     const langPrefix = langMatch ? langMatch[0] : '/nl';
+    //     //     const response = await fetch(`${langPrefix}/set-current-fig`, {
+    //     //         method: 'POST',
+    //     //         headers: { 'Content-Type': 'application/json' },
+    //     //         body: JSON.stringify({ fig: { name: nextFig.name, img: nextFig.img } })
+    //     //     }).then(() => {
+    //     //         setTimeout(() => {
+    //     //             window.location.href = "/figordenen";
+    //     //         }, 1000);
+    //     //     });
+    //     // } else {
+    //         setTimeout(() => {
+    //             window.location.href = "/figordenen";
+    //         }, 1000);
+    //     // }
+    // });
 }
 
     // Mobile version
     const minifiguresMobile = document.getElementById("minifigures-mobile");
     const gearsMobile = document.querySelectorAll(".factory-belt-gear-mobile");
 
-    minifiguresMobile.addEventListener("animationend", async () => {
-    // const nextFig = gameData.figs.find(fig => fig.status === "pending");
-    // if (nextFig) {
-    //         const langMatch = window.location.pathname.match(/^\/(nl|en)/);
-    //         const langPrefix = langMatch ? langMatch[0] : '/nl';
-    //         const response = await fetch(`${langPrefix}/set-current-fig`, {
-    //         method: 'POST',
-    //         headers: { 'Content-Type': 'application/json' },
-    //         body: JSON.stringify({ fig: { name: nextFig.name, img: nextFig.img } })
-    //     }).then(() => {
-    //         setTimeout(() => {
-    //             window.location.href = "/figordenen";
-    //         }, 1000);
-    //     });
-    // } else {
-        setTimeout(() => {
-            window.location.href = "/figordenen";
-        }, 1000);
-    // }
-});
+//     minifiguresMobile.addEventListener("animationend", async () => {
+//     // const nextFig = gameData.figs.find(fig => fig.status === "pending");
+//     // if (nextFig) {
+//     //         const langMatch = window.location.pathname.match(/^\/(nl|en)/);
+//     //         const langPrefix = langMatch ? langMatch[0] : '/nl';
+//     //         const response = await fetch(`${langPrefix}/set-current-fig`, {
+//     //         method: 'POST',
+//     //         headers: { 'Content-Type': 'application/json' },
+//     //         body: JSON.stringify({ fig: { name: nextFig.name, img: nextFig.img } })
+//     //     }).then(() => {
+//     //         setTimeout(() => {
+//     //             window.location.href = "/figordenen";
+//     //         }, 1000);
+//     //     });
+//     // } else {
+//         setTimeout(() => {
+//             window.location.href = "/figordenen";
+//         }, 1000);
+//     // }
+// });
 
 function addCurrentFigToFactory() {
     const nextFig = gameData.figs.find(fig => fig.status === "pending");
     if (nextFig) {
         if (window.innerWidth > 768) {
             minifiguresDesktop.innerHTML = "";
-            minifiguresDesktop.insertAdjacentHTML(
-                "beforeend",
-                `<img src="${nextFig.img}" alt="${nextFig.name} Minifigure">`
-            );
+            const img = document.createElement("img");
+            img.src = nextFig.img;
+            img.alt = `${nextFig.name} Minifigure`;
+            img.onload = () => {
+                minifiguresDesktop.style.animation = "activateFactoryBelt 7s ease-in-out forwards";
+                gears.forEach(gear => {
+                    gear.style.animation = "rotate 7s linear";
+                });
+                minifiguresDesktop.addEventListener("animationend", () => {
+                    setTimeout(() => {
+                        window.location.href = "/figordenen";
+                    }, 1000);
+                }, { once: true });
+            };
+            minifiguresDesktop.appendChild(img);
         } else {
             minifiguresMobile.innerHTML = "";
-            minifiguresMobile.insertAdjacentHTML(
-                "beforeend",
-                `<img src="${nextFig.img}" alt="${nextFig.name} Minifigure">`
-            );
+            const img = document.createElement("img");
+            img.src = nextFig.img;
+            img.alt = `${nextFig.name} Minifigure`;
+            img.onload = () => {
+                minifiguresMobile.style.animation = "activateFactoryBelt 7s ease-in-out forwards";
+                gearsMobile.forEach(gear => {
+                    gear.style.animation = "rotate 7s linear";
+                });
+                minifiguresMobile.addEventListener("animationend", () => {
+                    setTimeout(() => {
+                        window.location.href = "/figordenen";
+                    }, 1000);
+                }, { once: true });
+            };
+            minifiguresMobile.appendChild(img);
         }
     }
 }
