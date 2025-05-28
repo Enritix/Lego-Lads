@@ -1,5 +1,5 @@
 import { MongoClient, Db, ObjectId } from "mongodb";
-import { User } from "./interfaces";
+import { binElement, User } from "./interfaces";
 import dotenv from "dotenv";
 import { randomUUID } from "crypto";
 dotenv.config();
@@ -427,6 +427,21 @@ export async function deleteMinifigFromBin(userId: string, figName: string) {
   if (result.modifiedCount === 0) {
     throw new Error("Minifig niet gevonden in de bin of al verwiijderd.");
   }
+}
+
+// Lars: hier wordt een minifig toegevoegd aan de vuilbak
+export async function addMinifigToBin(
+  userId: string,
+  figName: string,
+  reason: string
+) {
+  const db = await connectToMongoDB();
+  const result = await db.collection("gebruikers").updateOne(
+    { _id: new ObjectId(userId) },
+    { $push: { bin: { fig: figName, reason: reason } } } as any
+  );
+  if (result.matchedCount === 0) throw new Error("Gebruiker niet gevonden.");
+  if (result.modifiedCount === 0) throw new Error("Minifig niet toegevoegd.");
 }
 
 // Lars: in deze functie kan de reden worden aangepast

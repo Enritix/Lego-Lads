@@ -1,11 +1,11 @@
 // export interface Achievement {
 
+import { ObjectId } from "mongodb";
+
 // }
 
 export interface User {
-  _id?: {
-    $oid: string;
-  };
+  _id?: ObjectId;
   username: string;
   password: string;
   email: string;
@@ -96,10 +96,3 @@ export interface TempUser {
   profile_fig: string;
   code: string;
 }
-
-// import "express-session";
-// declare module "express-session" {
-//   interface SessionData {
-    
-//   }
-// }
