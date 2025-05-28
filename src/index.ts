@@ -8,7 +8,7 @@ import mainRoutes from './routes/mainRoutes';
 import factoryRoutes from './routes/factoryRoutes';
 import profileRoutes from './routes/profileRoutes';
 import figoverviewRoutes from './routes/figoverviewRoutes';
-import {connectToMongoDB, insertTestUser, readAllUsers,deleteAllUsers} from './database';
+import {connectToMongoDB, insertTestUser, readAllUsers,deleteAllUsers,generatecluster} from './database';
 import {fetchMinifigs,fetchSets,fetchThemes} from'./apicalls';
 import { minifigsApi,requireAuth,setsApi,themesApi } from './middleware';
 import sessionMiddleware from './sessions';
@@ -136,6 +136,7 @@ async function startApp() {
     await fetchMinifigs();              
     await fetchSets();
     await fetchThemes()
+    //await generatecluster();
     /*await deleteAllUsers();*/
   } catch (err) {
     console.error( err);

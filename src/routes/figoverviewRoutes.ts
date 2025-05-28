@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import { deleteMinifigFromBin, getBin } from "../database";
+import { addMinifigToBin, deleteMinifigFromBin, deleteSortedFig, getBin, getSortedFigs } from "../database";
 import {
   fetchMinifigByName,
   getThemeById,
@@ -17,6 +17,7 @@ router.get("/blacklist", async (req: Request, res: Response) => {
       .status(400)
       .json({ success: false, message: "User ID is required" });
   }
+
   const bin = await getBin(userId.toString());
 
   const minifigs: Minifig[] = [];
@@ -26,8 +27,6 @@ router.get("/blacklist", async (req: Request, res: Response) => {
       minifigs.push(minifig);
     })
   );
-
-  // await deleteMinifigFromBin(userId, "Pirate");
 
   res.render("blacklist", {
     title: "Blacklist",
@@ -56,27 +55,34 @@ router.post("/delete-minifig", async (req: Request, res: Response) => {
 });
 
 router.get("/detaillist/:id", async (req: Request, res: Response) => {
+  const userId = req.session.user?._id;
+  if (!userId) {
+    return res.status(400).json({ success: false, message: "User ID is required" });
+  }
+
   let themeId = parseInt(req.params.id);
   let theme = await getThemeById(themeId);
 
-  const allSets = await fetchSets();
+  const sortedFigs = await getSortedFigs(userId.toString());
 
-  const sets = allSets.filter((set) => set.theme === themeId);
+  const sortedFigsForTheme = sortedFigs.filter((fig: any) => String(fig.theme) === String(themeId));
 
-  const setIds = sets.map((set) => set.id);
+  let minifigsWithSets: any[] = [];
+  if (sortedFigsForTheme.length > 0) {
+    const allSets = await fetchSets();
+    const allMinifigs = await fetchMinifigs();
 
-  const allMinifigs = await fetchMinifigs();
-  const minifigs = allMinifigs.filter(
-    (fig) => fig.set && setIds.includes(fig.set)
-  );
-
-  const minifigsWithSets = minifigs.map((fig) => {
-    const matchingSet = sets.find((set) => set.id === fig.set);
-    return {
-      ...fig,
-      sets: matchingSet ? [matchingSet] : [],
-    };
-  });
+    minifigsWithSets = await Promise.all(
+      sortedFigsForTheme.map(async (sortedFig: any) => {
+        const minifig = allMinifigs.find((fig) => fig.name === sortedFig.fig);
+        const set = allSets.find((set) => String(set.id) === String(sortedFig.set));
+        return {
+          ...minifig,
+          sets: set ? [set] : [],
+        };
+      })
+    );
+  }
 
   res.render("detaillist", {
     title: "Lego Fabriek",
@@ -84,7 +90,22 @@ router.get("/detaillist/:id", async (req: Request, res: Response) => {
     minifigsWithSets,
     cssFiles: ["/css/detaillist.css"],
     jsFiles: ["/js/detaillist.js"],
+    noSortedFigs: sortedFigsForTheme.length === 0,
   });
+});
+
+router.post("/delete-sorted-fig", async (req: Request, res: Response) => {
+  const userId = req.session.user?._id;
+  const { fig, set, theme } = req.body;
+  if (!userId || !fig || !set || !theme) {
+    return res.status(400).json({ success: false, message: "Data ontbreekt" });
+  }
+  try {
+    await deleteSortedFig(userId.toString(), String(fig), String(set), Number(theme));
+    res.json({ success: true });
+  } catch (error: any) {
+    res.status(500).json({ success: false, error: error.message });
+  }
 });
 
 router.get("/genre", async (req: Request, res: Response) => {

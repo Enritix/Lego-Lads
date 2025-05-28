@@ -29,33 +29,32 @@ router.get('/profile', async (req: Request, res: Response) => {
 });
 
 router.get('/inventory', async (req, res) => {
-  const db = await connectToMongoDB();
-
-
   const username = req.session.user?.username;
 
+  if (!username) return res.redirect('/login');
+
+  const db = await connectToMongoDB();
   const user = await db.collection("gebruikers").findOne({ username });
 
+  if (!user) return res.redirect('/login');
 
-  if(!user){
-
-    return res.status(404).send("gebruiker bestaat niet")
-  }
-
-  res.render('inventory', { title: "Rugzak",
-     cssFiles: ['/css/inventory.css'], 
-     jsFiles: ['/js/inventory.js'], 
-     figs:user.figs,
-     ongewoon: user.chests.uncommon,
-     episch: user.chests.epic,
-     legendarisch: user.chests.legendary,
-     keys: user.keys });
+  res.render('inventory', {
+    title: "Rugzak",
+    cssFiles: ['/css/inventory.css'],
+    jsFiles: ['/js/inventory.js'],
+    figs: user.figs,
+    ongewoon: user.chests.uncommon,
+    episch: user.chests.epic,
+    legendarisch: user.chests.legendary,
+    keys: user.keys
+  });
 });
-
 
 router.get('/chest', (req: Request, res: Response) => {
   const chestType = req.query.type;
   res.render('chest', { title: "Kistopening", cssFiles: ['/css/chest.css'], jsFiles: ['/js/chest.js'], chestType });
+
+
 });
 
 router.get('/shop', async (req: Request, res: Response) => {
@@ -92,7 +91,7 @@ router.get("/api/random-figs", async (req: Request, res: Response) => {
 
     res.json(figs);
   } catch (err) {
-    console.error("❌ Fout bij ophalen random figs:", err);
+    console.error("Fout bij ophalen random figs:", err);
     res.status(500).json({ error: "Interne serverfout" });
   }
 });
@@ -191,7 +190,135 @@ router.post("/buy-fig", async (req: Request, res: Response) => {
     res.json({ message: "Figuur gekocht!", newBalance: updatedUser?.coins ?? 0 });
 
   } catch (err) {
-    console.error("❌ Fout bij kopen:", err);
+    console.error("Fout bij kopen:", err);
+    res.status(500).json({ error: "Interne fout bij kopen" });
+  }
+});
+
+
+type ChestType = "common" | "epic" | "legendary";
+router.post("/api/open-chest", async (req, res) => {
+  const chestType = req.body.type as ChestType;
+  const fig = req.body.fig;
+  const username = req.session.user?.username;
+
+  if (!username) {
+    return res.status(401).json({ success: false, message: "Niet ingelogd." });
+  }
+
+  if (!fig || !fig.name || !fig.img || !fig.rarity) {
+    return res.status(400).json({ success: false, message: "Ongeldige figuur." });
+  }
+
+  const db = await connectToMongoDB();
+  const user = await db.collection("gebruikers").findOne({ username });
+
+  if (!user) {
+    return res.status(404).json({ success: false, message: "Gebruiker niet gevonden." });
+  }
+
+  const rarityMap: Record<ChestType, string> = {
+    common: "uncommon",
+    epic: "epic",
+    legendary: "legendary"
+  };
+
+  const rarityKey = rarityMap[chestType];
+  const chestCount = user.chests?.[rarityKey] || 0;
+  const keyCount = user.keys || 0;
+
+  if (chestCount <= 0 || keyCount <= 0) {
+    return res.status(400).json({ success: false, message: "Geen kisten of sleutels beschikbaar." });
+  }
+
+  await db.collection("gebruikers").updateOne(
+    { username },
+    {
+      $inc: {
+        [`chests.${rarityKey}`]: -1,
+        keys: -1
+      },
+      $push: {
+        figs: fig
+      }
+    }
+  );
+  return res.json({
+    success: true,
+    addedFig: fig
+  });
+});
+
+
+router.post("/api/get-chest-contents", async (req, res) => {
+  const chestType = req.body.type as ChestType;
+
+  if (!["common", "epic", "legendary"].includes(chestType)) {
+    return res.status(400).json({ success: false, message: "Ongeldig chest-type." });
+  }
+
+  const db = await connectToMongoDB();
+  const chest = await db.collection("chests").aggregate([
+    { $match: { type: chestType } },
+    { $sample: { size: 1 } }
+  ]).toArray();
+
+  if (!chest[0]) {
+    return res.status(404).json({ success: false, message: "Geen chest gevonden." });
+  }
+
+  res.json({ success: true, figs: chest[0].figs });
+});
+
+
+
+
+router.post("/buy-item", async (req: Request, res: Response) => {
+  try {
+    const username = req.session.user?.username;
+    if (!username) return res.status(401).json({ error: "Niet ingelogd" });
+
+    const { itemType } = req.body;
+
+    const prices: Record<string, number> = {
+      uncommon: 250,
+      epic: 500,
+      legendary: 750,
+      key: 150
+    };
+
+    if (!prices[itemType]) {
+      return res.status(400).json({ error: "Ongeldig itemtype." });
+    }
+
+    const db = await connectToMongoDB();
+    const gebruiker = await db.collection("gebruikers").findOne({ username });
+    if (!gebruiker) return res.status(404).json({ error: "Gebruiker niet gevonden" });
+
+    const price = prices[itemType];
+    if (gebruiker.coins < price) {
+      return res.status(400).json({ error: "Niet genoeg munten" });
+    }
+
+    await updateUserCoins(gebruiker._id.toString(), -price);
+
+    const update: any = itemType === "key"
+      ? { $inc: { keys: 1 } }
+      : { $inc: { [`chests.${itemType}`]: 1 } };
+
+    await db.collection("gebruikers").updateOne({ _id: gebruiker._id }, update);
+
+    const updatedUser = await db.collection("gebruikers").findOne({ _id: gebruiker._id });
+
+    res.json({
+      message: `${itemType} gekocht!`,
+      newBalance: updatedUser?.coins ?? 0,
+      chests: updatedUser?.chests,
+      keys: updatedUser?.keys
+    });
+
+  } catch (err) {
+    console.error("Fout bij kopen:", err);
     res.status(500).json({ error: "Interne fout bij kopen" });
   }
 });

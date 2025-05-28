@@ -88,12 +88,14 @@ document.addEventListener("DOMContentLoaded", async function () {
                 e.preventDefault();
                 const chosenSet = li.dataset.id;
                 let caseType = Number(chosenSet) === Number(currentFig.set) ? "juist" : "verkeerd";
-                await handleCase(caseType, chosenSet);
+                const setObj = sets.find(set => String(set.id) === String(chosenSet));
+                const themeId = setObj ? setObj.theme : null;
+                await handleCase(caseType, chosenSet, themeId);
             });
         });
     }
 
-    async function handleCase(type, chosenSet = null) {
+    async function handleCase(type, chosenSet = null, themeId = null) {
         const figEl = document.getElementById("figKeuze");
         const skipBtn = document.getElementById("skipButton");
         const vernietigBtn = document.getElementById("vernietigKnop");
@@ -128,7 +130,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                 showEmojiFeedback("juist");
                 await updateGameData("sorted");
                 await updateCoins(100);
-                await addToOrdenedFigs();
+                await addToOrdenedFigs(chosenSet, themeId);
                 await afterAnim();
             });
             return;
@@ -178,16 +180,17 @@ document.addEventListener("DOMContentLoaded", async function () {
         });
     }
 
-    async function addToOrdenedFigs() {
+    async function addToOrdenedFigs(setId, themeId) {
+        console.log("fig:", currentFig && currentFig.name, "set:", setId, "theme:", themeId);
         const langMatch = window.location.pathname.match(/^\/(nl|en)/);
         const langPrefix = langMatch ? langMatch[0] : '/nl';
         await fetch(`${langPrefix}/orden-fig`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                fig: { name: currentFig.name, img: currentFig.img },
-                set: currentFig.set,
-                status: "sorted"
+                fig: currentFig.name,
+                set: setId,
+                theme: themeId
             })
         });
     }
