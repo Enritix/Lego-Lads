@@ -4,7 +4,8 @@
     <section class="gameplay">
       <a class="close" href="/">❌</a>
       <header class="header-container">
-        <h1>klikspel
+        <% if (lang === 'nl') { %>
+       <h1>klikspel
           <button class="tooltip-button" aria-label="Meer informatie" onclick="openInfoPopup()">
             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-info-circle"
               viewBox="0 0 16 16">
@@ -13,10 +14,29 @@
                 d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 0 0 1 2 0" />
             </svg>
           </button>
-        </h1>
+        </h1>        
+        <% } else if (lang === 'en') { %>
+       <h1>Clickgame
+          <button class="tooltip-button" aria-label="Meer informatie" onclick="openInfoPopup()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-info-circle"
+              viewBox="0 0 16 16">
+              <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+              <path
+                d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 0 0 1 2 0" />
+            </svg>
+          </button>
+        </h1>        
+        <% } %>
+
+ 
       </header>
       <article class="brick-counter">
+        <% if (lang === 'nl') { %>
         <h2>stenen <span class="brick-cost">5000</span></h2>
+        <% } else if (lang === 'en') { %>
+        <h2>stones <span class="brick-cost">5000</span></h2>
+        <% } %>
+
         <img src="../assets/images/greenblock.png" alt="Green Brick" class="brick-img" onclick="incrementBrick()"
           draggable="false">
         <footer class="statistics">
@@ -28,17 +48,47 @@
         <dialog id="shop-popup">
           <section class="shop-content">
             <header>
+              <% if (lang === 'nl') { %>
               <h2>winkel</h2>
+              <% } else if (lang === 'en') { %>
+              <h2>shop</h2>
+              <% } %>
             </header>
             <img src="../assets/images/coin.png" alt="Munt icoon">
+               <% if (lang === 'nl') { %>
             <p>Kost: <strong>100 stenen per munt</strong></p>
+              <% } else if (lang === 'en') { %>
+            <p>Cost: <strong>100 stones per coin</strong></p>
+              <% } %>
             <form id="buy-form">
+                 <% if (lang === 'nl') { %>
               <label for="quantity">Aantal munten:</label>
+
+              <% } else if (lang === 'en') { %>
+              <label for="quantity">Ammount of coins:</label>
+
+              <% } %>
+
               <input type="number" id="quantity" name="quantity" min="1" value="1" required>
+                   <% if (lang === 'nl') { %>
               <p>Totale kosten: <span id="total-cost">100</span> stenen</p>
               <button type="submit" id="buy-item">Koop</button>
+
+              <% } else if (lang === 'en') { %>
+              <p>Total cost: <span id="total-cost">100</span> stones</p>
+              <button type="submit" id="buy-item">Buy</button>
+
+              <% } %>
+              
             </form>
-            <button class="text-lego-stroke" id="close-shop" data-text="Sluiten">Sluiten</button>
+              <% if (lang === 'nl') { %>
+              <button class="text-lego-stroke" id="close-shop" data-text="Sluiten">Sluiten</button>
+
+
+              <% } else if (lang === 'en') { %>
+              <button class="text-lego-stroke" id="close-shop" data-text="Close">Close</button>
+
+              <% } %>
           </section>
         </dialog>
 
@@ -51,11 +101,23 @@
             <img src="../assets/images/lego-tool-2.png" alt="Clicker Upgrade" class="upgrade-img">
           </figure>
           <section class="upgrade-details">
+                   <% if (lang === 'nl') { %>
             <h3>hamer</h3>
+
             <p>kost: <span class="clicker-cost">10</span> <img src="../assets/images/greenblock.png" alt="Brick"
                 class="upgrade-brick-img"></p>
-            <p>nivau: <span class="clicker-level">0</span></p>
+            <p>niveau: <span class="clicker-level">0</span></p>
             <p>+<span class="clicker-increase">1</span> Stenen per klik</p>
+
+              <% } else if (lang === 'en') { %>
+                <h3>hammer</h3>
+                 <p>cost: <span class="clicker-cost">10</span> <img src="../assets/images/greenblock.png" alt="Brick"
+                class="upgrade-brick-img"></p>
+            <p>tier: <span class="clicker-level">0</span></p>
+            <p>+<span class="clicker-increase">1</span> Stones per click</p>
+
+              <% } %>
+           
           </section>
         </article>
 
@@ -64,11 +126,20 @@
             <img src="../assets/images/lego-tool-1.png" alt="Saw Upgrade" class="upgrade-img">
           </figure>
           <section class="upgrade-details">
-            <h3>zaag</h3>
+            <% if (lang === 'nl') { %>
             <p>kost: <span class="saw-cost">130</span> <img src="../assets/images/greenblock.png" alt="Brick"
                 class="upgrade-brick-img"></p>
-            <p>nivau: <span class="saw-level">0</span></p>
+            <p>niveau: <span class="saw-level">0</span></p>
             <p>+<span class="saw-increase">4</span> stenen per seconde</p>
+
+
+            <% } else if (lang === 'en') { %>
+            <p>cost: <span class="saw-cost">130</span> <img src="../assets/images/greenblock.png" alt="Brick"
+                class="upgrade-brick-img"></p>
+            <p>tier: <span class="saw-level">0</span></p>
+            <p>+<span class="saw-increase">4</span> stones per second</p>
+            <% } %>
+
           </section>
         </article>
         <article class="upgrade" onclick="buyDril()">
@@ -76,29 +147,51 @@
             <img src="../assets/images/lego-tool-3.png" alt="Drill Upgrade" class="upgrade-img">
           </figure>
           <section class="upgrade-details">
+            <% if (lang === 'nl') { %>
             <h3>boor</h3>
             <p>kost: <span class="dril-cost">850</span> <img src="../assets/images/greenblock.png" alt="Brick"
                 class="upgrade-brick-img"></p>
-            <p>nivau: <span class="dril-level">0</span></p>
+            <p>niveau: <span class="dril-level">0</span></p>
             <p>+<span class="dril-increase">24</span> stenen per seconde</p>
+            <% } else if (lang === 'en') { %>
+            <h3>drill</h3>
+            <p>cost: <span class="dril-cost">850</span> <img src="../assets/images/greenblock.png" alt="Brick"
+                class="upgrade-brick-img"></p>
+            <p>tier: <span class="dril-level">0</span></p>
+            <p>+<span class="dril-increase">24</span> stones per second</p>
+            <% } %>
+
           </section>
         </article>
       </aside>
 
       <div class="popup-overlay" id="popupOverlay" onclick="closeUpgrades()"></div>
       <div class="upgrades-popup" id="upgradesPopup">
+        <% if (lang === 'nl') { %>
+        <h3>Verbeteringen</h3>
+        <% } else if (lang === 'en') { %>
         <h3>Upgrades</h3>
+        <% } %>
+
         <aside class="upgrades">
           <article class="upgrade" onclick="buyClick()">
             <figure class="upgrade-icon">
               <img src="../assets/images/lego-tool-2.png" alt="Clicker Upgrade" class="upgrade-img">
             </figure>
             <section class="upgrade-details">
+              <% if (lang === 'nl') { %>
               <h3>hamer</h3>
               <p>kost: <span class="clicker-cost">10</span> <img src="../assets/images/greenblock.png" alt="Brick"
                   class="upgrade-brick-img"></p>
-              <p>nivau: <span class="clicker-level">0</span></p>
-              <p>+<span class="clicker-increase">1</span> Stenen per klik</p>
+              <p>niveau: <span class="clicker-level">0</span></p>
+              <p>+<span class="clicker-increase">1</span> Stenen per klik</p>              
+              <% } else if (lang === 'en') { %>
+              <h3>hammer</h3>
+              <p>cost: <span class="clicker-cost">10</span> <img src="../assets/images/greenblock.png" alt="Brick"
+                  class="upgrade-brick-img"></p>
+              <p>tier: <span class="clicker-level">0</span></p>
+              <p>+<span class="clicker-increase">1</span> Stones per click</p>              <% } %>
+
             </section>
           </article>
           <article class="upgrade" onclick="buySaw()">
@@ -106,11 +199,20 @@
               <img src="../assets/images/lego-tool-1.png" alt="Saw Upgrade" class="upgrade-img">
             </figure>
             <section class="upgrade-details">
+              <% if (lang === 'nl') { %>
               <h3>zaag</h3>
               <p>kost: <span class="saw-cost">130</span> <img src="../assets/images/greenblock.png" alt="Brick"
                   class="upgrade-brick-img"></p>
-              <p>nivau: <span class="saw-level">0</span></p>
-              <p>+<span class="saw-increase">4</span> stenen per seconde</p>
+              <p>niveau: <span class="saw-level">0</span></p>
+              <p>+<span class="saw-increase">4</span> stenen per seconde</p>             
+               <% } else if (lang === 'en') { %>
+              <h3>saw</h3>
+              <p>cost: <span class="saw-cost">130</span> <img src="../assets/images/greenblock.png" alt="Brick"
+                  class="upgrade-brick-img"></p>
+              <p>tier: <span class="saw-level">0</span></p>
+              <p>+<span class="saw-increase">4</span> stones per second</p>              
+              <% } %>
+
             </section>
           </article>
           <article class="upgrade" onclick="buyDril()">
@@ -118,11 +220,22 @@
               <img src="../assets/images/lego-tool-3.png" alt="Drill Upgrade" class="upgrade-img">
             </figure>
             <section class="upgrade-details">
+              <% if (lang === 'nl') { %>
               <h3>boor</h3>
               <p>kost: <span class="dril-cost">850</span> <img src="../assets/images/greenblock.png" alt="Brick"
                   class="upgrade-brick-img"></p>
               <p>nivau: <span class="dril-level">0</span></p>
               <p>+<span class="dril-increase">24</span> stenen per seconde</p>
+
+              <% } else if (lang === 'en') { %>
+              <h3>drill</h3>
+              <p>cost: <span class="dril-cost">850</span> <img src="../assets/images/greenblock.png" alt="Brick"
+                  class="upgrade-brick-img"></p>
+              <p>tier: <span class="dril-level">0</span></p>
+              <p>+<span class="dril-increase">24</span> stones per second</p>
+              <% } %>
+
+
             </section>
           </article>
         </aside>
@@ -137,6 +250,7 @@
       </aside>
       <dialog id="infoPopup">
         <article class="popup-content">
+          <% if (lang === 'nl') { %>
           <h2>Over het Klik Spel</h2>
 
           <div class="info-section">
@@ -180,7 +294,54 @@
               <strong>SPC:</strong> Stenen per klik<br>
               <strong>SPS:</strong> Stenen per seconde
             </p>
+          </div>          
+          <% } else if (lang === 'en') { %>
+        <h2>About the Click Game</h2>
+
+          <div class="info-section">
+            <p><strong>🧱 Stone Clicker Game</strong></p>
+            <p>In this game, it's all about collecting stones by clicking on them. With these stones, you can make various upgrades and purchases to speed up your progress.</p>
           </div>
+
+          <div class="info-section">
+            <p><strong>🎮 Gameplay</strong></p>
+            <p>🧱 <strong>Click for stones</strong><br>
+              Click on the stone to collect stones.<br>
+              The more you click, the more stones you earn.</p>
+          </div>
+
+          <div class="info-section">
+            <p>🔧 <strong>Upgrades</strong><br>
+              Use stones to upgrade your clicker and earn more stones per click.<br>
+              Improve your tools to automatically earn stones per second.</p>
+          </div>
+
+          <div class="info-section">
+            <p>💰 <strong>Convert stones into coins</strong><br>
+              Earn enough stones and trade them for coins.<br>
+              Coins grant access to exclusive purchases.</p>
+          </div>
+
+          <div class="info-section">
+            <p>🧑‍🎨 <strong>Buy minifigs</strong><br>
+              Use your coins to buy minifigs and collect different figures!</p>
+          </div>
+
+          <div class="info-section">
+            <p>📊 <strong>Strategy</strong><br>
+              ✔️ Actively click to quickly collect stones.<br>
+              ✔️ Buy passive upgrades for a constant stream of stones.</p>
+          </div>
+
+          <div class="info-section">
+            <p>📈 <strong>Statistics</strong><br>
+              <strong>SPC:</strong> Stones per click<br>
+              <strong>SPS:</strong> Stones per second
+            </p>
+          </div>
+          <% } %>
+
+          
 
           <menu>
             <button id="closeInfoPopup" class="select-button text-lego-stroke" data-text="Sluiten" onclick="closeInfoPopup()">sluiten</button>
