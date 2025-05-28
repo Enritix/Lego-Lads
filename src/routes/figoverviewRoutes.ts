@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import { deleteMinifigFromBin, getBin } from "../database";
+import { addMinifigToBin, deleteMinifigFromBin, getBin } from "../database";
 import {
   fetchMinifigByName,
   getThemeById,
@@ -17,6 +17,10 @@ router.get("/blacklist", async (req: Request, res: Response) => {
       .status(400)
       .json({ success: false, message: "User ID is required" });
   }
+
+  // await addMinifigToBin(userId.toString(), "Pirate", "lelijk");
+
+  // Haal daarna de nieuwe bin-array op
   const bin = await getBin(userId.toString());
 
   const minifigs: Minifig[] = [];
@@ -26,8 +30,6 @@ router.get("/blacklist", async (req: Request, res: Response) => {
       minifigs.push(minifig);
     })
   );
-
-  // await deleteMinifigFromBin(userId, "Pirate");
 
   res.render("blacklist", {
     title: "Blacklist",

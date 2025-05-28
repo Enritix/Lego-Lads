@@ -6,6 +6,8 @@ import {
   getUserById,
   updateGameDataFromFactory,
   updateGameDataFromOrdenen,
+  deleteMinifigFromBin,
+  addMinifigToBin,
 } from "../database";
 import { fetchSets, fetchMinifigs } from "../apicalls";
 import { ObjectId } from "mongodb";
@@ -154,12 +156,7 @@ router.post("/bin-fig", async (req: Request, res: Response) => {
   }
 
   try {
-    const db = await connectToMongoDB();
-    await db.collection("gebruikers");
-    await (db.collection("gebruikers") as any).updateOne(
-      { _id: new ObjectId(userId.$oid) },
-      { $push: { bin: { fig: fig.name, reason: reason || "" } } }
-    );
+    await addMinifigToBin(userId.toString(), fig.name, reason);
     res.json({ success: true });
   } catch (error: any) {
     res.status(500).json({ success: false, error: error.message });
