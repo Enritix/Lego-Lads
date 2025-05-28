@@ -470,6 +470,71 @@ export async function updateMinifigReason(
   }
 }
 
+// Enrico: hier wordt de geordende figs van de user uitgelezen
+export async function getSortedFigs(userId: string) {
+  const db = await connectToMongoDB();
+  const gebruiker = await db
+    .collection("gebruikers")
+    .findOne({ _id: new ObjectId(userId) });
+  if (!gebruiker) {
+    throw new Error("Gebruiker niet gevonden");
+  }
+  return gebruiker.ordenedFigs;
+}
+
+// Enrico: hier wordt een geordende fig toegevoegd aan de user
+export async function addSortedFig(
+  userId: string,
+  figName: string,
+  setName: string | null,
+  themeName: string | null
+) {
+  const db = await connectToMongoDB();
+  const newOrderedFig = {
+    fig: figName,
+    set: setName,
+    theme: themeName
+  };
+  const result = await db.collection("gebruikers").updateOne(
+    { _id: new ObjectId(userId) },
+    { $push: { ordenedFigs: newOrderedFig } } as any
+  );
+  if (result.matchedCount === 0) {
+    throw new Error("Gebruiker niet gevonden.");
+  }
+  if (result.modifiedCount === 0) {
+    throw new Error("Geordende fig niet toegevoegd.");
+  }
+}
+
+// Enrico: hier wordt een fig verwijderd uit de geordende figs van de user
+export async function deleteSortedFig(
+  userId: string,
+  figName: string,
+  setName: string | null,
+  themeName: number | null
+) {
+  const db = await connectToMongoDB();
+  const result = await db.collection("gebruikers").updateOne(
+    { _id: new ObjectId(userId) },
+    {
+      $pull: {
+        ordenedFigs: {
+          fig: figName,
+          set: setName,
+          theme: themeName
+        }
+      }
+    } as any
+  );
+  if (result.matchedCount === 0) {
+    throw new Error("Gebruiker niet gevonden.");
+  }
+  if (result.modifiedCount === 0) {
+    throw new Error("Geordende fig niet gevonden of al verwijderd.");
+  }
+}
+
 // Lars: hier wordt een nieuwe user aangemaakt
 export async function insertUserGameData(playerId: string, totalFigs: number) {
   const db = await connectToMongoDB();

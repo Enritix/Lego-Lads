@@ -8,6 +8,7 @@ import {
   updateGameDataFromOrdenen,
   deleteMinifigFromBin,
   addMinifigToBin,
+  addSortedFig,
 } from "../database";
 import { fetchSets, fetchMinifigs } from "../apicalls";
 import { ObjectId } from "mongodb";
@@ -165,32 +166,27 @@ router.post("/bin-fig", async (req: Request, res: Response) => {
 
 router.post("/orden-fig", async (req: Request, res: Response) => {
   const userId = req.session.user?._id;
-  const { fig, set, status } = req.body;
+  const { fig, set, theme } = req.body;
 
-  if (!userId || !fig || !status) {
+  if (!userId || !fig || !theme || !set) {
     return res.status(400).json({ success: false, message: "Data ontbreekt" });
   }
 
   try {
     const db = await connectToMongoDB();
-    await db.collection("geordende_figs").insertOne({
-      userId: typeof userId === "string" ? userId : userId.toString(),
-      name: fig.name,
-      img: fig.img,
-      set: set || null,
-      status: status,
-      date: new Date(),
-    });
+    const gebruiker = await db.collection("gebruikers").findOne({ _id: new ObjectId(userId) });
+    const alreadySorted = gebruiker?.ordenedFigs?.some(
+      (f: any) => f.fig === fig && f.set === set && f.theme === theme
+    );
+
+    if (alreadySorted) {
+      return res.status(200).json({ success: false, message: "Deze fig is al gesorteerd voor deze set en theme." });
+    }
+
+    await addSortedFig(userId.toString(), fig, set, theme);
+    res.json({ success: true });
   } catch (error: any) {
-    return res.status(500).json({ success: false, error: error.message });
-  }
-
-  req.session.ordenenDone = (req.session.ordenenDone ?? 0) + 1;
-
-  if ((req.session.ordenenDone ?? 0) >= (req.session.ordenenCount ?? 0)) {
-    return res.json({ success: true, redirect: "/resultaat" });
-  } else {
-    return res.json({ success: true, redirect: "/factory" });
+    res.status(500).json({ success: false, error: error.message });
   }
 });
 
