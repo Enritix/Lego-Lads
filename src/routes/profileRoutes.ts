@@ -50,12 +50,31 @@ router.get('/inventory', async (req, res) => {
   });
 });
 
-router.get('/chest', (req: Request, res: Response) => {
-  const chestType = req.query.type;
-  res.render('chest', { title: "Kistopening", cssFiles: ['/css/chest.css'], jsFiles: ['/js/chest.js'], chestType });
+router.get('/chest', async (req: Request, res: Response) => {
+  const lang = req.params.lang;
+  const chestType = req.query.type as string;
 
+  if (!chestType) {
+    return res.status(400).send("Geen chest-type opgegeven.");
+  }
 
+  const db = await connectToMongoDB();
+  const chest = await db.collection("chests").findOne({ type: chestType });
+
+  if (!chest) {
+    return res.status(404).send("Kist niet gevonden.");
+  }
+
+  res.render('chest', {
+    title: "Kistopening",
+    cssFiles: ['/css/chest.css'],
+    jsFiles: ['/js/chest.js'],
+    chestType,
+    figs: chest.figs || [],
+    lang
+  });
 });
+
 
 router.get('/shop', async (req: Request, res: Response) => {
   try {

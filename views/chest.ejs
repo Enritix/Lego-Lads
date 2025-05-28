@@ -51,45 +51,16 @@
       <div class="content">
         <h1> <%= chestType %></h1>
         <section class="inventory-container">
-          <article class="inventory-item">
-           
-              <img src="../assets/images/cinder-shop.png" alt="chen">
-              <span class="details"><p>Cinder</p><p class="rarity legendary">legendary</p></span>
-
-          </article>
-          <article class="inventory-item">
-           
-              <img src="../assets/images/artic3-shop.png" alt="chen">
-              <span class="details"><p>Artic</p><p class="rarity episch">EPISCH</p></span>
- 
-          </article>
-          <article class="inventory-item">
-           
-              <img src="../assets/images/raddus-shop.png" alt="chen">
-              <span class="details"><p>Raddus</p><p class="rarity gewoon">gewoon</p></span>
-
-          </article>
-          <article class="inventory-item">
-           
-              <img src="../assets/images/crugx-shop.png" alt="chen">
-              <span class="details"><p>Crugx</p><p class="rarity legendary">legendary</p></span>
- 
-          </article>
-          <article class="inventory-item">
-           
-              <img src="../assets/images/crugs-shop.png" alt="chen">
-              <span class="details"><p>Crugs</p><p class="rarity episch">EPISCH</p></span>
- 
-          </article>
-          <article class="inventory-item">
-           
-              <img src="../assets/images/crug-shop.png" alt="chen">
-              <span class="details"><p>Crug</p><p class="rarity gewoon">gewoon</p></span>
-
- 
-          </article>
+      <% figs.forEach(fig => { %>
+        <article class="inventory-item">
+          <img src="<%= fig.img %>" alt="<%= fig.name %>">
+          <span class="details">
+            <p><%= fig.name %></p>
+            <p class="rarity <%= fig.rarity %>"><%= fig.rarity %></p>
+          </span>
+        </article>
+      <% }) %>
       </section>
-
       </div>
       </div>
     </main>
