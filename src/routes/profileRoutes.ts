@@ -272,4 +272,55 @@ router.post("/api/get-chest-contents", async (req, res) => {
 
 
 
+
+router.post("/buy-item", async (req: Request, res: Response) => {
+  try {
+    const username = req.session.user?.username;
+    if (!username) return res.status(401).json({ error: "Niet ingelogd" });
+
+    const { itemType } = req.body;
+
+    const prices: Record<string, number> = {
+      uncommon: 250,
+      epic: 500,
+      legendary: 750,
+      key: 150
+    };
+
+    if (!prices[itemType]) {
+      return res.status(400).json({ error: "Ongeldig itemtype." });
+    }
+
+    const db = await connectToMongoDB();
+    const gebruiker = await db.collection("gebruikers").findOne({ username });
+    if (!gebruiker) return res.status(404).json({ error: "Gebruiker niet gevonden" });
+
+    const price = prices[itemType];
+    if (gebruiker.coins < price) {
+      return res.status(400).json({ error: "Niet genoeg munten" });
+    }
+
+    await updateUserCoins(gebruiker._id.toString(), -price);
+
+    const update: any = itemType === "key"
+      ? { $inc: { keys: 1 } }
+      : { $inc: { [`chests.${itemType}`]: 1 } };
+
+    await db.collection("gebruikers").updateOne({ _id: gebruiker._id }, update);
+
+    const updatedUser = await db.collection("gebruikers").findOne({ _id: gebruiker._id });
+
+    res.json({
+      message: `${itemType} gekocht!`,
+      newBalance: updatedUser?.coins ?? 0,
+      chests: updatedUser?.chests,
+      keys: updatedUser?.keys
+    });
+
+  } catch (err) {
+    console.error("Fout bij kopen:", err);
+    res.status(500).json({ error: "Interne fout bij kopen" });
+  }
+});
+
 export default router;
