@@ -89,6 +89,7 @@ app.use('/:lang(nl|en)', requireAuth, profileRoutes);
 app.use('/:lang(nl|en)', requireAuth, figoverviewRoutes);
 app.use('/api', apiRoutes);
 app.use('/:lang(nl|en)/api', apiRoutes);
+app.use('/:lang/chatbot', chatbotRoutes);
 
 
 
